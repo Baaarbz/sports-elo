@@ -27,6 +27,7 @@ class DriverName:
 class Driver:
     id: DriverId
     name: DriverName
+    current_elo: Elo
     elo_record: List[Elo] = field(default_factory=list)
     
     def highest_elo(self) -> Elo:
@@ -39,7 +40,5 @@ class Driver:
             raise ValueError("No Elo records available.")
         return min(self.elo_record, key=lambda e: e.elo)
     
-    def current_elo(self) -> Elo:
-        if not self.elo_record:
-            raise ValueError("No Elo records available.")
-        return max(self.elo_record, key=lambda e: e.date)
+    def update_elo(self):
+        raise NotImplementedError
