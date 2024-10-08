@@ -14,12 +14,16 @@ class OpenAPIConfig {
 
   @Bean
   fun formula1EloAPI(): OpenAPI {
+    val devServer = Server()
+    devServer.url = "http://localhost:8000"
+    devServer.description = "Server URL in development environment"
+
     val prodServer = Server()
     // TODO("tbd prod url")
     prodServer.url = "https://tbd.com"
     prodServer.description = "Server URL in Production environment"
 
-    val contact: Contact = Contact()
+    val contact = Contact()
     contact.name = "Barbz"
     contact.url = "https://www.barbzdev.com"
 
@@ -32,6 +36,6 @@ class OpenAPIConfig {
       .description("This API will be responsible of calculating the ELO for the Formula 1. This is a non official API")
       .license(mitLicense)
 
-    return OpenAPI().info(info).servers(listOf(prodServer))
+    return OpenAPI().info(info).servers(listOf(devServer, prodServer))
   }
 }
