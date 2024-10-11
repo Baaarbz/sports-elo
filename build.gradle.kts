@@ -1,9 +1,10 @@
 plugins {
-  kotlin("jvm") version "1.9.25"
-  kotlin("plugin.spring") version "1.9.25"
+  val kotlinPluginVersion = "2.0.20"
+  kotlin("jvm") version kotlinPluginVersion
+  kotlin("plugin.spring") version kotlinPluginVersion
+  kotlin("plugin.jpa") version kotlinPluginVersion
   id("org.springframework.boot") version "3.3.4"
   id("io.spring.dependency-management") version "1.1.6"
-  kotlin("plugin.jpa") version "1.9.25"
 }
 
 group = "com.barbzdev"
