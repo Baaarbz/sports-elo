@@ -145,18 +145,16 @@ _________________
 > - $R'=R+K((S+TP)-E)$
 > - Where TP is theorical performance
 > - The values of TP will be bases on:
-    >
-
-- If you finish last with the best car you should be penalized as a lost $TP = -1$
-
->     - If you finish first with the best car nothing should change $TP= 0$
->     - And the same but inversed for the worst car
+   > - If you finish last with the best car you should be penalized as a lost $TP = -1$
+>    - If you finish first with the best car nothing should change $TP= 0$
+>    - And the same but inversed for the worst car
 > - This makes more sense than multiplying randomly, if the driver is performing better than the car therically
     > performance will ve rewarded but, if is underperforming then will be penalized
 > - If the driver end as DNF, we dont know if was by his mistake (should get full penalization) or mechanical
     > failure (not deserve full penalization) then, in this case, this new value called $TP$ well be equals to 0
 > - In the table bellow well be shown how this will be calculated, X axis = theorical position Y axis = driver
     > position at race
+
 
 |     | 1º | 2º | 3º | 4º | 5º | 6º | 7º | 8º | 9º | 10º | 11º | 12º | 13º | 14º | 15º |
                   |-----|----|----|----|----|----|----|----|----|----|-----|-----|-----|-----|-----|-----|
