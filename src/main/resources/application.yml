@@ -1,3 +1,5 @@
 spring:
   application:
     name: F1 ELO System
+server:
+  port: 8000
