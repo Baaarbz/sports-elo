@@ -2,8 +2,10 @@ package com.barbzdev.f1elo.infrastructure.spring
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.scheduling.annotation.EnableScheduling
 
-@SpringBootApplication
+@EnableScheduling
+@SpringBootApplication(scanBasePackages = ["com.barbzdev.f1elo.infrastructure.spring"])
 class F1EloApplication
 
 fun main(args: Array<String>) {
