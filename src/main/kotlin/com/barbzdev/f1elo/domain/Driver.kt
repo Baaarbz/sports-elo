@@ -10,13 +10,16 @@ class Driver private constructor(
   private val eloRecord: Set<Elo>
 ) {
 
+  fun id() = id
+  fun name() = name
+  fun currentElo() = currentElo
+  fun eloRecord() = eloRecord
+
   fun highestElo(): Elo? = eloRecord.maxByOrNull { it.value }
 
   fun lowestElo(): Elo? = eloRecord.minByOrNull { it.value }
 
-  fun updateElo(rivalElo: Elo) {
-    TODO("not implemented yet")
-  }
+  fun updateElo(newElo: Elo): Driver = create(id, name, newElo, eloRecord.plus(newElo))
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
