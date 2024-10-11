@@ -156,23 +156,23 @@ _________________
     > position at race
 
 
-|     | 1º | 2º | 3º | 4º | 5º | 6º | 7º | 8º | 9º | 10º | 11º | 12º | 13º | 14º | 15º |
-                  |-----|----|----|----|----|----|----|----|----|----|-----|-----|-----|-----|-----|-----|
-| 1º  | 0  | 0  |    |    |    |    |    |    |    |     |     |     |     |     |     |
-| 2º  | 0  | 0  |    |    |    |    |    |    |    |     |     |     |     |     |     |
-| 3º  |    |    | 0  | 0  |    |    |    |    |    |     |     |     |     |     |     |
-| 4º  |    |    | 0  | 0  |    |    |    |    |    |     |     |     |     |     |     |
-| 5º  |    |    |    |    | 0  | 0  |    |    |    |     |     |     |     |     |     |
-| 6º  |    |    |    |    | 0  | 0  |    |    |    |     |     |     |     |     |     |
-| 7º  |    |    |    |    |    |    | 0  | 0  |    |     |     |     |     |     |     |
-| 8º  |    |    |    |    |    |    | 0  | 0  |    |     |     |     |     |     |     |
-| 9º  |    |    |    |    |    |    |    |    | 0  | 0   |     |     |     |     |     |
-| 10º |    |    |    |    |    |    |    |    | 0  | 0   |     |     |     |     |     |
-| 11º |    |    |    |    |    |    |    |    |    |     | 0   | 0   |     |     |     |
-| 12º |    |    |    |    |    |    |    |    |    |     | 0   | 0   |     |     |     |
-| 13º |    |    |    |    |    |    |    |    |    |     |     |     | 0   | 0   |     |
-| 14º |    |    |    |    |    |    |    |    |    |     |     |     | 0   | 0   |     |
-| 15º |    |    |    |    |    |    |    |    |    |     |     |     |     |     | 0   |
+|     | 1º  | 2º  | 3º  | 4º  | 5º  | 6º  | 7º  | 8º  | 9º  | 10º | 11º | 12º | 13º | 14º | 15º |
+|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+| 1º  | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
+| 2º  | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
+| 3º  | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
+| 4º  | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
+| 5º  | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
+| 6º  | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
+| 7º  | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
+| 8º  | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
+| 9º  | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd |
+| 10º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd |
+| 11º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd |
+| 12º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd |
+| 13º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd |
+| 14º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd |
+| 15º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   |
 
 _________________
 
