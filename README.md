@@ -185,6 +185,6 @@ _________________
 
 ## References
 
-[Elo Rating System](https://stanislav-stankovic.medium.com/elo-rating-system-6196cc59941e)
-[Jolpica F1 API](https://github.com/jolpica/jolpica-f1)
-[Mr V's Garage inspiring video](https://www.youtube.com/live/U16a8tdrbII?t=1046s)
+[Elo Rating System](https://stanislav-stankovic.medium.com/elo-rating-system-6196cc59941e) <br/>
+[Jolpica F1 API](https://github.com/jolpica/jolpica-f1)<br/>
+[Mr V's Garage inspiring video](https://www.youtube.com/live/U16a8tdrbII?t=1046s)<br/>
