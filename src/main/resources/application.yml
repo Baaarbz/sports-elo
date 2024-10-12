@@ -1,5 +1,10 @@
 spring:
   application:
     name: F1 ELO System
+  datasource:
+    url: jdbc:postgresql://localhost:5432/f1_elo
+    username: local
+    password: local
+    driver-class-name: org.postgresql.Driver
 server:
   port: 8000
