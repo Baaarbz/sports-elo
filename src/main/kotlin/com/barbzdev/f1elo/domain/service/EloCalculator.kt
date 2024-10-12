@@ -7,14 +7,14 @@ import kotlin.math.pow
 import kotlin.math.round
 
 object EloCalculator {
-  fun calculateNewRating(driverElo: Int, rivalElo: Int, raceResult: RaceResult): Int {
-    val qDriver = calculateQ(rating = driverElo)
-    val qRival = calculateQ(rating = rivalElo)
+  fun calculateNewRating(elo: Int, rivalElo: Int, raceResult: RaceResult): Int {
+    val qA = calculateQ(rating = elo)
+    val qB = calculateQ(rating = rivalElo)
 
-    val e = calculateE(qA = qDriver, qB = qRival)
+    val e = calculateE(qA = qA, qB = qB)
     val s = calculateS(raceResult)
 
-    return round(driverElo + K * (s - e)).toInt()
+    return round(elo + K * (s - e)).toInt()
   }
 
   private fun calculateQ(rating: Int): Double = 10.0.pow(rating / 400.0)
