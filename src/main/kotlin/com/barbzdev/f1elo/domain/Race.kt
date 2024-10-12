@@ -2,6 +2,7 @@ package com.barbzdev.f1elo.domain
 
 import com.barbzdev.f1elo.domain.common.InfoUrl
 import com.barbzdev.f1elo.domain.common.OccurredOn
+import com.barbzdev.f1elo.domain.common.Season
 
 class Race private constructor(
   private val season: Season,
@@ -60,7 +61,7 @@ class Race private constructor(
 
   companion object {
     fun create(
-      season: String,
+      season: Int,
       round: Int,
       infoUrl: String,
       name: String,
@@ -76,14 +77,6 @@ class Race private constructor(
       occurredOn = RaceDate(occurredOn),
       results = results
     )
-  }
-}
-
-data class Season(val value: String) {
-  init {
-    require(value.isNotBlank())
-    require(value.toIntOrNull() != null) { "Season must be a number" }
-    require(value.toInt() >= 1950) { "Season must be greater or equals than 1950, year were Formula 1 officially starts" }
   }
 }
 

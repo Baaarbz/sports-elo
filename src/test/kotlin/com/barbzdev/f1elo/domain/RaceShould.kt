@@ -11,14 +11,14 @@ class RaceShould {
       "Melbourne", "https://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
     )
     val aRace = Race.create(
-      "2010", 1,
+      2010, 1,
       "https://en.wikipedia.org/wiki/2023_Australian_Grand_Prix",
       "Australian Grand Prix", aCircuit, "2010-03-28", emptyList()
     )
 
     assertThat(aRace).isEqualTo(
       Race.create(
-        "2010", 1,
+        2010, 1,
         "https://en.wikipedia.org/wiki/2023_Australian_Grand_Prix",
         "Australian Grand Prix", aCircuit, "2010-03-28", emptyList()
       )
