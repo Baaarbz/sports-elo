@@ -174,6 +174,10 @@ _________________
 | 14º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd |
 | 15º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   |
 
+
+### Calculate the ELO of the constructors
+
+TBD
 _________________
 
 ## Considerations
