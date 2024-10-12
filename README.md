@@ -145,8 +145,9 @@ _________________
 > - $R'=R+K((S+TP)-E)$
 > - Where TP is theorical performance
 > - The values of TP will be bases on:
-   > - If you finish last with the best car you should be penalized as a lost $TP = -1$
->    - If you finish first with the best car nothing should change $TP= 0$
+> - If you finish last with the best car you should be penalized as a lost $TP = -1$
+    >
+- If you finish first with the best car nothing should change $TP= 0$
 >    - And the same but inversed for the worst car
 > - This makes more sense than multiplying randomly, if the driver is performing better than the car therically
     > performance will ve rewarded but, if is underperforming then will be penalized
@@ -154,7 +155,6 @@ _________________
     > failure (not deserve full penalization) then, in this case, this new value called $TP$ well be equals to 0
 > - In the table bellow well be shown how this will be calculated, X axis = theorical position Y axis = driver
     > position at race
-
 
 |     | 1º  | 2º  | 3º  | 4º  | 5º  | 6º  | 7º  | 8º  | 9º  | 10º | 11º | 12º | 13º | 14º | 15º |
 |-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
@@ -174,7 +174,6 @@ _________________
 | 14º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd |
 | 15º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   |
 
-
 ### Calculate the ELO of the constructors
 
 TBD
@@ -183,7 +182,8 @@ _________________
 ## Considerations
 
 In order to not overload the API gathering the results of the races, the strategy we are going follow is to store the
-results in a database and each day at 12PM we will retrieve the next result, just one call per day to the API.
+results in a database and each day at 12PM we will retrieve race results until we are up to date, once we are up to date
+the scheduled job will work only each monday to ensure we always get last races results.
 
 _________________
 
