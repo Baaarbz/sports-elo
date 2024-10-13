@@ -15,30 +15,35 @@ class GatherRacesBySeasonUseCase(
 ) {
 
   operator fun invoke(): GatherRacesBySeasonResponse {
-    val lastLoadedSeason = getLastSeasonLoaded()
+    val seasonToLoad = getSeasonToLoad()
 
-    if (lastLoadedSeason.isLastCompletedSeason()) {
+    if (seasonToLoad.isCurrentSeason()) {
       return GatherRacesBySeasonUpToDate
     }
 
-    lastLoadedSeason
-      .loadNextSeasonRaces()
+    seasonToLoad
+      .loadSeason()
       .saveRaces()
 
-    publishSeasonLoadedDomainEvent(lastLoadedSeason)
+    publishSeasonLoadedDomainEvent(seasonToLoad)
     return GatherRacesBySeasonSuccess
   }
 
-  private fun getLastSeasonLoaded() = f1Repository.getLastSeasonLoaded()
+  private fun getSeasonToLoad() = (f1Repository.getLastSeasonLoaded()?.value?.plus(1))
+    ?: FIRST_FORMULA_1_SEASON
 
-  private fun Season.isLastCompletedSeason() = value == now().year - 1
+  private fun Int.isCurrentSeason() = this >= now().year
 
-  private fun Season.loadNextSeasonRaces() = f1Repository.gatherRacesBySeason(Season(value + 1))
+  private fun Int.loadSeason() = f1Repository.gatherRacesBySeason(Season(this))
 
   private fun List<Race>.saveRaces() = raceRepository.saveAll(this)
 
-  private fun publishSeasonLoadedDomainEvent(lastLoadedSeason: Season) =
-    seasonDomainEventPublisher.publish(SeasonLoadedDomainEvent(Season(lastLoadedSeason.value + 1)))
+  private fun publishSeasonLoadedDomainEvent(season: Int) =
+    seasonDomainEventPublisher.publish(SeasonLoadedDomainEvent(Season(season)))
+
+  private companion object {
+    const val FIRST_FORMULA_1_SEASON = 1950
+  }
 }
 
 sealed class GatherRacesBySeasonResponse

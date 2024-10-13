@@ -3,8 +3,11 @@ plugins {
   kotlin("jvm") version kotlinPluginVersion
   kotlin("plugin.spring") version kotlinPluginVersion
   kotlin("plugin.jpa") version kotlinPluginVersion
+
   id("org.springframework.boot") version "3.3.4"
   id("io.spring.dependency-management") version "1.1.6"
+
+  `java-test-fixtures`
 }
 
 group = "com.barbzdev"
@@ -33,12 +36,16 @@ dependencies {
   implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
   implementation("org.springdoc:springdoc-openapi-starter-common:2.1.0")
 
-  testImplementation("org.springframework.boot:spring-boot-starter-test")
+  testImplementation("org.springframework.boot:spring-boot-starter-test") {
+    exclude(module = "mockito-core")
+  }
   testImplementation("org.springframework.boot:spring-boot-testcontainers")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
   testImplementation("org.testcontainers:junit-jupiter")
   testImplementation("org.testcontainers:postgresql")
   testImplementation("com.willowtreeapps.assertk:assertk:0.28.0")
+  testImplementation("io.mockk:mockk:1.13.13")
+  testImplementation("com.ninja-squad:springmockk:4.0.2")
 }
 
 kotlin { compilerOptions { freeCompilerArgs.addAll("-Xjsr305=strict") } }

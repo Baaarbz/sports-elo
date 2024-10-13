@@ -52,7 +52,7 @@ class RaceShould {
     )
 
     val updatedRace = aRace.addResult(
-      "7", aDriver, 1, 25f, aConstructor, 1, 58, RaceResultStatus.FINISHED, 6000000, 60000, 200f, "kph"
+      "7", aDriver, 1, 25f, aConstructor, 1, 58, "Finished", 6000000, 60000, 200f, "kph"
     )
 
     assertThat(updatedRace.results().size).isEqualTo(1)
