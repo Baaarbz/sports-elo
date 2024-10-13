@@ -3,16 +3,19 @@ package com.barbzdev.f1elo.domain
 import com.barbzdev.f1elo.domain.common.InfoUrl
 import com.barbzdev.f1elo.domain.common.OccurredOn
 import com.barbzdev.f1elo.domain.common.Season
+import java.util.UUID
 
 class Race private constructor(
+  private val id: RaceId,
   private val season: Season,
   private val round: Round,
   private val infoUrl: InfoUrl,
   private val name: RaceName,
   private val circuit: Circuit,
   private val occurredOn: RaceDate,
-  private val results: List<RaceResult>
+  private val results: Set<RaceResult>
 ) {
+  fun id() = id
 
   fun season() = season
 
@@ -28,12 +31,45 @@ class Race private constructor(
 
   fun results() = results
 
+  fun addResult(
+    number: String,
+    driver: Driver,
+    position: Int,
+    points: Float,
+    constructor: Constructor,
+    grid: Int,
+    laps: Int,
+    status: RaceResultStatus,
+    timeInMillis: Long,
+    fastestLapInMillis: Long?,
+    averageSpeed: Float?,
+    averageSpeedUnit: String?
+  ): Race {
+    val result = RaceResult(
+      id = UUID.randomUUID().toString(),
+      number = number,
+      driver = driver,
+      position = position,
+      points = points,
+      constructor = constructor,
+      grid = grid,
+      laps = laps,
+      status = status,
+      timeInMillis = timeInMillis,
+      fastestLapInMillis = fastestLapInMillis,
+      averageSpeed = averageSpeed,
+      averageSpeedUnit = averageSpeedUnit
+    )
+    return Race(id, season, round, infoUrl, name, circuit, occurredOn, results.plus(result))
+  }
+
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
 
     other as Race
 
+    if (id != other.id) return false
     if (season != other.season) return false
     if (round != other.round) return false
     if (infoUrl != other.infoUrl) return false
@@ -46,7 +82,8 @@ class Race private constructor(
   }
 
   override fun hashCode(): Int {
-    var result = season.hashCode()
+    var result = id.hashCode()
+    result = 31 * result + season.hashCode()
     result = 31 * result + round.hashCode()
     result = 31 * result + infoUrl.hashCode()
     result = 31 * result + name.hashCode()
@@ -57,7 +94,7 @@ class Race private constructor(
   }
 
   override fun toString(): String =
-    "Race(season=$season, round=$round, infoUrl=$infoUrl, name=$name, circuit=$circuit, occurredOn=$occurredOn, results=$results)"
+    "Race(id=$id, season=$season, round=$round, infoUrl=$infoUrl, name=$name, circuit=$circuit, occurredOn=$occurredOn, results=$results)"
 
   companion object {
     fun create(
@@ -66,17 +103,27 @@ class Race private constructor(
       infoUrl: String,
       name: String,
       circuit: Circuit,
-      occurredOn: String,
-      results: List<RaceResult>
+      occurredOn: String
     ) = Race(
+      id = RaceId.generate(),
       season = Season(season),
       round = Round(round),
       infoUrl = InfoUrl(infoUrl),
       name = RaceName(name),
       circuit = circuit,
       occurredOn = RaceDate(occurredOn),
-      results = results
+      results = emptySet()
     )
+  }
+}
+
+data class RaceId(val value: String) {
+  init {
+    require(value.isNotBlank())
+  }
+
+  companion object {
+    fun generate() = RaceId(UUID.randomUUID().toString())
   }
 }
 
@@ -95,6 +142,7 @@ data class RaceName(val value: String) {
 data class RaceDate(val date: String) : OccurredOn(date)
 
 data class RaceResult(
+  val id: String,
   val number: String,
   val driver: Driver,
   val position: Int,
