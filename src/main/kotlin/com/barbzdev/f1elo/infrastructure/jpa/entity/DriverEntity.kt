@@ -8,13 +8,12 @@ import jakarta.persistence.Id
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import java.time.LocalDate
-import java.util.UUID
 
 @Entity
 @Table(name = "drivers")
 data class DriverEntity(
   @Id
-  val id: UUID,
+  val id: String,
   @Column(name = "full_name")
   val fullName: String,
   val code: String?,

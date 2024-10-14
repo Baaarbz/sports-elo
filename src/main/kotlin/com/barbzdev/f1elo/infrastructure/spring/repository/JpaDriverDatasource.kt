@@ -6,4 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface JpaDriverDatasource : JpaRepository<DriverEntity, UUID>
+interface JpaDriverDatasource : JpaRepository<DriverEntity, String>

@@ -4,13 +4,12 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import java.util.UUID
 
 @Entity
 @Table(name = "circuits")
 data class CircuitEntity(
   @Id
-  val id: UUID,
+  val id: String,
   val name: String,
   val latitude: String,
   val longitude: String,
