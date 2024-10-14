@@ -3,7 +3,7 @@ package com.barbzdev.f1elo.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CircuitShould {
+class CircuitEntityShould {
   @Test
   fun `create a circuit successfully`() {
     val aCircuit = Circuit.create(

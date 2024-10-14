@@ -10,5 +10,5 @@ class RacesScheduledTask(
 ) {
 
   @Scheduled(cron = "0 0 12 * * ?")
-  fun gatherRacesResult() = gatherRacesBySeasonUseCase.invoke()
+  fun gatherRacesResultBySeasonScheduledTask() = gatherRacesBySeasonUseCase.invoke()
 }
