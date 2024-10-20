@@ -45,7 +45,7 @@ class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
       )
   )
 
-  private fun givenFirstPageOfSeasonRaces(season: Season) = stubFor(
+  private fun givenSecondPageOfSeasonRaces(season: Season) = stubFor(
     get(urlEqualTo("/${season.year().value}/results/?limit=100&offset=100"))
       .willReturn(
         aResponse()
