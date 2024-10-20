@@ -13,9 +13,9 @@ CREATE TABLE race_results
     fastest_lap_in_millis BIGINT,
     average_speed         FLOAT,
     average_speed_unit    VARCHAR(3),
-    updated_at            TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
-);
+    updated_at            TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
 
-CREATE INDEX idx_race_id ON race_results (race_id);
-CREATE INDEX idx_driver_id ON race_results (driver_id);
-CREATE INDEX idx_constructor_id ON race_results (constructor_id);
+    FOREIGN KEY (race_id) REFERENCES races (id),
+    FOREIGN KEY (driver_id) REFERENCES drivers (id),
+    FOREIGN KEY (constructor_id) REFERENCES constructors (id)
+);

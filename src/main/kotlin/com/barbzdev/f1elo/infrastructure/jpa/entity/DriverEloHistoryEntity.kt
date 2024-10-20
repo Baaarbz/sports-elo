@@ -7,13 +7,12 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import java.time.LocalDate
-import java.util.UUID
 
 @Entity
 @Table(name = "drivers_elo_history")
 data class DriverEloHistoryEntity(
   @Id
-  val id: UUID,
+  val id: String,
   @ManyToOne
   @JoinColumn(name = "driver_id")
   val driver: DriverEntity,
