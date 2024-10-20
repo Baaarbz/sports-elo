@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: #TODO: Add database URL
+    username: #TODO: Add database username
+    password: #TODO: Add database password
+
+jolpi-f1:
+  base-url: https://api.jolpi.ca/ergast/f1

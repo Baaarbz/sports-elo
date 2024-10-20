@@ -16,14 +16,6 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class UseCaseConfiguration {
-
-  val mockF1Repository = object : F1Repository {
-    override fun gatherRacesBySeason(season: Season): List<F1Race> = TODO("Not yet implemented")
-    override fun gatherAllSeasons(): List<F1Season> {
-      TODO("Not yet implemented")
-    }
-  }
-
   val mockSeasonRepository = object : SeasonRepository {
     override fun getLastSeasonLoaded(): Season = TODO("Not yet implemented")
     override fun save(season: Season) = TODO("Not yet implemented")
@@ -44,8 +36,8 @@ class UseCaseConfiguration {
   }
 
   @Bean
-  fun gatherRaceResultUseCase() = GatherRacesBySeasonUseCase(
-    mockF1Repository,
+  fun gatherRaceResultUseCase(f1Repository: F1Repository) = GatherRacesBySeasonUseCase(
+    f1Repository,
     mockSeasonRepository,
     mockDriverRepository,
     mockSeasonDomainEventPublisher
