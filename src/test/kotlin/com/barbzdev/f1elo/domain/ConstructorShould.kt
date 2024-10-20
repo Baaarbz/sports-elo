@@ -7,12 +7,18 @@ class ConstructorShould {
   @Test
   fun `create a constructor successfully`() {
     val aConstructor = Constructor.create(
-      "mercedes", "Mercedes", "German", "https://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One"
+      id = "mercedes",
+      name = "Mercedes",
+      nationality = "German",
+      infoUrl = "https://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One"
     )
 
     assertThat(aConstructor).isEqualTo(
       Constructor.create(
-        "mercedes", "Mercedes", "German", "https://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One"
+        id = "mercedes",
+        name = "Mercedes",
+        nationality = "German",
+        infoUrl = "https://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One"
       )
     )
   }

@@ -20,14 +20,32 @@ class DriverShould {
     )
 
     val aDriver = Driver.create(
-      "raikkonen", "Kimi", "Räikkönen", "RAI", "7", "1979-10-17", "Finnish",
-      "http://en.wikipedia.org/wiki/Kimi_R%C3%A4ikk%C3%B6nen", 2100, "2023-04-30", anEloRecord
+      id = "raikkonen",
+      givenName = "Kimi",
+      familyName = "Räikkönen",
+      code = "RAI",
+      permanentNumber = "7",
+      birthDate = "1979-10-17",
+      nationality = "Finnish",
+      infoUrl = "http://en.wikipedia.org/wiki/Kimi_R%C3%A4ikk%C3%B6nen",
+      currentElo = 2100,
+      currentEloOccurredOn = "2023-04-30",
+      eloRecord = anEloRecord
     )
 
     assertThat(aDriver).isEqualTo(
       Driver.create(
-        "raikkonen", "Kimi", "Räikkönen", "RAI", "7", "1979-10-17", "Finnish",
-        "http://en.wikipedia.org/wiki/Kimi_R%C3%A4ikk%C3%B6nen", 2100, "2023-04-30", anEloRecord
+        id = "raikkonen",
+        givenName = "Kimi",
+        familyName = "Räikkönen",
+        code = "RAI",
+        permanentNumber = "7",
+        birthDate = "1979-10-17",
+        nationality = "Finnish",
+        infoUrl = "http://en.wikipedia.org/wiki/Kimi_R%C3%A4ikk%C3%B6nen",
+        currentElo = 2100,
+        currentEloOccurredOn = "2023-04-30",
+        eloRecord = anEloRecord
       )
     )
   }
@@ -35,18 +53,32 @@ class DriverShould {
   @Test
   fun `create a rookie successfully`() {
     val aDriver = Driver.createRookie(
-      "michael_schumacher", "German", "Schumacher", "MSC", null, "1969-01-03", "German",
-      "http://en.wikipedia.org/wiki/Michael_Schumacher", "1991-8-25"
+      id = "michael_schumacher",
+      givenName = "German",
+      familyName = "Schumacher",
+      code = "MSC",
+      permanentNumber = null,
+      birthDate = "1969-01-03",
+      nationality = "German",
+      infoUrl = "http://en.wikipedia.org/wiki/Michael_Schumacher",
+      debutDate = "1991-8-25"
     )
 
     assertThat(aDriver).isEqualTo(
       Driver.createRookie(
-        "michael_schumacher", "German", "Schumacher", "MSC", null, "1969-01-03", "German",
-        "http://en.wikipedia.org/wiki/Michael_Schumacher", "1991-8-25"
+        id = "michael_schumacher",
+        givenName = "German",
+        familyName = "Schumacher",
+        code = "MSC",
+        permanentNumber = null,
+        birthDate = "1969-01-03",
+        nationality = "German",
+        infoUrl = "http://en.wikipedia.org/wiki/Michael_Schumacher",
+        debutDate = "1991-8-25"
       )
     )
-    assertThat(aDriver.currentElo()).isEqualTo(Elo(1000, "1991-8-25"))
-    assertThat(aDriver.eloRecord()).containsOnly(Elo(1000, "1991-8-25"))
+    assertThat(aDriver.currentElo()).isEqualTo(Elo(rating = 1000, occurredOn = "1991-8-25"))
+    assertThat(aDriver.eloRecord()).containsOnly(Elo(rating = 1000, occurredOn = "1991-8-25"))
   }
 
   @Test
@@ -58,13 +90,22 @@ class DriverShould {
       2100 to "2023-04-30"
     )
     val aDriver = Driver.create(
-      "alonso", "Fernando", "Alonso", "ALO", "14", "1981-07-29", "Spanish",
-      "https://en.wikipedia.org/wiki/Fernando_Alonso", 2100, "2023-04-30", anEloRecord
+      id = "alonso",
+      givenName = "Fernando",
+      familyName = "Alonso",
+      code = "ALO",
+      permanentNumber = "14",
+      birthDate = "1981-07-29",
+      nationality = "Spanish",
+      infoUrl = "https://en.wikipedia.org/wiki/Fernando_Alonso",
+      currentElo = 2100,
+      currentEloOccurredOn = "2023-04-30",
+      eloRecord = anEloRecord
     )
 
     val highestElo = aDriver.highestElo()
 
-    assertThat(highestElo).isEqualTo(Elo(2300, "2023-03-26"))
+    assertThat(highestElo).isEqualTo(Elo(rating = 2300, occurredOn = "2023-03-26"))
   }
 
   @Test
@@ -76,13 +117,22 @@ class DriverShould {
       2100 to "2023-04-30"
     )
     val aDriver = Driver.create(
-      "max_verstappen", "Max", "Verstappen", "VER", "33", "1997-09-30", "Dutch",
-      "http://en.wikipedia.org/wiki/Max_Verstappen", 2100, "2023-04-30", anEloRecord
+      id = "max_verstappen",
+      givenName = "Max",
+      familyName = "Verstappen",
+      code = "VER",
+      permanentNumber = "33",
+      birthDate = "1997-09-30",
+      nationality = "Dutch",
+      infoUrl = "http://en.wikipedia.org/wiki/Max_Verstappen",
+      currentElo = 2100,
+      currentEloOccurredOn = "2023-04-30",
+      eloRecord = anEloRecord
     )
 
     val lowestElo = aDriver.lowestElo()
 
-    assertThat(lowestElo).isEqualTo(Elo(1900, "2023-03-19"))
+    assertThat(lowestElo).isEqualTo(Elo(rating = 1900, occurredOn = "2023-03-19"))
   }
 
   @Test
@@ -94,13 +144,25 @@ class DriverShould {
       2100 to "2023-04-30"
     )
     val outdatedDriver = Driver.create(
-      "hamilton", "Lewis", "Hamilton", "HAM", "44", "1985-01-07", "British",
-      "https://en.wikipedia.org/wiki/Lewis_Hamilton", 2100, "2023-04-30", anEloRecord
+      id = "hamilton",
+      givenName = "Lewis",
+      familyName = "Hamilton",
+      code = "HAM",
+      permanentNumber = "44",
+      birthDate = "1985-01-07",
+      nationality = "British",
+      infoUrl = "https://en.wikipedia.org/wiki/Lewis_Hamilton",
+      currentElo = 2100,
+      currentEloOccurredOn = "2023-04-30",
+      eloRecord = anEloRecord
     )
 
-    val updatedDriver = outdatedDriver.updateElo(2400, "2023-05-07")
+    val updatedDriver = outdatedDriver.updateElo(value = 2400, occurredOn = "2023-05-07")
 
-    assertThat(updatedDriver.currentElo()).isEqualToIgnoringGivenProperties(Elo(2400, "2023-05-07"), Elo::occurredOn)
-    assertThat(updatedDriver.eloRecord().last()).isEqualToIgnoringGivenProperties(Elo(2400, "2023-05-07"), Elo::occurredOn)
+    assertThat(updatedDriver.currentElo()).isEqualToIgnoringGivenProperties(Elo(rating = 2400, occurredOn = "2023-05-07"), Elo::occurredOn)
+    assertThat(updatedDriver.eloRecord().last()).isEqualToIgnoringGivenProperties(
+      Elo(rating = 2400, occurredOn = "2023-05-07"),
+      Elo::occurredOn
+    )
   }
 }

@@ -1,6 +1,8 @@
 package com.barbzdev.f1elo.factory
 
 import com.barbzdev.f1elo.domain.Circuit.Companion.create
+import com.barbzdev.f1elo.domain.repository.F1Circuit
+import com.barbzdev.f1elo.domain.repository.F1Location
 
 object CircuitFactory {
   private val circuits = listOf(
@@ -70,4 +72,53 @@ object CircuitFactory {
   )
 
   fun aCircuit() = circuits.random()
+
+  private val f1Circuits = listOf(
+    F1Circuit(
+      circuitId = "monza",
+      circuitName = "Autodromo Nazionale di Monza",
+      url = "http://en.wikipedia.org/wiki/Autodromo_Nazionale_Monza",
+      location = F1Location(
+        country = "Italy",
+        locality = "Monza",
+        lat = "45.6156",
+        long = "9.2811"
+      )
+    ),
+    F1Circuit(
+      circuitId = "interlagos",
+      circuitName = "Autódromo José Carlos Pace",
+      url = "http://en.wikipedia.org/wiki/Aut%C3%B3dromo_Jos%C3%A9_Carlos_Pace",
+      location = F1Location(
+        country = "Brazil",
+        locality = "São Paulo",
+        lat = "-23.7036",
+        long = "-46.6997"
+      )
+    ),
+    F1Circuit(
+      circuitId = "silverstone",
+      circuitName = "Silverstone Circuit",
+      url = "http://en.wikipedia.org/wiki/Silverstone_Circuit",
+      location = F1Location(
+        country = "United Kingdom",
+        locality = "Silverstone",
+        lat = "52.0786",
+        long = "-1.0169"
+      )
+    ),
+    F1Circuit(
+      circuitId = "spa",
+      circuitName = "Circuit de Spa-Francorchamps",
+      url = "http://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps",
+      location = F1Location(
+        country = "Belgium",
+        locality = "Spa",
+        lat = "50.4372",
+        long = "5.9714"
+      )
+    ),
+  )
+
+  fun aF1Circuit() = f1Circuits.random()
 }

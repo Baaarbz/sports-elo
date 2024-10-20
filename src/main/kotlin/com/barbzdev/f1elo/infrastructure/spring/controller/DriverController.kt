@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("api/v1/drivers")
-class DriverController: DriverControllerDocumentation {
+class DriverController : DriverControllerDocumentation {
 
   @GetMapping("{driverId}")
   override fun getDriver(@PathVariable driverId: String): ResponseEntity<HttpGetDriverResponse> {
@@ -24,7 +24,7 @@ data class HttpGetDriverResponse(
   val currentElo: HttpElo,
   val highestElo: HttpElo,
   val lowestElo: HttpElo,
-  val eloRecord: Set<HttpElo>
+  val eloRecord: List<HttpElo>
 )
 
 data class HttpElo(

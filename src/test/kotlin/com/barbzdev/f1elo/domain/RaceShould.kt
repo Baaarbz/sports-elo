@@ -11,17 +11,23 @@ class RaceShould {
   @Test
   fun `create a race successfully`() {
     val aCircuit = Circuit.create(
-      "albert_park", "Albert Park", "-37.8497", "144.968", "Australia",
-      "Melbourne", "https://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
+      id = "albert_park",
+      name = "Albert Park",
+      latitude = "-37.8497",
+      longitude = "144.968",
+      country = "Australia",
+      locality = "Melbourne",
+      infoUrl = "https://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
     )
     val aRace = Race.create(
-      2010, 1,
-      "https://en.wikipedia.org/wiki/2023_Australian_Grand_Prix",
-      "Australian Grand Prix", aCircuit, "2010-03-28"
+      round = 1,
+      infoUrl = "https://en.wikipedia.org/wiki/2023_Australian_Grand_Prix",
+      name = "Australian Grand Prix",
+      circuit = aCircuit,
+      occurredOn = "2010-03-28"
     )
 
     assertAll {
-      assertThat(aRace.season().value).isEqualTo(2010)
       assertThat(aRace.round().value).isEqualTo(1)
       assertThat(aRace.infoUrl().value).isEqualTo("https://en.wikipedia.org/wiki/2023_Australian_Grand_Prix")
       assertThat(aRace.name().value).isEqualTo("Australian Grand Prix")
@@ -35,24 +41,52 @@ class RaceShould {
   @Test
   fun `add a result to a race`() {
     val aDriver = Driver.createRookie(
-      "michael_schumacher", "German", "Schumacher", "MSC", null, "1969-01-03", "German",
-      "http://en.wikipedia.org/wiki/Michael_Schumacher", "1991-8-25"
+      id = "michael_schumacher",
+      givenName = "German",
+      familyName = "Schumacher",
+      code = "MSC",
+      permanentNumber = null,
+      birthDate = "1969-01-03",
+      nationality = "German",
+      infoUrl = "http://en.wikipedia.org/wiki/Michael_Schumacher",
+      debutDate = "1991-8-25"
     )
     val aConstructor = Constructor.create(
-      "ferrari", "Ferrari", "Italian", "http://en.wikipedia.org/wiki/Scuderia_Ferrari"
+      id = "ferrari",
+      name = "Ferrari",
+      nationality = "Italian",
+      infoUrl = "http://en.wikipedia.org/wiki/Scuderia_Ferrari"
     )
     val aCircuit = Circuit.create(
-      "albert_park", "Albert Park", "-37.8497", "144.968", "Australia",
-      "Melbourne", "https://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
+      id = "albert_park",
+      name = "Albert Park",
+      latitude = "-37.8497",
+      longitude = "144.968",
+      country = "Australia",
+      locality = "Melbourne",
+      infoUrl = "https://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
     )
     val aRace = Race.create(
-      2010, 1,
-      "https://en.wikipedia.org/wiki/2023_Australian_Grand_Prix",
-      "Australian Grand Prix", aCircuit, "2010-03-28"
+      round = 1,
+      infoUrl = "https://en.wikipedia.org/wiki/2023_Australian_Grand_Prix",
+      name = "Australian Grand Prix",
+      circuit = aCircuit,
+      occurredOn = "2010-03-28"
     )
 
     val updatedRace = aRace.addResult(
-      "7", aDriver, 1, 25f, aConstructor, 1, 58, "Finished", 6000000, 60000, 200f, "kph"
+      number = "7",
+      driver = aDriver,
+      position = 1,
+      points = 25f,
+      constructor = aConstructor,
+      grid = 1,
+      laps = 58,
+      status = "Finished",
+      timeInMillis = 6000000,
+      fastestLapInMillis = 60000,
+      averageSpeed = 200f,
+      averageSpeedUnit = "kph"
     )
 
     assertThat(updatedRace.results().size).isEqualTo(1)

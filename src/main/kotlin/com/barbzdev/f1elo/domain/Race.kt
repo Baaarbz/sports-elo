@@ -2,22 +2,18 @@ package com.barbzdev.f1elo.domain
 
 import com.barbzdev.f1elo.domain.common.InfoUrl
 import com.barbzdev.f1elo.domain.common.OccurredOn
-import com.barbzdev.f1elo.domain.common.Season
 import java.util.UUID
 
 class Race private constructor(
   private val id: RaceId,
-  private val season: Season,
   private val round: Round,
   private val infoUrl: InfoUrl,
   private val name: RaceName,
   private val circuit: Circuit,
   private val occurredOn: RaceDate,
-  private val results: Set<RaceResult>
+  private val results: List<RaceResult>
 ) {
   fun id() = id
-
-  fun season() = season
 
   fun round() = round
 
@@ -60,7 +56,7 @@ class Race private constructor(
       averageSpeed = averageSpeed,
       averageSpeedUnit = averageSpeedUnit
     )
-    return Race(id, season, round, infoUrl, name, circuit, occurredOn, results.plus(result))
+    return Race(id, round, infoUrl, name, circuit, occurredOn, results.plus(result))
   }
 
   override fun equals(other: Any?): Boolean {
@@ -70,7 +66,6 @@ class Race private constructor(
     other as Race
 
     if (id != other.id) return false
-    if (season != other.season) return false
     if (round != other.round) return false
     if (infoUrl != other.infoUrl) return false
     if (name != other.name) return false
@@ -83,7 +78,6 @@ class Race private constructor(
 
   override fun hashCode(): Int {
     var result = id.hashCode()
-    result = 31 * result + season.hashCode()
     result = 31 * result + round.hashCode()
     result = 31 * result + infoUrl.hashCode()
     result = 31 * result + name.hashCode()
@@ -93,12 +87,12 @@ class Race private constructor(
     return result
   }
 
-  override fun toString(): String =
-    "Race(id=$id, season=$season, round=$round, infoUrl=$infoUrl, name=$name, circuit=$circuit, occurredOn=$occurredOn, results=$results)"
+  override fun toString(): String {
+    return "Race(id=$id, round=$round, infoUrl=$infoUrl, name=$name, circuit=$circuit, occurredOn=$occurredOn, results=$results)"
+  }
 
   companion object {
     fun create(
-      season: Int,
       round: Int,
       infoUrl: String,
       name: String,
@@ -106,13 +100,12 @@ class Race private constructor(
       occurredOn: String
     ) = Race(
       id = RaceId.generate(),
-      season = Season(season),
       round = Round(round),
       infoUrl = InfoUrl(infoUrl),
       name = RaceName(name),
       circuit = circuit,
       occurredOn = RaceDate(occurredOn),
-      results = emptySet()
+      results = emptyList()
     )
   }
 }

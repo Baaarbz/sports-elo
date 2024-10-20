@@ -7,14 +7,24 @@ class CircuitEntityShould {
   @Test
   fun `create a circuit successfully`() {
     val aCircuit = Circuit.create(
-      "albert_park", "Albert Park", "-37.8497", "144.968", "Australia",
-      "Melbourne", "https://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
+      id = "albert_park",
+      name = "Albert Park",
+      latitude = "-37.8497",
+      longitude = "144.968",
+      country = "Australia",
+      locality = "Melbourne",
+      infoUrl = "https://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
     )
 
     assertThat(aCircuit).isEqualTo(
       Circuit.create(
-        "albert_park", "Albert Park", "-37.8497", "144.968", "Australia",
-        "Melbourne", "https://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
+        id = "albert_park",
+        name = "Albert Park",
+        latitude = "-37.8497",
+        longitude = "144.968",
+        country = "Australia",
+        locality = "Melbourne",
+        infoUrl = "https://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
       )
     )
   }

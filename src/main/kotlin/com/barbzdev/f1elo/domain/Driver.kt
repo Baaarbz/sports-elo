@@ -15,12 +15,16 @@ class Driver private constructor(
   private val nationality: Nationality,
   private val infoUrl: InfoUrl,
   private val currentElo: Elo,
-  private val eloRecord: Set<Elo>
+  private val eloRecord: List<Elo>
 ) {
 
   fun id() = id
 
   fun fullName() = fullName
+
+  fun code() = code
+
+  fun permanentNumber() = permanentNumber
 
   fun birthDate() = birthDate
 
@@ -104,7 +108,7 @@ class Driver private constructor(
       nationality = Nationality.fromGentilic(nationality),
       infoUrl = InfoUrl(infoUrl),
       currentElo = Elo(BASE_ELO, debutDate),
-      eloRecord = setOf(Elo(BASE_ELO, debutDate))
+      eloRecord = listOf(Elo(BASE_ELO, debutDate))
     )
 
     fun create(
@@ -128,7 +132,7 @@ class Driver private constructor(
       nationality = Nationality.fromGentilic(nationality),
       infoUrl = InfoUrl(infoUrl),
       currentElo = Elo(currentElo, currentEloOccurredOn),
-      eloRecord = eloRecord.map { (elo, date) -> Elo(elo, date) }.toSet(),
+      eloRecord = eloRecord.map { (elo, date) -> Elo(elo, date) }.toList(),
     )
 
     private const val BASE_ELO = 1000

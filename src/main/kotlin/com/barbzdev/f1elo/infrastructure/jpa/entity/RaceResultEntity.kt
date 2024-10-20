@@ -6,13 +6,12 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
-import java.util.UUID
 
 @Entity
 @Table(name = "race_results")
 data class RaceResultEntity(
   @Id
-  val id: UUID,
+  val id: String,
   @ManyToOne
   @JoinColumn(name = "race_id")
   val race: RaceEntity,
