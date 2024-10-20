@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @EnableScheduling
 @EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = ["com.barbzdev.f1elo.infrastructure.spring"])
-class F1EloApplication
+class SpringApplication
 
 fun main(args: Array<String>) {
-  runApplication<F1EloApplication>(*args)
+  runApplication<SpringApplication>(*args)
 }

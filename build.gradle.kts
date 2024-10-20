@@ -35,19 +35,75 @@ dependencies {
   // OpenAPI
   implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
   implementation("org.springdoc:springdoc-openapi-starter-common:2.1.0")
-
-  testImplementation("org.springframework.boot:spring-boot-starter-test") {
-    exclude(module = "mockito-core")
-  }
-  testImplementation("org.springframework.boot:spring-boot-testcontainers")
-  testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-  testImplementation("org.testcontainers:junit-jupiter")
-  testImplementation("org.testcontainers:postgresql")
-  testImplementation("com.willowtreeapps.assertk:assertk:0.28.0")
-  testImplementation("io.mockk:mockk:1.13.13")
-  testImplementation("com.ninja-squad:springmockk:4.0.2")
 }
 
 kotlin { compilerOptions { freeCompilerArgs.addAll("-Xjsr305=strict") } }
 
 tasks.withType<Test> { useJUnitPlatform() }
+
+testing {
+  suites {
+    val test by getting(JvmTestSuite::class) {
+      useJUnitJupiter()
+
+      dependencies {
+        implementation("io.mockk:mockk:1.13.13")
+        implementation("com.ninja-squad:springmockk:4.0.2")
+        implementation("com.willowtreeapps.assertk:assertk:0.28.0")
+        implementation("org.jetbrains.kotlin:kotlin-test-junit5")
+        implementation("org.springframework.boot:spring-boot-starter-test") {
+          exclude(module = "mockito-core")
+        }
+      }
+    }
+
+    withType(JvmTestSuite::class).matching { it.name in listOf("integrationTest", "acceptanceTest") }.configureEach {
+      useJUnitJupiter()
+      dependencies {
+        implementation(project())
+        implementation("org.testcontainers:postgresql")
+        implementation("org.testcontainers:junit-jupiter")
+
+        implementation("org.awaitility:awaitility:4.2.2")
+
+        implementation("org.springframework.boot:spring-boot-testcontainers")
+        implementation("org.springframework.cloud:spring-cloud-contract-wiremock:4.1.4")
+        implementation("org.springframework.boot:spring-boot-starter-test") {
+          exclude(module = "mockito-core")
+        }
+
+        implementation(testFixtures(project()))
+      }
+    }
+
+    val integrationTest by registering(JvmTestSuite::class) {
+      targets {
+        all {
+          testTask.configure {
+            mustRunAfter(test)
+          }
+        }
+      }
+    }
+
+    val acceptanceTest by registering(JvmTestSuite::class) {
+      dependencies {
+        implementation("org.springframework:spring-web:6.1.4")
+        implementation("io.rest-assured:rest-assured:5.4.0")
+        implementation("org.skyscreamer:jsonassert:1.5.1")
+      }
+
+      targets {
+        all {
+          testTask.configure {
+            mustRunAfter(integrationTest)
+          }
+        }
+      }
+    }
+  }
+}
+
+tasks.named("check") {
+  dependsOn(testing.suites.named("integrationTest"), testing.suites.named("acceptanceTest"))
+}
