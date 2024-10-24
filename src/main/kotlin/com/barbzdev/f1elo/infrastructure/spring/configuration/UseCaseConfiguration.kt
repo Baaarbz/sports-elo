@@ -7,9 +7,7 @@ import com.barbzdev.f1elo.domain.Season
 import com.barbzdev.f1elo.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.f1elo.domain.event.SeasonLoadedDomainEvent
 import com.barbzdev.f1elo.domain.repository.DriverRepository
-import com.barbzdev.f1elo.domain.repository.F1Race
 import com.barbzdev.f1elo.domain.repository.F1Repository
-import com.barbzdev.f1elo.domain.repository.F1Season
 import com.barbzdev.f1elo.domain.repository.SeasonRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

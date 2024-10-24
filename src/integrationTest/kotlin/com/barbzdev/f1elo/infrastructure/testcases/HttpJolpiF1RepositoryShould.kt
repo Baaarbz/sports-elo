@@ -17,6 +17,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.stubFor
 import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import org.apache.http.HttpHeaders.CONTENT_TYPE
 import org.apache.http.HttpStatus.SC_OK
+import org.assertj.core.api.Assertions.assertThat
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,9 +31,11 @@ class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
   fun `gather races of a season`() {
     val aSeason = SeasonFactory.aSeason()
     givenFirstPageOfSeasonRaces(aSeason)
-    givenSeconPageOfSeasonRaces(aSeason)
+    givenSecondPageOfSeasonRaces(aSeason)
 
     val response = repository.gatherRacesBySeason(aSeason)
+
+    assertThat(response).isEqualTo(EXPECTED_F1_RACES_RESPONSE)
   }
 
   private fun givenFirstPageOfSeasonRaces(season: Season) = stubFor(
@@ -198,7 +201,7 @@ class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
           circuitId = "silverstone",
           url = "http://en.wikipedia.org/wiki/Silverstone_Circuit",
           circuitName = "Silverstone Circuit",
-          location = F1Location("52.9786", "-1.01694", "Silverstone", "UK")
+          location = F1Location("52.0786", "-1.01694", "Silverstone", "UK")
         ),
         date = "1950-05-13",
         results = listOf(

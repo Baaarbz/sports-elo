@@ -14,6 +14,8 @@ import com.barbzdev.f1elo.domain.repository.F1Season
 import com.barbzdev.f1elo.domain.repository.F1Time
 import com.barbzdev.f1elo.infrastructure.spring.configuration.JolpiF1Properties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.web.client.RestClient
 
 class HttpJolpiF1Repository(
@@ -32,10 +34,11 @@ class HttpJolpiF1Repository(
         .uri(buildUriGetRacesBySeason(season, limit, offset))
         .retrieve()
         .toEntity(RaceResultResponse::class.java)
+        .body!!
 
-      total = response.body!!.mrData.total.toInt()
+      total = response.mrData.total.toInt()
       offset += limit
-      responses.add(response.body!!)
+      responses.add(response)
     } while (offset < total)
 
 
@@ -160,17 +163,17 @@ data class JolpiRace(
   val round: String,
   val url: String,
   val raceName: String,
-  val circuit: JolpiCircuit,
+  @JsonProperty("Circuit") val circuit: JolpiCircuit,
   val date: String,
-  val time: String,
-  val results: List<JolpiResult>
+  val time: String?,
+  @JsonProperty("Results") val results: List<JolpiResult>
 )
 
 data class JolpiCircuit(
   val circuitId: String,
   val url: String,
   val circuitName: String,
-  val location: JolpiLocation
+  @JsonProperty("Location") val location: JolpiLocation
 )
 
 data class JolpiLocation(
@@ -185,12 +188,12 @@ data class JolpiResult(
   val position: String,
   val positionText: String,
   val points: String,
-  val driver: JolpiDriver,
-  val constructor: JolpiConstructor,
+  @JsonProperty("Driver") val driver: JolpiDriver,
+  @JsonProperty("Constructor") val constructor: JolpiConstructor,
   val grid: String,
   val laps: String,
   val status: String,
-  val time: JolpiTime,
+  @JsonProperty("Time") val time: JolpiTime,
   val fastestLap: JolpiFastestLap?
 )
 

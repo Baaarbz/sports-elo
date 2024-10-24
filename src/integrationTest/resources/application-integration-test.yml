@@ -1,2 +1,2 @@
-jolpi:
-  base-url: https://localhost:${wiremock.server.port}
+jolpi-f1:
+  base-url: http://localhost:${wiremock.server.port}

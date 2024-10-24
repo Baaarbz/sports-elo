@@ -12,5 +12,5 @@ spring:
   flyway:
     baselineOnMigrate: true
 
-jolpi:
+jolpi-f1:
   base-url: https://localhost:8080

@@ -1,4 +1,4 @@
-package com.barbzdev.f1elo.infrastructure.jpa.entity
+package com.barbzdev.f1elo.infrastructure.spring.repository.jpa
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -6,6 +6,11 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
+
+@Repository
+interface JpaRaceResultDatasource : JpaRepository<RaceResultEntity, String>
 
 @Entity
 @Table(name = "race_results")
