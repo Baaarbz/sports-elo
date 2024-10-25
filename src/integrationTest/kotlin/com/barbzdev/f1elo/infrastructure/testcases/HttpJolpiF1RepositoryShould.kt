@@ -7,6 +7,7 @@ import com.barbzdev.f1elo.domain.repository.F1Driver
 import com.barbzdev.f1elo.domain.repository.F1Location
 import com.barbzdev.f1elo.domain.repository.F1Race
 import com.barbzdev.f1elo.domain.repository.F1Result
+import com.barbzdev.f1elo.domain.repository.F1Season
 import com.barbzdev.f1elo.domain.repository.F1Time
 import com.barbzdev.f1elo.factory.SeasonFactory
 import com.barbzdev.f1elo.infrastructure.IntegrationTestConfig
@@ -22,7 +23,7 @@ import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
-class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
+abstract class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
 
   @Autowired
   private lateinit var repository: HttpJolpiF1Repository
@@ -38,13 +39,22 @@ class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
     assertThat(response).isEqualTo(EXPECTED_F1_RACES_RESPONSE)
   }
 
+  @Test
+  fun `gather all seasons`() {
+    givenAllSeasons()
+
+    val response = repository.gatherAllSeasons()
+
+    assertThat(response).isEqualTo(EXPECTED_SEASONS_RESPONSE)
+  }
+
   private fun givenFirstPageOfSeasonRaces(season: Season) = stubFor(
     get(urlEqualTo("/${season.year().value}/results/?limit=100&offset=0"))
       .willReturn(
         aResponse()
           .withStatus(SC_OK)
           .withHeader(CONTENT_TYPE, "application/json")
-          .withBody(FIRST_PAGE_RACE_OF_SEASON_RESULTS)
+          .withBody(FIRST_PAGE_RACE_OF_SEASON_RESULTS_RESPONSE)
       )
   )
 
@@ -54,13 +64,23 @@ class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
         aResponse()
           .withStatus(SC_OK)
           .withHeader(CONTENT_TYPE, "application/json")
-          .withBody(SECOND_PAGE_RACE_OF_SEASON_RESULTS)
+          .withBody(SECOND_PAGE_RACE_OF_SEASON_RESULTS_RESPONSE)
+      )
+  )
+
+  private fun givenAllSeasons() = stubFor(
+    get(urlEqualTo("/seasons/?limit=100&offset=0"))
+      .willReturn(
+        aResponse()
+          .withStatus(SC_OK)
+          .withHeader(CONTENT_TYPE, "application/json")
+          .withBody(SEASON_RESULTS_RESPONSE)
       )
   )
 
   private companion object {
     @Language("JSON")
-    const val FIRST_PAGE_RACE_OF_SEASON_RESULTS = """
+    const val FIRST_PAGE_RACE_OF_SEASON_RESULTS_RESPONSE = """
       {
     "MRData": {
         "xmlns": "",
@@ -126,7 +146,7 @@ class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
     """
 
     @Language("JSON")
-    const val SECOND_PAGE_RACE_OF_SEASON_RESULTS = """
+    const val SECOND_PAGE_RACE_OF_SEASON_RESULTS_RESPONSE = """
       {
     "MRData": {
         "xmlns": "",
@@ -265,6 +285,75 @@ class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
           )
         ),
         time = null
+      )
+    )
+
+    @Language("JSON")
+    const val SEASON_RESULTS_RESPONSE = """
+{
+    "MRData": {
+        "xmlns": "",
+        "series": "f1",
+        "url": "http://api.jolpi.ca/ergast/f1/seasons/",
+        "limit": "30",
+        "offset": "0",
+        "total": "75",
+        "SeasonTable": {
+            "Seasons": [
+                {
+                    "season": "1950",
+                    "url": "http://en.wikipedia.org/wiki/1950_Formula_One_season"
+                },
+                {
+                    "season": "1951",
+                    "url": "http://en.wikipedia.org/wiki/1951_Formula_One_season"
+                },
+                {
+                    "season": "1952",
+                    "url": "http://en.wikipedia.org/wiki/1952_Formula_One_season"
+                },
+                {
+                    "season": "1953",
+                    "url": "http://en.wikipedia.org/wiki/1953_Formula_One_season"
+                },
+                {
+                    "season": "1954",
+                    "url": "http://en.wikipedia.org/wiki/1954_Formula_One_season"
+                },
+                {
+                    "season": "1955",
+                    "url": "http://en.wikipedia.org/wiki/1955_Formula_One_season"
+                }
+            ]
+        }
+    }
+}
+    """
+
+    val EXPECTED_SEASONS_RESPONSE = listOf(
+      F1Season(
+        season = 1950,
+        url = "http://en.wikipedia.org/wiki/1950_Formula_One_season"
+      ),
+      F1Season(
+        season = 1951,
+        url = "http://en.wikipedia.org/wiki/1951_Formula_One_season"
+      ),
+      F1Season(
+        season = 1952,
+        url = "http://en.wikipedia.org/wiki/1952_Formula_One_season"
+      ),
+      F1Season(
+        season = 1953,
+        url = "http://en.wikipedia.org/wiki/1953_Formula_One_season"
+      ),
+      F1Season(
+        season = 1954,
+        url = "http://en.wikipedia.org/wiki/1954_Formula_One_season"
+      ),
+      F1Season(
+        season = 1955,
+        url = "http://en.wikipedia.org/wiki/1955_Formula_One_season"
       )
     )
   }

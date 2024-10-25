@@ -14,8 +14,6 @@ import com.barbzdev.f1elo.domain.repository.F1Season
 import com.barbzdev.f1elo.domain.repository.F1Time
 import com.barbzdev.f1elo.infrastructure.spring.configuration.JolpiF1Properties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.web.client.RestClient
 
 class HttpJolpiF1Repository(
@@ -46,11 +44,33 @@ class HttpJolpiF1Repository(
   }
 
   override fun gatherAllSeasons(): List<F1Season> {
-    TODO("Not yet implemented")
+    val responses = mutableListOf<SeasonResponse>()
+    val limit = 100
+    var offset = 0
+    var total: Int
+
+    do {
+      val response = restClient
+        .get()
+        .uri(buildUriGetSeasons(limit, offset))
+        .retrieve()
+        .toEntity(SeasonResponse::class.java)
+        .body!!
+
+      total = response.mrData.total.toInt()
+      offset += limit
+      responses.add(response)
+    } while (offset < total)
+
+
+    return buildF1SeasonResponse(responses)
   }
 
   private fun buildUriGetRacesBySeason(season: Season, limit: Int, offset: Int) =
     "${jolpiF1Properties.baseUrl}/${season.year().value}/results/?limit=$limit&offset=$offset"
+
+  private fun buildUriGetSeasons(limit: Int, offset: Int) =
+    "${jolpiF1Properties.baseUrl}/seasons/?limit=$limit&offset=$offset"
 
   private fun buildF1RaceResponse(responses: List<RaceResultResponse>): List<F1Race> {
     val raceMap = mutableMapOf<String, F1Race>()
@@ -70,6 +90,23 @@ class HttpJolpiF1Repository(
 
     return raceMap.values.toList()
   }
+
+  private fun buildF1SeasonResponse(responses: List<SeasonResponse>): List<F1Season> {
+    val seasons: MutableList<F1Season> = mutableListOf()
+
+    responses.forEach { response ->
+      response.mrData.seasonTable.seasons.forEach { jolpiSeason ->
+        seasons.add(jolpiSeason.toF1Season())
+      }
+    }
+
+    return seasons
+  }
+
+  private fun JolpiSeason.toF1Season() = F1Season(
+    season = this.season.toInt(),
+    url = this.url
+  )
 
   private fun JolpiRace.toF1Race() = F1Race(
     season = this.season.toInt(),
@@ -146,16 +183,34 @@ class HttpJolpiF1Repository(
 }
 
 data class RaceResultResponse(
-  @JsonProperty("MRData") val mrData: MRData
+  @JsonProperty("MRData") val mrData: MRDataRaceResult
 )
 
-data class MRData(
+data class SeasonResponse (
+  @JsonProperty("MRData") val mrData: MRDataSeason
+)
+
+data class MRDataRaceResult(
   val total: String,
   @JsonProperty("RaceTable") val raceTable: RaceTable
 )
 
+data class MRDataSeason(
+  val total: String,
+  @JsonProperty("SeasonTable") val seasonTable: SeasonTable
+)
+
 data class RaceTable(
   @JsonProperty("Races") val races: List<JolpiRace>
+)
+
+data class SeasonTable(
+  @JsonProperty("Seasons") val seasons: List<JolpiSeason>
+)
+
+data class JolpiSeason(
+  val season: String,
+  val url: String
 )
 
 data class JolpiRace(
