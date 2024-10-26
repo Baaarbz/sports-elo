@@ -1,5 +1,6 @@
 package com.barbzdev.f1elo.infrastructure.spring.repository.jpa
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
@@ -9,17 +10,20 @@ import jakarta.persistence.Table
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
-@Repository interface JpaRaceResultDatasource : JpaRepository<RaceResultEntity, String>
+@Repository interface JpaRaceResultDatasource : JpaRepository<RaceResultEntity, String> {
+  fun findAllByRace(race: RaceEntity): List<RaceResultEntity>
+}
 
 @Entity
 @Table(name = "race_results")
 data class RaceResultEntity(
   @Id val id: String,
-  @ManyToOne @JoinColumn(name = "race_id") val race: RaceEntity,
-  @ManyToOne @JoinColumn(name = "driver_id") val driver: DriverEntity,
+  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE]) @JoinColumn(name = "race_id") val race: RaceEntity,
+  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE]) @JoinColumn(name = "driver_id") val driver: DriverEntity,
   val position: Int,
+  val number: String,
   val points: Float,
-  @ManyToOne @JoinColumn(name = "constructor_id") val constructor: ConstructorEntity,
+  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE]) @JoinColumn(name = "constructor_id") val constructor: ConstructorEntity,
   val grid: Int,
   val laps: Int,
   val status: String,

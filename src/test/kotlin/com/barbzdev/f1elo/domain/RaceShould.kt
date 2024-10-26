@@ -50,7 +50,7 @@ class RaceShould {
         birthDate = "1969-01-03",
         nationality = "German",
         infoUrl = "http://en.wikipedia.org/wiki/Michael_Schumacher",
-        debutDate = "1991-8-25")
+        debutDate = "1991-08-25")
     val aConstructor =
       Constructor.create(
         id = "ferrari",

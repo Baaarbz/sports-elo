@@ -135,6 +135,31 @@ private constructor(
         eloRecord = eloRecord.map { (elo, date) -> Elo(elo, date) }.toList(),
       )
 
+    fun create(
+      id: String,
+      givenName: String,
+      familyName: String,
+      code: String?,
+      permanentNumber: String?,
+      birthDate: String,
+      nationality: Nationality,
+      infoUrl: String,
+      currentElo: Int,
+      currentEloOccurredOn: String,
+      eloRecord: List<Elo>,
+    ) =
+      Driver(
+        id = DriverId(id),
+        fullName = DriverFullName(givenName, familyName),
+        code = code?.let { DriverCode(it) },
+        permanentNumber = permanentNumber?.let { PermanentNumber(it) },
+        birthDate = BirthDate(birthDate),
+        nationality = nationality,
+        infoUrl = InfoUrl(infoUrl),
+        currentElo = Elo(currentElo, currentEloOccurredOn),
+        eloRecord = eloRecord.map { (elo, date) -> Elo(elo, date) }.toList(),
+      )
+
     private const val BASE_ELO = 1000
   }
 }

@@ -56,7 +56,8 @@ private constructor(
         timeInMillis = timeInMillis,
         fastestLapInMillis = fastestLapInMillis,
         averageSpeed = averageSpeed,
-        averageSpeedUnit = averageSpeedUnit)
+        averageSpeedUnit = averageSpeedUnit
+      )
     return Race(id, round, infoUrl, name, circuit, occurredOn, results.plus(result))
   }
 
@@ -101,7 +102,19 @@ private constructor(
         name = RaceName(name),
         circuit = circuit,
         occurredOn = RaceDate(occurredOn),
-        results = emptyList())
+        results = emptyList()
+      )
+
+    fun create(id: String, round: Int, infoUrl: String, name: String, circuit: Circuit, occurredOn: String, results: List<RaceResult>) =
+      Race(
+        id = RaceId(id),
+        round = Round(round),
+        infoUrl = InfoUrl(infoUrl),
+        name = RaceName(name),
+        circuit = circuit,
+        occurredOn = RaceDate(occurredOn),
+        results = results
+      )
   }
 }
 
@@ -127,7 +140,7 @@ data class RaceName(val value: String) {
   }
 }
 
-data class RaceDate(val date: String) : OccurredOn(date)
+data class RaceDate(private val date: String) : OccurredOn(date)
 
 data class RaceResult(
   val id: String,

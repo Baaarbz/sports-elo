@@ -30,7 +30,7 @@ object DriverFactory {
         birthDate = "1969-01-03",
         nationality = "German",
         infoUrl = "http://en.wikipedia.org/wiki/Michael_Schumacher",
-        debutDate = "1991-8-25"),
+        debutDate = "1991-08-25"),
       create(
         id = "alonso",
         givenName = "Fernando",

@@ -55,7 +55,7 @@ class DriverShould {
         birthDate = "1969-01-03",
         nationality = "German",
         infoUrl = "http://en.wikipedia.org/wiki/Michael_Schumacher",
-        debutDate = "1991-8-25")
+        debutDate = "1991-08-25")
 
     assertThat(aDriver)
       .isEqualTo(
@@ -68,9 +68,9 @@ class DriverShould {
           birthDate = "1969-01-03",
           nationality = "German",
           infoUrl = "http://en.wikipedia.org/wiki/Michael_Schumacher",
-          debutDate = "1991-8-25"))
-    assertThat(aDriver.currentElo()).isEqualTo(Elo(rating = 1000, occurredOn = "1991-8-25"))
-    assertThat(aDriver.eloRecord()).containsOnly(Elo(rating = 1000, occurredOn = "1991-8-25"))
+          debutDate = "1991-08-25"))
+    assertThat(aDriver.currentElo()).isEqualTo(Elo(rating = 1000, occurredOn = "1991-08-25"))
+    assertThat(aDriver.eloRecord()).containsOnly(Elo(rating = 1000, occurredOn = "1991-08-25"))
   }
 
   @Test

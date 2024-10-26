@@ -1,7 +1,8 @@
 CREATE TABLE drivers
 (
     id                      VARCHAR(255) PRIMARY KEY,
-    full_name               VARCHAR(255)             NOT NULL,
+    given_name              VARCHAR(255)             NOT NULL,
+    family_name             VARCHAR(255)             NOT NULL,
     code                    VARCHAR(255),
     permanent_number        VARCHAR(255),
     birth_date              DATE                     NOT NULL,
@@ -11,7 +12,8 @@ CREATE TABLE drivers
     current_elo_occurred_on DATE                     NOT NULL,
     updated_at              TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
-CREATE INDEX idx_driver_full_name ON drivers (full_name);
+CREATE INDEX idx_driver_given_name ON drivers (given_name);
+CREATE INDEX idx_driver_family_name ON drivers (family_name);
 CREATE INDEX idx_driver_code ON drivers (code);
 CREATE INDEX idx_driver_permanent_number ON drivers (permanent_number);
 CREATE INDEX idx_driver_nationality ON drivers (nationality);

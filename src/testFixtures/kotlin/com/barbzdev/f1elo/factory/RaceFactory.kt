@@ -95,7 +95,7 @@ object RaceFactory {
     F1Race(
       round = this.round().value,
       raceName = this.name().value,
-      date = this.occurredOn().date,
+      date = this.occurredOn().value,
       url = this.infoUrl().value,
       circuit = this.circuit().toF1Circuit(),
       results = this.results().map { it.toF1Result() },

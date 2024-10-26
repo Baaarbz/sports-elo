@@ -46,6 +46,9 @@ private constructor(
   companion object {
     fun create(id: String, name: String, nationality: String, infoUrl: String): Constructor =
       Constructor(ConstructorId(id), ConstructorName(name), Nationality.fromGentilic(nationality), InfoUrl(infoUrl))
+
+    fun create(id: String, name: String, nationality: Nationality, infoUrl: String): Constructor =
+      Constructor(ConstructorId(id), ConstructorName(name), nationality, InfoUrl(infoUrl))
   }
 }
 

@@ -55,14 +55,35 @@ private constructor(
       infoUrl: String,
     ): Season =
       Season(
-        id = SeasonId(UUID.randomUUID().toString()),
+        id = SeasonId.generate(),
         year = SeasonYear(year),
         infoUrl = InfoUrl(infoUrl),
-        races = emptyList())
+        races = emptyList()
+      )
+
+    fun create(
+      id: String,
+      year: Int,
+      infoUrl: String,
+    ): Season =
+      Season(
+        id = SeasonId(id),
+        year = SeasonYear(year),
+        infoUrl = InfoUrl(infoUrl),
+        races = emptyList()
+      )
   }
 }
 
-data class SeasonId(val value: String)
+data class SeasonId(val value: String) {
+  init {
+    require(value.isNotBlank())
+  }
+
+  companion object {
+    fun generate() = SeasonId(UUID.randomUUID().toString())
+  }
+}
 
 data class SeasonYear(val value: Int) {
   init {
