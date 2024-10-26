@@ -16,10 +16,8 @@ import com.barbzdev.f1elo.infrastructure.spring.configuration.JolpiF1Properties
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.web.client.RestClient
 
-class HttpJolpiF1Repository(
-  private val restClient: RestClient,
-  private val jolpiF1Properties: JolpiF1Properties
-) : F1Repository {
+class HttpJolpiF1Repository(private val restClient: RestClient, private val jolpiF1Properties: JolpiF1Properties) :
+  F1Repository {
   override fun gatherRacesBySeason(season: Season): List<F1Race> {
     val responses = mutableListOf<RaceResultResponse>()
     val limit = 100
@@ -27,18 +25,18 @@ class HttpJolpiF1Repository(
     var total: Int
 
     do {
-      val response = restClient
-        .get()
-        .uri(buildUriGetRacesBySeason(season, limit, offset))
-        .retrieve()
-        .toEntity(RaceResultResponse::class.java)
-        .body!!
+      val response =
+        restClient
+          .get()
+          .uri(buildUriGetRacesBySeason(season, limit, offset))
+          .retrieve()
+          .toEntity(RaceResultResponse::class.java)
+          .body!!
 
       total = response.mrData.total.toInt()
       offset += limit
       responses.add(response)
     } while (offset < total)
-
 
     return buildF1RaceResponse(responses)
   }
@@ -50,18 +48,13 @@ class HttpJolpiF1Repository(
     var total: Int
 
     do {
-      val response = restClient
-        .get()
-        .uri(buildUriGetSeasons(limit, offset))
-        .retrieve()
-        .toEntity(SeasonResponse::class.java)
-        .body!!
+      val response =
+        restClient.get().uri(buildUriGetSeasons(limit, offset)).retrieve().toEntity(SeasonResponse::class.java).body!!
 
       total = response.mrData.total.toInt()
       offset += limit
       responses.add(response)
     } while (offset < total)
-
 
     return buildF1SeasonResponse(responses)
   }
@@ -83,7 +76,8 @@ class HttpJolpiF1Repository(
         if (existingRace == null) {
           raceMap[raceKey] = jolpiRace.toF1Race()
         } else {
-          raceMap[raceKey] = existingRace.copy(results = existingRace.results.plus(jolpiRace.results.map { it.toF1Result() }))
+          raceMap[raceKey] =
+            existingRace.copy(results = existingRace.results.plus(jolpiRace.results.map { it.toF1Result() }))
         }
       }
     }
@@ -95,123 +89,87 @@ class HttpJolpiF1Repository(
     val seasons: MutableList<F1Season> = mutableListOf()
 
     responses.forEach { response ->
-      response.mrData.seasonTable.seasons.forEach { jolpiSeason ->
-        seasons.add(jolpiSeason.toF1Season())
-      }
+      response.mrData.seasonTable.seasons.forEach { jolpiSeason -> seasons.add(jolpiSeason.toF1Season()) }
     }
 
     return seasons
   }
 
-  private fun JolpiSeason.toF1Season() = F1Season(
-    season = this.season.toInt(),
-    url = this.url
-  )
+  private fun JolpiSeason.toF1Season() = F1Season(season = this.season.toInt(), url = this.url)
 
-  private fun JolpiRace.toF1Race() = F1Race(
-    season = this.season.toInt(),
-    round = this.round.toInt(),
-    url = this.url,
-    raceName = this.raceName,
-    circuit = this.circuit.toF1Circuit(),
-    date = this.date,
-    time = this.time,
-    results = this.results.map { it.toF1Result() }
-  )
+  private fun JolpiRace.toF1Race() =
+    F1Race(
+      season = this.season.toInt(),
+      round = this.round.toInt(),
+      url = this.url,
+      raceName = this.raceName,
+      circuit = this.circuit.toF1Circuit(),
+      date = this.date,
+      time = this.time,
+      results = this.results.map { it.toF1Result() })
 
-  private fun JolpiCircuit.toF1Circuit() = F1Circuit(
-    circuitId = this.circuitId,
-    url = this.url,
-    circuitName = this.circuitName,
-    location = this.location.toF1Location()
-  )
+  private fun JolpiCircuit.toF1Circuit() =
+    F1Circuit(
+      circuitId = this.circuitId,
+      url = this.url,
+      circuitName = this.circuitName,
+      location = this.location.toF1Location())
 
-  private fun JolpiLocation.toF1Location() = F1Location(
-    lat = this.lat,
-    long = this.long,
-    locality = this.locality,
-    country = this.country
-  )
+  private fun JolpiLocation.toF1Location() =
+    F1Location(lat = this.lat, long = this.long, locality = this.locality, country = this.country)
 
-  private fun JolpiResult.toF1Result() = F1Result(
-    number = this.number,
-    position = this.position,
-    points = this.points.toFloat(),
-    driver = this.driver.toF1Driver(),
-    constructor = this.constructor.toF1Constructor(),
-    grid = this.grid.toInt(),
-    laps = this.laps.toInt(),
-    status = this.status,
-    time = this.time.toF1Time(),
-    fastestLap = this.fastestLap?.toF1FastestLap()
-  )
+  private fun JolpiResult.toF1Result() =
+    F1Result(
+      number = this.number,
+      position = this.position,
+      points = this.points.toFloat(),
+      driver = this.driver.toF1Driver(),
+      constructor = this.constructor.toF1Constructor(),
+      grid = this.grid.toInt(),
+      laps = this.laps.toInt(),
+      status = this.status,
+      time = this.time.toF1Time(),
+      fastestLap = this.fastestLap?.toF1FastestLap())
 
-  private fun JolpiDriver.toF1Driver() = F1Driver(
-    driverId = this.driverId,
-    permanentNumber = this.permanentNumber,
-    code = this.code,
-    url = this.url,
-    givenName = this.givenName,
-    familyName = this.familyName,
-    dateOfBirth = this.dateOfBirth,
-    nationality = this.nationality
-  )
+  private fun JolpiDriver.toF1Driver() =
+    F1Driver(
+      driverId = this.driverId,
+      permanentNumber = this.permanentNumber,
+      code = this.code,
+      url = this.url,
+      givenName = this.givenName,
+      familyName = this.familyName,
+      dateOfBirth = this.dateOfBirth,
+      nationality = this.nationality)
 
-  private fun JolpiConstructor.toF1Constructor() = F1Constructor(
-    constructorId = this.constructorId,
-    url = this.url,
-    name = this.name,
-    nationality = this.nationality
-  )
+  private fun JolpiConstructor.toF1Constructor() =
+    F1Constructor(constructorId = this.constructorId, url = this.url, name = this.name, nationality = this.nationality)
 
-  private fun JolpiTime.toF1Time() = F1Time(
-    millis = this.millis.toLong(),
-    time = this.time
-  )
+  private fun JolpiTime.toF1Time() = F1Time(millis = this.millis.toLong(), time = this.time)
 
-  private fun JolpiFastestLap.toF1FastestLap() = F1FastestLap(
-    rank = this.rank.toInt(),
-    lap = this.lap.toInt(),
-    time = this.time.toF1Time(),
-    averageSpeed = this.averageSpeed.toF1AverageSpeed()
-  )
+  private fun JolpiFastestLap.toF1FastestLap() =
+    F1FastestLap(
+      rank = this.rank.toInt(),
+      lap = this.lap.toInt(),
+      time = this.time.toF1Time(),
+      averageSpeed = this.averageSpeed.toF1AverageSpeed())
 
-  private fun JolpiAverageSpeed.toF1AverageSpeed() = F1AverageSpeed(
-    units = this.units,
-    speed = this.speed.toFloat()
-  )
+  private fun JolpiAverageSpeed.toF1AverageSpeed() = F1AverageSpeed(units = this.units, speed = this.speed.toFloat())
 }
 
-data class RaceResultResponse(
-  @JsonProperty("MRData") val mrData: MRDataRaceResult
-)
+data class RaceResultResponse(@JsonProperty("MRData") val mrData: MRDataRaceResult)
 
-data class SeasonResponse (
-  @JsonProperty("MRData") val mrData: MRDataSeason
-)
+data class SeasonResponse(@JsonProperty("MRData") val mrData: MRDataSeason)
 
-data class MRDataRaceResult(
-  val total: String,
-  @JsonProperty("RaceTable") val raceTable: RaceTable
-)
+data class MRDataRaceResult(val total: String, @JsonProperty("RaceTable") val raceTable: RaceTable)
 
-data class MRDataSeason(
-  val total: String,
-  @JsonProperty("SeasonTable") val seasonTable: SeasonTable
-)
+data class MRDataSeason(val total: String, @JsonProperty("SeasonTable") val seasonTable: SeasonTable)
 
-data class RaceTable(
-  @JsonProperty("Races") val races: List<JolpiRace>
-)
+data class RaceTable(@JsonProperty("Races") val races: List<JolpiRace>)
 
-data class SeasonTable(
-  @JsonProperty("Seasons") val seasons: List<JolpiSeason>
-)
+data class SeasonTable(@JsonProperty("Seasons") val seasons: List<JolpiSeason>)
 
-data class JolpiSeason(
-  val season: String,
-  val url: String
-)
+data class JolpiSeason(val season: String, val url: String)
 
 data class JolpiRace(
   val season: String,
@@ -231,12 +189,7 @@ data class JolpiCircuit(
   @JsonProperty("Location") val location: JolpiLocation
 )
 
-data class JolpiLocation(
-  val lat: String,
-  val long: String,
-  val locality: String,
-  val country: String
-)
+data class JolpiLocation(val lat: String, val long: String, val locality: String, val country: String)
 
 data class JolpiResult(
   val number: String,
@@ -263,26 +216,10 @@ data class JolpiDriver(
   val nationality: String
 )
 
-data class JolpiConstructor(
-  val constructorId: String,
-  val url: String,
-  val name: String,
-  val nationality: String
-)
+data class JolpiConstructor(val constructorId: String, val url: String, val name: String, val nationality: String)
 
-data class JolpiTime(
-  val millis: String,
-  val time: String
-)
+data class JolpiTime(val millis: String, val time: String)
 
-data class JolpiFastestLap(
-  val rank: String,
-  val lap: String,
-  val time: JolpiTime,
-  val averageSpeed: JolpiAverageSpeed
-)
+data class JolpiFastestLap(val rank: String, val lap: String, val time: JolpiTime, val averageSpeed: JolpiAverageSpeed)
 
-data class JolpiAverageSpeed(
-  val units: String,
-  val speed: String
-)
+data class JolpiAverageSpeed(val units: String, val speed: String)

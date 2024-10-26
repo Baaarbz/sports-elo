@@ -27,12 +27,8 @@ class GatherRacesBySeasonUseCaseShould {
   private val driverRepository: DriverRepository = mockk()
   private val seasonDomainEventPublisher: SeasonDomainEventPublisher = mockk(relaxed = true)
 
-  private val gatherRacesBySeasonUseCase = GatherRacesBySeasonUseCase(
-    f1Repository,
-    seasonRepository,
-    driverRepository,
-    seasonDomainEventPublisher
-  )
+  private val gatherRacesBySeasonUseCase =
+    GatherRacesBySeasonUseCase(f1Repository, seasonRepository, driverRepository, seasonDomainEventPublisher)
 
   @Test
   fun `return GatherRacesOverASeasonNonExistent when the season to load is the current season`() {
@@ -42,11 +38,15 @@ class GatherRacesBySeasonUseCaseShould {
     val result = gatherRacesBySeasonUseCase.invoke()
 
     assertThat(result).isInstanceOf(GatherRacesOverASeasonNonExistent::class)
-    verify(exactly = 1) { seasonRepository.getLastSeasonLoaded(); f1Repository.gatherAllSeasons() }
+    verify(exactly = 1) {
+      seasonRepository.getLastSeasonLoaded()
+      f1Repository.gatherAllSeasons()
+    }
     verify(exactly = 0) {
-      f1Repository.gatherRacesBySeason(any()); driverRepository.findBy(any()); seasonRepository.save(any()); seasonDomainEventPublisher.publish(
-      any()
-    )
+      f1Repository.gatherRacesBySeason(any())
+      driverRepository.findBy(any())
+      seasonRepository.save(any())
+      seasonDomainEventPublisher.publish(any())
     }
   }
 
@@ -58,11 +58,15 @@ class GatherRacesBySeasonUseCaseShould {
     val result = gatherRacesBySeasonUseCase.invoke()
 
     assertThat(result).isInstanceOf(GatherRacesBySeasonUpToDate::class)
-    verify(exactly = 1) { seasonRepository.getLastSeasonLoaded(); f1Repository.gatherAllSeasons() }
+    verify(exactly = 1) {
+      seasonRepository.getLastSeasonLoaded()
+      f1Repository.gatherAllSeasons()
+    }
     verify(exactly = 0) {
-      f1Repository.gatherRacesBySeason(any()); driverRepository.findBy(any()); seasonRepository.save(any()); seasonDomainEventPublisher.publish(
-      any()
-    )
+      f1Repository.gatherRacesBySeason(any())
+      driverRepository.findBy(any())
+      seasonRepository.save(any())
+      seasonDomainEventPublisher.publish(any())
     }
   }
 
@@ -82,20 +86,14 @@ class GatherRacesBySeasonUseCaseShould {
     verifyOrder {
       seasonRepository.getLastSeasonLoaded()
       f1Repository.gatherAllSeasons()
-      f1Repository.gatherRacesBySeason(withArg { savedSeason ->
-        assertThat(savedSeason.year()).isEqualTo(aSeasonToLoad.year())
-      })
-      aSeasonToLoad.races()
-        .forEach { race ->
-          race.results()
-            .forEach { result -> driverRepository.findBy(result.driver.id()) }
-        }
-      seasonRepository.save(withArg { savedSeason ->
-        assertThat(savedSeason.year()).isEqualTo(aSeasonToLoad.year())
-      })
-      seasonDomainEventPublisher.publish(withArg { seasonDomainEvent ->
-        assertThat(seasonDomainEvent.season.year()).isEqualTo(aSeasonToLoad.year())
-      })
+      f1Repository.gatherRacesBySeason(
+        withArg { savedSeason -> assertThat(savedSeason.year()).isEqualTo(aSeasonToLoad.year()) })
+      aSeasonToLoad.races().forEach { race ->
+        race.results().forEach { result -> driverRepository.findBy(result.driver.id()) }
+      }
+      seasonRepository.save(withArg { savedSeason -> assertThat(savedSeason.year()).isEqualTo(aSeasonToLoad.year()) })
+      seasonDomainEventPublisher.publish(
+        withArg { seasonDomainEvent -> assertThat(seasonDomainEvent.season.year()).isEqualTo(aSeasonToLoad.year()) })
     }
   }
 
@@ -112,9 +110,7 @@ class GatherRacesBySeasonUseCaseShould {
 
     assertThat(result).isInstanceOf(GatherRacesBySeasonSuccess::class)
     verify {
-      seasonRepository.save(withArg { savedSeason ->
-        assertThat(savedSeason.year()).isEqualTo(aSeasonToLoad.year())
-      })
+      seasonRepository.save(withArg { savedSeason -> assertThat(savedSeason.year()).isEqualTo(aSeasonToLoad.year()) })
     }
   }
 }

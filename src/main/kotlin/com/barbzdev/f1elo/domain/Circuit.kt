@@ -2,7 +2,8 @@ package com.barbzdev.f1elo.domain
 
 import com.barbzdev.f1elo.domain.common.InfoUrl
 
-class Circuit private constructor(
+class Circuit
+private constructor(
   private val id: CircuitId,
   private val name: CircuitName,
   private val location: CircuitLocation,
@@ -12,10 +13,15 @@ class Circuit private constructor(
 ) {
 
   fun id() = id
+
   fun name() = name
+
   fun location() = location
+
   fun country() = country
+
   fun locality() = locality
+
   fun infoUrl() = infoUrl
 
   override fun equals(other: Any?): Boolean {
@@ -56,14 +62,14 @@ class Circuit private constructor(
       country: String,
       locality: String,
       infoUrl: String
-    ): Circuit = Circuit(
-      CircuitId(id),
-      CircuitName(name),
-      CircuitLocation(latitude, longitude),
-      CircuitCountry(country),
-      CircuitLocality(locality),
-      InfoUrl(infoUrl)
-    )
+    ): Circuit =
+      Circuit(
+        CircuitId(id),
+        CircuitName(name),
+        CircuitLocation(latitude, longitude),
+        CircuitCountry(country),
+        CircuitLocality(locality),
+        InfoUrl(infoUrl))
   }
 }
 

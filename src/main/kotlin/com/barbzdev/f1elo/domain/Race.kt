@@ -4,7 +4,8 @@ import com.barbzdev.f1elo.domain.common.InfoUrl
 import com.barbzdev.f1elo.domain.common.OccurredOn
 import java.util.UUID
 
-class Race private constructor(
+class Race
+private constructor(
   private val id: RaceId,
   private val round: Round,
   private val infoUrl: InfoUrl,
@@ -41,21 +42,21 @@ class Race private constructor(
     averageSpeed: Float?,
     averageSpeedUnit: String?
   ): Race {
-    val result = RaceResult(
-      id = UUID.randomUUID().toString(),
-      number = number,
-      driver = driver,
-      position = position,
-      points = points,
-      constructor = constructor,
-      grid = grid,
-      laps = laps,
-      status = RaceResultStatus.fromText(status),
-      timeInMillis = timeInMillis,
-      fastestLapInMillis = fastestLapInMillis,
-      averageSpeed = averageSpeed,
-      averageSpeedUnit = averageSpeedUnit
-    )
+    val result =
+      RaceResult(
+        id = UUID.randomUUID().toString(),
+        number = number,
+        driver = driver,
+        position = position,
+        points = points,
+        constructor = constructor,
+        grid = grid,
+        laps = laps,
+        status = RaceResultStatus.fromText(status),
+        timeInMillis = timeInMillis,
+        fastestLapInMillis = fastestLapInMillis,
+        averageSpeed = averageSpeed,
+        averageSpeedUnit = averageSpeedUnit)
     return Race(id, round, infoUrl, name, circuit, occurredOn, results.plus(result))
   }
 
@@ -92,21 +93,15 @@ class Race private constructor(
   }
 
   companion object {
-    fun create(
-      round: Int,
-      infoUrl: String,
-      name: String,
-      circuit: Circuit,
-      occurredOn: String
-    ) = Race(
-      id = RaceId.generate(),
-      round = Round(round),
-      infoUrl = InfoUrl(infoUrl),
-      name = RaceName(name),
-      circuit = circuit,
-      occurredOn = RaceDate(occurredOn),
-      results = emptyList()
-    )
+    fun create(round: Int, infoUrl: String, name: String, circuit: Circuit, occurredOn: String) =
+      Race(
+        id = RaceId.generate(),
+        round = Round(round),
+        infoUrl = InfoUrl(infoUrl),
+        name = RaceName(name),
+        circuit = circuit,
+        occurredOn = RaceDate(occurredOn),
+        results = emptyList())
   }
 }
 
@@ -203,8 +198,7 @@ enum class RaceResultStatus(val text: String) {
   UNKNOWN("Unknown");
 
   companion object {
-    fun fromText(text: String): RaceResultStatus = RaceResultStatus.entries
-      .firstOrNull { it.text.equals(text, ignoreCase = true) }
-      ?: UNKNOWN
+    fun fromText(text: String): RaceResultStatus =
+      RaceResultStatus.entries.firstOrNull { it.text.equals(text, ignoreCase = true) } ?: UNKNOWN
   }
 }

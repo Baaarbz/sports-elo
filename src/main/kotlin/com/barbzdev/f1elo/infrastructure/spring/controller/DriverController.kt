@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-
 @RestController
 @RequestMapping("api/v1/drivers")
 class DriverController : DriverControllerDocumentation {
@@ -27,7 +26,4 @@ data class HttpGetDriverResponse(
   val eloRecord: List<HttpElo>
 )
 
-data class HttpElo(
-  val value: Int,
-  val occurredOn: LocalDate
-)
+data class HttpElo(val value: Int, val occurredOn: LocalDate)

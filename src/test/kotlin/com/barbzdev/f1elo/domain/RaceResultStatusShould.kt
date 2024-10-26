@@ -36,8 +36,7 @@ class RaceResultStatusShould {
     "Tyre, TYRE",
     "Driver Seat, DRIVER_SEAT",
     "Puncture, PUNCTURE",
-    "Driveshaft, DRIVESHAFT"
-  )
+    "Driveshaft, DRIVESHAFT")
   fun `return correct race result for given result text`(textResult: String, expectedResult: String) {
     val raceResult = RaceResultStatus.fromText(textResult)
 

@@ -10,18 +10,11 @@ import org.springframework.web.client.RestClient
 @Configuration
 class HttpRepositoryConfiguration {
 
-  @Bean
-  fun restClient(): RestClient = RestClient.create()
+  @Bean fun restClient(): RestClient = RestClient.create()
 
   @Bean
-  fun httpJolpiF1Repository(restClient: RestClient, jolpiF1Properties: JolpiF1Properties): F1Repository = HttpJolpiF1Repository(
-    restClient = restClient,
-    jolpiF1Properties = jolpiF1Properties
-  )
+  fun httpJolpiF1Repository(restClient: RestClient, jolpiF1Properties: JolpiF1Properties): F1Repository =
+    HttpJolpiF1Repository(restClient = restClient, jolpiF1Properties = jolpiF1Properties)
 }
 
-@Configuration
-@ConfigurationProperties(prefix = "jolpi-f1")
-data class JolpiF1Properties(
-  var baseUrl: String = ""
-)
+@Configuration @ConfigurationProperties(prefix = "jolpi-f1") data class JolpiF1Properties(var baseUrl: String = "")

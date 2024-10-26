@@ -4,6 +4,7 @@ import com.barbzdev.f1elo.domain.Season
 
 interface F1Repository {
   fun gatherRacesBySeason(season: Season): List<F1Race>
+
   fun gatherAllSeasons(): List<F1Season>
 }
 
@@ -23,19 +24,9 @@ data class F1Race(
   val results: List<F1Result>
 )
 
-data class F1Circuit(
-  val circuitId: String,
-  val url: String,
-  val circuitName: String,
-  val location: F1Location
-)
+data class F1Circuit(val circuitId: String, val url: String, val circuitName: String, val location: F1Location)
 
-data class F1Location(
-  val lat: String,
-  val long: String,
-  val locality: String,
-  val country: String
-)
+data class F1Location(val lat: String, val long: String, val locality: String, val country: String)
 
 data class F1Result(
   val number: String,
@@ -61,26 +52,10 @@ data class F1Driver(
   val nationality: String
 )
 
-data class F1Constructor(
-  val constructorId: String,
-  val url: String,
-  val name: String,
-  val nationality: String
-)
+data class F1Constructor(val constructorId: String, val url: String, val name: String, val nationality: String)
 
-data class F1Time(
-  val millis: Long,
-  val time: String
-)
+data class F1Time(val millis: Long, val time: String)
 
-data class F1FastestLap(
-  val rank: Int,
-  val lap: Int,
-  val time: F1Time,
-  val averageSpeed: F1AverageSpeed
-)
+data class F1FastestLap(val rank: Int, val lap: Int, val time: F1Time, val averageSpeed: F1AverageSpeed)
 
-data class F1AverageSpeed(
-  val units: String,
-  val speed: Float
-)
+data class F1AverageSpeed(val units: String, val speed: Float)

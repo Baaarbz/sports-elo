@@ -38,8 +38,7 @@ class NationalityShould {
     "Russian, RU, Russia",
     "Irish, IE, Ireland",
     "Belgian, BE, Belgium",
-    "not supported nationality, UNKNOWN, Unknown"
-  )
+    "not supported nationality, UNKNOWN, Unknown")
   fun `return correct Nationality for given gentilic`(gentilic: String, expectedCode: String, expectedCountry: String) {
     val nationality = Nationality.fromGentilic(gentilic)
 

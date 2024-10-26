@@ -5,8 +5,8 @@ import com.barbzdev.f1elo.domain.common.InfoUrl
 import com.barbzdev.f1elo.domain.common.Nationality
 import com.barbzdev.f1elo.domain.common.OccurredOn
 
-
-class Driver private constructor(
+class Driver
+private constructor(
   private val id: DriverId,
   private val fullName: DriverFullName,
   private val code: DriverCode?,
@@ -50,8 +50,7 @@ class Driver private constructor(
       nationality,
       infoUrl,
       Elo(value, occurredOn),
-      eloRecord.plus(Elo(value, occurredOn))
-    )
+      eloRecord.plus(Elo(value, occurredOn)))
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
@@ -99,17 +98,17 @@ class Driver private constructor(
       nationality: String,
       infoUrl: String,
       debutDate: String
-    ) = Driver(
-      id = DriverId(id),
-      fullName = DriverFullName(givenName, familyName),
-      code = code?.let { DriverCode(it) },
-      permanentNumber = permanentNumber?.let { PermanentNumber(it) },
-      birthDate = BirthDate(birthDate),
-      nationality = Nationality.fromGentilic(nationality),
-      infoUrl = InfoUrl(infoUrl),
-      currentElo = Elo(BASE_ELO, debutDate),
-      eloRecord = listOf(Elo(BASE_ELO, debutDate))
-    )
+    ) =
+      Driver(
+        id = DriverId(id),
+        fullName = DriverFullName(givenName, familyName),
+        code = code?.let { DriverCode(it) },
+        permanentNumber = permanentNumber?.let { PermanentNumber(it) },
+        birthDate = BirthDate(birthDate),
+        nationality = Nationality.fromGentilic(nationality),
+        infoUrl = InfoUrl(infoUrl),
+        currentElo = Elo(BASE_ELO, debutDate),
+        eloRecord = listOf(Elo(BASE_ELO, debutDate)))
 
     fun create(
       id: String,
@@ -123,17 +122,18 @@ class Driver private constructor(
       currentElo: Int,
       currentEloOccurredOn: String,
       eloRecord: Map<Int, String>,
-    ) = Driver(
-      id = DriverId(id),
-      fullName = DriverFullName(givenName, familyName),
-      code = code?.let { DriverCode(it) },
-      permanentNumber = permanentNumber?.let { PermanentNumber(it) },
-      birthDate = BirthDate(birthDate),
-      nationality = Nationality.fromGentilic(nationality),
-      infoUrl = InfoUrl(infoUrl),
-      currentElo = Elo(currentElo, currentEloOccurredOn),
-      eloRecord = eloRecord.map { (elo, date) -> Elo(elo, date) }.toList(),
-    )
+    ) =
+      Driver(
+        id = DriverId(id),
+        fullName = DriverFullName(givenName, familyName),
+        code = code?.let { DriverCode(it) },
+        permanentNumber = permanentNumber?.let { PermanentNumber(it) },
+        birthDate = BirthDate(birthDate),
+        nationality = Nationality.fromGentilic(nationality),
+        infoUrl = InfoUrl(infoUrl),
+        currentElo = Elo(currentElo, currentEloOccurredOn),
+        eloRecord = eloRecord.map { (elo, date) -> Elo(elo, date) }.toList(),
+      )
 
     private const val BASE_ELO = 1000
   }

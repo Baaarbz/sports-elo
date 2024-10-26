@@ -8,4 +8,4 @@ import org.springframework.test.context.ActiveProfiles
 @SpringBootTest(classes = [SpringApplication::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("integration-test")
 @AutoConfigureWireMock(port = 0)
-class IntegrationTestConfig
+class IntegrationTestConfiguration

@@ -10,7 +10,7 @@ import com.barbzdev.f1elo.domain.repository.F1Result
 import com.barbzdev.f1elo.domain.repository.F1Season
 import com.barbzdev.f1elo.domain.repository.F1Time
 import com.barbzdev.f1elo.factory.SeasonFactory
-import com.barbzdev.f1elo.infrastructure.IntegrationTestConfig
+import com.barbzdev.f1elo.infrastructure.IntegrationTestConfiguration
 import com.barbzdev.f1elo.infrastructure.spring.repository.http.HttpJolpiF1Repository
 import com.github.tomakehurst.wiremock.client.WireMock.aResponse
 import com.github.tomakehurst.wiremock.client.WireMock.get
@@ -23,10 +23,9 @@ import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
-abstract class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
+abstract class HttpJolpiF1RepositoryShould : IntegrationTestConfiguration() {
 
-  @Autowired
-  private lateinit var repository: HttpJolpiF1Repository
+  @Autowired private lateinit var repository: HttpJolpiF1Repository
 
   @Test
   fun `gather races of a season`() {
@@ -48,39 +47,34 @@ abstract class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
     assertThat(response).isEqualTo(EXPECTED_SEASONS_RESPONSE)
   }
 
-  private fun givenFirstPageOfSeasonRaces(season: Season) = stubFor(
-    get(urlEqualTo("/${season.year().value}/results/?limit=100&offset=0"))
-      .willReturn(
-        aResponse()
-          .withStatus(SC_OK)
-          .withHeader(CONTENT_TYPE, "application/json")
-          .withBody(FIRST_PAGE_RACE_OF_SEASON_RESULTS_RESPONSE)
-      )
-  )
+  private fun givenFirstPageOfSeasonRaces(season: Season) =
+    stubFor(
+      get(urlEqualTo("/${season.year().value}/results/?limit=100&offset=0"))
+        .willReturn(
+          aResponse()
+            .withStatus(SC_OK)
+            .withHeader(CONTENT_TYPE, "application/json")
+            .withBody(FIRST_PAGE_RACE_OF_SEASON_RESULTS_RESPONSE)))
 
-  private fun givenSecondPageOfSeasonRaces(season: Season) = stubFor(
-    get(urlEqualTo("/${season.year().value}/results/?limit=100&offset=100"))
-      .willReturn(
-        aResponse()
-          .withStatus(SC_OK)
-          .withHeader(CONTENT_TYPE, "application/json")
-          .withBody(SECOND_PAGE_RACE_OF_SEASON_RESULTS_RESPONSE)
-      )
-  )
+  private fun givenSecondPageOfSeasonRaces(season: Season) =
+    stubFor(
+      get(urlEqualTo("/${season.year().value}/results/?limit=100&offset=100"))
+        .willReturn(
+          aResponse()
+            .withStatus(SC_OK)
+            .withHeader(CONTENT_TYPE, "application/json")
+            .withBody(SECOND_PAGE_RACE_OF_SEASON_RESULTS_RESPONSE)))
 
-  private fun givenAllSeasons() = stubFor(
-    get(urlEqualTo("/seasons/?limit=100&offset=0"))
-      .willReturn(
-        aResponse()
-          .withStatus(SC_OK)
-          .withHeader(CONTENT_TYPE, "application/json")
-          .withBody(SEASON_RESULTS_RESPONSE)
-      )
-  )
+  private fun givenAllSeasons() =
+    stubFor(
+      get(urlEqualTo("/seasons/?limit=100&offset=0"))
+        .willReturn(
+          aResponse().withStatus(SC_OK).withHeader(CONTENT_TYPE, "application/json").withBody(SEASON_RESULTS_RESPONSE)))
 
   private companion object {
     @Language("JSON")
-    const val FIRST_PAGE_RACE_OF_SEASON_RESULTS_RESPONSE = """
+    const val FIRST_PAGE_RACE_OF_SEASON_RESULTS_RESPONSE =
+      """
       {
     "MRData": {
         "xmlns": "",
@@ -146,7 +140,8 @@ abstract class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
     """
 
     @Language("JSON")
-    const val SECOND_PAGE_RACE_OF_SEASON_RESULTS_RESPONSE = """
+    const val SECOND_PAGE_RACE_OF_SEASON_RESULTS_RESPONSE =
+      """
       {
     "MRData": {
         "xmlns": "",
@@ -211,85 +206,78 @@ abstract class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
 }
     """
 
-    val EXPECTED_F1_RACES_RESPONSE = listOf(
-      F1Race(
-        season = 1950,
-        round = 1,
-        url = "http://en.wikipedia.org/wiki/1950_British_Grand_Prix",
-        raceName = "British Grand Prix",
-        circuit = F1Circuit(
-          circuitId = "silverstone",
-          url = "http://en.wikipedia.org/wiki/Silverstone_Circuit",
-          circuitName = "Silverstone Circuit",
-          location = F1Location("52.0786", "-1.01694", "Silverstone", "UK")
-        ),
-        date = "1950-05-13",
-        results = listOf(
-          F1Result(
-            number = "2",
-            position = "1",
-            points = 9f,
-            driver = F1Driver(
-              driverId = "farina",
-              url = "http://en.wikipedia.org/wiki/Nino_Farina",
-              code = null,
-              permanentNumber = null,
-              givenName = "Nino",
-              familyName = "Farina",
-              dateOfBirth = "1906-10-30",
-              nationality = "Italian",
-            ),
-            constructor = F1Constructor(
-              constructorId = "alfa",
-              url = "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
-              name = "Alfa Romeo",
-              nationality = "Swiss"
-            ),
-            grid = 1,
-            laps = 70,
-            status = "Finished",
-            time = F1Time(
-              millis = 8003600,
-              time = "2:13:23.600"
-            ),
-            fastestLap = null
-          ),
-          F1Result(
-            number = "3",
-            position = "2",
-            points = 6f,
-            driver = F1Driver(
-              driverId = "fagioli",
-              permanentNumber = null,
-              code = null,
-              url = "http://en.wikipedia.org/wiki/Luigi_Fagioli",
-              givenName = "Luigi",
-              familyName = "Fagioli",
-              dateOfBirth = "1898-06-09",
-              nationality = "Italian"
-            ),
-            constructor = F1Constructor(
-              constructorId = "alfa",
-              url = "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
-              name = "Alfa Romeo",
-              nationality = "Swiss"
-            ),
-            grid = 2,
-            laps = 70,
-            status = "Finished",
-            time = F1Time(
-              millis = 8006200,
-              time = "+2.600"
-            ),
-            fastestLap = null
-          )
-        ),
-        time = null
-      )
-    )
+    val EXPECTED_F1_RACES_RESPONSE =
+      listOf(
+        F1Race(
+          season = 1950,
+          round = 1,
+          url = "http://en.wikipedia.org/wiki/1950_British_Grand_Prix",
+          raceName = "British Grand Prix",
+          circuit =
+            F1Circuit(
+              circuitId = "silverstone",
+              url = "http://en.wikipedia.org/wiki/Silverstone_Circuit",
+              circuitName = "Silverstone Circuit",
+              location = F1Location("52.0786", "-1.01694", "Silverstone", "UK")),
+          date = "1950-05-13",
+          results =
+            listOf(
+              F1Result(
+                number = "2",
+                position = "1",
+                points = 9f,
+                driver =
+                  F1Driver(
+                    driverId = "farina",
+                    url = "http://en.wikipedia.org/wiki/Nino_Farina",
+                    code = null,
+                    permanentNumber = null,
+                    givenName = "Nino",
+                    familyName = "Farina",
+                    dateOfBirth = "1906-10-30",
+                    nationality = "Italian",
+                  ),
+                constructor =
+                  F1Constructor(
+                    constructorId = "alfa",
+                    url = "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
+                    name = "Alfa Romeo",
+                    nationality = "Swiss"),
+                grid = 1,
+                laps = 70,
+                status = "Finished",
+                time = F1Time(millis = 8003600, time = "2:13:23.600"),
+                fastestLap = null),
+              F1Result(
+                number = "3",
+                position = "2",
+                points = 6f,
+                driver =
+                  F1Driver(
+                    driverId = "fagioli",
+                    permanentNumber = null,
+                    code = null,
+                    url = "http://en.wikipedia.org/wiki/Luigi_Fagioli",
+                    givenName = "Luigi",
+                    familyName = "Fagioli",
+                    dateOfBirth = "1898-06-09",
+                    nationality = "Italian"),
+                constructor =
+                  F1Constructor(
+                    constructorId = "alfa",
+                    url = "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
+                    name = "Alfa Romeo",
+                    nationality = "Swiss"),
+                grid = 2,
+                laps = 70,
+                status = "Finished",
+                time = F1Time(millis = 8006200, time = "+2.600"),
+                fastestLap = null)),
+          time = null))
 
     @Language("JSON")
-    const val SEASON_RESULTS_RESPONSE = """
+    const val SEASON_RESULTS_RESPONSE =
+      """
 {
     "MRData": {
         "xmlns": "",
@@ -330,31 +318,13 @@ abstract class HttpJolpiF1RepositoryShould : IntegrationTestConfig() {
 }
     """
 
-    val EXPECTED_SEASONS_RESPONSE = listOf(
-      F1Season(
-        season = 1950,
-        url = "http://en.wikipedia.org/wiki/1950_Formula_One_season"
-      ),
-      F1Season(
-        season = 1951,
-        url = "http://en.wikipedia.org/wiki/1951_Formula_One_season"
-      ),
-      F1Season(
-        season = 1952,
-        url = "http://en.wikipedia.org/wiki/1952_Formula_One_season"
-      ),
-      F1Season(
-        season = 1953,
-        url = "http://en.wikipedia.org/wiki/1953_Formula_One_season"
-      ),
-      F1Season(
-        season = 1954,
-        url = "http://en.wikipedia.org/wiki/1954_Formula_One_season"
-      ),
-      F1Season(
-        season = 1955,
-        url = "http://en.wikipedia.org/wiki/1955_Formula_One_season"
-      )
-    )
+    val EXPECTED_SEASONS_RESPONSE =
+      listOf(
+        F1Season(season = 1950, url = "http://en.wikipedia.org/wiki/1950_Formula_One_season"),
+        F1Season(season = 1951, url = "http://en.wikipedia.org/wiki/1951_Formula_One_season"),
+        F1Season(season = 1952, url = "http://en.wikipedia.org/wiki/1952_Formula_One_season"),
+        F1Season(season = 1953, url = "http://en.wikipedia.org/wiki/1953_Formula_One_season"),
+        F1Season(season = 1954, url = "http://en.wikipedia.org/wiki/1954_Formula_One_season"),
+        F1Season(season = 1955, url = "http://en.wikipedia.org/wiki/1955_Formula_One_season"))
   }
 }

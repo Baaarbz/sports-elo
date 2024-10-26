@@ -5,10 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
 @Component
-class RacesScheduledTask(
-  private val gatherRacesBySeasonUseCase: GatherRacesBySeasonUseCase
-) {
+class RacesScheduledTask(private val gatherRacesBySeasonUseCase: GatherRacesBySeasonUseCase) {
 
-  @Scheduled(cron = "0 0 12 * * ?")
-  fun gatherRacesResultBySeasonScheduledTask() = gatherRacesBySeasonUseCase.invoke()
+  @Scheduled(cron = "0 0 12 * * ?") fun gatherRacesResultBySeasonScheduledTask() = gatherRacesBySeasonUseCase.invoke()
 }

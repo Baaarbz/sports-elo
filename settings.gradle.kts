@@ -1,1 +1,1 @@
-rootProject.name = "f1elo"
+rootProject.name = "f1-elo"

@@ -24,18 +24,13 @@ class GatherRacesBySeasonUseCase(
 ) {
 
   operator fun invoke(): GatherRacesBySeasonResponse {
-    val seasonToLoad = getSeasonToLoad()
-      ?: return GatherRacesOverASeasonNonExistent
+    val seasonToLoad = getSeasonToLoad() ?: return GatherRacesOverASeasonNonExistent
 
     if (seasonToLoad.isCurrentSeason()) {
       return GatherRacesBySeasonUpToDate
     }
 
-    seasonToLoad
-      .loadF1RacesOfSeason()
-      .toDomain()
-      .saveSeasonLoaded(seasonToLoad)
-      .publishSeasonLoadedDomainEvent()
+    seasonToLoad.loadF1RacesOfSeason().toDomain().saveSeasonLoaded(seasonToLoad).publishSeasonLoadedDomainEvent()
 
     return GatherRacesBySeasonSuccess
   }
@@ -47,13 +42,11 @@ class GatherRacesBySeasonUseCase(
   }
 
   private fun getSeasonToLoad(): Season? {
-    val yearToLoad = seasonRepository.getLastSeasonLoaded()
-      ?.let { seasonFound -> seasonFound.year().value + 1 }
-      ?: FIRST_FORMULA_1_SEASON
+    val yearToLoad =
+      seasonRepository.getLastSeasonLoaded()?.let { seasonFound -> seasonFound.year().value + 1 }
+        ?: FIRST_FORMULA_1_SEASON
 
-    return f1Repository.gatherAllSeasons()
-      .find { it.season == yearToLoad }
-      ?.let { Season.create(it.season, it.url) }
+    return f1Repository.gatherAllSeasons().find { it.season == yearToLoad }?.let { Season.create(it.season, it.url) }
   }
 
   private fun Season.loadF1RacesOfSeason() = f1Repository.gatherRacesBySeason(this)
@@ -61,28 +54,28 @@ class GatherRacesBySeasonUseCase(
   private fun List<F1Race>.toDomain() = this.map { it.toRace() }
 
   private fun F1Race.toRace(): Race {
-    var race = Race.create(
-      round = this.round,
-      infoUrl = this.url,
-      name = this.raceName,
-      circuit = this.circuit.toCircuit(),
-      occurredOn = this.date
-    )
+    var race =
+      Race.create(
+        round = this.round,
+        infoUrl = this.url,
+        name = this.raceName,
+        circuit = this.circuit.toCircuit(),
+        occurredOn = this.date)
     this.results.forEach { result ->
-      race = race.addResult(
-        number = result.number,
-        driver = result.driver.toDriver(this.date),
-        position = result.position.toInt(),
-        points = result.points,
-        constructor = result.constructor.toConstructor(),
-        grid = result.grid,
-        laps = result.laps,
-        status = result.status,
-        timeInMillis = result.time.millis,
-        fastestLapInMillis = result.fastestLap?.time?.millis,
-        averageSpeed = result.fastestLap?.averageSpeed?.speed,
-        averageSpeedUnit = result.fastestLap?.averageSpeed?.units
-      )
+      race =
+        race.addResult(
+          number = result.number,
+          driver = result.driver.toDriver(this.date),
+          position = result.position.toInt(),
+          points = result.points,
+          constructor = result.constructor.toConstructor(),
+          grid = result.grid,
+          laps = result.laps,
+          status = result.status,
+          timeInMillis = result.time.millis,
+          fastestLapInMillis = result.fastestLap?.time?.millis,
+          averageSpeed = result.fastestLap?.averageSpeed?.speed,
+          averageSpeedUnit = result.fastestLap?.averageSpeed?.units)
     }
     return race
   }
@@ -98,25 +91,20 @@ class GatherRacesBySeasonUseCase(
         permanentNumber = permanentNumber,
         nationality = nationality,
         infoUrl = url,
-        debutDate = raceDate
-      )
+        debutDate = raceDate)
 
-  private fun F1Circuit.toCircuit() = Circuit.create(
-    id = this.circuitId,
-    name = this.circuitName,
-    infoUrl = this.url,
-    latitude = this.location.lat,
-    longitude = this.location.long,
-    locality = this.location.locality,
-    country = this.location.country
-  )
+  private fun F1Circuit.toCircuit() =
+    Circuit.create(
+      id = this.circuitId,
+      name = this.circuitName,
+      infoUrl = this.url,
+      latitude = this.location.lat,
+      longitude = this.location.long,
+      locality = this.location.locality,
+      country = this.location.country)
 
-  private fun F1Constructor.toConstructor() = Constructor.create(
-    id = this.constructorId,
-    name = this.name,
-    nationality = this.nationality,
-    infoUrl = this.url
-  )
+  private fun F1Constructor.toConstructor() =
+    Constructor.create(id = this.constructorId, name = this.name, nationality = this.nationality, infoUrl = this.url)
 
   private fun Season.publishSeasonLoadedDomainEvent() =
     seasonDomainEventPublisher.publish(SeasonLoadedDomainEvent(this))
@@ -127,6 +115,9 @@ class GatherRacesBySeasonUseCase(
 }
 
 sealed class GatherRacesBySeasonResponse
+
 data object GatherRacesBySeasonUpToDate : GatherRacesBySeasonResponse()
+
 data object GatherRacesBySeasonSuccess : GatherRacesBySeasonResponse()
+
 data object GatherRacesOverASeasonNonExistent : GatherRacesBySeasonResponse()

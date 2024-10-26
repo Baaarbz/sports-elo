@@ -21,11 +21,12 @@ object EloCalculator {
 
   private fun calculateE(qA: Double, qB: Double): Double = qA / (qA + qB)
 
-  private fun calculateS(raceResult: RaceResult) = when (raceResult) {
-    WIN -> 1.0
-    LOSE -> 0.0
-    DRAW -> 0.5
-  }
+  private fun calculateS(raceResult: RaceResult) =
+    when (raceResult) {
+      WIN -> 1.0
+      LOSE -> 0.0
+      DRAW -> 0.5
+    }
 
   private const val K = 32.0
 }
@@ -35,4 +36,3 @@ enum class RaceResult {
   LOSE,
   DRAW
 }
-

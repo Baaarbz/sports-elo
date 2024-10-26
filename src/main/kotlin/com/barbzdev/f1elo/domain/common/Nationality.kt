@@ -96,8 +96,6 @@ enum class Nationality(val countryCode: String, val countryName: String) {
 
   companion object {
     fun fromGentilic(gentilic: String): Nationality =
-      entries
-        .firstOrNull { it.name.replace("_", " ").equals(gentilic, ignoreCase = true) }
-        ?: UNKNOWN
+      entries.firstOrNull { it.name.replace("_", " ").equals(gentilic, ignoreCase = true) } ?: UNKNOWN
   }
 }

@@ -3,7 +3,8 @@ package com.barbzdev.f1elo.domain
 import com.barbzdev.f1elo.domain.common.InfoUrl
 import com.barbzdev.f1elo.domain.common.Nationality
 
-class Constructor private constructor(
+class Constructor
+private constructor(
   private val id: ConstructorId,
   private val name: ConstructorName,
   private val nationality: Nationality,
@@ -11,8 +12,11 @@ class Constructor private constructor(
 ) {
 
   fun id() = id
+
   fun name() = name
+
   fun nationality() = nationality
+
   fun infoUrl() = infoUrl
 
   override fun equals(other: Any?): Boolean {
@@ -40,17 +44,8 @@ class Constructor private constructor(
   override fun toString(): String = "Constructor(id=$id, name=$name, nationality=$nationality, infoUrl=$infoUrl)"
 
   companion object {
-    fun create(
-      id: String,
-      name: String,
-      nationality: String,
-      infoUrl: String
-    ): Constructor = Constructor(
-      ConstructorId(id),
-      ConstructorName(name),
-      Nationality.fromGentilic(nationality),
-      InfoUrl(infoUrl)
-    )
+    fun create(id: String, name: String, nationality: String, infoUrl: String): Constructor =
+      Constructor(ConstructorId(id), ConstructorName(name), Nationality.fromGentilic(nationality), InfoUrl(infoUrl))
   }
 }
 
