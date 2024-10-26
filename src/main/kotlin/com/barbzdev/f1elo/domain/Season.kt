@@ -4,7 +4,8 @@ import com.barbzdev.f1elo.domain.common.InfoUrl
 import java.time.LocalDate.now
 import java.util.UUID
 
-class Season private constructor(
+class Season
+private constructor(
   private val id: SeasonId,
   private val year: SeasonYear,
   private val infoUrl: InfoUrl,
@@ -20,12 +21,7 @@ class Season private constructor(
 
   fun isCurrentSeason() = year.value >= now().year
 
-  fun addRacesOfSeason(races: List<Race>) = Season(
-    id = id,
-    year = year,
-    infoUrl = infoUrl,
-    races = races.plus(races)
-  )
+  fun addRacesOfSeason(races: List<Race>) = Season(id = id, year = year, infoUrl = infoUrl, races = races.plus(races))
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
@@ -57,12 +53,12 @@ class Season private constructor(
     fun create(
       year: Int,
       infoUrl: String,
-    ): Season = Season(
-      id = SeasonId(UUID.randomUUID().toString()),
-      year = SeasonYear(year),
-      infoUrl = InfoUrl(infoUrl),
-      races = emptyList()
-    )
+    ): Season =
+      Season(
+        id = SeasonId(UUID.randomUUID().toString()),
+        year = SeasonYear(year),
+        infoUrl = InfoUrl(infoUrl),
+        races = emptyList())
   }
 }
 

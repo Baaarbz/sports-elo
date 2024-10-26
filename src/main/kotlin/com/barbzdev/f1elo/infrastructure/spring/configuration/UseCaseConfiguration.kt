@@ -14,30 +14,30 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class UseCaseConfiguration {
-  val mockSeasonRepository = object : SeasonRepository {
-    override fun getLastSeasonLoaded(): Season = TODO("Not yet implemented")
-    override fun save(season: Season) = TODO("Not yet implemented")
-  }
+  val mockSeasonRepository =
+    object : SeasonRepository {
+      override fun getLastSeasonLoaded(): Season = TODO("Not yet implemented")
 
-  val mockDriverRepository = object : DriverRepository {
-    override fun findBy(driver: DriverId): Driver? {
-      TODO("Not yet implemented")
+      override fun save(season: Season) = TODO("Not yet implemented")
     }
 
-    override fun save(driver: Driver) {
-      TODO("Not yet implemented")
-    }
-  }
+  val mockDriverRepository =
+    object : DriverRepository {
+      override fun findBy(driver: DriverId): Driver? {
+        TODO("Not yet implemented")
+      }
 
-  val mockSeasonDomainEventPublisher = object : SeasonDomainEventPublisher {
-    override fun publish(event: SeasonLoadedDomainEvent) = TODO("Not yet implemented")
-  }
+      override fun save(driver: Driver) {
+        TODO("Not yet implemented")
+      }
+    }
+
+  val mockSeasonDomainEventPublisher =
+    object : SeasonDomainEventPublisher {
+      override fun publish(event: SeasonLoadedDomainEvent) = TODO("Not yet implemented")
+    }
 
   @Bean
-  fun gatherRaceResultUseCase(f1Repository: F1Repository) = GatherRacesBySeasonUseCase(
-    f1Repository,
-    mockSeasonRepository,
-    mockDriverRepository,
-    mockSeasonDomainEventPublisher
-  )
+  fun gatherRaceResultUseCase(f1Repository: F1Repository) =
+    GatherRacesBySeasonUseCase(f1Repository, mockSeasonRepository, mockDriverRepository, mockSeasonDomainEventPublisher)
 }
