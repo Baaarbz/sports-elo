@@ -1,8 +1,18 @@
+import java.util.Locale
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.gradle.internal.component.external.model.ProjectTestFixtures
+import org.gradle.plugins.ide.idea.model.IdeaModel
+import org.gradle.plugins.ide.idea.model.internal.GeneratedIdeaScope
+import org.gradle.plugins.ide.idea.model.internal.IdeaDependenciesProvider
+
 plugins {
   val kotlinPluginVersion = "2.0.20"
   kotlin("jvm") version kotlinPluginVersion
   kotlin("plugin.spring") version kotlinPluginVersion
   kotlin("plugin.jpa") version kotlinPluginVersion
+
+  id("com.ncorti.ktfmt.gradle") version "0.20.1"
 
   id("org.springframework.boot") version "3.3.4"
   id("io.spring.dependency-management") version "1.1.6"
@@ -14,14 +24,11 @@ group = "com.barbzdev"
 
 version = "0.0.1-SNAPSHOT"
 
-java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
-
 repositories { mavenCentral() }
 
 dependencies {
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.springframework.boot:spring-boot-starter-web")
-  implementation("org.springframework.boot:spring-boot-starter-graphql")
 
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
@@ -35,75 +42,119 @@ dependencies {
   // OpenAPI
   implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
   implementation("org.springdoc:springdoc-openapi-starter-common:2.1.0")
+
+  // Testing
+  testImplementation("org.springframework.boot:spring-boot-starter-test") {
+    exclude(module = "mockito-core")
+  }
+  testImplementation("org.springframework.boot:spring-boot-testcontainers")
+  testImplementation("org.springframework.cloud:spring-cloud-contract-wiremock:4.1.4")
+  testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+
+  testImplementation("org.testcontainers:postgresql")
+  testImplementation("org.testcontainers:junit-jupiter")
+
+  testImplementation("io.mockk:mockk:1.13.13")
+  testImplementation("com.ninja-squad:springmockk:4.0.2")
+
+  testImplementation("com.willowtreeapps.assertk:assertk:0.28.0")
+
+  testImplementation("org.awaitility:awaitility:4.2.2")
 }
 
-kotlin { compilerOptions { freeCompilerArgs.addAll("-Xjsr305=strict") } }
+addTestSet("integrationTest")
+addTestSet("acceptanceTest")
+
+kotlin {
+  compilerOptions { freeCompilerArgs.addAll("-Xjsr305=strict") }
+  jvmToolchain { languageVersion = JavaLanguageVersion.of(21) }
+}
+
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
 
 tasks.withType<Test> { useJUnitPlatform() }
 
-testing {
-  suites {
-    val test by getting(JvmTestSuite::class) {
-      useJUnitJupiter()
+tasks.named("check") {
+  dependsOn(testing.suites.named("integrationTest"), testing.suites.named("acceptanceTest"))
+}
 
-      dependencies {
-        implementation("io.mockk:mockk:1.13.13")
-        implementation("com.ninja-squad:springmockk:4.0.2")
-        implementation("com.willowtreeapps.assertk:assertk:0.28.0")
-        implementation("org.jetbrains.kotlin:kotlin-test-junit5")
-        implementation("org.springframework.boot:spring-boot-starter-test") {
-          exclude(module = "mockito-core")
-        }
-      }
+tasks.withType(Test::class) {
+  testLogging {
+    events = setOf(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
+    exceptionFormat = TestExceptionFormat.FULL
+  }
+
+  useJUnitPlatform()
+  // Fix encoding issues on GHA Runners
+  systemProperty("file.encoding", "UTF-8")
+}
+
+tasks.named<Test>("integrationTest") {
+  mustRunAfter(tasks.named<Test>("test"))
+
+  outputs.upToDateWhen { false }
+  outputs.cacheIf { false }
+}
+
+tasks.named<Test>("acceptanceTest") {
+  mustRunAfter(tasks.named<Test>("integrationTest"))
+
+  outputs.upToDateWhen { false }
+  outputs.cacheIf { false }
+}
+
+ktfmt {
+  googleStyle()
+  maxWidth.set(120)
+  manageTrailingCommas.set(false)
+}
+
+private fun Project.addTestSet(name: String) {
+  sourceSets {
+    create(name) {
+      compileClasspath += sourceSets["main"].output
+      runtimeClasspath += sourceSets["main"].output
     }
+  }
 
-    withType(JvmTestSuite::class).matching { it.name in listOf("integrationTest", "acceptanceTest") }.configureEach {
-      useJUnitJupiter()
-      dependencies {
-        implementation(project())
-        implementation("org.testcontainers:postgresql")
-        implementation("org.testcontainers:junit-jupiter")
-
-        implementation("org.awaitility:awaitility:4.2.2")
-
-        implementation("org.springframework.boot:spring-boot-testcontainers")
-        implementation("org.springframework.cloud:spring-cloud-contract-wiremock:4.1.4")
-        implementation("org.springframework.boot:spring-boot-starter-test") {
-          exclude(module = "mockito-core")
-        }
-
-        implementation(testFixtures(project()))
-      }
+  with(configurations) {
+    named("${name}Implementation") {
+      extendsFrom(configurations["testImplementation"])
     }
-
-    val integrationTest by registering(JvmTestSuite::class) {
-      targets {
-        all {
-          testTask.configure {
-            mustRunAfter(test)
-          }
-        }
-      }
+    named("${name}RuntimeOnly") {
+      extendsFrom(configurations["testRuntimeOnly"])
     }
+  }
 
-    val acceptanceTest by registering(JvmTestSuite::class) {
-      dependencies {
-        implementation("org.springframework:spring-web:6.1.4")
-        implementation("io.rest-assured:rest-assured:5.4.0")
-        implementation("org.skyscreamer:jsonassert:1.5.1")
-      }
+  plugins.withType<JavaTestFixturesPlugin> {
+    val testDependency = dependencies.add("${name}Implementation", dependencies.create(project)) as ProjectDependency
+    testDependency.capabilities(ProjectTestFixtures(project))
+  }
 
-      targets {
-        all {
-          testTask.configure {
-            mustRunAfter(integrationTest)
-          }
-        }
+  plugins.withType<IdeaPlugin> {
+    with(the<IdeaModel>()) {
+      module {
+        testSources.from(testSources, sourceSets[name].allJava.srcDirs)
+        testResources.from(testResources, sourceSets[name].resources.srcDirs)
+
+        val test = scopes[GeneratedIdeaScope.TEST.name]!![IdeaDependenciesProvider.SCOPE_PLUS]
+        test!!.add(configurations["${name}CompileClasspath"])
+        test.add(configurations["${name}RuntimeClasspath"])
       }
     }
   }
-}
 
-tasks.named("check") {
-  dependsOn(testing.suites.named("integrationTest"), testing.suites.named("acceptanceTest"))
+  val testTask = tasks.register<Test>(name) {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = "Runs the ${name.removeSuffix("Test")} tests."
+
+    testClassesDirs = sourceSets[name].output.classesDirs
+    classpath = sourceSets[name].runtimeClasspath
+  }
+
+  tasks.register<JacocoReport>("jacoco${name.replaceFirstChar { it.titlecase(Locale.ROOT) }}Report") {
+    dependsOn(testTask)
+    executionData(testTask.get())
+    sourceSets(sourceSets["main"])
+  }
 }
