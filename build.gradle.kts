@@ -17,6 +17,8 @@ plugins {
   id("org.springframework.boot") version "3.3.4"
   id("io.spring.dependency-management") version "1.1.6"
 
+  id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.7"
+
   `java-test-fixtures`
 }
 
@@ -75,7 +77,6 @@ java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
 tasks.withType<Test> { useJUnitPlatform() }
 
 tasks.named("check") {
-//  dependsOn(testing.suites.named("integrationTest"), testing.suites.named("acceptanceTest"))
   dependsOn("jacocoIntegrationTestReport", "jacocoAcceptanceTestReport")
 }
 

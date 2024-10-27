@@ -3,10 +3,12 @@ package com.barbzdev.f1elo.infrastructure.spring
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
+import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.annotation.EnableScheduling
 
 @EnableScheduling
 @EnableConfigurationProperties
+@EnableAsync
 @SpringBootApplication(scanBasePackages = ["com.barbzdev.f1elo.infrastructure.spring"])
 class SpringApplication
 

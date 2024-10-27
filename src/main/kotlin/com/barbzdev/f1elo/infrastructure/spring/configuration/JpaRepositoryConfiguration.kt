@@ -1,5 +1,6 @@
 package com.barbzdev.f1elo.infrastructure.spring.configuration
 
+import com.barbzdev.f1elo.infrastructure.jpa.JpaDriverRepository
 import com.barbzdev.f1elo.infrastructure.jpa.JpaSeasonRepository
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaCircuitDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaConstructorDatasource
@@ -30,5 +31,14 @@ class JpaRepositoryConfiguration {
       constructorDatasource = constructorDatasource,
       circuitDatasource = circuitDatasource,
       raceResultDatasource = raceResultDatasource,
+      eloHistoryDatasource = eloHistoryDatasource)
+
+  @Bean
+  fun jpaDriverRepository(
+    driverDatasource: JpaDriverDatasource,
+    eloHistoryDatasource: JpaDriverEloHistoryDatasource
+  ) =
+    JpaDriverRepository(
+      driverDatasource = driverDatasource,
       eloHistoryDatasource = eloHistoryDatasource)
 }
