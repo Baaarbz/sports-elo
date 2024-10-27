@@ -54,24 +54,13 @@ private constructor(
       year: Int,
       infoUrl: String,
     ): Season =
-      Season(
-        id = SeasonId.generate(),
-        year = SeasonYear(year),
-        infoUrl = InfoUrl(infoUrl),
-        races = emptyList()
-      )
+      Season(id = SeasonId.generate(), year = SeasonYear(year), infoUrl = InfoUrl(infoUrl), races = emptyList())
 
     fun create(
       id: String,
       year: Int,
       infoUrl: String,
-    ): Season =
-      Season(
-        id = SeasonId(id),
-        year = SeasonYear(year),
-        infoUrl = InfoUrl(infoUrl),
-        races = emptyList()
-      )
+    ): Season = Season(id = SeasonId(id), year = SeasonYear(year), infoUrl = InfoUrl(infoUrl), races = emptyList())
   }
 }
 

@@ -1,11 +1,8 @@
 package com.barbzdev.f1elo.infrastructure.spring.repository.jpa
 
-import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
 import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import java.time.LocalDate
 import org.springframework.data.jpa.repository.JpaRepository

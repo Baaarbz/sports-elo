@@ -78,7 +78,11 @@ class NationalityShould {
     "Irish, IE, Ireland",
     "Belgian, BE, Belgium",
     "UNKNOWN, UNKNOWN, Unknown")
-  fun `return correct Nationality for given country code`(expectedGentilic: String, code: String, expectedCountry: String) {
+  fun `return correct Nationality for given country code`(
+    expectedGentilic: String,
+    code: String,
+    expectedCountry: String
+  ) {
     val nationality = Nationality.fromCountryCode(code)
 
     assertThat(nationality.name).isEqualTo(expectedGentilic, ignoreCase = true)

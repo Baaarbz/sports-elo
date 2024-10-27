@@ -22,13 +22,13 @@ class JpaRepositoryConfiguration {
     circuitDatasource: JpaCircuitDatasource,
     raceResultDatasource: JpaRaceResultDatasource,
     eloHistoryDatasource: JpaDriverEloHistoryDatasource
-  ) = JpaSeasonRepository(
-    seasonDatasource = seasonDatasource,
-    raceDatasource = raceDatasource,
-    driverDatasource = driverDatasource,
-    constructorDatasource = constructorDatasource,
-    circuitDatasource = circuitDatasource,
-    raceResultDatasource = raceResultDatasource,
-    eloHistoryDatasource = eloHistoryDatasource
-  )
+  ) =
+    JpaSeasonRepository(
+      seasonDatasource = seasonDatasource,
+      raceDatasource = raceDatasource,
+      driverDatasource = driverDatasource,
+      constructorDatasource = constructorDatasource,
+      circuitDatasource = circuitDatasource,
+      raceResultDatasource = raceResultDatasource,
+      eloHistoryDatasource = eloHistoryDatasource)
 }

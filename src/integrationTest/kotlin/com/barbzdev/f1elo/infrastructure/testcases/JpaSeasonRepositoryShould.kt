@@ -11,11 +11,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 abstract class JpaSeasonRepositoryShould : IntegrationTestConfiguration() {
-  @Autowired
-  private lateinit var repository: JpaSeasonRepository
+  @Autowired private lateinit var repository: JpaSeasonRepository
 
-  @Autowired
-  private lateinit var datasource: JpaSeasonDatasource
+  @Autowired private lateinit var datasource: JpaSeasonDatasource
 
   @Test
   fun `save a season`() {

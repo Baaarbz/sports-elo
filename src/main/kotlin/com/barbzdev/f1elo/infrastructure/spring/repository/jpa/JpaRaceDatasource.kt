@@ -20,10 +20,14 @@ interface JpaRaceDatasource : JpaRepository<RaceEntity, String> {
 @Table(name = "races")
 data class RaceEntity(
   @Id val id: String,
-  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE]) @JoinColumn(name = "season_id") var season: SeasonEntity,
+  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+  @JoinColumn(name = "season_id")
+  var season: SeasonEntity,
   val round: Int,
   @Column(name = "info_url") val infoUrl: String,
   val name: String,
-  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE]) @JoinColumn(name = "circuit_id") val circuit: CircuitEntity,
+  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+  @JoinColumn(name = "circuit_id")
+  val circuit: CircuitEntity,
   @Column(name = "occurred_on") val occurredOn: LocalDate
 )

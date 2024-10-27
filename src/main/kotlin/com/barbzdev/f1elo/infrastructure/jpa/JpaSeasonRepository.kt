@@ -22,16 +22,15 @@ open class JpaSeasonRepository(
   private val circuitDatasource: JpaCircuitDatasource,
   private val raceResultDatasource: JpaRaceResultDatasource,
   private val eloHistoryDatasource: JpaDriverEloHistoryDatasource
-) :
-  SeasonRepository {
+) : SeasonRepository {
   override fun getLastSeasonLoaded(): Season? {
     val seasonEntity = seasonDatasource.findAll().maxByOrNull { it.year } ?: return null
 
     val raceEntitiesOfSeason = raceDatasource.findAllBySeason(seasonEntity)
     val racesOfSeason = mutableListOf<Race>()
     raceEntitiesOfSeason.forEach { raceEntity ->
-      val raceResults = raceResultDatasource.findAllByRace(raceEntity)
-        .map {
+      val raceResults =
+        raceResultDatasource.findAllByRace(raceEntity).map {
           val eloRecordEntity = eloHistoryDatasource.findAllByDriver(it.driver)
           it.toDomain(eloRecordEntity)
         }
@@ -42,9 +41,7 @@ open class JpaSeasonRepository(
 
   @Transactional
   override fun save(season: Season) {
-    season
-      .saveSeason()
-      .saveRaces()
+    season.saveSeason().saveRaces()
   }
 
   private fun Season.saveSeason(): Season {
