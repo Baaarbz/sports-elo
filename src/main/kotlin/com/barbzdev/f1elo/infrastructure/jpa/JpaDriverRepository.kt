@@ -13,8 +13,8 @@ class JpaDriverRepository(
   private val driverDatasource: JpaDriverDatasource,
   private val eloHistoryDatasource: JpaDriverEloHistoryDatasource
 ) : DriverRepository {
-  override fun findBy(id: DriverId): Driver? = driverDatasource.findById(id.value).getOrNull()
-    ?.let {
+  override fun findBy(id: DriverId): Driver? =
+    driverDatasource.findById(id.value).getOrNull()?.let {
       val eloRecordEntity = eloHistoryDatasource.findAllByDriver(it)
       it.toDomain(eloRecordEntity)
     }

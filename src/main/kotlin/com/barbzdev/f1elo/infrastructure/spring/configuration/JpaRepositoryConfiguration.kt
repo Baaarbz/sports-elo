@@ -34,11 +34,6 @@ class JpaRepositoryConfiguration {
       eloHistoryDatasource = eloHistoryDatasource)
 
   @Bean
-  fun jpaDriverRepository(
-    driverDatasource: JpaDriverDatasource,
-    eloHistoryDatasource: JpaDriverEloHistoryDatasource
-  ) =
-    JpaDriverRepository(
-      driverDatasource = driverDatasource,
-      eloHistoryDatasource = eloHistoryDatasource)
+  fun jpaDriverRepository(driverDatasource: JpaDriverDatasource, eloHistoryDatasource: JpaDriverEloHistoryDatasource) =
+    JpaDriverRepository(driverDatasource = driverDatasource, eloHistoryDatasource = eloHistoryDatasource)
 }

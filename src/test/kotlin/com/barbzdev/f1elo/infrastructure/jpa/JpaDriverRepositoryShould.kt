@@ -14,7 +14,6 @@ import io.mockk.verifyOrder
 import java.util.Optional
 import org.junit.jupiter.api.Test
 
-
 class JpaDriverRepositoryShould {
   private val driverDatasource: JpaDriverDatasource = mockk()
   private val eloHistoryDatasource: JpaDriverEloHistoryDatasource = mockk(relaxed = true)
@@ -42,9 +41,7 @@ class JpaDriverRepositoryShould {
 
     val response = jpaDriverRepository.findBy(DriverId("non_existent"))
 
-    verify(exactly = 1) {
-      driverDatasource.findById("non_existent")
-    }
+    verify(exactly = 1) { driverDatasource.findById("non_existent") }
     verify(exactly = 0) { eloHistoryDatasource.findAllByDriver(any()) }
     assertThat(response).isEqualTo(null)
   }

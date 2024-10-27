@@ -11,11 +11,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
-  @Autowired
-  private lateinit var repository: JpaDriverRepository
+  @Autowired private lateinit var repository: JpaDriverRepository
 
-  @Autowired
-  private lateinit var datasource: JpaDriverDatasource
+  @Autowired private lateinit var datasource: JpaDriverDatasource
 
   @Test
   fun `save a driver`() {
