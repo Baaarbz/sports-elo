@@ -55,6 +55,8 @@ dependencies {
 
   testImplementation("org.testcontainers:postgresql")
   testImplementation("org.testcontainers:junit-jupiter")
+  testFixturesImplementation("org.testcontainers:postgresql")
+  testFixturesImplementation("org.testcontainers:junit-jupiter")
 
   testImplementation("io.mockk:mockk:1.13.13")
   testImplementation("com.ninja-squad:springmockk:4.0.2")
@@ -120,6 +122,7 @@ private fun Project.addTestSet(name: String) {
   }
 
   with(configurations) {
+    // TODO("not working properly need to fix)
     named("${name}Implementation") {
       extendsFrom(configurations["testImplementation"])
     }

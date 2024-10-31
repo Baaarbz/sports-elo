@@ -11,8 +11,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
-
-abstract class SpringSeasonDomainEventPublisherShould: IntegrationTestConfiguration() {
+abstract class SpringSeasonDomainEventPublisherShould : IntegrationTestConfiguration() {
 
   @MockkBean(relaxed = true) private lateinit var springDomainEventListener: SpringDomainEventListener
 
@@ -26,5 +25,4 @@ abstract class SpringSeasonDomainEventPublisherShould: IntegrationTestConfigurat
 
     verify { springDomainEventListener.on(SpringSeasonLoadedDomainEvent(aSeasonLoaded)) }
   }
-
 }

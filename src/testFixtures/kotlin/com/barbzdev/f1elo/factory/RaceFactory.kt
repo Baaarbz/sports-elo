@@ -15,6 +15,10 @@ import com.barbzdev.f1elo.domain.repository.F1Location
 import com.barbzdev.f1elo.domain.repository.F1Race
 import com.barbzdev.f1elo.domain.repository.F1Result
 import com.barbzdev.f1elo.domain.repository.F1Time
+import com.barbzdev.f1elo.factory.CircuitFactory.interlagos
+import com.barbzdev.f1elo.factory.ConstructorFactory.ferrariConstructor
+import com.barbzdev.f1elo.factory.DriverFactory.alonso
+import com.barbzdev.f1elo.factory.DriverFactory.hamilton
 
 object RaceFactory {
   val races =
@@ -87,7 +91,39 @@ object RaceFactory {
           number = "44"),
     )
 
-  fun aRace() = races.random()
+  val raceOf2014 = Race.create(
+        round = 1,
+        name = "Interlagos Grand Prix",
+        occurredOn = "2014-03-05",
+        infoUrl = "https://en.wikipedia.org/wiki/2014_Brazilian_Grand_Prix",
+        circuit = interlagos,
+      )
+      .addResult(
+        driver = alonso,
+        constructor = ferrariConstructor,
+        grid = 5,
+        position = 1,
+        points = 25f,
+        laps = 57,
+        averageSpeed = 245.3f,
+        averageSpeedUnit = "kph",
+        timeInMillis = 5400000,
+        fastestLapInMillis = 90000,
+        status = "Finished",
+        number = "14")
+      .addResult(
+        driver = hamilton,
+        constructor = ferrariConstructor,
+        grid = 2,
+        position = 2,
+        points = 18f,
+        laps = 57,
+        averageSpeed = 244.3f,
+        averageSpeedUnit = "kph",
+        timeInMillis = 5400000,
+        fastestLapInMillis = 91000,
+        status = "Finished",
+        number = "1")
 
   fun aF1RacesFrom(aSeason: Season) = aSeason.races().map { it.toF1Race(aSeason.year().value) }
 

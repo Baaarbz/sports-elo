@@ -1,0 +1,6 @@
+spring:
+  flyway:
+    clean-disabled: false
+
+jolpi-f1:
+  base-url: http://localhost:${wiremock.server.port}

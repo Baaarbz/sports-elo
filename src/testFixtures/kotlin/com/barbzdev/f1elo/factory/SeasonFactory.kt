@@ -2,25 +2,31 @@ package com.barbzdev.f1elo.factory
 
 import com.barbzdev.f1elo.domain.Season
 import com.barbzdev.f1elo.domain.repository.F1Season
+import com.barbzdev.f1elo.factory.RaceFactory.raceOf2014
+import com.barbzdev.f1elo.factory.RaceFactory.races
 
 object SeasonFactory {
   private val seasons =
     listOf(
       Season.create(year = 1950, infoUrl = "http://en.wikipedia.org/wiki/1950_Formula_One_season")
-        .addRacesOfSeason(RaceFactory.races),
+        .addRacesOfSeason(races),
       Season.create(year = 2006, infoUrl = "http://en.wikipedia.org/wiki/2006_Formula_One_season")
-        .addRacesOfSeason(RaceFactory.races),
+        .addRacesOfSeason(races),
       Season.create(year = 2014, infoUrl = "http://en.wikipedia.org/wiki/2014_Formula_One_season")
-        .addRacesOfSeason(RaceFactory.races),
+        .addRacesOfSeason(races),
       Season.create(year = 2021, infoUrl = "https://en.wikipedia.org/wiki/2021_Formula_One_World_Championship")
-        .addRacesOfSeason(RaceFactory.races),
+        .addRacesOfSeason(races),
     )
 
   fun aSeason() = seasons.random()
 
   fun aSeason(year: Int) =
     Season.create(year = year, infoUrl = "https://en.wikipedia.org/wiki/${year}_Formula_One_World_Championship")
-      .addRacesOfSeason(RaceFactory.races)
+      .addRacesOfSeason(races)
+
+  val seasonOf2014 =
+    Season.create(year = 2014, infoUrl = "http://en.wikipedia.org/wiki/2014_Formula_One_season")
+      .addRacesOfSeason(listOf(raceOf2014))
 
   val f1Seasons =
     listOf(

@@ -1,4 +1,4 @@
-package com.barbzdev.f1elo.infrastructure.helper
+package com.barbzdev.f1elo.helper
 
 import java.io.File
 import org.testcontainers.containers.ComposeContainer
