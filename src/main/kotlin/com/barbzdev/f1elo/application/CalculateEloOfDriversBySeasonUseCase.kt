@@ -20,9 +20,7 @@ class CalculateEloOfDriversBySeasonUseCase(
       .findSeason()
       ?.races()
       ?.orderByRoundAsc()
-      ?.forEach { race ->
-        race.groupDriversByTeam().orderDriversAscByPosition().calculateEloOfDrivers(race.occurredOn()).saveDriversElo()
-      }
+      ?.forEach { race -> race.groupDriversByTeam().calculateEloOfDrivers(race.occurredOn()).updateDriversElo() }
       ?.let { CalculateEloOfDriversOfBySeasonSuccess } ?: CalculateEloOfDriversOfANonExistentSeason
 
   private fun CalculateEloOfDriversBySeasonRequest.findSeason() = seasonRepository.findBy(SeasonYear(this.season))
@@ -31,13 +29,13 @@ class CalculateEloOfDriversBySeasonUseCase(
 
   private fun Race.groupDriversByTeam() = this.results().groupBy { it.constructor }
 
-  private fun Map<Constructor, List<RaceResult>>.orderDriversAscByPosition() =
-    this.mapValues { (_, results) -> results.sortedBy { it.position } }
-
   private fun Map<Constructor, List<RaceResult>>.calculateEloOfDrivers(occurredOn: RaceDate): List<Driver> {
     val updatedDrivers = mutableListOf<Driver>()
     this.forEach { (_, results) ->
-      val mapDriversByPosition = results.groupBy { it.position }.mapValues { it.value.map { result -> result.driver } }
+      val mapDriversByPosition =
+        results
+          .groupBy { it.position }
+          .mapValues { it.value.map { result -> driverRepository.findBy(result.driver.id())!! } }
 
       val eloOfDriversUpdated = eloCalculator.calculateEloRatingsByPosition(mapDriversByPosition, occurredOn)
       updatedDrivers.addAll(eloOfDriversUpdated)
@@ -45,7 +43,7 @@ class CalculateEloOfDriversBySeasonUseCase(
     return updatedDrivers
   }
 
-  private fun List<Driver>.saveDriversElo() = this.forEach { driverRepository.save(it) }
+  private fun List<Driver>.updateDriversElo() = this.forEach { driverRepository.save(it) }
 }
 
 data class CalculateEloOfDriversBySeasonRequest(val season: Int)
