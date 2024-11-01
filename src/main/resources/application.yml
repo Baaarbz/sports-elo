@@ -14,3 +14,7 @@ spring:
 
 jolpi-f1:
   base-url: https://localhost:8080
+
+cron:
+  job:
+    enabled: false

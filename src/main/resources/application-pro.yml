@@ -6,3 +6,7 @@ spring:
 
 jolpi-f1:
   base-url: https://api.jolpi.ca/ergast/f1
+
+cron:
+  job:
+    enabled: true
