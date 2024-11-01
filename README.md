@@ -104,9 +104,9 @@ _________________
 #### $N$ drivers share the same car in the race (Argentina GP 1955...)
 
 > **Solution**:
-> <br/> We will take the average ELO of that car and they will win or lose the same amount of ELO, for example: <br/>
+> <br/> We will take the average ELO of that car, and it will be used to calculate the new rating, for example: <br/>
 > There are 3 drivers for a team of 2 cars, driver A & B share the same car, driver C has his own car:
->   - Driver A & B: calculate avg of ELO, and we calculate wins and loses as if they were the same driver, and the total o wins and loses will be divided by 2 and the aggregated to each driver
+>   - Driver A & B: calculate avg of ELO, and we calculate wins and loses as if they were the same driver, and the total o wins and loses will be divided by 2 and then aggregated to each driver
 >   - Driver C: calculate wins and loses as normal
 
 
@@ -115,7 +115,7 @@ _________________
 #### Driver race for multiple teams in the same weekend (1978 Italian GP)
 
 > **Solution**:
-> <br/> Ignore it
+> <br/> He will get ELO updated for each team
 
 
 <br/>

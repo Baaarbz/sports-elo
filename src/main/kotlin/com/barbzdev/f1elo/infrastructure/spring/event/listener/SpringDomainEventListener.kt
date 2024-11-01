@@ -11,6 +11,7 @@ open class SpringDomainEventListener(
 ) {
   @Async
   @EventListener
-  open fun on(event: SpringSeasonLoadedDomainEvent) =
+  open fun on(event: SpringSeasonLoadedDomainEvent) {
     calculateEloOfDriversBySeasonUseCase(CalculateEloOfDriversBySeasonRequest(event.season.year().value))
+  }
 }

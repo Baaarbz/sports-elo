@@ -6,6 +6,7 @@ import com.barbzdev.f1elo.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.f1elo.domain.repository.DriverRepository
 import com.barbzdev.f1elo.domain.repository.F1Repository
 import com.barbzdev.f1elo.domain.repository.SeasonRepository
+import com.barbzdev.f1elo.domain.service.EloCalculator
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -20,6 +21,9 @@ class UseCaseConfiguration {
   ) = GatherRacesBySeasonUseCase(f1Repository, seasonRepository, driverRepository, seasonDomainEventPublisher)
 
   @Bean
-  fun calculateEloOfDriversBySeasonUseCase(seasonRepository: SeasonRepository, driverRepository: DriverRepository) =
-    CalculateEloOfDriversBySeasonUseCase(seasonRepository, driverRepository)
+  fun calculateEloOfDriversBySeasonUseCase(
+    seasonRepository: SeasonRepository,
+    driverRepository: DriverRepository,
+    eloCalculator: EloCalculator
+  ) = CalculateEloOfDriversBySeasonUseCase(seasonRepository, driverRepository, eloCalculator)
 }

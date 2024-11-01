@@ -32,12 +32,8 @@ abstract class CalculateEloOfDriversBySeasonShould : AcceptanceTestConfiguration
       val alonso = driverRepository.findBy(ALONSO_ID)!!
       val hamilton = driverRepository.findBy(HAMILTON_ID)!!
 
-      assertThat(alonso.currentElo().rating)
-        .isGreaterThan(2000)
-        .isGreaterThan(hamilton.currentElo().rating)
-        .isEqualTo(2016)
-
-      assertThat(hamilton.currentElo().rating).isLessThan(2000).isLessThan(alonso.currentElo().rating).isEqualTo(1984)
+      assertThat(alonso.currentElo().rating).isEqualTo(2016)
+      assertThat(hamilton.currentElo().rating).isEqualTo(1984)
     }
   }
 

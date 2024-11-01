@@ -19,6 +19,7 @@ import com.barbzdev.f1elo.factory.CircuitFactory.interlagos
 import com.barbzdev.f1elo.factory.ConstructorFactory.ferrariConstructor
 import com.barbzdev.f1elo.factory.DriverFactory.alonso
 import com.barbzdev.f1elo.factory.DriverFactory.hamilton
+import com.barbzdev.f1elo.factory.DriverFactory.verstappen
 
 object RaceFactory {
   val races =
