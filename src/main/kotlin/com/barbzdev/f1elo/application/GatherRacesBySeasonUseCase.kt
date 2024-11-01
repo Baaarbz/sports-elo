@@ -83,15 +83,18 @@ class GatherRacesBySeasonUseCase(
   private fun F1Driver.toDriver(raceDate: String) =
     driverRepository.findBy(DriverId(driverId))
       ?: Driver.createRookie(
-        id = driverId,
-        givenName = givenName,
-        familyName = familyName,
-        birthDate = dateOfBirth,
-        code = code,
-        permanentNumber = permanentNumber,
-        nationality = nationality,
-        infoUrl = url,
-        debutDate = raceDate)
+          id = driverId,
+          givenName = givenName,
+          familyName = familyName,
+          birthDate = dateOfBirth,
+          code = code,
+          permanentNumber = permanentNumber,
+          nationality = nationality,
+          infoUrl = url,
+          debutDate = raceDate)
+        .saveIt()
+
+  private fun Driver.saveIt() = driverRepository.save(this).let { this }
 
   private fun F1Circuit.toCircuit() =
     Circuit.create(

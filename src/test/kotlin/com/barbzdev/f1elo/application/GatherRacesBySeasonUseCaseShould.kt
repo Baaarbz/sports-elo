@@ -78,6 +78,7 @@ class GatherRacesBySeasonUseCaseShould {
     every { f1Repository.gatherAllSeasons() } returns f1Seasons
     every { f1Repository.gatherRacesBySeason(any()) } returns RaceFactory.aF1RacesFrom(aSeasonToLoad)
     every { driverRepository.findBy(any()) } returns null
+    every { driverRepository.save(any()) } just Runs
     every { seasonRepository.save(any()) } just Runs
 
     val result = gatherRacesBySeasonUseCase.invoke()
@@ -104,6 +105,7 @@ class GatherRacesBySeasonUseCaseShould {
     every { f1Repository.gatherAllSeasons() } returns f1Seasons
     every { f1Repository.gatherRacesBySeason(any()) } returns RaceFactory.aF1RacesFrom(aSeasonToLoad)
     every { driverRepository.findBy(any()) } returns null
+    every { driverRepository.save(any()) } just Runs
     every { seasonRepository.save(any()) } just Runs
 
     val result = gatherRacesBySeasonUseCase.invoke()

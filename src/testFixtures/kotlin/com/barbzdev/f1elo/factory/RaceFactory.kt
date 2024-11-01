@@ -170,10 +170,12 @@ object RaceFactory {
       laps = this.laps,
       status = this.status.name,
       time =
-        F1Time(
-          millis = this.timeInMillis,
-          time = this.timeInMillis.toString(),
-        ),
+        this.timeInMillis?.let {
+          F1Time(
+            millis = it,
+            time = this.timeInMillis.toString(),
+          )
+        },
       fastestLap =
         F1FastestLap(
           rank = 1,
