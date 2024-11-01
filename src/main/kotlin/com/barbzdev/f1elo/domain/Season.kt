@@ -21,7 +21,10 @@ private constructor(
 
   fun isCurrentSeason() = year.value >= now().year
 
-  fun addRacesOfSeason(races: List<Race>) = Season(id = id, year = year, infoUrl = infoUrl, races = races.plus(races))
+  fun addRacesOfSeason(races: List<Race>): Season {
+    val filteredRaces = races.filter { it.name().value != "Indianapolis 500" }
+    return Season(id = id, year = year, infoUrl = infoUrl, races = this.races.plus(filteredRaces))
+  }
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
