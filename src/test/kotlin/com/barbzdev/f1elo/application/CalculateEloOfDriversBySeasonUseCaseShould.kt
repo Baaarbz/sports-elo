@@ -21,7 +21,6 @@ class CalculateEloOfDriversBySeasonUseCaseShould {
   private val useCase: CalculateEloOfDriversBySeasonUseCase =
     CalculateEloOfDriversBySeasonUseCase(seasonRepository, driverRepository, eloCalculator)
 
-
   @Test
   fun `calculate elo of drivers when season is found`() {
     val aSeason = aSeason()
