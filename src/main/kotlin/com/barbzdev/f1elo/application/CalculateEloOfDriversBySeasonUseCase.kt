@@ -16,18 +16,14 @@ class CalculateEloOfDriversBySeasonUseCase(
   private val eloCalculator: EloCalculator
 ) {
   operator fun invoke(request: CalculateEloOfDriversBySeasonRequest) =
-    request.findSeason()
+    request
+      .findSeason()
       ?.races()
       ?.orderByRoundAsc()
       ?.forEach { race ->
-        race
-          .groupDriversByTeam()
-          .orderDriversAscByPosition()
-          .calculateEloOfDrivers(race.occurredOn())
-          .saveDriversElo()
+        race.groupDriversByTeam().orderDriversAscByPosition().calculateEloOfDrivers(race.occurredOn()).saveDriversElo()
       }
-      ?.let { CalculateEloOfDriversOfBySeasonSuccess }
-      ?: CalculateEloOfDriversOfANonExistentSeason
+      ?.let { CalculateEloOfDriversOfBySeasonSuccess } ?: CalculateEloOfDriversOfANonExistentSeason
 
   private fun CalculateEloOfDriversBySeasonRequest.findSeason() = seasonRepository.findBy(SeasonYear(this.season))
 
@@ -55,5 +51,7 @@ class CalculateEloOfDriversBySeasonUseCase(
 data class CalculateEloOfDriversBySeasonRequest(val season: Int)
 
 sealed class CalculateEloOfDriversBySeasonResponse
+
 data object CalculateEloOfDriversOfBySeasonSuccess : CalculateEloOfDriversBySeasonResponse()
+
 data object CalculateEloOfDriversOfANonExistentSeason : CalculateEloOfDriversBySeasonResponse()

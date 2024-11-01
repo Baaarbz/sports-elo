@@ -6,6 +6,5 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class ServiceConfiguration {
-  @Bean
-  fun eloCalculator() = EloCalculator()
+  @Bean fun eloCalculator() = EloCalculator()
 }

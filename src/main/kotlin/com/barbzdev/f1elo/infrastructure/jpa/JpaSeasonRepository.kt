@@ -26,9 +26,11 @@ open class JpaSeasonRepository(
   private val eloHistoryDatasource: JpaDriverEloHistoryDatasource
 ) : SeasonRepository {
 
-  override fun getLastSeasonLoaded(): Season? = seasonDatasource.findAll().maxByOrNull { it.year }?.gatherAllRelatedDataOfTheSeason()
+  override fun getLastSeasonLoaded(): Season? =
+    seasonDatasource.findAll().maxByOrNull { it.year }?.gatherAllRelatedDataOfTheSeason()
 
-  override fun findBy(year: SeasonYear): Season? = seasonDatasource.findByYear(year.value)?.gatherAllRelatedDataOfTheSeason()
+  override fun findBy(year: SeasonYear): Season? =
+    seasonDatasource.findByYear(year.value)?.gatherAllRelatedDataOfTheSeason()
 
   private fun SeasonEntity.gatherAllRelatedDataOfTheSeason(): Season {
     val raceEntitiesOfSeason = raceDatasource.findAllBySeason(this)
@@ -44,8 +46,7 @@ open class JpaSeasonRepository(
     return this.toDomain().addRacesOfSeason(racesOfSeason)
   }
 
-  @Transactional
-  override fun save(season: Season) = season.saveSeason().saveRaces()
+  @Transactional override fun save(season: Season) = season.saveSeason().saveRaces()
 
   private fun Season.saveSeason(): Season {
     seasonDatasource.save(this.toEntity())

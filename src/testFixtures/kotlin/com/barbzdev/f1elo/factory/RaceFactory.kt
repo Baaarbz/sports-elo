@@ -19,7 +19,6 @@ import com.barbzdev.f1elo.factory.CircuitFactory.interlagos
 import com.barbzdev.f1elo.factory.ConstructorFactory.ferrariConstructor
 import com.barbzdev.f1elo.factory.DriverFactory.alonso
 import com.barbzdev.f1elo.factory.DriverFactory.hamilton
-import com.barbzdev.f1elo.factory.DriverFactory.verstappen
 
 object RaceFactory {
   val races =
@@ -92,7 +91,8 @@ object RaceFactory {
           number = "44"),
     )
 
-  val raceOf2014 = Race.create(
+  val raceOf2014 =
+    Race.create(
         round = 1,
         name = "Interlagos Grand Prix",
         occurredOn = "2014-03-05",

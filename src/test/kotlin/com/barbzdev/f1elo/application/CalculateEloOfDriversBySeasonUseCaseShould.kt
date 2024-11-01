@@ -13,7 +13,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 
-
 class CalculateEloOfDriversBySeasonUseCaseShould {
   private val seasonRepository: SeasonRepository = mockk()
   private val driverRepository: DriverRepository = mockk(relaxed = true)
