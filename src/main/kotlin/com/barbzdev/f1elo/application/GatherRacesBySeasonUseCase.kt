@@ -72,7 +72,7 @@ class GatherRacesBySeasonUseCase(
           grid = result.grid,
           laps = result.laps,
           status = result.status,
-          timeInMillis = result.time.millis,
+          timeInMillis = result.time?.millis,
           fastestLapInMillis = result.fastestLap?.time?.millis,
           averageSpeed = result.fastestLap?.averageSpeed?.speed,
           averageSpeedUnit = result.fastestLap?.averageSpeed?.units)

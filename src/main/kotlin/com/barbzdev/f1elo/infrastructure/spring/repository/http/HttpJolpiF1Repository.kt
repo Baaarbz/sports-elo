@@ -128,7 +128,7 @@ class HttpJolpiF1Repository(private val restClient: RestClient, private val jolp
       grid = this.grid.toInt(),
       laps = this.laps.toInt(),
       status = this.status,
-      time = this.time.toF1Time(),
+      time = this.time?.toF1Time(),
       fastestLap = this.fastestLap?.toF1FastestLap())
 
   private fun JolpiDriver.toF1Driver() =
@@ -201,7 +201,7 @@ data class JolpiResult(
   val grid: String,
   val laps: String,
   val status: String,
-  @JsonProperty("Time") val time: JolpiTime,
+  @JsonProperty("Time") val time: JolpiTime?,
   val fastestLap: JolpiFastestLap?
 )
 

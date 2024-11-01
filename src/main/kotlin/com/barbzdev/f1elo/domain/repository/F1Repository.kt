@@ -37,7 +37,7 @@ data class F1Result(
   val grid: Int,
   val laps: Int,
   val status: String,
-  val time: F1Time,
+  val time: F1Time?,
   val fastestLap: F1FastestLap?
 )
 

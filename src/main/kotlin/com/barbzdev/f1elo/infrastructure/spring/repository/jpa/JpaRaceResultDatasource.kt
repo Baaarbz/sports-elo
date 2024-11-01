@@ -32,7 +32,7 @@ data class RaceResultEntity(
   val grid: Int,
   val laps: Int,
   val status: String,
-  @Column(name = "time_in_millis") val timeInMillis: Long,
+  @Column(name = "time_in_millis") val timeInMillis: Long?,
   @Column(name = "fastest_lap_in_millis") val fastestLapInMillis: Long?,
   @Column(name = "average_speed") val averageSpeed: Float?,
   @Column(name = "average_speed_unit") val averageSpeedUnit: String?

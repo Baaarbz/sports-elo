@@ -37,7 +37,7 @@ private constructor(
     grid: Int,
     laps: Int,
     status: String,
-    timeInMillis: Long,
+    timeInMillis: Long?,
     fastestLapInMillis: Long?,
     averageSpeed: Float?,
     averageSpeedUnit: String?
@@ -157,7 +157,7 @@ data class RaceResult(
   val grid: Int,
   val laps: Int,
   val status: RaceResultStatus,
-  val timeInMillis: Long,
+  val timeInMillis: Long?,
   val fastestLapInMillis: Long?,
   val averageSpeed: Float?,
   val averageSpeedUnit: String?,

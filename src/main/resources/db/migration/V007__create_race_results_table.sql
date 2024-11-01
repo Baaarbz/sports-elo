@@ -10,7 +10,7 @@ CREATE TABLE race_results
     grid                  INT                      NOT NULL,
     laps                  INT                      NOT NULL,
     status                VARCHAR(255)             NOT NULL,
-    time_in_millis        BIGINT                   NOT NULL,
+    time_in_millis        BIGINT,
     fastest_lap_in_millis BIGINT,
     average_speed         FLOAT,
     average_speed_unit    VARCHAR(3),
