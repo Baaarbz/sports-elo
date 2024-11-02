@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class RacesScheduledTask(
-  private val gatherRacesBySeasonUseCase: GatherRacesBySeasonUseCase, @Value("\${cron.job.enabled}") private val isCronJobEnabled: Boolean
+  private val gatherRacesBySeasonUseCase: GatherRacesBySeasonUseCase,
+  @Value("\${cron.job.enabled}") private val isCronJobEnabled: Boolean
 ) {
 
   @Scheduled(cron = "0 0 12 * * ?")
