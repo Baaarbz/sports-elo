@@ -67,7 +67,7 @@ $$
 $Q_A$ for driver <br/>
 $Q_B$ for teammate <br/>
 $R'$ new driver rating <br/>
-$R$  old driver rating <br/>
+$R$ old driver rating <br/>
 $K$ is a multiplier we will use $K=32$ the double than chess.com <br/>
 $S$ Result against teammate <br/>
 
@@ -88,16 +88,32 @@ _________________
 
 #### More than 2 drivers per team (Argentina GP 1955...)
 
-> **Solution**:
+**Solutions**:
+> **Option A**:
 > <br/>The drivers will get wins and loses depends on the final position, accumulating the loses or the winnings in
 > terms of ELO, for example: <br/>
 > There are 4 drivers for a team in the same race, driver A, B, C and D end the race in the respective positions (1º A,
 > 2º B, 3º C, 4º D)
 > each driver wins and loses the same ELO, for example 10. Then the result will end as:
 >    - Driver A: Wins $+30$ ELO (wins against 3 drivers $+10 +10 +10 = 30$ )
->    - Driver B: Wins $+10$ ELO (wins against 2 drivers $+10 +10 = 20$  but lose against 1 driver $-10 = -10$)
->    - Driver C: Lose$-10$ ELO (wins against 1 driver $+10= 10$  but loses against 2 drivers $-10-10 = -20$)
+>    - Driver B: Wins $+10$ ELO (wins against 2 drivers $+10 +10 = 20$ but lose against 1 driver $-10 = -10$)
+>    - Driver C: Lose$-10$ ELO (wins against 1 driver $+10= 10$ but loses against 2 drivers $-10-10 = -20$)
 >    - Driver D: Lose $-30$ ELO (loses against 3 drivers $-10 -10-10 = -30$ )
+> ________
+> **Issues**:
+> <br/>The problem with this solution is that the drivers will get the ELO calculated based on the ELO previous of the
+> race, in case they win, they will win more ELO, and in case they lose, they will lose more ELO, and this is not fair.
+> And this case does not happen in real world, if you win/lose in your next match you will get your ELO updated in base
+> of
+> the last record of elo you have not based in a fixed one.
+> ____
+> **Conclusion**:
+> <br/>After several test we have concluded that drivers before 1981 have in average more chances to win and lose "a
+> lot" more ELO than modern drivers (post 1981) and breaks the consistency of the ELO system, so we are going to discard
+> this option
+
+> **Option B**:
+> <br/>Use the same approach as before but the $K$ multiplier will be divided by the number of drivers in the team.
 
 <br/>
 
@@ -106,7 +122,8 @@ _________________
 > **Solution**:
 > <br/> We will take the average ELO of that car, and it will be used to calculate the new rating, for example: <br/>
 > There are 3 drivers for a team of 2 cars, driver A & B share the same car, driver C has his own car:
->   - Driver A & B: calculate avg of ELO, and we calculate wins and loses as if they were the same driver, and the total o wins and loses will be divided by 2 and then aggregated to each driver
+>   - Driver A & B: calculate avg of ELO, and we calculate wins and loses as if they were the same driver, and the total
+      o wins and loses will be divided by 2 and then aggregated to each driver
 >   - Driver C: calculate wins and loses as normal
 
 
@@ -129,61 +146,39 @@ _________________
 
 ## Iterations
 
-### Take into account the performance of the car (WIP)
+### Take into account the performance of the car
+
+For both possible solutions we require to calculate the elo, only when the season ends, as we need to know the final
+result of the constructors standings.
+Also, due to the lack of consistency in the first seasons of Formula 1 in terms of, teams, number of drivers per team,
+and so on, we are going to take into account for this feature, only since season 1981, were each team can only have 2
+drivers.
+There are two options:
 
 > **Option A**: <br/>
-> Add a new multiplier to  $R'=R+K(S-E)$  as for example: $R'=R+K(S-E)*TR$ where $TR$ is **T**eam **R**ating,
-> tradeoffs:<br/>
->    - ELO only can be calculated at the end of the season.
->    - It should be an ELO if you win against teammate and other if you lose, for example: you have the worst car but
-       > you end 1º and 2º in the race, you should not lose ELO, or at least you should not lose a lot, hard to fix
-       > this case (to not lose or win ELOif you end in front of other cars…)
->    - If you have the 10th car and you en 8th when you expected result is 19th and 20th you should win a lot more
+> Add a new multiplier to $R'=R+K(S-E)$ as for example: $R'=R+K(S-E)*TR$ where $TR$ is **T**eam **R**ating<br/>
 
 > **Option B**: <br/>
-> Increase/decrease the value of $S$ depending if the driver is performing above or under the car performance
-> - $R'=R+K((S+TP)-E)$
-> - Where TP is theorical performance
-> - The values of TP will be bases on:
-> - If you finish last with the best car you should be penalized as a lost $TP = -1$
-    >
-- If you finish first with the best car nothing should change $TP= 0$
->    - And the same but inversed for the worst car
-> - This makes more sense than multiplying randomly, if the driver is performing better than the car therically
-    > performance will ve rewarded but, if is underperforming then will be penalized
-> - If the driver end as DNF, we dont know if was by his mistake (should get full penalization) or mechanical
-    > failure (not deserve full penalization) then, in this case, this new value called $TP$ well be equals to 0
-> - In the table bellow well be shown how this will be calculated, X axis = theorical position Y axis = driver
-    > position at race
+> Increase/decrease the value of $S$ depending on if the driver is performing above or under the car performance
+> $R'=R+K((S+TP)-E)$
+> <br/>Where TP is **T**heorical **P**erformance those values of TP will be based on the next table:
 
-|     | 1º  | 2º  | 3º  | 4º  | 5º  | 6º  | 7º  | 8º  | 9º  | 10º | 11º | 12º | 13º | 14º | 15º |
-|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
-| 1º  | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
-| 2º  | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
-| 3º  | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
-| 4º  | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
-| 5º  | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
-| 6º  | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
-| 7º  | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
-| 8º  | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd | tbd | tbd |
-| 9º  | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd |
-| 10º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd | tbd | tbd |
-| 11º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd |
-| 12º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd | tbd | tbd |
-| 13º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd |
-| 14º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   | 0   | tbd |
-| 15º | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | tbd | 0   |
+|     | 1º - 2º<br/>1º in standings | 3º - 4º<br/>2º in standings | 5º - 6º<br/>3º in standings | 7º - 8º<br/>4º in standings | 9º - 10º<br/>5º in standings |
+|-----|-----------------------------|-----------------------------|-----------------------------|-----------------------------|------------------------------|
+| 1º  | 0                           | 0.2                         | 0.4                         | 0.6                         | 0.8                          |
+| 2º  | 0                           | 0.1                         | 0.3                         | 0.5                         | 0.7                          |
+| 3º  | -0.1                        | 0                           | 0.2                         | 0.4                         | 0.6                          |
+| 4º  | -0.2                        | 0                           | 0.1                         | 0.3                         | 0.5                          |
+| 5º  | -0.3                        | -0.1                        | 0                           | 0.2                         | 0.4                          |
+| 6º  | -0.4                        | -0.2                        | 0                           | 0.1                         | 0.3                          |
+| 7º  | -0.4                        | -0.3                        | -0.1                        | 0                           | 0.2                          |
+| 8º  | -0.5                        | -0.4                        | -0.2                        | 0                           | 0.1                          |
+| 9º  | -0.6                        | -0.5                        | -0.3                        | -0.1                        | 0                            |
+| 10º | -0.7                        | -0.6                        | -0.4                        | -0.2                        | 0                            |
 
 ### Calculate the ELO of the constructors
 
 TBD
-_________________
-
-## Considerations
-
-In order to not overload the API gathering the results of the races, the strategy we are going follow is to store the
-results in a database and each day at 12PM we will retrieve race results until we are up to date, once we are up to date
-the scheduled job will work only each monday to ensure we always get last races results.
 
 _________________
 
