@@ -113,7 +113,7 @@ _________________
 > this option
 
 > **Option B**:
-> <br/>Use the same approach as before but the $K$ multiplier will be divided by the number of drivers in the team.
+> <br/>Use the same approach as before but the $K$ multiplier will be divided by the number of cars racing in the team.
 
 <br/>
 
