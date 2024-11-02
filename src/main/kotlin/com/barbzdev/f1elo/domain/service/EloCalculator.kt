@@ -21,7 +21,8 @@ class EloCalculator {
         if (position != opponentPosition) {
           val averageOpponentElo = opponents.getAverageElo()
           val raceResult = if (position < opponentPosition) WIN else LOSE
-          accumulatedEloDeltaForPosition += calculateEloDelta(averageElo, averageOpponentElo, raceResult)
+          val kReducer = if (driversByPosition.size == 2) 1 else driversByPosition.size
+          accumulatedEloDeltaForPosition += calculateEloDelta(averageElo, averageOpponentElo, raceResult, kReducer)
         }
       }
 
@@ -38,14 +39,14 @@ class EloCalculator {
 
   private fun List<Driver>.getAverageElo(): Int = this.map { it.currentElo().rating }.average().toInt()
 
-  fun calculateEloDelta(elo: Int, rivalElo: Int, raceResult: RaceResult): Int {
+  fun calculateEloDelta(elo: Int, rivalElo: Int, raceResult: RaceResult, kReducer: Int): Int {
     val qA = calculateQ(rating = elo)
     val qB = calculateQ(rating = rivalElo)
 
     val e = calculateE(qA = qA, qB = qB)
     val s = calculateS(raceResult)
 
-    return round(elo + K * (s - e)).toInt() - elo
+    return round(elo + (K / kReducer) * (s - e)).toInt() - elo
   }
 
   private fun calculateQ(rating: Int): Double = 10.0.pow(rating / 400.0)
