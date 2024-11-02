@@ -35,9 +35,9 @@ class EloCalculatorShould {
     val result = eloCalculator.calculateEloRatingsByPosition(givenMapOfPositionDrivers, RaceDate(ANY_RACE_DATE))
 
     assertAll {
-      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().rating).isEqualTo(2032)
+      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().rating).isEqualTo(2026)
       assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().rating).isEqualTo(2000)
-      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().rating).isEqualTo(1968)
+      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().rating).isEqualTo(1974)
     }
     verifyCurrentEloOccurredOn(result)
   }
@@ -50,10 +50,10 @@ class EloCalculatorShould {
     val result = eloCalculator.calculateEloRatingsByPosition(givenMapOfPositionDrivers, RaceDate(ANY_RACE_DATE))
 
     assertAll {
-      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().rating).isEqualTo(2048)
-      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().rating).isEqualTo(2016)
-      assertThat(result.find { it.id() == verstappen.id() }!!.currentElo().rating).isEqualTo(1984)
-      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().rating).isEqualTo(1952)
+      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().rating).isEqualTo(2036)
+      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().rating).isEqualTo(2012)
+      assertThat(result.find { it.id() == verstappen.id() }!!.currentElo().rating).isEqualTo(1988)
+      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().rating).isEqualTo(1964)
     }
     verifyCurrentEloOccurredOn(result)
   }
@@ -94,7 +94,7 @@ class EloCalculatorShould {
     val driverElo = 2000
     val rivalElo = 2000
 
-    val result = eloCalculator.calculateEloDelta(driverElo, rivalElo, RaceResult.WIN)
+    val result = eloCalculator.calculateEloDelta(driverElo, rivalElo, RaceResult.WIN, 1)
 
     val expectedEloDelta = 16
     assertThat(result).isEqualTo(expectedEloDelta)
@@ -105,7 +105,7 @@ class EloCalculatorShould {
     val driverElo = 2000
     val rivalElo = 2000
 
-    val result = eloCalculator.calculateEloDelta(driverElo, rivalElo, RaceResult.LOSE)
+    val result = eloCalculator.calculateEloDelta(driverElo, rivalElo, RaceResult.LOSE, 1)
 
     val expectedEloDelta = -16
     assertThat(result).isEqualTo(expectedEloDelta)
@@ -116,7 +116,7 @@ class EloCalculatorShould {
     val driverElo = 2000
     val rivalElo = 2000
 
-    val result = eloCalculator.calculateEloDelta(driverElo, rivalElo, RaceResult.DRAW)
+    val result = eloCalculator.calculateEloDelta(driverElo, rivalElo, RaceResult.DRAW, 1)
 
     val expectedEloDelta = 0
     assertThat(result).isEqualTo(expectedEloDelta)

@@ -46,7 +46,9 @@ class EloCalculator {
     val e = calculateE(qA = qA, qB = qB)
     val s = calculateS(raceResult)
 
-    return round(elo + (K / kReducer) * (s - e)).toInt() - elo
+    val k = if (kReducer == 1) K else K - (kReducer * 2)
+
+    return round(elo + k * (s - e)).toInt() - elo
   }
 
   private fun calculateQ(rating: Int): Double = 10.0.pow(rating / 400.0)
