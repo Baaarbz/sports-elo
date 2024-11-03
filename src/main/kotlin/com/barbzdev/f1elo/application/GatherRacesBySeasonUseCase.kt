@@ -8,6 +8,7 @@ import com.barbzdev.f1elo.domain.Race
 import com.barbzdev.f1elo.domain.Season
 import com.barbzdev.f1elo.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.f1elo.domain.event.SeasonLoadedDomainEvent
+import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository
 import com.barbzdev.f1elo.domain.repository.F1Circuit
 import com.barbzdev.f1elo.domain.repository.F1Constructor
@@ -20,19 +21,20 @@ class GatherRacesBySeasonUseCase(
   private val f1Repository: F1Repository,
   private val seasonRepository: SeasonRepository,
   private val driverRepository: DriverRepository,
-  private val seasonDomainEventPublisher: SeasonDomainEventPublisher
+  private val seasonDomainEventPublisher: SeasonDomainEventPublisher,
+  private val instrumentation: UseCaseInstrumentation
 ) {
 
-  operator fun invoke(): GatherRacesBySeasonResponse {
-    val seasonToLoad = getSeasonToLoad() ?: return GatherRacesOverASeasonNonExistent
+  operator fun invoke(): GatherRacesBySeasonResponse = instrumentation {
+    val seasonToLoad = getSeasonToLoad() ?: return@instrumentation GatherRacesOverASeasonNonExistent
 
     if (seasonToLoad.isCurrentSeason()) {
-      return GatherRacesBySeasonUpToDate
+      return@instrumentation GatherRacesBySeasonUpToDate
     }
 
     seasonToLoad.loadF1RacesOfSeason().toDomain().saveSeasonLoaded(seasonToLoad).publishSeasonLoadedDomainEvent()
 
-    return GatherRacesBySeasonSuccess
+    GatherRacesBySeasonSuccess
   }
 
   private fun List<Race>.saveSeasonLoaded(seasonToLoad: Season): Season {

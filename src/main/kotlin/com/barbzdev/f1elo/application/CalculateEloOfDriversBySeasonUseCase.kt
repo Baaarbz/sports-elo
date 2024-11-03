@@ -6,6 +6,7 @@ import com.barbzdev.f1elo.domain.Race
 import com.barbzdev.f1elo.domain.RaceDate
 import com.barbzdev.f1elo.domain.RaceResult
 import com.barbzdev.f1elo.domain.SeasonYear
+import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository
 import com.barbzdev.f1elo.domain.repository.SeasonRepository
 import com.barbzdev.f1elo.domain.service.EloCalculator
@@ -13,15 +14,17 @@ import com.barbzdev.f1elo.domain.service.EloCalculator
 class CalculateEloOfDriversBySeasonUseCase(
   private val seasonRepository: SeasonRepository,
   private val driverRepository: DriverRepository,
-  private val eloCalculator: EloCalculator
+  private val eloCalculator: EloCalculator,
+  private val instrumentation: UseCaseInstrumentation
 ) {
-  operator fun invoke(request: CalculateEloOfDriversBySeasonRequest) =
+  operator fun invoke(request: CalculateEloOfDriversBySeasonRequest) = instrumentation {
     request
       .findSeason()
       ?.races()
       ?.orderByRoundAsc()
       ?.forEach { race -> race.groupDriversByTeam().calculateEloOfDrivers(race.occurredOn()).updateDriversElo() }
       ?.let { CalculateEloOfDriversOfBySeasonSuccess } ?: CalculateEloOfDriversOfANonExistentSeason
+  }
 
   private fun CalculateEloOfDriversBySeasonRequest.findSeason() = seasonRepository.findBy(SeasonYear(this.season))
 
