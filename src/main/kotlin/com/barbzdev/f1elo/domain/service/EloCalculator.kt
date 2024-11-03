@@ -46,7 +46,7 @@ class EloCalculator {
     val e = calculateE(qA = qA, qB = qB)
     val s = calculateS(raceResult)
 
-    val k = if (kReducer == 1) K else K - (kReducer * 2)
+    val k = if (kReducer == 1) K else (K / (kReducer - 1)) * 1.5f
 
     return round(elo + k * (s - e)).toInt() - elo
   }
