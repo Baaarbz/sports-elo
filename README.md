@@ -114,7 +114,7 @@ _________________
 
 > **Option B**:
 > <br/>Use the same approach as before but the $K$ multiplier will be decreased depending on the number of drivers for
-> the team following the next formula: $K = 32 - (N * 2)$<br/><br/>
+> the team following the next formula: $K = (32 - (N - 1)) * 1.5$<br/><br/>
 > This will be the logic behind the scenes:
 > ```java
 > if (numberOfDrivers == 2) then K = 32
