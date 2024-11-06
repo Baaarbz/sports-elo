@@ -12,7 +12,7 @@ plugins {
   kotlin("plugin.spring") version kotlinPluginVersion
   kotlin("plugin.jpa") version kotlinPluginVersion
 
-  id("com.ncorti.ktfmt.gradle") version "0.20.1"
+  id("com.ncorti.ktfmt.gradle") version "0.21.0"
 
   id("org.springframework.boot") version "3.3.5"
   id("io.spring.dependency-management") version "1.1.6"
