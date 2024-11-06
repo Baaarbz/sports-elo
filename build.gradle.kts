@@ -61,7 +61,7 @@ dependencies {
   testImplementation("io.mockk:mockk:1.13.13")
   testImplementation("com.ninja-squad:springmockk:4.0.2")
 
-  testImplementation("com.willowtreeapps.assertk:assertk:0.28.0")
+  testImplementation("com.willowtreeapps.assertk:assertk:0.28.1")
 
   testImplementation("org.awaitility:awaitility:4.2.2")
 
