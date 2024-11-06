@@ -2,12 +2,14 @@ package com.barbzdev.f1elo.application
 
 import assertk.assertThat
 import assertk.assertions.isInstanceOf
+import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository
 import com.barbzdev.f1elo.domain.repository.SeasonRepository
 import com.barbzdev.f1elo.domain.service.EloCalculator
 import com.barbzdev.f1elo.factory.DriverFactory.hamilton
 import com.barbzdev.f1elo.factory.DriverFactory.verstappen
 import com.barbzdev.f1elo.factory.SeasonFactory.aSeason
+import com.barbzdev.f1elo.observability.instrumentationMock
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -17,8 +19,10 @@ class CalculateEloOfDriversBySeasonUseCaseShould {
   private val seasonRepository: SeasonRepository = mockk()
   private val driverRepository: DriverRepository = mockk(relaxed = true)
   private val eloCalculator: EloCalculator = mockk()
+  private val instrumentation: UseCaseInstrumentation = instrumentationMock<UseCaseInstrumentation>()
+
   private val useCase: CalculateEloOfDriversBySeasonUseCase =
-    CalculateEloOfDriversBySeasonUseCase(seasonRepository, driverRepository, eloCalculator)
+    CalculateEloOfDriversBySeasonUseCase(seasonRepository, driverRepository, eloCalculator, instrumentation)
 
   @Test
   fun `calculate elo of drivers when season is found`() {

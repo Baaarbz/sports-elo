@@ -64,6 +64,8 @@ dependencies {
   testImplementation("com.willowtreeapps.assertk:assertk:0.28.0")
 
   testImplementation("org.awaitility:awaitility:4.2.2")
+
+  testFixturesImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
 }
 
 addTestSet("integrationTest")

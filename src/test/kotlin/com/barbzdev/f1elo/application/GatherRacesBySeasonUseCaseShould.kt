@@ -4,6 +4,7 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import com.barbzdev.f1elo.domain.event.SeasonDomainEventPublisher
+import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository
 import com.barbzdev.f1elo.domain.repository.F1Repository
 import com.barbzdev.f1elo.domain.repository.SeasonRepository
@@ -11,6 +12,7 @@ import com.barbzdev.f1elo.factory.RaceFactory
 import com.barbzdev.f1elo.factory.SeasonFactory.aF1Season
 import com.barbzdev.f1elo.factory.SeasonFactory.aSeason
 import com.barbzdev.f1elo.factory.SeasonFactory.f1Seasons
+import com.barbzdev.f1elo.observability.instrumentationMock
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -26,9 +28,10 @@ class GatherRacesBySeasonUseCaseShould {
   private val seasonRepository: SeasonRepository = mockk()
   private val driverRepository: DriverRepository = mockk()
   private val seasonDomainEventPublisher: SeasonDomainEventPublisher = mockk(relaxed = true)
+  private val instrumentation: UseCaseInstrumentation = instrumentationMock<UseCaseInstrumentation>()
 
   private val gatherRacesBySeasonUseCase =
-    GatherRacesBySeasonUseCase(f1Repository, seasonRepository, driverRepository, seasonDomainEventPublisher)
+    GatherRacesBySeasonUseCase(f1Repository, seasonRepository, driverRepository, seasonDomainEventPublisher, instrumentation)
 
   @Test
   fun `return GatherRacesOverASeasonNonExistent when the season to load is the current season`() {
