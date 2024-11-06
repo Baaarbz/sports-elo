@@ -14,7 +14,7 @@ plugins {
 
   id("com.ncorti.ktfmt.gradle") version "0.20.1"
 
-  id("org.springframework.boot") version "3.3.4"
+  id("org.springframework.boot") version "3.3.5"
   id("io.spring.dependency-management") version "1.1.6"
 
   id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.9"
