@@ -9,7 +9,8 @@ class LoggerDelegate : ReadOnlyProperty<Any?, Logger> {
 
   private var logger: Logger? = null
 
-  override operator fun getValue(thisRef: Any?, property: KProperty<*>): Logger = logger ?: createLogger(thisRef!!.javaClass)
+  override operator fun getValue(thisRef: Any?, property: KProperty<*>): Logger =
+    logger ?: createLogger(thisRef!!.javaClass)
 
   private companion object {
     fun <T> createLogger(clazz: Class<T>): Logger = LoggerFactory.getLogger(clazz)

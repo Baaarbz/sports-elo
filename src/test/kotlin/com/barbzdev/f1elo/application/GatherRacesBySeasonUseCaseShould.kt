@@ -31,7 +31,8 @@ class GatherRacesBySeasonUseCaseShould {
   private val instrumentation: UseCaseInstrumentation = instrumentationMock<UseCaseInstrumentation>()
 
   private val gatherRacesBySeasonUseCase =
-    GatherRacesBySeasonUseCase(f1Repository, seasonRepository, driverRepository, seasonDomainEventPublisher, instrumentation)
+    GatherRacesBySeasonUseCase(
+      f1Repository, seasonRepository, driverRepository, seasonDomainEventPublisher, instrumentation)
 
   @Test
   fun `return GatherRacesOverASeasonNonExistent when the season to load is the current season`() {

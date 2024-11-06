@@ -14,7 +14,7 @@ open class DefaultUseCaseInstrumentation : UseCaseInstrumentation {
 
     return measureTimedValue { execute(useCase) }
       .logExecutionTime(useCaseName)
-      .onFailure { exception ->  onFailedUseCaseExecution(exception, useCaseName)}
+      .onFailure { exception -> onFailedUseCaseExecution(exception, useCaseName) }
       .onSuccess { onSuccessUseCaseExecution(useCaseName) }
       .getOrThrow()
   }
@@ -27,7 +27,9 @@ open class DefaultUseCaseInstrumentation : UseCaseInstrumentation {
   }
 
   private fun onFailedUseCaseExecution(throwable: Throwable, useCaseName: String) {
-    logger.error("Exception [${throwable::class.simpleName}] executing use case $useCaseName reason: ${throwable.message}", throwable)
+    logger.error(
+      "Exception [${throwable::class.simpleName}] executing use case $useCaseName reason: ${throwable.message}",
+      throwable)
   }
 
   private fun onSuccessUseCaseExecution(useCaseName: String) {
@@ -39,12 +41,7 @@ open class DefaultUseCaseInstrumentation : UseCaseInstrumentation {
     val suffixesToRemove = listOf("Service", "UseCase")
 
     fun takeUseCaseNameFromEmbeddingClass(clazz: KClass<out Any>) =
-      clazz.java.name
-        .removeLambdaReference()
-        ?.extractClassName()
-        ?.removeUseCaseSuffixes()
-        .toSnakeCase()
-        ?: UNKNOWN
+      clazz.java.name.removeLambdaReference()?.extractClassName()?.removeUseCaseSuffixes().toSnakeCase() ?: UNKNOWN
 
     fun String.removeLambdaReference() = split("$").firstOrNull()
 

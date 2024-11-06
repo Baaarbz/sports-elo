@@ -20,7 +20,9 @@ class UseCaseConfiguration {
     driverRepository: DriverRepository,
     seasonDomainEventPublisher: SeasonDomainEventPublisher,
     useCaseInstrumentation: UseCaseInstrumentation
-  ) = GatherRacesBySeasonUseCase(f1Repository, seasonRepository, driverRepository, seasonDomainEventPublisher, useCaseInstrumentation)
+  ) =
+    GatherRacesBySeasonUseCase(
+      f1Repository, seasonRepository, driverRepository, seasonDomainEventPublisher, useCaseInstrumentation)
 
   @Bean
   fun calculateEloOfDriversBySeasonUseCase(
