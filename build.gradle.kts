@@ -7,7 +7,7 @@ import org.gradle.plugins.ide.idea.model.internal.GeneratedIdeaScope
 import org.gradle.plugins.ide.idea.model.internal.IdeaDependenciesProvider
 
 plugins {
-  val kotlinPluginVersion = "2.0.20"
+  val kotlinPluginVersion = "2.0.21"
   kotlin("jvm") version kotlinPluginVersion
   kotlin("plugin.spring") version kotlinPluginVersion
   kotlin("plugin.jpa") version kotlinPluginVersion
