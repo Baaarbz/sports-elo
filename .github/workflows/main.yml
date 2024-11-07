@@ -53,3 +53,13 @@ jobs:
 
       - name: Check typos
         uses: crate-ci/typos@master
+
+  automerge:
+    name: Auto-merge dependabot PRs
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v3
