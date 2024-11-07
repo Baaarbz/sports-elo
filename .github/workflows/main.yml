@@ -35,12 +35,21 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Run Lava
         uses: adevinta/lava-action@v0
 
   typo-checker:
     name: Check typos in project 📚
-    uses: crate-ci/typos@master
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check typos
+        uses: crate-ci/typos@master
