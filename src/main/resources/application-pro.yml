@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: #TODO: Add database URL
-    username: #TODO: Add database username
-    password: #TODO: Add database password
+    url: jdbc:postgresql://localhost:5432/f1_elo
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
 
 jolpi-f1:
   base-url: https://api.jolpi.ca/ergast/f1
