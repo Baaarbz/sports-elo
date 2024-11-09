@@ -1,11 +1,16 @@
 package com.barbzdev.f1elo.infrastructure.observability
 
+import com.barbzdev.f1elo.domain.observability.MetricClient
+import com.barbzdev.f1elo.domain.observability.MetricEnum.USE_CASE_ELAPSED_TIME
+import com.barbzdev.f1elo.domain.observability.MetricEnum.USE_CASE_FAILURE
+import com.barbzdev.f1elo.domain.observability.MetricEnum.USE_CASE_SUCCESS
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
-import kotlin.reflect.KClass
+import com.barbzdev.f1elo.domain.observability.UseCaseNameExtractor.takeUseCaseNameFromEmbeddingClass
 import kotlin.time.TimedValue
 import kotlin.time.measureTimedValue
+import kotlin.time.toJavaDuration
 
-open class DefaultUseCaseInstrumentation : UseCaseInstrumentation {
+open class DefaultUseCaseInstrumentation(private val metricClient: MetricClient) : UseCaseInstrumentation {
 
   private val logger by LoggerDelegate()
 
@@ -13,42 +18,52 @@ open class DefaultUseCaseInstrumentation : UseCaseInstrumentation {
     val useCaseName = takeUseCaseNameFromEmbeddingClass(useCase::class)
 
     return measureTimedValue { execute(useCase) }
-      .logExecutionTime(useCaseName)
+      .metricUseCasElapsedTime(useCaseName)
       .onFailure { exception -> onFailedUseCaseExecution(exception, useCaseName) }
-      .onSuccess { onSuccessUseCaseExecution(useCaseName) }
+      .onSuccess { onSuccessUseCaseExecution(useCaseName, it) }
       .getOrThrow()
   }
 
   private fun <Response> execute(func: () -> Response): Result<Response> = runCatching { func() }
 
-  private fun <Response> TimedValue<Response>.logExecutionTime(useCaseName: String): Response {
-    logger.info("use case::$useCaseName executed in ${duration.inWholeMilliseconds}ms")
+  private fun <Response> TimedValue<Response>.metricUseCasElapsedTime(useCaseName: String): Response {
+    metricClient.recordTime(
+      USE_CASE_ELAPSED_TIME,
+      duration.toJavaDuration(),
+      mapOf(USE_CASE_TAG to useCaseName),
+    )
     return value
   }
 
   private fun onFailedUseCaseExecution(throwable: Throwable, useCaseName: String) {
     logger.error(
       "Exception [${throwable::class.simpleName}] executing use case $useCaseName reason: ${throwable.message}",
-      throwable)
+      throwable,
+    )
+
+    metricClient.increment(
+      USE_CASE_FAILURE,
+      mapOf(
+        USE_CASE_TAG to useCaseName,
+        EXCEPTION_TAG to (throwable::class.simpleName ?: UNKNOWN),
+      ),
+    )
   }
 
-  private fun onSuccessUseCaseExecution(useCaseName: String) {
-    logger.info("use case::$useCaseName executed successfully")
+  private fun <Response> onSuccessUseCaseExecution(useCaseName: String, response: Response) {
+    metricClient.increment(
+      USE_CASE_SUCCESS,
+      mapOf(
+        USE_CASE_TAG to useCaseName,
+        RESPONSE_TAG to (response?.let { it::class.simpleName } ?: UNKNOWN),
+      ),
+    )
   }
 
   private companion object {
+    const val USE_CASE_TAG = "use_case"
+    const val EXCEPTION_TAG = "exception"
+    const val RESPONSE_TAG = "response"
     const val UNKNOWN = "unknown"
-    val suffixesToRemove = listOf("Service", "UseCase")
-
-    fun takeUseCaseNameFromEmbeddingClass(clazz: KClass<out Any>) =
-      clazz.java.name.removeLambdaReference()?.extractClassName()?.removeUseCaseSuffixes().toSnakeCase() ?: UNKNOWN
-
-    fun String.removeLambdaReference() = split("$").firstOrNull()
-
-    fun String.extractClassName() = split(".").lastOrNull()
-
-    fun String.removeUseCaseSuffixes() = suffixesToRemove.fold(this) { acc, suffix -> acc.removeSuffix(suffix) }
-
-    fun String?.toSnakeCase() = this?.replace(Regex("(\\p{Lower})(\\p{Upper}+)"), "$1_$2")?.lowercase()
   }
 }

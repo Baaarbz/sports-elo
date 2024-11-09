@@ -31,6 +31,8 @@ repositories { mavenCentral() }
 dependencies {
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.springframework.boot:spring-boot-starter-web")
+  implementation("org.springframework.boot:spring-boot-starter-actuator")
+
 
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
@@ -62,6 +64,7 @@ dependencies {
   testImplementation("com.ninja-squad:springmockk:4.0.2")
 
   testImplementation("com.willowtreeapps.assertk:assertk:0.28.1")
+  testImplementation("org.assertj:assertj-core:3.26.3")
 
   testImplementation("org.awaitility:awaitility:4.2.2")
 
