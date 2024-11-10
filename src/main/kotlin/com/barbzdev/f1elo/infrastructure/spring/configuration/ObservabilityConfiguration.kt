@@ -11,12 +11,9 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class ObservabilityConfiguration {
 
-  @Bean
-  fun useCaseInstrumentation(metricClient: MetricClient) = DefaultUseCaseInstrumentation(metricClient)
+  @Bean fun useCaseInstrumentation(metricClient: MetricClient) = DefaultUseCaseInstrumentation(metricClient)
 
-  @Bean
-  fun threadMetrics() = JvmThreadMetrics()
+  @Bean fun threadMetrics() = JvmThreadMetrics()
 
-  @Bean
-  fun metricClient(meterRegistry: MeterRegistry) = MicrometerMetricClient(meterRegistry)
+  @Bean fun metricClient(meterRegistry: MeterRegistry) = MicrometerMetricClient(meterRegistry)
 }

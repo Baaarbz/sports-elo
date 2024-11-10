@@ -12,13 +12,12 @@ import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
+import java.time.Duration as JavaDuration
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.toJavaDuration
-import org.junit.jupiter.api.Test
-import java.time.Duration as JavaDuration
 import org.assertj.core.api.Assertions.catchThrowable
-
+import org.junit.jupiter.api.Test
 
 class DefaultUseCaseInstrumentationShould {
   private val metricClient: MetricClient = mockk(relaxed = true)
@@ -37,7 +36,8 @@ class DefaultUseCaseInstrumentationShould {
       metricClient.increment(USE_CASE_SUCCESS, mapOf("use_case" to "success", "response" to "SuccessResponse"))
       metricClient.recordTime(USE_CASE_ELAPSED_TIME, capture(durationSlot), mapOf("use_case" to "success"))
     }
-    assertThat(durationSlot.captured).isBetween(executeTime.toJavaDuration(), (executeTime + 100.milliseconds).toJavaDuration())
+    assertThat(durationSlot.captured)
+      .isBetween(executeTime.toJavaDuration(), (executeTime + 100.milliseconds).toJavaDuration())
   }
 
   @Test
@@ -53,9 +53,7 @@ class DefaultUseCaseInstrumentationShould {
   }
 }
 
-class SuccessUseCase(
-  private val instrumentation: UseCaseInstrumentation
-) {
+class SuccessUseCase(private val instrumentation: UseCaseInstrumentation) {
   object SuccessResponse
 
   fun execute(executionTime: Duration = 0.milliseconds) = instrumentation {
@@ -64,14 +62,10 @@ class SuccessUseCase(
   }
 }
 
-class FailureUseCase(
-  private val instrumentation: UseCaseInstrumentation
-) {
+class FailureUseCase(private val instrumentation: UseCaseInstrumentation) {
   object FailureResponse
 
-  fun execute(): FailureResponse = instrumentation {
-    throw TestableDomainException
-  }
+  fun execute(): FailureResponse = instrumentation { throw TestableDomainException }
 }
 
 object TestableDomainException : RuntimeException("something went wrong") {
