@@ -33,6 +33,7 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-web")
   implementation("org.springframework.boot:spring-boot-starter-actuator")
 
+  implementation("io.micrometer:micrometer-registry-prometheus:1.13.6")
 
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
