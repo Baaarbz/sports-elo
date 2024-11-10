@@ -18,3 +18,12 @@ jolpi-f1:
 cron:
   job:
     enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,prometheus"
+  endpoint:
+    health:
+      show-details: always
