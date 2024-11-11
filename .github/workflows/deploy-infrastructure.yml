@@ -1,0 +1,12 @@
+name: Deploy Infrastructure 🛠️
+
+on: workflow_dispatch
+
+jobs:
+    deploy:
+        name: Execute scripts
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
