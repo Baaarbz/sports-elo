@@ -1,7 +1,7 @@
 FROM openjdk:21-jdk
 
 USER root
-RUN adduser -D -H f1elo
+RUN adduser f1elo
 USER f1elo
 
 WORKDIR /app
