@@ -1,5 +1,9 @@
 FROM openjdk:21-jdk
 
+USER root
+RUN adduser -D -H f1elo
+USER f1elo
+
 WORKDIR /app
 
 COPY build/libs/f1-elo-1.0.0.jar app.jar
