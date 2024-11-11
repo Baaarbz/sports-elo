@@ -1,4 +1,4 @@
-FROM openjdk:21-jdk
+FROM openjdk:24-jdk
 
 USER root
 RUN adduser f1elo
