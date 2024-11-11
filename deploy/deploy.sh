@@ -2,7 +2,8 @@
 
 # Check if Prometheus and Postgres services are up
 if ! docker ps | grep -q prometheus || ! docker ps | grep -q postgres; then
-  ./deploy/deploy_infrastructure.sh
+  chmod +x ./f1-elo/deploy/deploy_infrastructure.sh
+  ./f1-elo/deploy/deploy_infrastructure.sh
 fi
 
 FILE="f1-elo/src/main/resources/application-pro.yml"
