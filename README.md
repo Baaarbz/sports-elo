@@ -1,5 +1,7 @@
 # F1 Elo
 
+[![CD/CI](https://github.com/Baaarbz/f1-elo/actions/workflows/main.yml/badge.svg)](https://github.com/Baaarbz/f1-elo/actions/workflows/main.yml)
+
 > ### Disclaimer
 > This is a personal project, I am not affiliated with Formula 1 or any of its teams. The data used in this project is
 > from the [Jolpica F1 API](https://github.com/jolpica/jolpica-f1). I run personally with the expenses of the server,
