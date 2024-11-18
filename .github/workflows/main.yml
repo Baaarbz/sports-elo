@@ -29,18 +29,20 @@ jobs:
       - name: Skip check if no changes
         if: steps.src-changes.outputs.changes == ''
         run: echo "No changes in src/, skipping check step."
-        continue-on-error: true
 
       - name: Setup JDK
+        if: steps.src-changes.outputs.changes == ''
         uses: actions/setup-java@v4
         with:
           java-version: 21
           distribution: 'adopt'
 
       - name: Grant execute permissions to gradlew
+        if: steps.src-changes.outputs.changes == ''
         run: chmod +x ./gradlew
 
       - name: Run gradle check
+        if: steps.src-changes.outputs.changes == ''
         run: ./gradlew check --stacktrace --no-configuration-cache
 
   security-scan:
