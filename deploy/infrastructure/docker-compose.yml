@@ -6,14 +6,14 @@ services:
       context: ./
       dockerfile: prometheus/Dockerfile
     container_name: prometheus
-    restart: unless-stopped
+    restart: always
     user: root
     ports:
       - "9090:9090"
   postgres:
     image: postgres:17
     container_name: postgres
-    restart: unless-stopped
+    restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
