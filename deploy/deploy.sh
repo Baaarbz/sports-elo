@@ -17,6 +17,7 @@ rm ${FILE}.bak
 
 cd f1-elo
 
+./gradlew clean build --exclude-task check
 docker build -t f1-elo:latest .
 docker run -d --restart=always --replace -p 8000:8000 --name f1-elo f1-elo:latest
 docker images --filter "dangling=true" -q | xargs -r docker rmi
