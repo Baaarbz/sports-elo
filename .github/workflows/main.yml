@@ -85,7 +85,4 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            rm -rf f1-elo && \
-            git clone https://github.com/Baaarbz/f1-elo.git && \
-            sh f1-elo/deploy/deploy.sh && \
-            rm -rf f1-elo
+            echo "WIP"

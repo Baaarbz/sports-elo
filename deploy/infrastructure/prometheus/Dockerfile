@@ -1,4 +1,4 @@
-FROM prom/prometheus
+FROM docker.io/prom/prometheus
 
 USER root
 RUN adduser -D -H prometheus
