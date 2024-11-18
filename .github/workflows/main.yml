@@ -87,5 +87,4 @@ jobs:
           script: |
             git clone https://github.com/Baaarbz/f1-elo.git
             sh f1-elo/deploy/deploy.sh
-            docker images --filter "dangling=true" -q | xargs -r docker rmi
             rm -rf f1-elo
