@@ -127,5 +127,5 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            docker pull baaarbz/f1-elo:latest
+            docker pull docker.io/baaarbz/f1-elo:latest
             docker run -d --restart=always -p 8000:8000 --name f1-elo baaarbz/f1-elo:latest
