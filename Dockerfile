@@ -1,4 +1,4 @@
-FROM docker.io/penjdk:21-jdk
+FROM docker.io/openjdk:21-jdk
 
 USER root
 RUN adduser f1elo
