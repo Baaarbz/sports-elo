@@ -75,7 +75,6 @@ jobs:
     needs:
       - check
       - typo-checker
-      - security-scan
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
