@@ -11,5 +11,5 @@ report:
   exclusions:
     - description: Ignore Dockerfile.
       summary: 'Secret Leaked in Dockerfile'
-      resource: 'Dockerfile'
+      resource: './Dockerfile'
 log: error
