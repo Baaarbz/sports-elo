@@ -107,11 +107,19 @@ jobs:
 
       - name: Deploy the application 🚀
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          POSTGRES_HOST: ${{ secrets.POSTGRES_URL }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
+          envs: POSTGRES_HOST,POSTGRES_PASSWORD,POSTGRES_PORT,POSTGRES_USER,POSTGRES_DB
           script: |
+            export POSTGRES_URL=$POSTGRES_URL
+            export POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+            export POSTGRES_USER=$POSTGRES_USER
             git clone https://baaarbz:${{ secrets.GITHUB_TOKEN }}@github.com/Baaarbz/f1-elo.git
             sh f1-elo/deploy/deploy.sh
