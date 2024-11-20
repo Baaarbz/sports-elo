@@ -67,6 +67,8 @@ jobs:
       contents: write
     steps:
       - uses: fastify/github-action-merge-dependabot@v3
+        with:
+          merge-method: 'rebase'
 
   build:
     if: ${{ github.ref == 'refs/heads/main' }}
