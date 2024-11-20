@@ -114,9 +114,7 @@ jobs:
     name: Deploy 🚀
     runs-on: ubuntu-latest
     needs:
-      - check
-      - typo-checker
-      - security-scan
+      - build
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
