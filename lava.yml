@@ -8,8 +8,4 @@ agent:
   parallel: 4
 report:
   severity: high
-  exclusions:
-    - description: Ignore Dockerfile.
-      summary: 'Secret Leaked in Dockerfile'
-      resource: './Dockerfile'
 log: error
