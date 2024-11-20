@@ -15,4 +15,4 @@ ENV POSTGRES_USER=''
 ENV POSTGRES_PASSWORD=''
 ENV SPRING_PROFILES_ACTIVE=pro
 
-CMD ["java", "-jar", "-Dspring.datasource.url=${POSTGRES_URL}", "-Dspring.datasource.username=${POSTGRES_USER}", "-Dspring.datasource.password=${POSTGRES_PASSWORD}", "app.jar"]
+CMD ["sh", "-c", "java -jar app.jar -Dspring.datasource.url=${POSTGRES_URL} -Dspring.datasource.username=${POSTGRES_USER} -Dspring.datasource.password=${POSTGRES_PASSWORD}"]
