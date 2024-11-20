@@ -1,6 +1,6 @@
 FROM docker.io/openjdk:21-jdk
 
-MAINTAINER barbzdev.com
+LABEL org.opencontainers.image.authors="github.com/baaarbz","linkedin.com/in/eduardobarbosatarrio/"
 
 USER root
 RUN adduser f1elo
