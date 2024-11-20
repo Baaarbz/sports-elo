@@ -30,22 +30,6 @@ jobs:
       - name: Run gradle check
         run: ./gradlew check --stacktrace --no-configuration-cache
 
-  security-scan:
-    name: Security Scan 🔎
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Run Lava
-        uses: adevinta/lava-action@v0
-        with:
-          comment-pr: "true"
-
   typo-checker:
     name: Check typos in project 📚
     runs-on: ubuntu-latest
@@ -131,4 +115,3 @@ jobs:
           script: |
             git clone https://baaarbz:${{ secrets.GITHUB_TOKEN }}@github.com/Baaarbz/f1-elo.git
             sh f1-elo/deploy/deploy.sh
-            rm -rf f1-elo
