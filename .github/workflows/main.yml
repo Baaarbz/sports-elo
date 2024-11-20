@@ -30,6 +30,22 @@ jobs:
       - name: Run gradle check
         run: ./gradlew check --stacktrace --no-configuration-cache
 
+  security-scan:
+    name: Security Scan 🔎
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Lava
+        uses: adevinta/lava-action@v0
+        with:
+          comment-pr: "true"
+
   typo-checker:
     name: Check typos in project 📚
     runs-on: ubuntu-latest
@@ -44,7 +60,7 @@ jobs:
   automerge:
     name: Auto-merge dependabot PRs
     if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
-    needs: [ check ]
+    needs: [ check, security-scan ]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -59,6 +75,7 @@ jobs:
     needs:
       - check
       - typo-checker
+      - security-scan
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
