@@ -4,6 +4,11 @@ spring:
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
 
+logging:
+  level:
+    root: debug
+    org.springframework.web: debug
+
 jolpi-f1:
   base-url: https://api.jolpi.ca/ergast/f1
 
