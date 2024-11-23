@@ -16,34 +16,30 @@ class ListingDriversUseCase(
       return@instrumentation NotValidListingRequestResponse
     }
 
-    request
-      .findDrivers()
-      .toResponse()
+    request.findDrivers().toResponse()
   }
 
   private fun ListingDriversRequest.isNotValidRequest() = this.page < 0 || this.pageSize !in SUPPORTED_PAGE_LIMIT
 
   private fun ListingDriversRequest.findDrivers() = driverRepository.findAll(this.page, this.pageSize)
 
-  private fun DomainPaginated<Driver>.toResponse() = ListingDriversSuccess(
-    drivers = this.elements.map { driver ->
-      ListingDriver(
-        id = driver.id().value,
-        fullName = ListingDriverFullName(
-          familyName = driver.fullName().familyName,
-          givenName = driver.fullName().givenName
-        ),
-        currentElo = driver.currentElo().rating,
-        highestElo = driver.highestElo().rating,
-        lowestElo = driver.lowestElo().rating,
-        lastRaceDate = driver.currentElo().toLocalDate()
-      )
-    },
-    page = this.page,
-    pageSize = this.pageSize,
-    totalElements = this.totalElements,
-    totalPages = this.totalPages
-  )
+  private fun DomainPaginated<Driver>.toResponse() =
+    ListingDriversSuccess(
+      drivers =
+        this.elements.map { driver ->
+          ListingDriver(
+            id = driver.id().value,
+            fullName =
+              ListingDriverFullName(familyName = driver.fullName().familyName, givenName = driver.fullName().givenName),
+            currentElo = driver.currentElo().rating,
+            highestElo = driver.highestElo().rating,
+            lowestElo = driver.lowestElo().rating,
+            lastRaceDate = driver.currentElo().toLocalDate())
+        },
+      page = this.page,
+      pageSize = this.pageSize,
+      totalElements = this.totalElements,
+      totalPages = this.totalPages)
 
   private companion object {
     val SUPPORTED_PAGE_LIMIT = intArrayOf(25, 50, 100)
@@ -73,7 +69,4 @@ data class ListingDriver(
   val lastRaceDate: LocalDate
 )
 
-data class ListingDriverFullName(
-  val familyName: String,
-  val givenName: String
-)
+data class ListingDriverFullName(val familyName: String, val givenName: String)

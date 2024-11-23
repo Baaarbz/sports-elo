@@ -1,7 +1,6 @@
 package com.barbzdev.f1elo.testcases
 
 import com.barbzdev.f1elo.AcceptanceTestConfiguration
-import com.barbzdev.f1elo.factory.SeasonFactory.aSeason
 import com.barbzdev.f1elo.factory.SeasonFactory.seasonOf2014
 import io.restassured.RestAssured.given
 import io.restassured.http.ContentType
@@ -24,17 +23,18 @@ abstract class ListingDriversShould : AcceptanceTestConfiguration() {
 
   private fun givenASeasonInDatabase() = seasonRepository.save(SEASON_IN_DATABASE)
 
-  private fun whenGetListingDriversRequest() = given()
-    .port(port.toInt())
-    .contentType(ContentType.JSON)
-    .`when`()
-    .get("/api/v1/drivers")
-    .then()
-    .assertThat()
-    .statusCode(HttpStatus.OK.value())
-    .extract()
-    .body()
-    .asString()
+  private fun whenGetListingDriversRequest() =
+    given()
+      .port(port.toInt())
+      .contentType(ContentType.JSON)
+      .`when`()
+      .get("/api/v1/drivers")
+      .then()
+      .assertThat()
+      .statusCode(HttpStatus.OK.value())
+      .extract()
+      .body()
+      .asString()
 
   private fun thenVerifyResponseIsExpected(response: String) {
     JSONAssert.assertEquals(EXPECTED_RESPONSE, response, JSONCompareMode.NON_EXTENSIBLE)
@@ -44,7 +44,8 @@ abstract class ListingDriversShould : AcceptanceTestConfiguration() {
     val SEASON_IN_DATABASE = seasonOf2014
 
     @Language("JSON")
-    const val EXPECTED_RESPONSE = """
+    const val EXPECTED_RESPONSE =
+      """
       {
         "drivers": [
           {

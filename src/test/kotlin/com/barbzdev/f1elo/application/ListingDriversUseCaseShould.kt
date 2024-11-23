@@ -13,13 +13,11 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 
-
 class ListingDriversUseCaseShould {
   private val driverRepository: DriverRepository = mockk()
   private val instrumentation: UseCaseInstrumentation = instrumentationMock()
 
   private val listingDriversUseCase = ListingDriversUseCase(driverRepository, instrumentation)
-
 
   @Test
   fun `return drivers when page and size are valid`() {
@@ -28,25 +26,24 @@ class ListingDriversUseCaseShould {
 
     val result = listingDriversUseCase.invoke(ListingDriversRequest(0, 25))
 
-    val expected = ListingDriversSuccess(
-      drivers = drivers.map { driver ->
-        ListingDriver(
-          id = driver.id().value,
-          fullName = ListingDriverFullName(
-            familyName = driver.fullName().familyName,
-            givenName = driver.fullName().givenName
-          ),
-          currentElo = driver.currentElo().rating,
-          highestElo = driver.highestElo().rating,
-          lowestElo = driver.lowestElo().rating,
-          lastRaceDate = driver.currentElo().toLocalDate()
-        )
-      },
-      page = 0,
-      pageSize = 25,
-      totalElements = 2,
-      totalPages = 1
-    )
+    val expected =
+      ListingDriversSuccess(
+        drivers =
+          drivers.map { driver ->
+            ListingDriver(
+              id = driver.id().value,
+              fullName =
+                ListingDriverFullName(
+                  familyName = driver.fullName().familyName, givenName = driver.fullName().givenName),
+              currentElo = driver.currentElo().rating,
+              highestElo = driver.highestElo().rating,
+              lowestElo = driver.lowestElo().rating,
+              lastRaceDate = driver.currentElo().toLocalDate())
+          },
+        page = 0,
+        pageSize = 25,
+        totalElements = 2,
+        totalPages = 1)
     assertThat(result).isEqualTo(expected)
     verify { driverRepository.findAll(0, 25) }
   }

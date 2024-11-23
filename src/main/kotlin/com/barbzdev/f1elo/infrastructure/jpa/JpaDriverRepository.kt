@@ -19,16 +19,16 @@ class JpaDriverRepository(
     val pageable = PageRequest.of(page, pageSize)
     val jpaPaginated = driverDatasource.findAll(pageable)
     return DomainPaginated(
-        elements = jpaPaginated.toList().map { driverEntity ->
+      elements =
+        jpaPaginated.toList().map { driverEntity ->
           val eloRecordEntity = eloHistoryDatasource.findAllByDriver(driverEntity)
           driverEntity.toDomain(eloRecordEntity)
         },
-        page = page,
-        pageSize = pageSize,
-        totalElements = jpaPaginated.totalElements,
-        totalPages = jpaPaginated.totalPages
-      )
-    }
+      page = page,
+      pageSize = pageSize,
+      totalElements = jpaPaginated.totalElements,
+      totalPages = jpaPaginated.totalPages)
+  }
 
   override fun findBy(id: DriverId): Driver? =
     driverDatasource.findById(id.value).getOrNull()?.let {
