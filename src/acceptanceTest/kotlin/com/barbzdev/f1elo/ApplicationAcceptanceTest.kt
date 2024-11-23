@@ -1,7 +1,8 @@
-package com.barbzdev.f1elo.infrastructure.com.barbzdev.f1elo
+package com.barbzdev.f1elo
 
 import com.barbzdev.f1elo.helper.DockerComposeHelper
 import com.barbzdev.f1elo.testcases.CalculateEloOfDriversBySeasonShould
+import com.barbzdev.f1elo.testcases.ListingDriversShould
 import org.junit.jupiter.api.Nested
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
@@ -14,4 +15,6 @@ class ApplicationAcceptanceTest {
   }
 
   @Nested inner class CalculateEloOfDriversBySeason : CalculateEloOfDriversBySeasonShould()
+
+  @Nested inner class ListingDrivers : ListingDriversShould()
 }

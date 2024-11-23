@@ -69,6 +69,8 @@ dependencies {
 
   testImplementation("org.awaitility:awaitility:4.2.2")
 
+  testImplementation("io.rest-assured:rest-assured:5.4.0")
+
   testFixturesImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
 }
 
