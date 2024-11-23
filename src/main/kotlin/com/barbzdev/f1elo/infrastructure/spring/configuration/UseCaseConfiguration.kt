@@ -2,6 +2,7 @@ package com.barbzdev.f1elo.infrastructure.spring.configuration
 
 import com.barbzdev.f1elo.application.CalculateEloOfDriversBySeasonUseCase
 import com.barbzdev.f1elo.application.GatherRacesBySeasonUseCase
+import com.barbzdev.f1elo.application.ListingDriversUseCase
 import com.barbzdev.f1elo.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository
@@ -31,4 +32,7 @@ class UseCaseConfiguration {
     eloCalculator: EloCalculator,
     useCaseInstrumentation: UseCaseInstrumentation
   ) = CalculateEloOfDriversBySeasonUseCase(seasonRepository, driverRepository, eloCalculator, useCaseInstrumentation)
+
+  @Bean
+  fun listingDriversUseCase(driverRepository: DriverRepository, useCaseInstrumentation: UseCaseInstrumentation) = ListingDriversUseCase(driverRepository, useCaseInstrumentation)
 }

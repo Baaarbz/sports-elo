@@ -36,9 +36,9 @@ private constructor(
 
   fun eloRecord() = eloRecord
 
-  fun highestElo(): Elo? = eloRecord.maxByOrNull { it.rating }
+  fun highestElo(): Elo = eloRecord.maxByOrNull { it.rating }!!
 
-  fun lowestElo(): Elo? = eloRecord.minByOrNull { it.rating }
+  fun lowestElo(): Elo = eloRecord.minByOrNull { it.rating }!!
 
   fun updateElo(value: Int, occurredOn: String): Driver =
     Driver(
