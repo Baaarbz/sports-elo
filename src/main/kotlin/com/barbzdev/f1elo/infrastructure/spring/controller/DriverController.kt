@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("api/v1/drivers")
-class DriverController(
-  private val listingDriversUseCase: ListingDriversUseCase
-) : DriverControllerDocumentation {
+class DriverController(private val listingDriversUseCase: ListingDriversUseCase) : DriverControllerDocumentation {
 
   @GetMapping
-  override fun getDriversListing(    @RequestParam(defaultValue = "0") page: Int,    @RequestParam(defaultValue = "25") pageSize: Int): ResponseEntity<HttpGetDriverListingResponse> {
+  override fun getDriversListing(
+    @RequestParam(defaultValue = "0") page: Int,
+    @RequestParam(defaultValue = "25") pageSize: Int
+  ): ResponseEntity<HttpGetDriverListingResponse> {
     val listingDriversResponse = listingDriversUseCase.invoke(ListingDriversRequest(page, pageSize))
     return when (listingDriversResponse) {
       is ListingDriversSuccess -> ResponseEntity.ok(listingDriversResponse.toHttpResponse())
@@ -27,25 +28,23 @@ class DriverController(
     }
   }
 
-  private fun ListingDriversSuccess.toHttpResponse() = HttpGetDriverListingResponse(
-    drivers = this.drivers.map { driver ->
-      HttpDriversListing(
-        id = driver.id,
-        fullName = HttpDriverListingFullName(
-          familyName = driver.fullName.familyName,
-          givenName = driver.fullName.givenName
-        ),
-        currentElo = driver.currentElo,
-        highestElo = driver.highestElo,
-        lowestElo = driver.lowestElo,
-        lastRaceDate = driver.lastRaceDate
-      )
-    },
-    page = this.page,
-    pageSize = this.pageSize,
-    totalElements = this.totalElements,
-    totalPages = this.totalPages
-  )
+  private fun ListingDriversSuccess.toHttpResponse() =
+    HttpGetDriverListingResponse(
+      drivers =
+        this.drivers.map { driver ->
+          HttpDriversListing(
+            id = driver.id,
+            fullName =
+              HttpDriverListingFullName(familyName = driver.fullName.familyName, givenName = driver.fullName.givenName),
+            currentElo = driver.currentElo,
+            highestElo = driver.highestElo,
+            lowestElo = driver.lowestElo,
+            lastRaceDate = driver.lastRaceDate)
+        },
+      page = this.page,
+      pageSize = this.pageSize,
+      totalElements = this.totalElements,
+      totalPages = this.totalPages)
 
   @GetMapping("{driverId}")
   override fun getDriver(@PathVariable driverId: String): ResponseEntity<HttpGetDriverResponse> {
@@ -70,10 +69,7 @@ data class HttpDriversListing(
   val lastRaceDate: LocalDate,
 )
 
-data class HttpDriverListingFullName(
-  val familyName: String,
-  val givenName: String
-)
+data class HttpDriverListingFullName(val familyName: String, val givenName: String)
 
 data class HttpGetDriverResponse(
   val id: String,

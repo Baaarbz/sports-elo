@@ -30,9 +30,11 @@ interface DriverControllerDocumentation {
         ApiResponse(
           responseCode = "200",
           description = "Successfully retrieved drivers listing",
-          content =
-            [Content(mediaType = "application/json", schema = Schema(implementation = Page::class))]),
-        ApiResponse(responseCode = "400", description = "Required query params not present or not supported values", content = [Content()]),
+          content = [Content(mediaType = "application/json", schema = Schema(implementation = Page::class))]),
+        ApiResponse(
+          responseCode = "400",
+          description = "Required query params not present or not supported values",
+          content = [Content()]),
         ApiResponse(responseCode = "500", description = "Internal server error", content = [Content()])])
   fun getDriversListing(page: Int, pageSize: Int): ResponseEntity<HttpGetDriverListingResponse>
 }

@@ -38,15 +38,10 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
   fun `get all drivers`() {
     val driverInDatabase = givenADriverInDatabase()
 
-    val drivers = repository.findAll(0,1)
+    val drivers = repository.findAll(0, 1)
 
-    val expected = DomainPaginated(
-      elements = listOf(driverInDatabase),
-      page = 0,
-      pageSize = 1,
-      totalElements = 1,
-      totalPages = 1
-    )
+    val expected =
+      DomainPaginated(elements = listOf(driverInDatabase), page = 0, pageSize = 1, totalElements = 1, totalPages = 1)
     assertThat(drivers).isEqualTo(expected)
   }
 

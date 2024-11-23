@@ -34,5 +34,6 @@ class UseCaseConfiguration {
   ) = CalculateEloOfDriversBySeasonUseCase(seasonRepository, driverRepository, eloCalculator, useCaseInstrumentation)
 
   @Bean
-  fun listingDriversUseCase(driverRepository: DriverRepository, useCaseInstrumentation: UseCaseInstrumentation) = ListingDriversUseCase(driverRepository, useCaseInstrumentation)
+  fun listingDriversUseCase(driverRepository: DriverRepository, useCaseInstrumentation: UseCaseInstrumentation) =
+    ListingDriversUseCase(driverRepository, useCaseInstrumentation)
 }
