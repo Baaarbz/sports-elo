@@ -3,7 +3,7 @@ package com.barbzdev.f1elo.testcases
 import com.barbzdev.f1elo.domain.DriverId
 import com.barbzdev.f1elo.domain.event.SeasonLoadedDomainEvent
 import com.barbzdev.f1elo.factory.SeasonFactory.seasonOf2014
-import com.barbzdev.f1elo.infrastructure.com.barbzdev.f1elo.AcceptanceTestConfiguration
+import com.barbzdev.f1elo.AcceptanceTestConfiguration
 import com.barbzdev.f1elo.infrastructure.spring.event.publisher.SpringSeasonDomainEventPublisher
 import org.assertj.core.api.Assertions.assertThat
 import org.awaitility.Awaitility.await
