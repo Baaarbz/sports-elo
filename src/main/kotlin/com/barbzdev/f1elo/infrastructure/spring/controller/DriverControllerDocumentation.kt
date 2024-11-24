@@ -29,7 +29,11 @@ interface DriverControllerDocumentation {
         ApiResponse(
           responseCode = "200",
           description = "Successfully retrieved drivers listing",
-          content = [Content(mediaType = "application/json", schema = Schema(implementation = HttpGetDriverListingResponse::class))]),
+          content =
+            [
+              Content(
+                mediaType = "application/json",
+                schema = Schema(implementation = HttpGetDriverListingResponse::class))]),
         ApiResponse(
           responseCode = "400",
           description = "Required query params not present or not supported values",
