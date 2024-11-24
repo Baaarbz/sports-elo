@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("api/v1/drivers")
-class DriverController(private val listingDriversUseCase: ListingDriversUseCase, private val getDriverByIdUseCase: GetDriverByIdUseCase) : DriverControllerDocumentation {
+class DriverController(
+  private val listingDriversUseCase: ListingDriversUseCase,
+  private val getDriverByIdUseCase: GetDriverByIdUseCase
+) : DriverControllerDocumentation {
 
   @GetMapping
   override fun getDriversListing(
@@ -48,55 +51,35 @@ class DriverController(private val listingDriversUseCase: ListingDriversUseCase,
   private fun ListingDriversSuccess.toHttpResponse() =
     HttpGetDriverListingResponse(
       drivers =
-      this.drivers.map { driver ->
-        HttpDriversListing(
-          id = driver.id,
-          fullName =
-          HttpFullName(familyName = driver.fullName.familyName, givenName = driver.fullName.givenName),
-          currentElo = driver.currentElo,
-          highestElo = driver.highestElo,
-          lowestElo = driver.lowestElo,
-          lastRaceDate = driver.lastRaceDate
-        )
-      },
+        this.drivers.map { driver ->
+          HttpDriversListing(
+            id = driver.id,
+            fullName = HttpFullName(familyName = driver.fullName.familyName, givenName = driver.fullName.givenName),
+            currentElo = driver.currentElo,
+            highestElo = driver.highestElo,
+            lowestElo = driver.lowestElo,
+            lastRaceDate = driver.lastRaceDate)
+        },
       page = this.page,
       pageSize = this.pageSize,
       totalElements = this.totalElements,
-      totalPages = this.totalPages
-    )
+      totalPages = this.totalPages)
 
-  private fun GetDriverByIdSuccess.toHttpResponse() = HttpGetDriverResponse(
-    id = id,
-    fullName = HttpFullName(
-      familyName = fullName.familyName,
-      givenName = fullName.givenName
-    ),
-    code = code,
-    permanentNumber = permanentNumber,
-    birthDate= birthDate,
-    nationality = HttpNationality(
-      countryCode = nationality.countryCode,
-      countryName = nationality.countryName,
-      value = nationality.value
-    ),
-    infoUrl = infoUrl,
-    currentElo = HttpElo(
-      value = currentElo.rating,
-      occurredOn = currentElo.occurredOn
-    ),
-    highestElo = HttpElo(
-      value = highestElo.rating,
-      occurredOn = highestElo.occurredOn
-    ),
-    lowestElo = HttpElo(
-      value = lowestElo.rating,
-      occurredOn = lowestElo.occurredOn
-    ),
-    eloRecord = eloRecord.map { HttpElo(
-      value = it.rating,
-      occurredOn = it.occurredOn
-    ) }
-  )
+  private fun GetDriverByIdSuccess.toHttpResponse() =
+    HttpGetDriverResponse(
+      id = id,
+      fullName = HttpFullName(familyName = fullName.familyName, givenName = fullName.givenName),
+      code = code,
+      permanentNumber = permanentNumber,
+      birthDate = birthDate,
+      nationality =
+        HttpNationality(
+          countryCode = nationality.countryCode, countryName = nationality.countryName, value = nationality.value),
+      infoUrl = infoUrl,
+      currentElo = HttpElo(value = currentElo.rating, occurredOn = currentElo.occurredOn),
+      highestElo = HttpElo(value = highestElo.rating, occurredOn = highestElo.occurredOn),
+      lowestElo = HttpElo(value = lowestElo.rating, occurredOn = lowestElo.occurredOn),
+      eloRecord = eloRecord.map { HttpElo(value = it.rating, occurredOn = it.occurredOn) })
 }
 
 data class HttpGetDriverListingResponse(

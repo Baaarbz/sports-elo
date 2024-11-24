@@ -17,49 +17,30 @@ class GetDriverByIdUseCase(
 
   private fun GetDriverByIdRequest.findDriver() = driverRepository.findBy(DriverId(driverId))
 
-  private fun Driver.toResponse() = GetDriverByIdSuccess(
-    id = id().value,
-    fullName = GetDriverByIdFullName(
-      familyName = fullName().familyName,
-      givenName = fullName().givenName
-    ),
-    code = code()?.value,
-    permanentNumber = permanentNumber()?.value,
-    birthDate = birthDate().toLocalDate(),
-    nationality = GetDriverByIdNationality(
-      countryCode = nationality().countryCode,
-      countryName = nationality().countryName,
-      value = nationality().name,
-    ),
-    infoUrl = infoUrl().value,
-    currentElo = GetDriverByIdElo(
-      rating = currentElo().rating,
-      occurredOn = currentElo().toLocalDate()
-    ),
-    highestElo = highestElo().let {
-      GetDriverByIdElo(
-        rating = it.rating,
-        occurredOn = it.toLocalDate()
-      )
-    },
-    lowestElo = lowestElo().let {
-      GetDriverByIdElo(
-        rating = it.rating,
-        occurredOn = it.toLocalDate()
-      )
-    },
-    eloRecord = eloRecord().map {
-      GetDriverByIdElo(
-        rating = it.rating,
-        occurredOn = it.toLocalDate()
-      )
-    }
-  )
+  private fun Driver.toResponse() =
+    GetDriverByIdSuccess(
+      id = id().value,
+      fullName = GetDriverByIdFullName(familyName = fullName().familyName, givenName = fullName().givenName),
+      code = code()?.value,
+      permanentNumber = permanentNumber()?.value,
+      birthDate = birthDate().toLocalDate(),
+      nationality =
+        GetDriverByIdNationality(
+          countryCode = nationality().countryCode,
+          countryName = nationality().countryName,
+          value = nationality().name,
+        ),
+      infoUrl = infoUrl().value,
+      currentElo = GetDriverByIdElo(rating = currentElo().rating, occurredOn = currentElo().toLocalDate()),
+      highestElo = highestElo().let { GetDriverByIdElo(rating = it.rating, occurredOn = it.toLocalDate()) },
+      lowestElo = lowestElo().let { GetDriverByIdElo(rating = it.rating, occurredOn = it.toLocalDate()) },
+      eloRecord = eloRecord().map { GetDriverByIdElo(rating = it.rating, occurredOn = it.toLocalDate()) })
 }
 
 data class GetDriverByIdRequest(val driverId: String)
 
 sealed class GetDriverByIdResponse
+
 data object GetDriverByIdNotFound : GetDriverByIdResponse()
 
 data class GetDriverByIdSuccess(
@@ -76,15 +57,9 @@ data class GetDriverByIdSuccess(
   val eloRecord: List<GetDriverByIdElo>,
 ) : GetDriverByIdResponse()
 
-data class GetDriverByIdElo(
-  val rating: Int,
-  val occurredOn: LocalDate
-)
+data class GetDriverByIdElo(val rating: Int, val occurredOn: LocalDate)
 
-data class GetDriverByIdFullName(
-  val familyName: String,
-  val givenName: String
-)
+data class GetDriverByIdFullName(val familyName: String, val givenName: String)
 
 data class GetDriverByIdNationality(
   val countryCode: String,

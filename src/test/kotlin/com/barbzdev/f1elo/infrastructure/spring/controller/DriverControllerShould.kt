@@ -85,67 +85,47 @@ class DriverControllerShould {
   }
 
   @Test
-    fun `return driver when use case success`() {
-        val getDriverByIdSuccessResponse = GetDriverByIdSuccess(
-            id = "alonso",
-            fullName = GetDriverByIdFullName(familyName = "Alonso", givenName = "Fernando"),
-            code = "ALO",
-            permanentNumber = "14",
-            birthDate = LocalDate.of(1981, 7, 29),
-            nationality = GetDriverByIdNationality(
-                countryCode = "ES",
-                countryName = "Spain",
-                value = "SPANISH"
-            ),
-            infoUrl = "https://en.wikipedia.org/wiki/Fernando_Alonso",
-            currentElo = GetDriverByIdElo(
-                rating = 2016,
-                occurredOn = LocalDate.of(2021, 1, 1)
-            ),
-            highestElo = GetDriverByIdElo(
-                rating = 2016,
-                occurredOn = LocalDate.of(2021, 1, 1)
-            ),
-            lowestElo = GetDriverByIdElo(
-                rating = 2016,
-                occurredOn = LocalDate.of(2021, 1, 1)
-            ),
-            eloRecord = listOf(
-                GetDriverByIdElo(
-                    rating = 2016,
-                    occurredOn = LocalDate.of(2021, 1, 1)
-                )
-            )
-        )
-        every { getDriverByIdUseCase.invoke(any()) } returns getDriverByIdSuccessResponse
+  fun `return driver when use case success`() {
+    val getDriverByIdSuccessResponse =
+      GetDriverByIdSuccess(
+        id = "alonso",
+        fullName = GetDriverByIdFullName(familyName = "Alonso", givenName = "Fernando"),
+        code = "ALO",
+        permanentNumber = "14",
+        birthDate = LocalDate.of(1981, 7, 29),
+        nationality = GetDriverByIdNationality(countryCode = "ES", countryName = "Spain", value = "SPANISH"),
+        infoUrl = "https://en.wikipedia.org/wiki/Fernando_Alonso",
+        currentElo = GetDriverByIdElo(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
+        highestElo = GetDriverByIdElo(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
+        lowestElo = GetDriverByIdElo(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
+        eloRecord = listOf(GetDriverByIdElo(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1))))
+    every { getDriverByIdUseCase.invoke(any()) } returns getDriverByIdSuccessResponse
 
-        val result = controller.getDriver("alonso")
+    val result = controller.getDriver("alonso")
 
-    val expected = HttpGetDriverResponse(
-      id = "alonso",
-      fullName = HttpFullName(familyName = "Alonso", givenName = "Fernando"),
-      code = "ALO",
-      permanentNumber = "14",
-      birthDate = LocalDate.of(1981, 7, 29),
-      nationality = HttpNationality(countryCode = "ES", countryName = "Spain", value = "SPANISH"),
-      infoUrl = "https://en.wikipedia.org/wiki/Fernando_Alonso",
-      currentElo = HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
-      highestElo = HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
-      lowestElo = HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
-      eloRecord = listOf(
-        HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1))
-      )
-    )
-        assertThat(result.statusCode.value()).isEqualTo(HttpStatus.OK.value())
-        assertThat(result.body).isEqualTo(expected)
+    val expected =
+      HttpGetDriverResponse(
+        id = "alonso",
+        fullName = HttpFullName(familyName = "Alonso", givenName = "Fernando"),
+        code = "ALO",
+        permanentNumber = "14",
+        birthDate = LocalDate.of(1981, 7, 29),
+        nationality = HttpNationality(countryCode = "ES", countryName = "Spain", value = "SPANISH"),
+        infoUrl = "https://en.wikipedia.org/wiki/Fernando_Alonso",
+        currentElo = HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
+        highestElo = HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
+        lowestElo = HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
+        eloRecord = listOf(HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1))))
+    assertThat(result.statusCode.value()).isEqualTo(HttpStatus.OK.value())
+    assertThat(result.body).isEqualTo(expected)
   }
 
-    @Test
-    fun `return not found when use case returns GetDriverByIdNotFound`() {
-        every { getDriverByIdUseCase.invoke(any()) } returns GetDriverByIdNotFound
+  @Test
+  fun `return not found when use case returns GetDriverByIdNotFound`() {
+    every { getDriverByIdUseCase.invoke(any()) } returns GetDriverByIdNotFound
 
-        val result = controller.getDriver("non-existing-id")
+    val result = controller.getDriver("non-existing-id")
 
-        assertThat(result.statusCode.value()).isEqualTo(HttpStatus.NOT_FOUND.value())
-    }
+    assertThat(result.statusCode.value()).isEqualTo(HttpStatus.NOT_FOUND.value())
+  }
 }
