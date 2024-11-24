@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
-import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 
 interface DriverControllerDocumentation {
@@ -30,7 +29,7 @@ interface DriverControllerDocumentation {
         ApiResponse(
           responseCode = "200",
           description = "Successfully retrieved drivers listing",
-          content = [Content(mediaType = "application/json", schema = Schema(implementation = Page::class))]),
+          content = [Content(mediaType = "application/json", schema = Schema(implementation = HttpGetDriverListingResponse::class))]),
         ApiResponse(
           responseCode = "400",
           description = "Required query params not present or not supported values",
