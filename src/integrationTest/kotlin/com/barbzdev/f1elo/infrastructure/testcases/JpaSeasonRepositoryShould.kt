@@ -18,7 +18,8 @@ abstract class JpaSeasonRepositoryShould : IntegrationTestConfiguration() {
 
   @AfterEach
   fun cleanUp() {
-    datasource.deleteAll()
+    flyway.clean()
+    flyway.migrate()
   }
 
   @Test

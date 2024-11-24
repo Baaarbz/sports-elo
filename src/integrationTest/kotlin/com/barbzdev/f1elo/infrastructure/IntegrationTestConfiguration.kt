@@ -11,5 +11,5 @@ import org.springframework.test.context.ActiveProfiles
 @ActiveProfiles("integration-test")
 @AutoConfigureWireMock(port = 0)
 class IntegrationTestConfiguration {
-  @Autowired private lateinit var flyway: Flyway
+  @Autowired lateinit var flyway: Flyway
 }
