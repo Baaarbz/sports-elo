@@ -7,3 +7,8 @@ data class DomainPaginated<T>(
   val totalElements: Long = 0,
   val totalPages: Int = 0
 )
+
+data class Page(val value: Int)
+data class PageSize(val value: Int)
+data class SortBy(val value: String)
+data class SortOrder(val value: String)

@@ -38,7 +38,7 @@ class DriverControllerShould {
     )
     every { listingDriversUseCase.invoke(any()) } returns responseUseCase
 
-    val result = driverController.getDriversListing(0, 25, null, null)
+    val result = driverController.getDriversListing(0, 25, "id", "asc")
 
     assertThat(result.statusCode.value()).isEqualTo(HttpStatus.OK.value())
     assertThat(result.body).isEqualTo(
@@ -65,7 +65,7 @@ class DriverControllerShould {
   fun `return bad request when use case returns NotValidDriverListingRequestResponse`() {
     every { listingDriversUseCase.invoke(any()) } returns NotValidDriverListingRequestResponse
 
-    val result = driverController.getDriversListing(-1, 25, null, null)
+    val result = driverController.getDriversListing(-1, 25, "id", "asc")
 
     assertThat(result.statusCode.value()).isEqualTo(HttpStatus.BAD_REQUEST.value())
   }
@@ -74,7 +74,7 @@ class DriverControllerShould {
   fun `return bad request when use case returns NotValidDriverListingSortingRequestResponse`() {
     every { listingDriversUseCase.invoke(any()) } returns NotValidDriverListingSortingRequestResponse
 
-    val result = driverController.getDriversListing(-1, 25, null, null)
+    val result = driverController.getDriversListing(-1, 25, "not-valid", "asc")
 
     assertThat(result.statusCode.value()).isEqualTo(HttpStatus.BAD_REQUEST.value())
   }

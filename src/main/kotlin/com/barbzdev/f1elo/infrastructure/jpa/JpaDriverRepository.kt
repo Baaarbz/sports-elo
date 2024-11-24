@@ -3,6 +3,10 @@ package com.barbzdev.f1elo.infrastructure.jpa
 import com.barbzdev.f1elo.domain.Driver
 import com.barbzdev.f1elo.domain.DriverId
 import com.barbzdev.f1elo.domain.common.DomainPaginated
+import com.barbzdev.f1elo.domain.common.Page
+import com.barbzdev.f1elo.domain.common.PageSize
+import com.barbzdev.f1elo.domain.common.SortBy
+import com.barbzdev.f1elo.domain.common.SortOrder
 import com.barbzdev.f1elo.domain.repository.DriverRepository
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
 import com.barbzdev.f1elo.infrastructure.mapper.EntityToDomainMapper.toDomain
@@ -15,8 +19,8 @@ class JpaDriverRepository(
   private val driverDatasource: JpaDriverDatasource,
   private val eloHistoryDatasource: JpaDriverEloHistoryDatasource
 ) : DriverRepository {
-  override fun findAll(page: Int, pageSize: Int): DomainPaginated<Driver> {
-    val pageable = PageRequest.of(page, pageSize)
+  override fun findAll(page: Page, pageSize: PageSize, sortBy: SortBy, sortOrder: SortOrder): DomainPaginated<Driver> {
+    val pageable = PageRequest.of(page.value, pageSize.value)
     val jpaPaginated = driverDatasource.findAll(pageable)
     return DomainPaginated(
       elements =
@@ -24,8 +28,8 @@ class JpaDriverRepository(
           val eloRecordEntity = eloHistoryDatasource.findAllByDriver(driverEntity)
           driverEntity.toDomain(eloRecordEntity)
         },
-      page = page,
-      pageSize = pageSize,
+      page = page.value,
+      pageSize = pageSize.value,
       totalElements = jpaPaginated.totalElements,
       totalPages = jpaPaginated.totalPages)
   }

@@ -2,6 +2,10 @@ package com.barbzdev.f1elo.application
 
 import com.barbzdev.f1elo.domain.Driver
 import com.barbzdev.f1elo.domain.common.DomainPaginated
+import com.barbzdev.f1elo.domain.common.Page
+import com.barbzdev.f1elo.domain.common.PageSize
+import com.barbzdev.f1elo.domain.common.SortBy
+import com.barbzdev.f1elo.domain.common.SortOrder
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository
 import java.time.LocalDate
@@ -26,7 +30,7 @@ class ListingDriversUseCase(
 
   private fun ListingDriversRequest.isNotValidSorting() = sortBy !in SUPPORTED_SORTING_BY || sortOrder !in SUPPORTED_SORTING_ORDER
 
-  private fun ListingDriversRequest.findDrivers() = driverRepository.findAll(page, pageSize, sortBy, sortOrder)
+  private fun ListingDriversRequest.findDrivers() = driverRepository.findAll(Page(page), PageSize(pageSize), SortBy(sortBy), SortOrder(sortOrder))
 
   private fun DomainPaginated<Driver>.toResponse() =
     ListingDriversSuccess(

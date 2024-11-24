@@ -4,6 +4,10 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import com.barbzdev.f1elo.domain.common.DomainPaginated
+import com.barbzdev.f1elo.domain.common.Page
+import com.barbzdev.f1elo.domain.common.PageSize
+import com.barbzdev.f1elo.domain.common.SortBy
+import com.barbzdev.f1elo.domain.common.SortOrder
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository
 import com.barbzdev.f1elo.factory.DriverFactory.aDriver
@@ -45,7 +49,7 @@ class ListingDriversUseCaseShould {
         totalElements = 2,
         totalPages = 1)
     assertThat(result).isEqualTo(expected)
-    verify { driverRepository.findAll(0, 25, "id", "desc") }
+    verify { driverRepository.findAll(Page(0), PageSize(25), SortBy("id"), SortOrder("desc")) }
   }
 
   @Test
