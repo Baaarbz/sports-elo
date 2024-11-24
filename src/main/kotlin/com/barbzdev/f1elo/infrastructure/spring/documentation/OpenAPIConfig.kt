@@ -18,8 +18,7 @@ class OpenAPIConfig {
     devServer.description = "Server URL in development environment"
 
     val prodServer = Server()
-    // TODO("tbd prod url")
-    prodServer.url = "https://tbd.com"
+    prodServer.url = "https://f1elo.barbzdev.com"
     prodServer.description = "Server URL in Production environment"
 
     val contact = Contact()
