@@ -3,7 +3,8 @@ package com.barbzdev.f1elo.infrastructure.spring.controller
 import com.barbzdev.f1elo.application.ListingDriversRequest
 import com.barbzdev.f1elo.application.ListingDriversSuccess
 import com.barbzdev.f1elo.application.ListingDriversUseCase
-import com.barbzdev.f1elo.application.NotValidListingRequestResponse
+import com.barbzdev.f1elo.application.NotValidDriverListingRequestResponse
+import com.barbzdev.f1elo.application.NotValidDriverListingSortingRequestResponse
 import java.time.LocalDate
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,12 +20,14 @@ class DriverController(private val listingDriversUseCase: ListingDriversUseCase)
   @GetMapping
   override fun getDriversListing(
     @RequestParam(defaultValue = "0") page: Int,
-    @RequestParam(defaultValue = "25") pageSize: Int
+    @RequestParam(defaultValue = "25") pageSize: Int,
+    @RequestParam(defaultValue = "id") sortBy: String,
+    @RequestParam(defaultValue = "desc") sortOrder: String
   ): ResponseEntity<HttpGetDriverListingResponse> {
-    val listingDriversResponse = listingDriversUseCase.invoke(ListingDriversRequest(page, pageSize))
+    val listingDriversResponse = listingDriversUseCase.invoke(ListingDriversRequest(page, pageSize, sortBy, sortOrder))
     return when (listingDriversResponse) {
       is ListingDriversSuccess -> ResponseEntity.ok(listingDriversResponse.toHttpResponse())
-      is NotValidListingRequestResponse -> ResponseEntity.badRequest().build()
+      is NotValidDriverListingRequestResponse, NotValidDriverListingSortingRequestResponse -> ResponseEntity.badRequest().build()
     }
   }
 
