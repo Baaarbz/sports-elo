@@ -7,6 +7,7 @@ import com.barbzdev.f1elo.infrastructure.jpa.JpaSeasonRepository
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaSeasonDatasource
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -14,6 +15,11 @@ abstract class JpaSeasonRepositoryShould : IntegrationTestConfiguration() {
   @Autowired private lateinit var repository: JpaSeasonRepository
 
   @Autowired private lateinit var datasource: JpaSeasonDatasource
+
+  @AfterEach
+  fun cleanUp() {
+    datasource.deleteAll()
+  }
 
   @Test
   fun `save a season`() {
@@ -31,6 +37,15 @@ abstract class JpaSeasonRepositoryShould : IntegrationTestConfiguration() {
     val lastSeasonLoaded = repository.getLastSeasonLoaded()
 
     assertThat(lastSeasonLoaded).isEqualTo(seasonInDatabase)
+  }
+
+  @Test
+  fun `get the last season year loaded`() {
+    val seasonInDatabase = givenASeasonInDatabase()
+
+    val lastSeasonLoaded = repository.getLastYearLoaded()
+
+    assertThat(lastSeasonLoaded).isEqualTo(seasonInDatabase.year())
   }
 
   private fun givenASeasonInDatabase(): Season = aSeason().also { repository.save(it) }

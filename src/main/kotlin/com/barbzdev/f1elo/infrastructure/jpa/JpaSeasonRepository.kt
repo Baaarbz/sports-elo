@@ -29,6 +29,14 @@ open class JpaSeasonRepository(
   override fun getLastSeasonLoaded(): Season? =
     seasonDatasource.findAll().maxByOrNull { it.year }?.gatherAllRelatedDataOfTheSeason()
 
+  override fun getLastYearLoaded(): SeasonYear? =
+    seasonDatasource
+      .findAll()
+      .maxByOrNull { it.year }
+      ?.let {
+        return SeasonYear(it.year)
+      }
+
   override fun findBy(year: SeasonYear): Season? =
     seasonDatasource.findByYear(year.value)?.gatherAllRelatedDataOfTheSeason()
 

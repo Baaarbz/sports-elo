@@ -3,6 +3,7 @@ package com.barbzdev.f1elo.infrastructure.jpa
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.barbzdev.f1elo.domain.Season.Companion.create
+import com.barbzdev.f1elo.domain.SeasonYear
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaCircuitDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaConstructorDatasource
@@ -63,6 +64,34 @@ class JpaSeasonRepositoryShould {
     every { seasonDatasource.findAll() } returns emptyList()
 
     val response = jpaSeasonRepository.getLastSeasonLoaded()
+
+    assertThat(response).isEqualTo(null)
+  }
+
+  @Test
+  fun `return the last year loaded`() {
+    val expectedSeason = create(2004, "https://www.url.com/season/2004")
+    val seasonsInDatasource =
+      mutableListOf(
+        create(2000, "https://www.url.com/season/2000"),
+        create(2001, "https://www.url.com/season/2001"),
+        create(2002, "https://www.url.com/season/2002"),
+        create(2003, "https://www.url.com/season/2003"),
+        expectedSeason)
+    seasonsInDatasource.shuffle()
+    every { seasonDatasource.findAll() } returns seasonsInDatasource.map { it.toEntity() }
+
+    val response = jpaSeasonRepository.getLastYearLoaded()
+
+    assertThat(response).isEqualTo(SeasonYear(2004))
+    verifyOrder { seasonDatasource.findAll() }
+  }
+
+  @Test
+  fun `return null if there are no seasons year loaded`() {
+    every { seasonDatasource.findAll() } returns emptyList()
+
+    val response = jpaSeasonRepository.getLastYearLoaded()
 
     assertThat(response).isEqualTo(null)
   }

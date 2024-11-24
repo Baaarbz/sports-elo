@@ -6,6 +6,8 @@ import com.barbzdev.f1elo.domain.SeasonYear
 interface SeasonRepository {
   fun getLastSeasonLoaded(): Season?
 
+  fun getLastYearLoaded(): SeasonYear?
+
   fun save(season: Season)
 
   fun findBy(year: SeasonYear): Season?

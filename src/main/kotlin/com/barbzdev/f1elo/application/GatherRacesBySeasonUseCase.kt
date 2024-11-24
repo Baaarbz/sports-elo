@@ -45,8 +45,7 @@ class GatherRacesBySeasonUseCase(
 
   private fun getSeasonToLoad(): Season? {
     val yearToLoad =
-      seasonRepository.getLastSeasonLoaded()?.let { seasonFound -> seasonFound.year().value + 1 }
-        ?: FIRST_FORMULA_1_SEASON
+      seasonRepository.getLastYearLoaded()?.let { seasonFound -> seasonFound.value + 1 } ?: FIRST_FORMULA_1_SEASON
 
     return f1Repository.gatherAllSeasons().find { it.season == yearToLoad }?.let { Season.create(it.season, it.url) }
   }

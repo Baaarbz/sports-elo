@@ -3,6 +3,7 @@ package com.barbzdev.f1elo.application
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
+import com.barbzdev.f1elo.domain.SeasonYear
 import com.barbzdev.f1elo.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository
@@ -36,14 +37,14 @@ class GatherRacesBySeasonUseCaseShould {
 
   @Test
   fun `return GatherRacesOverASeasonNonExistent when the season to load is the current season`() {
-    every { seasonRepository.getLastSeasonLoaded() } returns aSeason(now().year)
+    every { seasonRepository.getLastYearLoaded() } returns SeasonYear(now().year)
     every { f1Repository.gatherAllSeasons() } returns listOf(aF1Season(now().year))
 
     val result = gatherRacesBySeasonUseCase.invoke()
 
     assertThat(result).isInstanceOf(GatherRacesOverASeasonNonExistent::class)
     verify(exactly = 1) {
-      seasonRepository.getLastSeasonLoaded()
+      seasonRepository.getLastYearLoaded()
       f1Repository.gatherAllSeasons()
     }
     verify(exactly = 0) {
@@ -56,14 +57,14 @@ class GatherRacesBySeasonUseCaseShould {
 
   @Test
   fun `return GatherRacesBySeasonUpToDate when the season to load is the current season`() {
-    every { seasonRepository.getLastSeasonLoaded() } returns aSeason(now().year)
+    every { seasonRepository.getLastYearLoaded() } returns SeasonYear(now().year)
     every { f1Repository.gatherAllSeasons() } returns listOf(aF1Season(now().year + 1))
 
     val result = gatherRacesBySeasonUseCase.invoke()
 
     assertThat(result).isInstanceOf(GatherRacesBySeasonUpToDate::class)
     verify(exactly = 1) {
-      seasonRepository.getLastSeasonLoaded()
+      seasonRepository.getLastYearLoaded()
       f1Repository.gatherAllSeasons()
     }
     verify(exactly = 0) {
@@ -76,9 +77,9 @@ class GatherRacesBySeasonUseCaseShould {
 
   @Test
   fun `return GatherRacesBySeasonSuccess when the season to load is not the current season`() {
-    val aSeasonLoaded = aSeason()
-    val aSeasonToLoad = aSeason(aSeasonLoaded.year().value + 1)
-    every { seasonRepository.getLastSeasonLoaded() } returns aSeasonLoaded
+    val aSeasonLoaded = SeasonYear(aSeason().year().value)
+    val aSeasonToLoad = aSeason(aSeasonLoaded.value + 1)
+    every { seasonRepository.getLastYearLoaded() } returns aSeasonLoaded
     every { f1Repository.gatherAllSeasons() } returns f1Seasons
     every { f1Repository.gatherRacesBySeason(any()) } returns RaceFactory.aF1RacesFrom(aSeasonToLoad)
     every { driverRepository.findBy(any()) } returns null
@@ -89,7 +90,7 @@ class GatherRacesBySeasonUseCaseShould {
 
     assertThat(result).isInstanceOf(GatherRacesBySeasonSuccess::class)
     verifyOrder {
-      seasonRepository.getLastSeasonLoaded()
+      seasonRepository.getLastYearLoaded()
       f1Repository.gatherAllSeasons()
       f1Repository.gatherRacesBySeason(
         withArg { savedSeason -> assertThat(savedSeason.year()).isEqualTo(aSeasonToLoad.year()) })
@@ -105,7 +106,7 @@ class GatherRacesBySeasonUseCaseShould {
   @Test
   fun `return GatherRacesBySeasonSuccess when there are non previous season loaded`() {
     val aSeasonToLoad = aSeason(1950)
-    every { seasonRepository.getLastSeasonLoaded() } returns null
+    every { seasonRepository.getLastYearLoaded() } returns null
     every { f1Repository.gatherAllSeasons() } returns f1Seasons
     every { f1Repository.gatherRacesBySeason(any()) } returns RaceFactory.aF1RacesFrom(aSeasonToLoad)
     every { driverRepository.findBy(any()) } returns null
