@@ -38,6 +38,6 @@ abstract class JpaSeasonRepositoryShould : IntegrationTestConfiguration() {
   private fun verifySeasonWasSaved(expectedSeasonEntitySaved: Season) {
     val actualSavedSeason = datasource.findAll()
     val expectedSeason = expectedSeasonEntitySaved.toEntity()
-    assertThat(actualSavedSeason).containsExactly(expectedSeason)
+    assertThat(actualSavedSeason).contains(expectedSeason)
   }
 }

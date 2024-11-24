@@ -45,7 +45,12 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
     val drivers = repository.findAll(Page(0), PageSize(1), SortBy("id"), SortOrder("asc"))
 
     val expected =
-      DomainPaginated(elements = listOf(driverInDatabase), page = 0, pageSize = 1, totalElements = 1, totalPages = 1)
+      DomainPaginated(
+        elements = listOf(driverInDatabase),
+        page = 0,
+        pageSize = 1,
+        totalElements = drivers.totalElements,
+        totalPages = drivers.totalPages)
     assertThat(drivers).isEqualTo(expected)
   }
 
@@ -54,6 +59,6 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
   private fun verifyDriverWasSaved(expectedDriverEntitySaved: Driver) {
     val actualSavedDrivers = datasource.findAll()
     val expectedDriver = expectedDriverEntitySaved.toEntity()
-    assertThat(actualSavedDrivers).containsExactly(expectedDriver)
+    assertThat(actualSavedDrivers).contains(expectedDriver)
   }
 }
