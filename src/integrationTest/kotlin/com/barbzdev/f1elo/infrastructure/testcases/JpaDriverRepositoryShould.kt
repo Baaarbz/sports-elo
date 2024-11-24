@@ -2,6 +2,10 @@ package com.barbzdev.f1elo.infrastructure.testcases
 
 import com.barbzdev.f1elo.domain.Driver
 import com.barbzdev.f1elo.domain.common.DomainPaginated
+import com.barbzdev.f1elo.domain.common.Page
+import com.barbzdev.f1elo.domain.common.PageSize
+import com.barbzdev.f1elo.domain.common.SortBy
+import com.barbzdev.f1elo.domain.common.SortOrder
 import com.barbzdev.f1elo.factory.DriverFactory.aDriver
 import com.barbzdev.f1elo.infrastructure.IntegrationTestConfiguration
 import com.barbzdev.f1elo.infrastructure.jpa.JpaDriverRepository
@@ -38,7 +42,7 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
   fun `get all drivers`() {
     val driverInDatabase = givenADriverInDatabase()
 
-    val drivers = repository.findAll(0, 1)
+    val drivers = repository.findAll(Page(0), PageSize(1), SortBy("id"), SortOrder("asc"))
 
     val expected =
       DomainPaginated(elements = listOf(driverInDatabase), page = 0, pageSize = 1, totalElements = 1, totalPages = 1)

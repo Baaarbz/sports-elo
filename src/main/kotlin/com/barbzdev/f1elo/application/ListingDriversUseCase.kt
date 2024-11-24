@@ -2,6 +2,10 @@ package com.barbzdev.f1elo.application
 
 import com.barbzdev.f1elo.domain.Driver
 import com.barbzdev.f1elo.domain.common.DomainPaginated
+import com.barbzdev.f1elo.domain.common.Page
+import com.barbzdev.f1elo.domain.common.PageSize
+import com.barbzdev.f1elo.domain.common.SortBy
+import com.barbzdev.f1elo.domain.common.SortOrder
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository
 import java.time.LocalDate
@@ -13,15 +17,22 @@ class ListingDriversUseCase(
 
   operator fun invoke(request: ListingDriversRequest): ListingDriversResponse = instrumentation {
     if (request.isNotValidRequest()) {
-      return@instrumentation NotValidListingRequestResponse
+      return@instrumentation NotValidDriverListingRequestResponse
+    }
+    if (request.isNotValidSorting()) {
+      return@instrumentation NotValidDriverListingSortingRequestResponse
     }
 
     request.findDrivers().toResponse()
   }
 
-  private fun ListingDriversRequest.isNotValidRequest() = this.page < 0 || this.pageSize !in SUPPORTED_PAGE_LIMIT
+  private fun ListingDriversRequest.isNotValidRequest() = page < 0 || pageSize !in SUPPORTED_PAGE_LIMIT
 
-  private fun ListingDriversRequest.findDrivers() = driverRepository.findAll(this.page, this.pageSize)
+  private fun ListingDriversRequest.isNotValidSorting() =
+    sortBy !in SUPPORTED_SORTING_BY || sortOrder !in SUPPORTED_SORTING_ORDER
+
+  private fun ListingDriversRequest.findDrivers() =
+    driverRepository.findAll(Page(page), PageSize(pageSize), SortBy(sortBy), SortOrder(sortOrder))
 
   private fun DomainPaginated<Driver>.toResponse() =
     ListingDriversSuccess(
@@ -43,14 +54,18 @@ class ListingDriversUseCase(
 
   private companion object {
     val SUPPORTED_PAGE_LIMIT = intArrayOf(25, 50, 100)
+    val SUPPORTED_SORTING_BY = arrayOf("currentElo", "highestElo", "lowestElo", "id")
+    val SUPPORTED_SORTING_ORDER = arrayOf("asc", "desc")
   }
 }
 
-data class ListingDriversRequest(val page: Int, val pageSize: Int)
+data class ListingDriversRequest(val page: Int, val pageSize: Int, val sortBy: String, val sortOrder: String)
 
 sealed class ListingDriversResponse
 
-data object NotValidListingRequestResponse : ListingDriversResponse()
+data object NotValidDriverListingRequestResponse : ListingDriversResponse()
+
+data object NotValidDriverListingSortingRequestResponse : ListingDriversResponse()
 
 data class ListingDriversSuccess(
   val drivers: List<ListingDriver>,

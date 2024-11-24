@@ -1,6 +1,7 @@
 package com.barbzdev.f1elo.infrastructure.spring.controller
 
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -22,7 +23,22 @@ interface DriverControllerDocumentation {
         ApiResponse(responseCode = "500", description = "Internal server error", content = [Content()])])
   fun getDriver(driverId: String): ResponseEntity<HttpGetDriverResponse>
 
-  @Operation(summary = "Get drivers peak ELO listing", description = "Fetches all the drivers peak ELO with pagination")
+  @Operation(
+    summary = "Get drivers peak ELO listing",
+    description = "Fetches all the drivers peak ELO with pagination",
+    parameters =
+      [
+        Parameter(name = "page", description = "Page number from 0 to (nPages - 1)", required = false, example = "0"),
+        Parameter(
+          name = "pageSize",
+          description = "Number of items per page, supported values: [25 | 50 | 100]",
+          required = false,
+        ),
+        Parameter(
+          name = "sortBy",
+          description = "Sort by field, supported values: [currentElo | highestElo | lowestElo | id]",
+          required = false),
+        Parameter(name = "sortOrder", description = "Sort order, supported values: [asc | desc]", required = false)])
   @ApiResponses(
     value =
       [
@@ -39,5 +55,10 @@ interface DriverControllerDocumentation {
           description = "Required query params not present or not supported values",
           content = [Content()]),
         ApiResponse(responseCode = "500", description = "Internal server error", content = [Content()])])
-  fun getDriversListing(page: Int, pageSize: Int): ResponseEntity<HttpGetDriverListingResponse>
+  fun getDriversListing(
+    page: Int,
+    pageSize: Int,
+    sortBy: String,
+    sortOrder: String
+  ): ResponseEntity<HttpGetDriverListingResponse>
 }
