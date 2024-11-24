@@ -5,7 +5,7 @@ import com.barbzdev.f1elo.domain.DriverId
 import com.barbzdev.f1elo.domain.common.DomainPaginated
 
 interface DriverRepository {
-  fun findAll(page: Int, pageSize: Int): DomainPaginated<Driver>
+  fun findAll(page: Int, pageSize: Int, sortBy: String, sortOrder: String): DomainPaginated<Driver>
 
   fun findBy(id: DriverId): Driver?
 
