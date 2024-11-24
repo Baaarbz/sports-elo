@@ -27,7 +27,8 @@ class DriverController(private val listingDriversUseCase: ListingDriversUseCase)
     val listingDriversResponse = listingDriversUseCase.invoke(ListingDriversRequest(page, pageSize, sortBy, sortOrder))
     return when (listingDriversResponse) {
       is ListingDriversSuccess -> ResponseEntity.ok(listingDriversResponse.toHttpResponse())
-      is NotValidDriverListingRequestResponse, NotValidDriverListingSortingRequestResponse -> ResponseEntity.badRequest().build()
+      is NotValidDriverListingRequestResponse,
+      NotValidDriverListingSortingRequestResponse -> ResponseEntity.badRequest().build()
     }
   }
 

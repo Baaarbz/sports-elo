@@ -20,45 +20,43 @@ class DriverControllerShould {
 
   @Test
   fun `return drivers when use case success`() {
-    val responseUseCase = ListingDriversSuccess(
-      drivers = listOf(
-        ListingDriver(
-          id = "alonso",
-          fullName = ListingDriverFullName(familyName = "Alonso", givenName = "Fernando"),
-          currentElo = 2016,
-          highestElo = 2016,
-          lowestElo = 2016,
-          lastRaceDate = LocalDate.of(2021, 1, 1)
-        ),
-      ),
-      page = 0,
-      pageSize = 25,
-      totalElements = 2,
-      totalPages = 1
-    )
+    val responseUseCase =
+      ListingDriversSuccess(
+        drivers =
+          listOf(
+            ListingDriver(
+              id = "alonso",
+              fullName = ListingDriverFullName(familyName = "Alonso", givenName = "Fernando"),
+              currentElo = 2016,
+              highestElo = 2016,
+              lowestElo = 2016,
+              lastRaceDate = LocalDate.of(2021, 1, 1)),
+          ),
+        page = 0,
+        pageSize = 25,
+        totalElements = 2,
+        totalPages = 1)
     every { listingDriversUseCase.invoke(any()) } returns responseUseCase
 
     val result = driverController.getDriversListing(0, 25, "id", "asc")
 
     assertThat(result.statusCode.value()).isEqualTo(HttpStatus.OK.value())
-    assertThat(result.body).isEqualTo(
-      HttpGetDriverListingResponse(
-        drivers = listOf(
-          HttpDriversListing(
-            id = "alonso",
-            fullName = HttpDriverListingFullName(familyName = "Alonso", givenName = "Fernando"),
-            currentElo = 2016,
-            highestElo = 2016,
-            lowestElo = 2016,
-            lastRaceDate = LocalDate.of(2021, 1, 1)
-          )
-        ),
-        page = 0,
-        pageSize = 25,
-        totalElements = 2,
-        totalPages = 1
-      )
-    )
+    assertThat(result.body)
+      .isEqualTo(
+        HttpGetDriverListingResponse(
+          drivers =
+            listOf(
+              HttpDriversListing(
+                id = "alonso",
+                fullName = HttpDriverListingFullName(familyName = "Alonso", givenName = "Fernando"),
+                currentElo = 2016,
+                highestElo = 2016,
+                lowestElo = 2016,
+                lastRaceDate = LocalDate.of(2021, 1, 1))),
+          page = 0,
+          pageSize = 25,
+          totalElements = 2,
+          totalPages = 1))
   }
 
   @Test

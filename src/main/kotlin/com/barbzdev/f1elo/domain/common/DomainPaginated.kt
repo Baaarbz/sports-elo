@@ -9,6 +9,9 @@ data class DomainPaginated<T>(
 )
 
 data class Page(val value: Int)
+
 data class PageSize(val value: Int)
+
 data class SortBy(val value: String)
+
 data class SortOrder(val value: String)

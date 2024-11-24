@@ -21,19 +21,21 @@ class JpaDriverRepository(
   private val eloHistoryDatasource: JpaDriverEloHistoryDatasource
 ) : DriverRepository {
   override fun findAll(page: Page, pageSize: PageSize, sortBy: SortBy, sortOrder: SortOrder): DomainPaginated<Driver> {
-    val orderByColum = when (sortBy.value) {
-      "currentElo" -> "current_elo"
-      "highestElo" -> "highest_elo"
-      "lowestElo" -> "lowest_elo"
-      "id" -> "id"
-      else -> throw IllegalArgumentException("Invalid sortBy value for find all drivers query")
-    }
-    val sortDirection = when (sortOrder.value) {
-      "asc" -> Sort.Direction.ASC
-      "desc" -> Sort.Direction.DESC
-      else -> throw IllegalArgumentException("Invalid sortOrder value for find all drivers query")
-    }
-    val pageable =  PageRequest.of(page.value, pageSize.value, sortDirection, orderByColum)
+    val orderByColum =
+      when (sortBy.value) {
+        "currentElo" -> "current_elo"
+        "highestElo" -> "highest_elo"
+        "lowestElo" -> "lowest_elo"
+        "id" -> "id"
+        else -> throw IllegalArgumentException("Invalid sortBy value for find all drivers query")
+      }
+    val sortDirection =
+      when (sortOrder.value) {
+        "asc" -> Sort.Direction.ASC
+        "desc" -> Sort.Direction.DESC
+        else -> throw IllegalArgumentException("Invalid sortOrder value for find all drivers query")
+      }
+    val pageable = PageRequest.of(page.value, pageSize.value, sortDirection, orderByColum)
 
     val jpaPaginated = driverDatasource.findAllJoinDriverEloHistory(pageable)
     return DomainPaginated(

@@ -28,29 +28,29 @@ class ListingDriversUseCase(
 
   private fun ListingDriversRequest.isNotValidRequest() = page < 0 || pageSize !in SUPPORTED_PAGE_LIMIT
 
-  private fun ListingDriversRequest.isNotValidSorting() = sortBy !in SUPPORTED_SORTING_BY || sortOrder !in SUPPORTED_SORTING_ORDER
+  private fun ListingDriversRequest.isNotValidSorting() =
+    sortBy !in SUPPORTED_SORTING_BY || sortOrder !in SUPPORTED_SORTING_ORDER
 
-  private fun ListingDriversRequest.findDrivers() = driverRepository.findAll(Page(page), PageSize(pageSize), SortBy(sortBy), SortOrder(sortOrder))
+  private fun ListingDriversRequest.findDrivers() =
+    driverRepository.findAll(Page(page), PageSize(pageSize), SortBy(sortBy), SortOrder(sortOrder))
 
   private fun DomainPaginated<Driver>.toResponse() =
     ListingDriversSuccess(
       drivers =
-      this.elements.map { driver ->
-        ListingDriver(
-          id = driver.id().value,
-          fullName =
-          ListingDriverFullName(familyName = driver.fullName().familyName, givenName = driver.fullName().givenName),
-          currentElo = driver.currentElo().rating,
-          highestElo = driver.highestElo().rating,
-          lowestElo = driver.lowestElo().rating,
-          lastRaceDate = driver.currentElo().toLocalDate()
-        )
-      },
+        this.elements.map { driver ->
+          ListingDriver(
+            id = driver.id().value,
+            fullName =
+              ListingDriverFullName(familyName = driver.fullName().familyName, givenName = driver.fullName().givenName),
+            currentElo = driver.currentElo().rating,
+            highestElo = driver.highestElo().rating,
+            lowestElo = driver.lowestElo().rating,
+            lastRaceDate = driver.currentElo().toLocalDate())
+        },
       page = this.page,
       pageSize = this.pageSize,
       totalElements = this.totalElements,
-      totalPages = this.totalPages
-    )
+      totalPages = this.totalPages)
 
   private companion object {
     val SUPPORTED_PAGE_LIMIT = intArrayOf(25, 50, 100)
@@ -64,6 +64,7 @@ data class ListingDriversRequest(val page: Int, val pageSize: Int, val sortBy: S
 sealed class ListingDriversResponse
 
 data object NotValidDriverListingRequestResponse : ListingDriversResponse()
+
 data object NotValidDriverListingSortingRequestResponse : ListingDriversResponse()
 
 data class ListingDriversSuccess(
