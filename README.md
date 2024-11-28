@@ -2,59 +2,52 @@
 
 [![CD/CI](https://github.com/Baaarbz/f1-elo/actions/workflows/main.yml/badge.svg)](https://github.com/Baaarbz/f1-elo/actions/workflows/main.yml)
 
+> [!NOTE]
 > ### Disclaimer
 > This is a personal project, I am not affiliated with Formula 1 or any of its teams. The data used in this project is
 > from the [Jolpica F1 API](https://github.com/jolpica/jolpica-f1). I run personally with the expenses of the server,
 > domain and so on. If you like this project and want to support it, you can buy me a coffee.
 
 **Formula 1 ELO system. Who are the GOATs? Let's see!**
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About the project</a>
-    </li>
-    <li>
-      <a href="#how-to-calculate-it">How to calculate it</a>
-    </li>
-    <li>
-      <a href="#assumptions">Assumptions</a>
-      <ul>
-        <li><a href="#corner-cases">Corner cases</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#iterations">Iterations</a>
-      <ul>
-        <li><a href="#take-into-account-the-performance-of-the-car">Take into account the performance of the car</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#considerations">Considerations</a>
-    </li>
-    <li>
-      <a href="#references">References</a>
-    </li>
-  </ol>
-</details>
-
+<!-- TOC -->
+* [F1 Elo](#f1-elo)
+  * [About the project](#about-the-project)
+  * [Assumptions](#assumptions)
+  * [Ways of calculating the rating](#ways-of-calculating-the-rating)
+    * [ELO System](#elo-system)
+      * [How to calculate it](#how-to-calculate-it)
+      * [Corner cases](#corner-cases)
+    * [iRating System](#irating-system)
+    * [TrueSkill System](#trueskill-system)
+  * [References](#references)
+<!-- TOC -->
 _________________
 
 ## About the project
 
-This project is a personal project to calculate the ELO of the Formula 1 drivers, inspired in the next video
-of [Mr V's Garage](https://www.youtube.com/live/U16a8tdrbII?t=1046s). <br/>The ELO system is a method for
-calculating the relative skill levels of players in two-player games such as chess. It is named after its creator Arpad
-Elo, a Hungarian-American physics professor. In this case, there are some assumptions to make the ELO system work in the
-Formula 1 world.
-As the drivers does not compete with equal machinery we are going to evaluate the drivers against their teammates, at
-least for the first stage of the project.
+This project is a personal project to calculate the ELO of the Formula 1 drivers, inspired in the next video of [Mr V's Garage](https://www.youtube.com/live/U16a8tdrbII?t=1046s) and motivated to know who are the greatest of all time. 
+<br/>The system will count with 3 different ways to calculate the rating of the drivers: ELO System, iRating system and TrueSkill system.
+
+## Assumptions
+
+- Rookie drivers will start with 1000 ELO/rating
+- Indy 500 drivers will be ignored
 
 _________________
 
-## How to calculate it
+## Ways of calculating the rating
+
+### ELO System
+
+> [!IMPORTANT]
+> As the drivers does not compete with equal machinery we are going to evaluate the drivers against their teammates.
+
+Method for calculating the relative skill levels of players in two-player games such as chess. It is named after its creator Arpad Elo, a Hungarian-American physics professor. This method is also used in different sports and e-sports.
+
+#### How to calculate it
+
+<div style="display: flex; gap: 10px; align-items: center; justify-content: space-around;">
+  <div>
 
 $$
 R'=R+K(S-E)\\
@@ -66,133 +59,64 @@ $$
 Q = 10^{\cfrac{R}{(400)}}
 $$
 
-$Q_A$ for driver <br/>
-$Q_B$ for teammate <br/>
-$R'$ new driver rating <br/>
-$R$ old driver rating <br/>
-$K$ is a multiplier we will use $K=32$ the double than chess.com <br/>
-$S$ Result against teammate <br/>
+  </div>
+  <div>
 
-| Result | $S$ |
-|--------|-----|
-| Win    | 1   |
-| Draw   | 0.5 |
-| Lose   | 0   |
+| Parameters  | Description                                                                            |
+|-------------|----------------------------------------------------------------------------------------|
+| $Q_A$       | $Q_A$ for driver                                                                       |
+| $Q_B$       | $Q_B$ for teammate                                                                     |
+| $R'$        | New driver rating                                                                      |
+| $R$         | Old driver rating                                                                      |
+| $K$         | Multiplier used. Value $K=32$                                                          |
+| $S$         | Value depending on the result against the teammate ${Win: 1 // Draw: 0.5 // Lose: 0}$  |
+| $K(S-E)$    | Rating winnings or losings for driver                                                  |
+  </div>
+</div>
 
-$K(S-E)$ Rating winnings or losings for driver <br/>
-_________________
+#### Corner cases
+> [!NOTE] Before 1981 the Formula 1 was not as structured as it is now (number of drivers per team racing, drivers for different teams in the same race...), so we need to take into account some corner cases
 
-## Assumptions
-
-- Rookie drivers will start with 1000 ELO
-
-### Corner cases
-
-#### More than 2 drivers per team (Argentina GP 1955...)
-
-**Solutions**:
-> **Option A**:
-> <br/>The drivers will get wins and loses depends on the final position, accumulating the loses or the winnings in
-> terms of ELO, for example: <br/>
-> There are 4 drivers for a team in the same race, driver A, B, C and D end the race in the respective positions (1º A,
-> 2º B, 3º C, 4º D)
-> each driver wins and loses the same ELO, for example 10. Then the result will end as:
->    - Driver A: Wins $+30$ ELO (wins against 3 drivers $+10 +10 +10 = 30$ )
->    - Driver B: Wins $+10$ ELO (wins against 2 drivers $+10 +10 = 20$ but lose against 1 driver $-10 = -10$)
->    - Driver C: Lose$-10$ ELO (wins against 1 driver $+10= 10$ but loses against 2 drivers $-10-10 = -20$)
->    - Driver D: Lose $-30$ ELO (loses against 3 drivers $-10 -10-10 = -30$ )
-> ________
-> **Issues**:
-> <br/>The problem with this solution is that the drivers will get the ELO calculated based on the ELO previous of the
-> race, in case they win, they will win more ELO, and in case they lose, they will lose more ELO, and this is not fair.
-> And this case does not happen in real world, if you win/lose in your next match you will get your ELO updated in base
-> of
-> the last record of elo you have not based in a fixed one.
-> ____
-> **Conclusion**:
-> <br/>After several test we have concluded that drivers before 1981 have in average more chances to win and lose "a
-> lot" more ELO than modern drivers (post 1981) and breaks the consistency of the ELO system, so we are going to discard
-> this option
-
-> **Option B**:
-> <br/>Use the same approach as before but the $K$ multiplier will be decreased depending on the number of drivers for
-> the team following the next formula: $K = (32 - (N - 1)) * 1.5$<br/><br/>
-> This will be the logic behind the scenes:
-> ```java
-> if (numberOfDrivers == 2) then K = 32
-> if (numberOfDrivers > 2) then K = (32 - (numberOfDrivers - 1)) * 1.5
+> [!WARNING] **More than 2 drivers per team (Argentina GP 1955...)** </br>
+> The drivers will get wins and loses depends on the final position, accumulating the loses or the winnings in terms of ELO but knowing to compensate the winnings and loses in the team, the $K$ multiplier will be decreased depending on the number of drivers for the team following the next formula: $K = (32 - (N - 1)) * 1.5$
+> <div style="display: flex; gap: 10px; align-items: center; justify-content: space-around;">
+> <div>
+> 
+> ```kotlin
+> if (numberOfDrivers == 2)  K = 32
+> if (numberOfDrivers > 2)  K = (32 - (numberOfDrivers - 1)) * 1.5
 > ```
+> 
+>   </div>
+>   <div>
+> 
+> | Number of drivers in the team | $K$ |
+> |-------------------------------|-----|
+> | 2                             | 32  |
+> | 3                             | 24  |
+> | 4                             | 16  |
+> | 5                             | 9.6 |
+> | ...                           | ... |
+> 
+>   </div>
+> </div>
 
-| Number of drivers | 2  | 3  | 4  | 5   |
-|-------------------|----|----|----|-----|
-| $K$               | 32 | 24 | 16 | 9.6 |
-
-
-<br/>
-
-#### $N$ drivers share the same car in the race (Argentina GP 1955...)
-
-> **Solution**:
-> <br/> We will take the average ELO of that car, and it will be used to calculate the new rating, for example: <br/>
-> There are 3 drivers for a team of 2 cars, driver A & B share the same car, driver C has his own car:
->   - Driver A & B: calculate avg of ELO, and we calculate wins and loses as if they were the same driver, and the total
-      o wins and loses will be divided by 2 and then aggregated to each driver
->   - Driver C: calculate wins and loses as normal
-
-
-<br/>
-
-#### Driver race for multiple teams in the same weekend (1978 Italian GP)
-
-> **Solution**:
-> <br/> He will get ELO updated for each team
+> [!WARNING] **$N$ drivers share the same car in the race (Argentina GP 1955...)** <br/>
+> <br/> We will take the average ELO of that car, and it will be used to calculate the new rating for each driver.
 
 
-<br/>
-
-#### Indie 500
-
-> **Solution**:
-> <br/> Ignore it
+> [!WARNING] **Driver race for multiple teams in the same weekend (1978 Italian GP)** <br/>
+> He will get ELO updated for each team
 
 _________________
 
-## Iterations
-
-### Take into account the performance of the car
-
-For both possible solutions we require to calculate the elo, only when the season ends, as we need to know the final
-result of the constructors standings.
-Also, due to the lack of consistency in the first seasons of Formula 1 in terms of, teams, number of drivers per team,
-and so on, we are going to take into account for this feature, only since season 1981, were each team can only have 2
-drivers.
-There are two options:
-
-> **Option A**: <br/>
-> Add a new multiplier to $R'=R+K(S-E)$ as for example: $R'=R+K(S-E)*TR$ where $TR$ is **T**eam **R**ating<br/>
-
-> **Option B**: <br/>
-> Increase/decrease the value of $S$ depending on if the driver is performing above or under the car performance
-> $R'=R+K((S+TP)-E)$
-> <br/>Where TP is **T**heorical **P**erformance those values of TP will be based on the next table:
-
-|     | 1º - 2º<br/>1º in standings | 3º - 4º<br/>2º in standings | 5º - 6º<br/>3º in standings | 7º - 8º<br/>4º in standings | 9º - 10º<br/>5º in standings |
-|-----|-----------------------------|-----------------------------|-----------------------------|-----------------------------|------------------------------|
-| 1º  | 0                           | 0.2                         | 0.4                         | 0.6                         | 0.8                          |
-| 2º  | 0                           | 0.1                         | 0.3                         | 0.5                         | 0.7                          |
-| 3º  | -0.1                        | 0                           | 0.2                         | 0.4                         | 0.6                          |
-| 4º  | -0.2                        | 0                           | 0.1                         | 0.3                         | 0.5                          |
-| 5º  | -0.3                        | -0.1                        | 0                           | 0.2                         | 0.4                          |
-| 6º  | -0.4                        | -0.2                        | 0                           | 0.1                         | 0.3                          |
-| 7º  | -0.4                        | -0.3                        | -0.1                        | 0                           | 0.2                          |
-| 8º  | -0.5                        | -0.4                        | -0.2                        | 0                           | 0.1                          |
-| 9º  | -0.6                        | -0.5                        | -0.3                        | -0.1                        | 0                            |
-| 10º | -0.7                        | -0.6                        | -0.4                        | -0.2                        | 0                            |
-
-### Calculate the ELO of the constructors
+### iRating System
 
 TBD
 
+### TrueSkill System
+
+TBD
 _________________
 
 ## References
@@ -200,3 +124,7 @@ _________________
 [Elo Rating System](https://stanislav-stankovic.medium.com/elo-rating-system-6196cc59941e) <br/>
 [Jolpica F1 API](https://github.com/jolpica/jolpica-f1)<br/>
 [Mr V's Garage inspiring video](https://www.youtube.com/live/U16a8tdrbII?t=1046s)<br/>
+[TrueSkill System](https://www.microsoft.com/en-us/research/project/trueskill-ranking-system/)<br/>
+[TrueSkill System Paper](https://www.microsoft.com/en-us/research/wp-content/uploads/2007/01/NIPS2006_0688.pdf)<br/>
+[ELO System](https://en.wikipedia.org/wiki/Elo_rating_system)<br/>
+[iRating System](https://www.iracing.com/license-progression/) <br/>
