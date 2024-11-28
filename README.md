@@ -46,9 +46,6 @@ Method for calculating the relative skill levels of players in two-player games 
 
 #### How to calculate it
 
-<div style="display: flex; gap: 10px; align-items: center; justify-content: space-around;">
-  <div>
-
 $$
 R'=R+K(S-E)\\
 $$
@@ -59,9 +56,6 @@ $$
 Q = 10^{\cfrac{R}{(400)}}
 $$
 
-  </div>
-  <div>
-
 | Parameters  | Description                                                                            |
 |-------------|----------------------------------------------------------------------------------------|
 | $Q_A$       | $Q_A$ for driver                                                                       |
@@ -71,24 +65,15 @@ $$
 | $K$         | Multiplier used. Value $K=32$                                                          |
 | $S$         | Value depending on the result against the teammate ${Win: 1 // Draw: 0.5 // Lose: 0}$  |
 | $K(S-E)$    | Rating winnings or losings for driver                                                  |
-  </div>
-</div>
+
 
 #### Corner cases
-> [!NOTE] Before 1981 the Formula 1 was not as structured as it is now (number of drivers per team racing, drivers for different teams in the same race...), so we need to take into account some corner cases
+> [!NOTE] 
+> Before 1981 the Formula 1 was not as structured as it is now (number of drivers per team racing, drivers for different teams in the same race...), so we need to take into account some corner cases
 
-> [!WARNING] **More than 2 drivers per team (Argentina GP 1955...)** </br>
+> [!WARNING] 
+> ** More than 2 drivers per team (Argentina GP 1955...) ** <br/>
 > The drivers will get wins and loses depends on the final position, accumulating the loses or the winnings in terms of ELO but knowing to compensate the winnings and loses in the team, the $K$ multiplier will be decreased depending on the number of drivers for the team following the next formula: $K = (32 - (N - 1)) * 1.5$
-> <div style="display: flex; gap: 10px; align-items: center; justify-content: space-around;">
-> <div>
-> 
-> ```kotlin
-> if (numberOfDrivers == 2)  K = 32
-> if (numberOfDrivers > 2)  K = (32 - (numberOfDrivers - 1)) * 1.5
-> ```
-> 
->   </div>
->   <div>
 > 
 > | Number of drivers in the team | $K$ |
 > |-------------------------------|-----|
@@ -97,27 +82,33 @@ $$
 > | 4                             | 16  |
 > | 5                             | 9.6 |
 > | ...                           | ... |
-> 
->   </div>
-> </div>
 
-> [!WARNING] **$N$ drivers share the same car in the race (Argentina GP 1955...)** <br/>
+
+> [!WARNING] 
+> **$N$ drivers share the same car in the race (Argentina GP 1955...)** <br/>
 > <br/> We will take the average ELO of that car, and it will be used to calculate the new rating for each driver.
 
 
-> [!WARNING] **Driver race for multiple teams in the same weekend (1978 Italian GP)** <br/>
-> He will get ELO updated for each team
+> [!WARNING] 
+> **Driver race for multiple teams in the same weekend (1978 Italian GP)** <br/>
+> He will get ELO updated for each team.
 
 _________________
 
 ### iRating System
 
 TBD
+_________________
+
 
 ### TrueSkill System
 
 TBD
 _________________
+
+## Milestones
+
+TBD
 
 ## References
 
