@@ -17,11 +17,14 @@
     * [ELO System](#elo-system)
       * [How to calculate it](#how-to-calculate-it)
       * [Corner cases](#corner-cases)
+        * [More than 2 drivers per team (Argentina GP 1955...)](#more-than-2-drivers-per-team-argentina-gp-1955)
+        * [$N$ drivers share the same car in the race (Argentina GP 1955...)](#n-drivers-share-the-same-car-in-the-race-argentina-gp-1955)
+        * [Driver race for multiple teams in the same weekend (1978 Italian GP)](#driver-race-for-multiple-teams-in-the-same-weekend-1978-italian-gp)
     * [iRating System](#irating-system)
     * [TrueSkill System](#trueskill-system)
+  * [Milestones](#milestones)
   * [References](#references)
 <!-- TOC -->
-_________________
 
 ## About the project
 
@@ -33,7 +36,6 @@ This project is a personal project to calculate the ELO of the Formula 1 drivers
 - Rookie drivers will start with 1000 ELO/rating
 - Indy 500 drivers will be ignored
 
-_________________
 
 ## Ways of calculating the rating
 
@@ -71,7 +73,7 @@ $$
 > [!NOTE] 
 > Before 1981 the Formula 1 was not as structured as it is now (number of drivers per team racing, drivers for different teams in the same race...), so we need to take into account some corner cases
 
-##### More than 2 drivers per team (Argentina GP 1955...)
+* _**More than 2 drivers per team (Argentina GP 1955...)**_<br/>
 
 The drivers will get wins and loses depends on the final position, accumulating the loses or the winnings in terms of ELO but knowing to compensate the winnings and loses in the team, the $K$ multiplier will be decreased depending on the number of drivers for the team following the next formula: $K = (32 - (N - 1)) * 1.5$
 
@@ -83,29 +85,23 @@ The drivers will get wins and loses depends on the final position, accumulating 
 | 5                             | 9.6 |
 | ...                           | ... |
 
-____
 
-##### $N$ drivers share the same car in the race (Argentina GP 1955...)
+
+* **_$N$ drivers share the same car in the race (Argentina GP 1955...)_** <br/>
 We will take the average ELO of that car, and it will be used to calculate the new rating for each driver.
 
-____
 
-##### Driver race for multiple teams in the same weekend (1978 Italian GP)
+* **_Driver race for multiple teams in the same weekend (1978 Italian GP)_** <br/>
 
 He will get ELO updated for each team.
-
-_________________
 
 ### iRating System
 
 TBD
-_________________
-
 
 ### TrueSkill System
 
 TBD
-_________________
 
 ## Milestones
 
