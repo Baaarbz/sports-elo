@@ -102,7 +102,13 @@ TBD
 
 ## Milestones
 
-TBD
+✅ **v1.0.0 (Dec 1st of 2023):** Publish the first stage of the API with the ELO system implemented.
+
+⬜ v2.0.0: Implement the iRating system.
+
+⬜ v3.0.0: Implement the TrueSkill system.
+
+
 
 ## References
 
