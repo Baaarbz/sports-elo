@@ -71,8 +71,7 @@ $$
 > [!NOTE] 
 > Before 1981 the Formula 1 was not as structured as it is now (number of drivers per team racing, drivers for different teams in the same race...), so we need to take into account some corner cases
 
-> [!WARNING] 
-> ### More than 2 drivers per team (Argentina GP 1955...)
+##### More than 2 drivers per team (Argentina GP 1955...)
 
 The drivers will get wins and loses depends on the final position, accumulating the loses or the winnings in terms of ELO but knowing to compensate the winnings and loses in the team, the $K$ multiplier will be decreased depending on the number of drivers for the team following the next formula: $K = (32 - (N - 1)) * 1.5$
 
@@ -85,13 +84,11 @@ The drivers will get wins and loses depends on the final position, accumulating 
 | ...                           | ... |
 
 
-> [!WARNING] 
-> ### $N$ drivers share the same car in the race (Argentina GP 1955...)
+##### $N$ drivers share the same car in the race (Argentina GP 1955...)
 We will take the average ELO of that car, and it will be used to calculate the new rating for each driver.
 
 
-> [!WARNING] 
-> ### Driver race for multiple teams in the same weekend (1978 Italian GP)
+##### Driver race for multiple teams in the same weekend (1978 Italian GP)
 
 He will get ELO updated for each team.
 
