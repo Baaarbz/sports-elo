@@ -85,8 +85,8 @@ The drivers will get wins and loses depends on the final position, accumulating 
 
 
 * **_N drivers share the same car in the race (Argentina GP 1955...)_** <br/>
-We will take the average ELO of that car, and it will be used to calculate the new rating for each driver.
 
+We will take the average ELO of that car, and it will be used to calculate the new rating for each driver.
 
 * **_Driver race for multiple teams in the same weekend (1978 Italian GP)_** <br/>
 
