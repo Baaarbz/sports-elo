@@ -31,7 +31,7 @@ interface DriverControllerDocumentation {
         Parameter(name = "page", description = "Page number from 0 to (nPages - 1)", required = false, example = "0"),
         Parameter(
           name = "pageSize",
-          description = "Number of items per page, supported values: [25 | 50 | 100]",
+          description = "Number of items per page, supported values: [10 | 25 | 50 | 100]",
           required = false,
         ),
         Parameter(

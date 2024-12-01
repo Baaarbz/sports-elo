@@ -53,7 +53,7 @@ class ListingDriversUseCase(
       totalPages = this.totalPages)
 
   private companion object {
-    val SUPPORTED_PAGE_LIMIT = intArrayOf(25, 50, 100)
+    val SUPPORTED_PAGE_LIMIT = intArrayOf(10, 25, 50, 100)
     val SUPPORTED_SORTING_BY = arrayOf("currentElo", "highestElo", "lowestElo", "id")
     val SUPPORTED_SORTING_ORDER = arrayOf("asc", "desc")
   }
