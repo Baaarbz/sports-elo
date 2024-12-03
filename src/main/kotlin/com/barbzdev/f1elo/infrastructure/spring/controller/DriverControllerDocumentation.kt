@@ -10,13 +10,13 @@ import org.springframework.http.ResponseEntity
 
 interface DriverControllerDocumentation {
 
-  @Operation(summary = "Get driver ELO details", description = "Fetches the ELO details of a driver by their ID")
+  @Operation(summary = "Get driver details", description = "Fetche details of a driver by their ID")
   @ApiResponses(
     value =
       [
         ApiResponse(
           responseCode = "200",
-          description = "Successfully retrieved driver ELO details",
+          description = "Successfully retrieved driver details",
           content =
             [Content(mediaType = "application/json", schema = Schema(implementation = HttpGetDriverResponse::class))]),
         ApiResponse(responseCode = "404", description = "Driver not found", content = [Content()]),
