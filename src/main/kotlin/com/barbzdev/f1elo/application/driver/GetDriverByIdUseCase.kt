@@ -34,7 +34,7 @@ class GetDriverByIdUseCase(
       currentElo = GetDriverByIdElo(rating = currentElo().rating, occurredOn = currentElo().toLocalDate()),
       highestElo = highestElo().let { GetDriverByIdElo(rating = it.rating, occurredOn = it.toLocalDate()) },
       lowestElo = lowestElo().let { GetDriverByIdElo(rating = it.rating, occurredOn = it.toLocalDate()) },
-      eloRecord = eloRecord().map { GetDriverByIdElo(rating = it.rating, occurredOn = it.toLocalDate()) })
+      eloRecord = eloRecord().map { GetDriverByIdElo(rating = it.rating, occurredOn = it.toLocalDate()) }.sortedBy { it.occurredOn })
 }
 
 data class GetDriverByIdRequest(val driverId: String)
