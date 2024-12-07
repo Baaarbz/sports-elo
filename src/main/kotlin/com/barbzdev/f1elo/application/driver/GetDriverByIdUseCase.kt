@@ -47,17 +47,17 @@ sealed class GetDriverByIdResponse
 data object GetDriverByIdNotFound : GetDriverByIdResponse()
 
 data class GetDriverByIdSuccess(
-  val id: String,
-  val fullName: GetDriverByIdFullName,
-  val code: String?,
-  val permanentNumber: String?,
-  val birthDate: LocalDate,
-  val nationality: GetDriverByIdNationality,
-  val infoUrl: String,
-  val currentElo: GetDriverByIdElo,
-  val highestElo: GetDriverByIdElo,
-  val lowestElo: GetDriverByIdElo,
-  val eloRecord: List<GetDriverByIdElo>,
+    val id: String,
+    val fullName: GetDriverByIdFullName,
+    val code: String?,
+    val permanentNumber: String?,
+    val birthDate: LocalDate,
+    val nationality: GetDriverByIdNationality,
+    val infoUrl: String,
+    val currentElo: GetDriverByIdElo,
+    val highestElo: GetDriverByIdElo,
+    val lowestElo: GetDriverByIdElo,
+    val eloRecord: List<GetDriverByIdElo>,
 ) : GetDriverByIdResponse()
 
 data class GetDriverByIdElo(val rating: Int, val occurredOn: LocalDate)

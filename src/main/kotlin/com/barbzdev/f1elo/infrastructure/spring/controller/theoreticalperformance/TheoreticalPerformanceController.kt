@@ -23,9 +23,7 @@ class TheoreticalPerformanceController : TheoreticalPerformanceControllerDocumen
   }
 
   @GetMapping("{seasonYear}")
-  override fun getTheoreticalPerformanceOfSeasonYear(
-    @PathVariable seasonYear: String
-  ): ResponseEntity<HttpGetTheoreticalPerformanceBySeasonYearResponse> {
+  override fun getTheoreticalPerformanceOfSeasonYear(@PathVariable seasonYear: String): ResponseEntity<HttpGetTheoreticalPerformanceBySeasonYearResponse> {
     TODO("Not yet implemented")
   }
 }
@@ -36,7 +34,10 @@ data class HttpTheoreticalPerformanceRequest(
   val theoreticalConstructorPerformances: List<HttpTheoreticalConstructorPerformance>
 )
 
-data class HttpTheoreticalConstructorPerformance(val constructorId: String, val performance: Float)
+data class HttpTheoreticalConstructorPerformance(
+  val constructorId: String,
+  val performance: Float
+)
 
 data class HttpGetTheoreticalPerformanceBySeasonYearResponse(
   val seasonYear: String,

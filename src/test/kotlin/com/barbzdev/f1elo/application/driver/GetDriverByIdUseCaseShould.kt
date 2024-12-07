@@ -3,6 +3,13 @@ package com.barbzdev.f1elo.application.driver
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
+import com.barbzdev.f1elo.application.driver.GetDriverByIdElo
+import com.barbzdev.f1elo.application.driver.GetDriverByIdFullName
+import com.barbzdev.f1elo.application.driver.GetDriverByIdNationality
+import com.barbzdev.f1elo.application.driver.GetDriverByIdNotFound
+import com.barbzdev.f1elo.application.driver.GetDriverByIdRequest
+import com.barbzdev.f1elo.application.driver.GetDriverByIdSuccess
+import com.barbzdev.f1elo.application.driver.GetDriverByIdUseCase
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository
 import com.barbzdev.f1elo.factory.DriverFactory.aDriver
