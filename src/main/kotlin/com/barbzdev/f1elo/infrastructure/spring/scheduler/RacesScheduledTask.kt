@@ -1,6 +1,6 @@
 package com.barbzdev.f1elo.infrastructure.spring.scheduler
 
-import com.barbzdev.f1elo.application.GatherRacesBySeasonUseCase
+import com.barbzdev.f1elo.application.data.GatherRacesBySeasonUseCase
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component

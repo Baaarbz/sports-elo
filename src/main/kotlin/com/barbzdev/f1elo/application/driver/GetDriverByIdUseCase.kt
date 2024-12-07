@@ -1,4 +1,4 @@
-package com.barbzdev.f1elo.application
+package com.barbzdev.f1elo.application.driver
 
 import com.barbzdev.f1elo.domain.Driver
 import com.barbzdev.f1elo.domain.DriverId
@@ -44,17 +44,17 @@ sealed class GetDriverByIdResponse
 data object GetDriverByIdNotFound : GetDriverByIdResponse()
 
 data class GetDriverByIdSuccess(
-  val id: String,
-  val fullName: GetDriverByIdFullName,
-  val code: String?,
-  val permanentNumber: String?,
-  val birthDate: LocalDate,
-  val nationality: GetDriverByIdNationality,
-  val infoUrl: String,
-  val currentElo: GetDriverByIdElo,
-  val highestElo: GetDriverByIdElo,
-  val lowestElo: GetDriverByIdElo,
-  val eloRecord: List<GetDriverByIdElo>,
+    val id: String,
+    val fullName: GetDriverByIdFullName,
+    val code: String?,
+    val permanentNumber: String?,
+    val birthDate: LocalDate,
+    val nationality: GetDriverByIdNationality,
+    val infoUrl: String,
+    val currentElo: GetDriverByIdElo,
+    val highestElo: GetDriverByIdElo,
+    val lowestElo: GetDriverByIdElo,
+    val eloRecord: List<GetDriverByIdElo>,
 ) : GetDriverByIdResponse()
 
 data class GetDriverByIdElo(val rating: Int, val occurredOn: LocalDate)

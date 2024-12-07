@@ -1,7 +1,7 @@
 package com.barbzdev.f1elo.domain.repository
 
 import com.barbzdev.f1elo.domain.Season
-import com.barbzdev.f1elo.domain.SeasonYear
+import com.barbzdev.f1elo.domain.common.SeasonYear
 
 interface SeasonRepository {
   fun getLastSeasonLoaded(): Season?

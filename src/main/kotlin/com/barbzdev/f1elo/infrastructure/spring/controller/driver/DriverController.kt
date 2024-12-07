@@ -1,14 +1,14 @@
-package com.barbzdev.f1elo.infrastructure.spring.controller
+package com.barbzdev.f1elo.infrastructure.spring.controller.driver
 
-import com.barbzdev.f1elo.application.GetDriverByIdNotFound
-import com.barbzdev.f1elo.application.GetDriverByIdRequest
-import com.barbzdev.f1elo.application.GetDriverByIdSuccess
-import com.barbzdev.f1elo.application.GetDriverByIdUseCase
-import com.barbzdev.f1elo.application.ListingDriversRequest
-import com.barbzdev.f1elo.application.ListingDriversSuccess
-import com.barbzdev.f1elo.application.ListingDriversUseCase
-import com.barbzdev.f1elo.application.NotValidDriverListingRequestResponse
-import com.barbzdev.f1elo.application.NotValidDriverListingSortingRequestResponse
+import com.barbzdev.f1elo.application.driver.GetDriverByIdNotFound
+import com.barbzdev.f1elo.application.driver.GetDriverByIdRequest
+import com.barbzdev.f1elo.application.driver.GetDriverByIdSuccess
+import com.barbzdev.f1elo.application.driver.GetDriverByIdUseCase
+import com.barbzdev.f1elo.application.driver.ListingDriversRequest
+import com.barbzdev.f1elo.application.driver.ListingDriversSuccess
+import com.barbzdev.f1elo.application.driver.ListingDriversUseCase
+import com.barbzdev.f1elo.application.driver.NotValidDriverListingRequestResponse
+import com.barbzdev.f1elo.application.driver.NotValidDriverListingSortingRequestResponse
 import java.time.LocalDate
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

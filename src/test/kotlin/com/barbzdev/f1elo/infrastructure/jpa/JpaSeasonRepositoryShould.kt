@@ -3,7 +3,7 @@ package com.barbzdev.f1elo.infrastructure.jpa
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.barbzdev.f1elo.domain.Season.Companion.create
-import com.barbzdev.f1elo.domain.SeasonYear
+import com.barbzdev.f1elo.domain.common.SeasonYear
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaCircuitDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaConstructorDatasource
