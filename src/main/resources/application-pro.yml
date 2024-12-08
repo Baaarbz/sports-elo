@@ -10,3 +10,7 @@ jolpi-f1:
 cron:
   job:
     enabled: true
+
+auth:
+  username: ${AUTH_USER}
+  password: ${AUTH_PASSWORD}
