@@ -45,7 +45,7 @@ abstract class AddTheoreticalPerformanceShould : AcceptanceTestConfiguration() {
       {
         "seasonYear": ${season.year().value},
         "isAnalyzedSeason": true,
-        "constructorsPerformance": [
+        "theoreticalConstructorPerformances": [
           {
             "constructorId": "${constructor.id().value}",
             "performance": 0.0
@@ -55,10 +55,12 @@ abstract class AddTheoreticalPerformanceShould : AcceptanceTestConfiguration() {
     """
 
     given()
+      .port(port.toInt())
       .contentType(ContentType.JSON)
       .auth()
       .basic("local", "local")
       .body(request)
+      .`when`()
       .post("/api/v1/theoretical-performance")
       .then()
       .statusCode(201)
