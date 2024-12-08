@@ -13,7 +13,7 @@ object TheoreticalPerformanceFactory {
       constructorsPerformance =
         listOf(
           ConstructorPerformance(aConstructor(), 0f),
-          ConstructorPerformance(aConstructor(), "%.3f".format((0..2).random() + Math.random()).toFloat())))
+          ConstructorPerformance(aConstructor(), 0.234f)))
 
   fun aTheoreticalPerformance(seasonYear: Int) =
     TheoreticalPerformance.create(
@@ -22,5 +22,5 @@ object TheoreticalPerformanceFactory {
       constructorsPerformance =
         listOf(
           ConstructorPerformance(aConstructor(), 0f),
-          ConstructorPerformance(aConstructor(), "%.3f".format((0..2).random() + Math.random()).toFloat())))
+          ConstructorPerformance(aConstructor(), 0.234f)))
 }
