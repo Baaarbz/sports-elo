@@ -66,13 +66,11 @@ class DriverControllerShould {
                 currentElo = 2016,
                 highestElo = 2016,
                 lowestElo = 2016,
-                lastRaceDate = LocalDate.of(2021, 1, 1))
-            ),
+                lastRaceDate = LocalDate.of(2021, 1, 1))),
           page = 0,
           pageSize = 25,
           totalElements = 2,
-          totalPages = 1)
-      )
+          totalPages = 1))
   }
 
   @Test

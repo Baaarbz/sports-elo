@@ -2,7 +2,8 @@ package com.barbzdev.f1elo.domain
 
 import com.barbzdev.f1elo.domain.common.SeasonYear
 
-class TheoreticalPerformance private constructor(
+class TheoreticalPerformance
+private constructor(
   private val seasonYear: SeasonYear,
   private val isAnalyzedData: IsAnalyzedData,
   private val constructorsPerformance: List<ConstructorPerformance>
@@ -41,11 +42,16 @@ class TheoreticalPerformance private constructor(
   }
 
   companion object {
-    fun create(seasonYear: Int, isAnalyzedData: Boolean, constructorsPerformance: List<ConstructorPerformance>): TheoreticalPerformance {
+    fun create(
+      seasonYear: Int,
+      isAnalyzedData: Boolean,
+      constructorsPerformance: List<ConstructorPerformance>
+    ): TheoreticalPerformance {
       return TheoreticalPerformance(SeasonYear(seasonYear), IsAnalyzedData(isAnalyzedData), constructorsPerformance)
     }
   }
 }
 
 data class IsAnalyzedData(val value: Boolean)
+
 data class ConstructorPerformance(val constructor: Constructor, val performance: Float)

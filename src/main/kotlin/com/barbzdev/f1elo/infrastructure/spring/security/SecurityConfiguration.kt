@@ -30,9 +30,7 @@ class SecurityConfiguration(
       .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
       .authorizeHttpRequests {
         it
-          .requestMatchers(
-            HttpMethod.GET, "/api/v1/drivers"
-          )
+          .requestMatchers(HttpMethod.GET, "/api/v1/drivers")
           .permitAll()
           .requestMatchers(
             "/swagger-ui.html",
@@ -55,13 +53,7 @@ class SecurityConfiguration(
 
   @Bean
   fun configureUserDetailsService(): UserDetailsService =
-    InMemoryUserDetailsManager(
-      User
-        .withUsername(username)
-        .password(passwordEncoder().encode(password))
-        .build()
-    )
+    InMemoryUserDetailsManager(User.withUsername(username).password(passwordEncoder().encode(password)).build())
 
-  @Bean
-  fun passwordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder()
+  @Bean fun passwordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder()
 }
