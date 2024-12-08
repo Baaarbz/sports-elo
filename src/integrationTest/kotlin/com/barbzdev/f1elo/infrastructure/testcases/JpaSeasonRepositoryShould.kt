@@ -7,7 +7,6 @@ import com.barbzdev.f1elo.infrastructure.jpa.JpaSeasonRepository
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.JpaSeasonDatasource
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -15,12 +14,6 @@ abstract class JpaSeasonRepositoryShould : IntegrationTestConfiguration() {
   @Autowired private lateinit var repository: JpaSeasonRepository
 
   @Autowired private lateinit var datasource: JpaSeasonDatasource
-
-  @AfterEach
-  fun cleanUp() {
-    flyway.clean()
-    flyway.migrate()
-  }
 
   @Test
   fun `save a season`() {
