@@ -1,5 +1,6 @@
 package com.barbzdev.f1elo.infrastructure.spring.configuration
 
+import com.barbzdev.f1elo.infrastructure.jpa.JpaConstructorRepository
 import com.barbzdev.f1elo.infrastructure.jpa.JpaDriverRepository
 import com.barbzdev.f1elo.infrastructure.jpa.JpaSeasonRepository
 import com.barbzdev.f1elo.infrastructure.jpa.JpaTheoreticalPerformanceRepository
@@ -50,4 +51,7 @@ class JpaRepositoryConfiguration {
     constructorDatasource = constructorDatasource,
     seasonDatasource = seasonDatasource
   )
+
+  @Bean
+  fun jpaConstructorRepository(constructorDatasource: JpaConstructorDatasource) = JpaConstructorRepository(constructorDatasource)
 }

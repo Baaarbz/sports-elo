@@ -2,18 +2,22 @@ package com.barbzdev.f1elo.infrastructure.mapper
 
 import com.barbzdev.f1elo.domain.Circuit
 import com.barbzdev.f1elo.domain.Constructor
+import com.barbzdev.f1elo.domain.ConstructorId
 import com.barbzdev.f1elo.domain.Driver
 import com.barbzdev.f1elo.domain.Race
 import com.barbzdev.f1elo.domain.RaceResult
 import com.barbzdev.f1elo.domain.Season
+import com.barbzdev.f1elo.domain.TheoreticalPerformance
 import com.barbzdev.f1elo.domain.common.Elo
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.circuit.CircuitEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.ConstructorEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.TheoreticalConstructorPerformanceEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.DriverEloHistoryEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.DriverEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.RaceEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.RaceResultEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.SeasonEntity
+import java.util.UUID
 
 object DomainToEntityMapper {
 
@@ -99,4 +103,13 @@ object DomainToEntityMapper {
           infoUrl = driver.infoUrl().value,
           currentElo = driver.currentElo().rating,
           currentEloOccurredOn = driver.currentElo().toLocalDate()))
+
+  fun mapToTheoreticalConstructorPerformanceEntity(theoreticalPerformance: TheoreticalPerformance, constructor: ConstructorEntity, season: SeasonEntity)
+    = TheoreticalConstructorPerformanceEntity(
+    id = UUID.randomUUID().toString(),
+    constructor = constructor,
+    season = season,
+    theoreticalPerformance = theoreticalPerformance.getConstructorPerformance(ConstructorId(constructor.id))!!,
+    isAnalyzedSeason = theoreticalPerformance.isAnalyzedSeason()
+  )
 }
