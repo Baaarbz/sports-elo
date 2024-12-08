@@ -10,7 +10,7 @@ import com.barbzdev.f1elo.domain.repository.ConstructorRepository
 import com.barbzdev.f1elo.domain.repository.SeasonRepository
 import com.barbzdev.f1elo.domain.repository.TheoreticalPerformanceRepository
 
-class AddTheoreticalPerformance(
+class AddTheoreticalPerformanceUseCase(
   private val instrumentation: UseCaseInstrumentation,
   private val theoreticalPerformanceRepository: TheoreticalPerformanceRepository,
   private val seasonRepository: SeasonRepository,
