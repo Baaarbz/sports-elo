@@ -8,7 +8,7 @@ object TheoreticalPerformanceFactory {
 
   fun aTheoreticalPerformance() =
     TheoreticalPerformance.create(
-      seasonYear = 2021,
+      seasonYear = (1960..2024).random(),
       isAnalyzedSeason = true,
       constructorsPerformance =
         listOf(ConstructorPerformance(aConstructor(), 0f), ConstructorPerformance(aConstructor(), 0.234f)))

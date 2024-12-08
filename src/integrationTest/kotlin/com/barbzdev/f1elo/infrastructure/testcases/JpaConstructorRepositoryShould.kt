@@ -19,7 +19,6 @@ class JpaConstructorRepositoryShould : IntegrationTestConfiguration() {
 
     val constructor = repository.findBy(constructorInDatabase.id())
 
-    assertThat(constructor).isNotNull
     assertThat(constructor).isEqualTo(constructorInDatabase)
   }
 
