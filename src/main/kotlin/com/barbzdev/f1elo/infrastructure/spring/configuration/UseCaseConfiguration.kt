@@ -4,7 +4,6 @@ import com.barbzdev.f1elo.application.data.CalculateEloOfDriversBySeasonUseCase
 import com.barbzdev.f1elo.application.data.GatherRacesBySeasonUseCase
 import com.barbzdev.f1elo.application.driver.GetDriverByIdUseCase
 import com.barbzdev.f1elo.application.driver.ListingDriversUseCase
-import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformance
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceUseCase
 import com.barbzdev.f1elo.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
@@ -28,7 +27,8 @@ class UseCaseConfiguration {
     useCaseInstrumentation: UseCaseInstrumentation
   ) =
     GatherRacesBySeasonUseCase(
-      f1Repository, seasonRepository, driverRepository, seasonDomainEventPublisher, useCaseInstrumentation)
+      f1Repository, seasonRepository, driverRepository, seasonDomainEventPublisher, useCaseInstrumentation
+    )
 
   @Bean
   fun calculateEloOfDriversBySeasonUseCase(
