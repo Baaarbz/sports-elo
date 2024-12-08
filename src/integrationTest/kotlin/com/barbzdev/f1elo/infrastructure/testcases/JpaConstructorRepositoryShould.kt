@@ -9,7 +9,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
-class JpaConstructorRepositoryShould : IntegrationTestConfiguration() {
+abstract class JpaConstructorRepositoryShould : IntegrationTestConfiguration() {
   @Autowired private lateinit var repository: JpaConstructorRepository
   @Autowired private lateinit var datasource: JpaConstructorDatasource
 
