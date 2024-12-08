@@ -1,4 +1,4 @@
-package com.barbzdev.f1elo.infrastructure.spring.controller
+package com.barbzdev.f1elo.infrastructure.spring.controller.driver
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity
 
 interface DriverControllerDocumentation {
 
-  @Operation(summary = "Get driver details", description = "Fetche details of a driver by their ID")
+  @Operation(summary = "Get driver details", description = "Fetch details of a driver by their ID")
   @ApiResponses(
     value =
       [

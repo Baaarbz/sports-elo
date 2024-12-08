@@ -1,4 +1,4 @@
-package com.barbzdev.f1elo.application
+package com.barbzdev.f1elo.application.driver
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo

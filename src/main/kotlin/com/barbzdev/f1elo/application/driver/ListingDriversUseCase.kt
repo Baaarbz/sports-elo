@@ -1,4 +1,4 @@
-package com.barbzdev.f1elo.application
+package com.barbzdev.f1elo.application.driver
 
 import com.barbzdev.f1elo.domain.Driver
 import com.barbzdev.f1elo.domain.common.DomainPaginated

@@ -27,3 +27,7 @@ management:
   endpoint:
     health:
       show-details: always
+
+auth:
+  username: local
+  password: local

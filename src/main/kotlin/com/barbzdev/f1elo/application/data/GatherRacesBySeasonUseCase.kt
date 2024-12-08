@@ -1,4 +1,4 @@
-package com.barbzdev.f1elo.application
+package com.barbzdev.f1elo.application.data
 
 import com.barbzdev.f1elo.domain.Circuit
 import com.barbzdev.f1elo.domain.Constructor

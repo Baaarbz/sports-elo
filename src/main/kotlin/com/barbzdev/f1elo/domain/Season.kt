@@ -1,6 +1,7 @@
 package com.barbzdev.f1elo.domain
 
 import com.barbzdev.f1elo.domain.common.InfoUrl
+import com.barbzdev.f1elo.domain.common.SeasonYear
 import java.time.LocalDate.now
 import java.util.UUID
 
@@ -74,11 +75,5 @@ data class SeasonId(val value: String) {
 
   companion object {
     fun generate() = SeasonId(UUID.randomUUID().toString())
-  }
-}
-
-data class SeasonYear(val value: Int) {
-  init {
-    require(value >= 1950) { "Season must be greater or equals than 1950, year were Formula 1 officially starts" }
   }
 }

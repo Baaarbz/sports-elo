@@ -14,4 +14,4 @@ EXPOSE 8000
 
 ENV SPRING_PROFILES_ACTIVE=pro
 
-CMD ["java", "-jar", "-Dspring.datasource.url=${POSTGRES_URL}", "-Dspring.datasource.username=${POSTGRES_USER}", "-Dspring.datasource.password=${POSTGRES_PASSWORD}", "app.jar"]
+CMD ["java", "-jar", "-Dspring.datasource.url=${POSTGRES_URL}", "-Dspring.datasource.username=${POSTGRES_USER}", "-Dspring.datasource.password=${POSTGRES_PASSWORD}", "-Dauth.username=${AUTH_USERNAME}", "-Dauth.password=${AUTH_PASSWORD}", "app.jar"]

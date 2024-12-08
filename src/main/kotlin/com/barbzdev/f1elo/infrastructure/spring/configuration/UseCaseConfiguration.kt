@@ -1,9 +1,9 @@
 package com.barbzdev.f1elo.infrastructure.spring.configuration
 
-import com.barbzdev.f1elo.application.CalculateEloOfDriversBySeasonUseCase
-import com.barbzdev.f1elo.application.GatherRacesBySeasonUseCase
-import com.barbzdev.f1elo.application.GetDriverByIdUseCase
-import com.barbzdev.f1elo.application.ListingDriversUseCase
+import com.barbzdev.f1elo.application.data.CalculateEloOfDriversBySeasonUseCase
+import com.barbzdev.f1elo.application.data.GatherRacesBySeasonUseCase
+import com.barbzdev.f1elo.application.driver.GetDriverByIdUseCase
+import com.barbzdev.f1elo.application.driver.ListingDriversUseCase
 import com.barbzdev.f1elo.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository

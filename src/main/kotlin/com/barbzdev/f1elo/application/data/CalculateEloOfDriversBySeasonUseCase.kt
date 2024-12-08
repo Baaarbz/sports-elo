@@ -1,11 +1,11 @@
-package com.barbzdev.f1elo.application
+package com.barbzdev.f1elo.application.data
 
 import com.barbzdev.f1elo.domain.Constructor
 import com.barbzdev.f1elo.domain.Driver
 import com.barbzdev.f1elo.domain.Race
 import com.barbzdev.f1elo.domain.RaceDate
 import com.barbzdev.f1elo.domain.RaceResult
-import com.barbzdev.f1elo.domain.SeasonYear
+import com.barbzdev.f1elo.domain.common.SeasonYear
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository
 import com.barbzdev.f1elo.domain.repository.SeasonRepository

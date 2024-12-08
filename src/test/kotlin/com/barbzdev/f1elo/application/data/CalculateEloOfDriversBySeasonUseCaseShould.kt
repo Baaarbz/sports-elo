@@ -1,4 +1,4 @@
-package com.barbzdev.f1elo.application
+package com.barbzdev.f1elo.application.data
 
 import assertk.assertThat
 import assertk.assertions.isInstanceOf
