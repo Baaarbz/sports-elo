@@ -7,13 +7,13 @@ import com.barbzdev.f1elo.domain.Race
 import com.barbzdev.f1elo.domain.RaceResult
 import com.barbzdev.f1elo.domain.Season
 import com.barbzdev.f1elo.domain.common.Elo
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.CircuitEntity
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.ConstructorEntity
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.DriverEloHistoryEntity
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.DriverEntity
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.RaceEntity
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.RaceResultEntity
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.SeasonEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.circuit.CircuitEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.ConstructorEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.DriverEloHistoryEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.DriverEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.RaceEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.RaceResultEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.SeasonEntity
 
 object DomainToEntityMapper {
 

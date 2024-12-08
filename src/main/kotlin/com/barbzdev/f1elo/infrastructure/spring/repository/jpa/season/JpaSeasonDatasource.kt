@@ -1,4 +1,4 @@
-package com.barbzdev.f1elo.infrastructure.spring.repository.jpa
+package com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season
 
 import jakarta.persistence.Entity
 import jakarta.persistence.Id

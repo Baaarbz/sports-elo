@@ -1,4 +1,4 @@
-package com.barbzdev.f1elo.infrastructure.spring.repository.jpa
+package com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver
 
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
@@ -22,12 +22,12 @@ interface JpaDriverEloHistoryDatasource : JpaRepository<DriverEloHistoryEntity, 
 @IdClass(DriverEloHistoryId::class)
 @Table(name = "drivers_elo_history")
 data class DriverEloHistoryEntity(
-  @Id
+    @Id
   @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
   @JoinColumn(name = "driver_id")
   val driver: DriverEntity,
-  @Id val elo: Int,
-  @Id @Column(name = "occurred_on") val occurredOn: LocalDate,
+    @Id val elo: Int,
+    @Id @Column(name = "occurred_on") val occurredOn: LocalDate,
 )
 
 data class DriverEloHistoryId(val driver: String = "", val elo: Int = 0, val occurredOn: LocalDate = LocalDate.now()) :

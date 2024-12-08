@@ -1,5 +1,7 @@
-package com.barbzdev.f1elo.infrastructure.spring.repository.jpa
+package com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race
 
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.ConstructorEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.DriverEntity
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

@@ -2,13 +2,13 @@ package com.barbzdev.f1elo.infrastructure.spring.configuration
 
 import com.barbzdev.f1elo.infrastructure.jpa.JpaDriverRepository
 import com.barbzdev.f1elo.infrastructure.jpa.JpaSeasonRepository
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaCircuitDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaConstructorDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaDriverDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaDriverEloHistoryDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaRaceDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaRaceResultDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaSeasonDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.circuit.JpaCircuitDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.JpaConstructorDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverEloHistoryDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.JpaRaceDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.JpaRaceResultDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.JpaSeasonDatasource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

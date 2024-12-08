@@ -1,4 +1,4 @@
-package com.barbzdev.f1elo.infrastructure.spring.repository.jpa
+package com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

@@ -6,14 +6,14 @@ import com.barbzdev.f1elo.domain.common.SeasonYear
 import com.barbzdev.f1elo.domain.repository.SeasonRepository
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
 import com.barbzdev.f1elo.infrastructure.mapper.EntityToDomainMapper.toDomain
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaCircuitDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaConstructorDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaDriverDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaDriverEloHistoryDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaRaceDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaRaceResultDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaSeasonDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.SeasonEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.circuit.JpaCircuitDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.JpaConstructorDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverEloHistoryDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.JpaRaceDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.JpaRaceResultDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.JpaSeasonDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.SeasonEntity
 import jakarta.transaction.Transactional
 
 open class JpaSeasonRepository(

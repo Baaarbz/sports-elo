@@ -10,7 +10,7 @@ import com.barbzdev.f1elo.factory.DriverFactory.aDriver
 import com.barbzdev.f1elo.infrastructure.IntegrationTestConfiguration
 import com.barbzdev.f1elo.infrastructure.jpa.JpaDriverRepository
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaDriverDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverDatasource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

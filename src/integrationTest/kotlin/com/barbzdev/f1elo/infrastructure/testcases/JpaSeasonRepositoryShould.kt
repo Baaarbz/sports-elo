@@ -5,7 +5,7 @@ import com.barbzdev.f1elo.factory.SeasonFactory.aSeason
 import com.barbzdev.f1elo.infrastructure.IntegrationTestConfiguration
 import com.barbzdev.f1elo.infrastructure.jpa.JpaSeasonRepository
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaSeasonDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.JpaSeasonDatasource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
