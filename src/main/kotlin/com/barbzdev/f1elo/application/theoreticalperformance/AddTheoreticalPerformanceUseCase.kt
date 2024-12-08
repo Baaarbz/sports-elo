@@ -5,6 +5,7 @@ import com.barbzdev.f1elo.domain.ConstructorPerformance
 import com.barbzdev.f1elo.domain.TheoreticalPerformance
 import com.barbzdev.f1elo.domain.common.SeasonYear
 import com.barbzdev.f1elo.domain.exception.AddTheoreticalPerformanceConstructorNotFoundException
+import com.barbzdev.f1elo.domain.exception.NonValidPerformanceException
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.ConstructorRepository
 import com.barbzdev.f1elo.domain.repository.SeasonRepository
@@ -28,7 +29,7 @@ class AddTheoreticalPerformanceUseCase(
       .onFailure {
         return@instrumentation when (it) {
           is AddTheoreticalPerformanceConstructorNotFoundException -> AddTheoreticalPerformanceOverAnInvalidConstructor
-          is IllegalArgumentException -> AddTheoreticalPerformanceOverAnInvalidPerformance
+          is NonValidPerformanceException -> AddTheoreticalPerformanceOverAnInvalidPerformance
           else -> throw it
         }
       }

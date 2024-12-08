@@ -9,12 +9,13 @@ import com.barbzdev.f1elo.domain.common.SeasonYear
 import com.barbzdev.f1elo.domain.repository.ConstructorRepository
 import com.barbzdev.f1elo.domain.repository.SeasonRepository
 import com.barbzdev.f1elo.domain.repository.TheoreticalPerformanceRepository
-import com.barbzdev.f1elo.factory.ConstructorFactory.aConstructor
 import com.barbzdev.f1elo.factory.ConstructorFactory.ferrariConstructor
 import com.barbzdev.f1elo.factory.SeasonFactory.aSeason
 import com.barbzdev.f1elo.factory.TheoreticalPerformanceFactory.aTheoreticalPerformance
 import com.barbzdev.f1elo.observability.instrumentationMock
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
@@ -37,6 +38,7 @@ class AddTheoreticalPerformanceShould {
     every { seasonRepository.getSeasonIdBy(any()) } returns aSeason().id()
     every { constructorRepository.findBy(any()) } returns ferrariConstructor
     every { theoreticalPerformanceRepository.findBy(any()) } returns null
+    every { theoreticalPerformanceRepository.save(any()) } just Runs
 
     val response = service(request)
 
@@ -49,7 +51,7 @@ class AddTheoreticalPerformanceShould {
         TheoreticalPerformance.create(
           seasonYear = 2021,
           isAnalyzedSeason = true,
-          constructorsPerformance = listOf(ConstructorPerformance(aConstructor(), 0.0f))))
+          constructorsPerformance = listOf(ConstructorPerformance(ferrariConstructor, 0.0f))))
     }
   }
 
