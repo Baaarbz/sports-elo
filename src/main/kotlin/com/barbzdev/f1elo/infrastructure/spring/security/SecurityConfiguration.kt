@@ -30,7 +30,7 @@ class SecurityConfiguration(
       .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
       .authorizeHttpRequests {
         it
-          .requestMatchers(HttpMethod.GET, "/api/v1/drivers")
+          .requestMatchers(HttpMethod.GET, "/api/v1/drivers/**")
           .permitAll()
           .requestMatchers(
             "/swagger-ui.html",
