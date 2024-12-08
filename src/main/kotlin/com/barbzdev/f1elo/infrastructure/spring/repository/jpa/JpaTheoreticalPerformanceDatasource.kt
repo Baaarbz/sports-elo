@@ -3,6 +3,8 @@ package com.barbzdev.f1elo.infrastructure.spring.repository.jpa
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
@@ -15,8 +17,8 @@ interface JpaTheoreticalConstructorPerformanceDatasource :
 @Table(name = "theoretical_constructor_performance")
 data class TheoreticalConstructorPerformanceEntity(
   @Id val id: String,
-  @Column(name = "constructor_id") val constructorId: String,
-  @Column(name = "season_id") val seasonId: String,
+  @ManyToOne @JoinColumn(name = "constructor_id") val constructor: ConstructorEntity,
+  @ManyToOne @JoinColumn(name = "season_id") val season: SeasonEntity,
   @Column(name = "theoretical_performance") val theoreticalPerformance: Float,
   @Column(name = "is_analyzed_season") val isAnalyzedSeason: Boolean
 )
