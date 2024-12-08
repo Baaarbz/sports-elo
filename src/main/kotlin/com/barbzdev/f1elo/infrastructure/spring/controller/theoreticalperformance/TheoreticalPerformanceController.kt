@@ -10,9 +10,7 @@ import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerfo
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceUseCase
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.badRequest
-import org.springframework.http.ResponseEntity.created
 import org.springframework.http.ResponseEntity.notFound
-import org.springframework.http.ResponseEntity.ok
 import org.springframework.http.ResponseEntity.status
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

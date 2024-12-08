@@ -11,12 +11,16 @@ object TheoreticalPerformanceFactory {
       seasonYear = (1960..2024).random(),
       isAnalyzedSeason = true,
       constructorsPerformance =
-        listOf(ConstructorPerformance(aConstructor(), 0f), ConstructorPerformance(aConstructor(), "%.3f".format((0..2).random() + Math.random()).toFloat())))
+        listOf(
+          ConstructorPerformance(aConstructor(), 0f),
+          ConstructorPerformance(aConstructor(), "%.3f".format((0..2).random() + Math.random()).toFloat())))
 
   fun aTheoreticalPerformance(seasonYear: Int) =
     TheoreticalPerformance.create(
       seasonYear = seasonYear,
       isAnalyzedSeason = true,
       constructorsPerformance =
-        listOf(ConstructorPerformance(aConstructor(), 0f), ConstructorPerformance(aConstructor(), "%.3f".format((0..2).random() + Math.random()).toFloat())))
+        listOf(
+          ConstructorPerformance(aConstructor(), 0f),
+          ConstructorPerformance(aConstructor(), "%.3f".format((0..2).random() + Math.random()).toFloat())))
 }
