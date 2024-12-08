@@ -22,7 +22,8 @@ abstract class JpaTheoreticalPerformanceRepositoryShould : IntegrationTestConfig
 
   @Test
   fun `save a theoretical performance`() {
-    val aTheoreticalPerformance = aTheoreticalPerformance()
+    val seasonInDatabase = givenASeasonInDatabase()
+    val aTheoreticalPerformance = aTheoreticalPerformance(seasonInDatabase.year().value)
 
     repository.save(aTheoreticalPerformance)
 
@@ -52,4 +53,6 @@ abstract class JpaTheoreticalPerformanceRepositoryShould : IntegrationTestConfig
         constructorsPerformance = listOf(ConstructorPerformance(aConstructor, 0f)))
       .also { repository.save(it) }
   }
+
+  private fun givenASeasonInDatabase() = aSeason().also { seasonDatasource.save(it.toEntity()) }
 }
