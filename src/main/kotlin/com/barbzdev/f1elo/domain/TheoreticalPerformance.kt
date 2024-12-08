@@ -1,6 +1,7 @@
 package com.barbzdev.f1elo.domain
 
 import com.barbzdev.f1elo.domain.common.SeasonYear
+import com.barbzdev.f1elo.domain.exception.NonValidPerformanceException
 
 class TheoreticalPerformance
 private constructor(
@@ -54,4 +55,8 @@ private constructor(
 
 data class IsAnalyzedSeason(val value: Boolean)
 
-data class ConstructorPerformance(val constructor: Constructor, val performance: Float)
+data class ConstructorPerformance(val constructor: Constructor, val performance: Float) {
+  init {
+    require(performance >= 0) { throw NonValidPerformanceException(performance) }
+  }
+}

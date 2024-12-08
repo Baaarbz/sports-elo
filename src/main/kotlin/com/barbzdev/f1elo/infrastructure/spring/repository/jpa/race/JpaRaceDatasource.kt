@@ -1,5 +1,7 @@
-package com.barbzdev.f1elo.infrastructure.spring.repository.jpa
+package com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race
 
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.circuit.CircuitEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.SeasonEntity
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

@@ -5,8 +5,8 @@ import assertk.assertions.isEqualTo
 import com.barbzdev.f1elo.domain.DriverId
 import com.barbzdev.f1elo.factory.DriverFactory.aDriver
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaDriverDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaDriverEloHistoryDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverEloHistoryDatasource
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

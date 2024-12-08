@@ -1,4 +1,4 @@
-package com.barbzdev.f1elo.infrastructure.spring.repository.jpa
+package com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver
 
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column

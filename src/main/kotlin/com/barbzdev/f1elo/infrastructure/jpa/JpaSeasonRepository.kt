@@ -2,18 +2,19 @@ package com.barbzdev.f1elo.infrastructure.jpa
 
 import com.barbzdev.f1elo.domain.Race
 import com.barbzdev.f1elo.domain.Season
+import com.barbzdev.f1elo.domain.common.SeasonId
 import com.barbzdev.f1elo.domain.common.SeasonYear
 import com.barbzdev.f1elo.domain.repository.SeasonRepository
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
 import com.barbzdev.f1elo.infrastructure.mapper.EntityToDomainMapper.toDomain
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaCircuitDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaConstructorDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaDriverDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaDriverEloHistoryDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaRaceDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaRaceResultDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.JpaSeasonDatasource
-import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.SeasonEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.circuit.JpaCircuitDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.JpaConstructorDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverEloHistoryDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.JpaRaceDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.JpaRaceResultDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.JpaSeasonDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.SeasonEntity
 import jakarta.transaction.Transactional
 
 open class JpaSeasonRepository(
@@ -36,6 +37,9 @@ open class JpaSeasonRepository(
       ?.let {
         return SeasonYear(it.year)
       }
+
+  override fun getSeasonIdBy(year: SeasonYear): SeasonId? =
+    seasonDatasource.findByYear(year.value)?.let { SeasonId(it.id) }
 
   override fun findBy(year: SeasonYear): Season? =
     seasonDatasource.findByYear(year.value)?.gatherAllRelatedDataOfTheSeason()
