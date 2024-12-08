@@ -44,7 +44,7 @@ abstract class AddTheoreticalPerformanceShould : AcceptanceTestConfiguration() {
       """
       {
         "seasonYear": ${season.year().value},
-        "isAnalyzedSeason": true,
+        "isAnalyzedData": true,
         "theoreticalConstructorPerformances": [
           {
             "constructorId": "${constructor.id().value}",
