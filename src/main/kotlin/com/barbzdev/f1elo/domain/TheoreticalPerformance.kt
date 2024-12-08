@@ -1,15 +1,15 @@
 package com.barbzdev.f1elo.domain
 
-import com.barbzdev.f1elo.domain.common.SeasonYear
+import com.barbzdev.f1elo.domain.common.SeasonId
 import com.barbzdev.f1elo.domain.exception.NonValidPerformanceException
 
 class TheoreticalPerformance
 private constructor(
-  private val seasonYear: SeasonYear,
+  private val seasonId: SeasonId,
   private val isAnalyzedSeason: IsAnalyzedSeason,
   private val constructorsPerformance: List<ConstructorPerformance>
 ) {
-  fun seasonYear() = seasonYear
+  fun seasonId() = seasonId
 
   fun isAnalyzedSeason() = isAnalyzedSeason.value
 
@@ -24,7 +24,7 @@ private constructor(
 
     other as TheoreticalPerformance
 
-    if (seasonYear != other.seasonYear) return false
+    if (seasonId != other.seasonId) return false
     if (isAnalyzedSeason != other.isAnalyzedSeason) return false
     if (constructorsPerformance != other.constructorsPerformance) return false
 
@@ -32,23 +32,23 @@ private constructor(
   }
 
   override fun hashCode(): Int {
-    var result = seasonYear.hashCode()
+    var result = seasonId.hashCode()
     result = 31 * result + isAnalyzedSeason.hashCode()
     result = 31 * result + constructorsPerformance.hashCode()
     return result
   }
 
   override fun toString(): String {
-    return "TheoreticalPerformance(seasonYear=$seasonYear, isAnalyzedSeason=$isAnalyzedSeason, constructorsPerformance=$constructorsPerformance)"
+    return "TheoreticalPerformance(seasonId=$seasonId, isAnalyzedSeason=$isAnalyzedSeason, constructorsPerformance=$constructorsPerformance)"
   }
 
   companion object {
     fun create(
-      seasonYear: Int,
+      seasonId: String,
       isAnalyzedSeason: Boolean,
       constructorsPerformance: List<ConstructorPerformance>
     ): TheoreticalPerformance {
-      return TheoreticalPerformance(SeasonYear(seasonYear), IsAnalyzedSeason(isAnalyzedSeason), constructorsPerformance)
+      return TheoreticalPerformance(SeasonId(seasonId), IsAnalyzedSeason(isAnalyzedSeason), constructorsPerformance)
     }
   }
 }

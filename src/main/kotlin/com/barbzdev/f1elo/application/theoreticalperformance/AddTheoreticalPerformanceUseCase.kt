@@ -26,7 +26,7 @@ class AddTheoreticalPerformanceUseCase(
 
     runCatching {
       request
-        .mapToDomain()
+        .mapToDomain(seasonId.value)
         .save()
     }.onFailure {
       return@instrumentation when (it) {
@@ -41,16 +41,17 @@ class AddTheoreticalPerformanceUseCase(
 
   private fun AddTheoreticalPerformanceRequest.findSeason() = seasonRepository.getSeasonIdBy(SeasonYear(seasonYear))
 
-  private fun AddTheoreticalPerformanceRequest.mapToDomain(): TheoreticalPerformance = TheoreticalPerformance.create(
-      seasonYear = seasonYear,
-      isAnalyzedSeason = isAnalyzedData,
-      constructorsPerformance = theoreticalConstructorPerformances.map {
-        ConstructorPerformance(
-          constructor = constructorRepository.findBy(ConstructorId(it.constructorId))?: throw AddTheoreticalPerformanceConstructorNotFoundException(it.constructorId),
-          performance = it.performance
-        )
-      }
-    )
+  private fun AddTheoreticalPerformanceRequest.mapToDomain(seasonId: String): TheoreticalPerformance = TheoreticalPerformance.create(
+    seasonId = seasonId,
+    isAnalyzedSeason = isAnalyzedData,
+    constructorsPerformance = theoreticalConstructorPerformances.map {
+      ConstructorPerformance(
+        constructor = constructorRepository.findBy(ConstructorId(it.constructorId))
+          ?: throw AddTheoreticalPerformanceConstructorNotFoundException(it.constructorId),
+        performance = it.performance
+      )
+    }
+  )
 
   private fun TheoreticalPerformance.save() = theoreticalPerformanceRepository.save(this)
 }

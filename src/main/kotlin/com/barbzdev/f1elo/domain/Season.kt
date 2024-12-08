@@ -1,9 +1,9 @@
 package com.barbzdev.f1elo.domain
 
 import com.barbzdev.f1elo.domain.common.InfoUrl
+import com.barbzdev.f1elo.domain.common.SeasonId
 import com.barbzdev.f1elo.domain.common.SeasonYear
 import java.time.LocalDate.now
-import java.util.UUID
 
 class Season
 private constructor(
@@ -68,12 +68,3 @@ private constructor(
   }
 }
 
-data class SeasonId(val value: String) {
-  init {
-    require(value.isNotBlank())
-  }
-
-  companion object {
-    fun generate() = SeasonId(UUID.randomUUID().toString())
-  }
-}
