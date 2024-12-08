@@ -49,6 +49,15 @@ abstract class JpaSeasonRepositoryShould : IntegrationTestConfiguration() {
     assertThat(lastSeasonLoaded).isEqualTo(seasonInDatabase.year())
   }
 
+  @Test
+  fun `get the season id by year`() {
+    val seasonInDatabase = givenASeasonInDatabase()
+
+    val seasonId = repository.getSeasonIdBy(seasonInDatabase.year())
+
+    assertThat(seasonId).isEqualTo(seasonInDatabase.id())
+  }
+
   private fun givenASeasonInDatabase(): Season = aSeason().also { repository.save(it) }
 
   private fun verifySeasonWasSaved(expectedSeasonEntitySaved: Season) {

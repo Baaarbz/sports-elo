@@ -1,6 +1,5 @@
 package com.barbzdev.f1elo.infrastructure.spring.controller.theoreticalperformance
 
-import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformance
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceAlreadyCreated
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceConstructorPerformance
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceOverANonExistentSeason
@@ -8,6 +7,7 @@ import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerfo
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceOverAnInvalidPerformance
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceRequest
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceSuccess
+import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceUseCase
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.badRequest
 import org.springframework.http.ResponseEntity.notFound
@@ -23,12 +23,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("api/v1/theoretical-performance")
 class TheoreticalPerformanceController(
-  private val addTheoreticalPerformance: AddTheoreticalPerformance,
+  private val addTheoreticalPerformanceUseCase: AddTheoreticalPerformanceUseCase,
 ) : TheoreticalPerformanceControllerDocumentation {
 
   @PostMapping
   override fun addTheoreticalPerformanceOfSeason(@RequestBody body: HttpTheoreticalPerformanceRequest): ResponseEntity<Unit> {
-    val response = addTheoreticalPerformance(body.mapToUseCaseRequest())
+    val response = addTheoreticalPerformanceUseCase(body.mapToUseCaseRequest())
     return when (response) {
       is AddTheoreticalPerformanceSuccess -> ok().build()
       is AddTheoreticalPerformanceOverANonExistentSeason -> notFound().build()

@@ -18,7 +18,7 @@ class AddTheoreticalPerformanceUseCase(
 ) {
 
   operator fun invoke(request: AddTheoreticalPerformanceRequest): AddTheoreticalPerformanceResponse = instrumentation {
-    val seasonId = request.findSeason() ?: return@instrumentation AddTheoreticalPerformanceOverANonExistentSeason
+    if (request.isSeasonNotAvailable()) return@instrumentation AddTheoreticalPerformanceOverANonExistentSeason
 
     if (theoreticalPerformanceRepository.findBy(SeasonYear(request.seasonYear)) != null) {
       return@instrumentation AddTheoreticalPerformanceAlreadyCreated
@@ -26,7 +26,7 @@ class AddTheoreticalPerformanceUseCase(
 
     runCatching {
       request
-        .mapToDomain(seasonId.value)
+        .mapToDomain()
         .save()
     }.onFailure {
       return@instrumentation when (it) {
@@ -39,10 +39,10 @@ class AddTheoreticalPerformanceUseCase(
     AddTheoreticalPerformanceSuccess
   }
 
-  private fun AddTheoreticalPerformanceRequest.findSeason() = seasonRepository.getSeasonIdBy(SeasonYear(seasonYear))
+  private fun AddTheoreticalPerformanceRequest.isSeasonNotAvailable() = seasonRepository.getSeasonIdBy(SeasonYear(seasonYear)) == null
 
-  private fun AddTheoreticalPerformanceRequest.mapToDomain(seasonId: String): TheoreticalPerformance = TheoreticalPerformance.create(
-    seasonId = seasonId,
+  private fun AddTheoreticalPerformanceRequest.mapToDomain(): TheoreticalPerformance = TheoreticalPerformance.create(
+    seasonYear = seasonYear,
     isAnalyzedSeason = isAnalyzedData,
     constructorsPerformance = theoreticalConstructorPerformances.map {
       ConstructorPerformance(

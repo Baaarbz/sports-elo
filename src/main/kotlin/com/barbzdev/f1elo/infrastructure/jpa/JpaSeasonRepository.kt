@@ -2,6 +2,7 @@ package com.barbzdev.f1elo.infrastructure.jpa
 
 import com.barbzdev.f1elo.domain.Race
 import com.barbzdev.f1elo.domain.Season
+import com.barbzdev.f1elo.domain.common.SeasonId
 import com.barbzdev.f1elo.domain.common.SeasonYear
 import com.barbzdev.f1elo.domain.repository.SeasonRepository
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
@@ -37,6 +38,9 @@ open class JpaSeasonRepository(
         return SeasonYear(it.year)
       }
 
+  override fun getSeasonIdBy(year: SeasonYear): SeasonId? =
+    seasonDatasource.findByYear(year.value)?.let { SeasonId(it.id) }
+
   override fun findBy(year: SeasonYear): Season? =
     seasonDatasource.findByYear(year.value)?.gatherAllRelatedDataOfTheSeason()
 
@@ -54,7 +58,8 @@ open class JpaSeasonRepository(
     return this.toDomain().addRacesOfSeason(racesOfSeason)
   }
 
-  @Transactional override fun save(season: Season) = season.saveSeason().saveRaces()
+  @Transactional
+  override fun save(season: Season) = season.saveSeason().saveRaces()
 
   private fun Season.saveSeason(): Season {
     seasonDatasource.save(this.toEntity())
