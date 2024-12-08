@@ -12,5 +12,5 @@ cron:
     enabled: true
 
 auth:
-  username: ${AUTH_USER}
+  username: ${AUTH_USERNAME}
   password: ${AUTH_PASSWORD}
