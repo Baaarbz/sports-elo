@@ -2,9 +2,6 @@ package com.barbzdev.f1elo.application.data
 
 import assertk.assertThat
 import assertk.assertions.isInstanceOf
-import com.barbzdev.f1elo.application.data.CalculateEloOfDriversBySeasonRequest
-import com.barbzdev.f1elo.application.data.CalculateEloOfDriversBySeasonUseCase
-import com.barbzdev.f1elo.application.data.CalculateEloOfDriversOfBySeasonSuccess
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.DriverRepository
 import com.barbzdev.f1elo.domain.repository.SeasonRepository
