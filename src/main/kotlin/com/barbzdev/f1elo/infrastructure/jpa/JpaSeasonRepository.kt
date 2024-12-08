@@ -58,8 +58,7 @@ open class JpaSeasonRepository(
     return this.toDomain().addRacesOfSeason(racesOfSeason)
   }
 
-  @Transactional
-  override fun save(season: Season) = season.saveSeason().saveRaces()
+  @Transactional override fun save(season: Season) = season.saveSeason().saveRaces()
 
   private fun Season.saveSeason(): Season {
     seasonDatasource.save(this.toEntity())

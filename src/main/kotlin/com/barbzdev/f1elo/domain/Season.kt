@@ -67,4 +67,3 @@ private constructor(
     ): Season = Season(id = SeasonId(id), year = SeasonYear(year), infoUrl = InfoUrl(infoUrl), races = emptyList())
   }
 }
-

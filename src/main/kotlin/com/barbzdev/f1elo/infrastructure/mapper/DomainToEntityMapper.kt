@@ -104,12 +104,15 @@ object DomainToEntityMapper {
           currentElo = driver.currentElo().rating,
           currentEloOccurredOn = driver.currentElo().toLocalDate()))
 
-  fun mapToTheoreticalConstructorPerformanceEntity(theoreticalPerformance: TheoreticalPerformance, constructor: ConstructorEntity, season: SeasonEntity)
-    = TheoreticalConstructorPerformanceEntity(
-    id = UUID.randomUUID().toString(),
-    constructor = constructor,
-    season = season,
-    theoreticalPerformance = theoreticalPerformance.getConstructorPerformance(ConstructorId(constructor.id))!!,
-    isAnalyzedSeason = theoreticalPerformance.isAnalyzedSeason()
-  )
+  fun mapToTheoreticalConstructorPerformanceEntity(
+    theoreticalPerformance: TheoreticalPerformance,
+    constructor: ConstructorEntity,
+    season: SeasonEntity
+  ) =
+    TheoreticalConstructorPerformanceEntity(
+      id = UUID.randomUUID().toString(),
+      constructor = constructor,
+      season = season,
+      theoreticalPerformance = theoreticalPerformance.getConstructorPerformance(ConstructorId(constructor.id))!!,
+      isAnalyzedSeason = theoreticalPerformance.isAnalyzedSeason())
 }

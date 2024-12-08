@@ -34,8 +34,7 @@ class JpaRepositoryConfiguration {
       constructorDatasource = constructorDatasource,
       circuitDatasource = circuitDatasource,
       raceResultDatasource = raceResultDatasource,
-      eloHistoryDatasource = eloHistoryDatasource
-    )
+      eloHistoryDatasource = eloHistoryDatasource)
 
   @Bean
   fun jpaDriverRepository(driverDatasource: JpaDriverDatasource, eloHistoryDatasource: JpaDriverEloHistoryDatasource) =
@@ -46,12 +45,13 @@ class JpaRepositoryConfiguration {
     theoreticalConstructorPerformanceDatasource: JpaTheoreticalConstructorPerformanceDatasource,
     constructorDatasource: JpaConstructorDatasource,
     seasonDatasource: JpaSeasonDatasource
-  ) = JpaTheoreticalPerformanceRepository(
-    theoreticalConstructorPerformanceDatasource = theoreticalConstructorPerformanceDatasource,
-    constructorDatasource = constructorDatasource,
-    seasonDatasource = seasonDatasource
-  )
+  ) =
+    JpaTheoreticalPerformanceRepository(
+      theoreticalConstructorPerformanceDatasource = theoreticalConstructorPerformanceDatasource,
+      constructorDatasource = constructorDatasource,
+      seasonDatasource = seasonDatasource)
 
   @Bean
-  fun jpaConstructorRepository(constructorDatasource: JpaConstructorDatasource) = JpaConstructorRepository(constructorDatasource)
+  fun jpaConstructorRepository(constructorDatasource: JpaConstructorDatasource) =
+    JpaConstructorRepository(constructorDatasource)
 }

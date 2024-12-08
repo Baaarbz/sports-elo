@@ -10,10 +10,8 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 class JpaConstructorRepositoryShould : IntegrationTestConfiguration() {
-  @Autowired
-  private lateinit var repository: JpaConstructorRepository
-  @Autowired
-  private lateinit var datasource: JpaConstructorDatasource
+  @Autowired private lateinit var repository: JpaConstructorRepository
+  @Autowired private lateinit var datasource: JpaConstructorDatasource
 
   @Test
   fun `find a constructor by id`() {
@@ -25,6 +23,5 @@ class JpaConstructorRepositoryShould : IntegrationTestConfiguration() {
     assertThat(constructor).isEqualTo(constructorInDatabase)
   }
 
-  private fun givenAConstructorInDatabase() =
-    aConstructor().also { datasource.save(it.toEntity()) }
+  private fun givenAConstructorInDatabase() = aConstructor().also { datasource.save(it.toEntity()) }
 }

@@ -18,14 +18,11 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 abstract class AddTheoreticalPerformanceShould : AcceptanceTestConfiguration() {
-  @Autowired
-  private lateinit var seasonDatasource: JpaSeasonDatasource
+  @Autowired private lateinit var seasonDatasource: JpaSeasonDatasource
 
-  @Autowired
-  private lateinit var constructorDatasource: JpaConstructorDatasource
+  @Autowired private lateinit var constructorDatasource: JpaConstructorDatasource
 
-  @Autowired
-  private lateinit var theoreticalPerformanceRepository: JpaTheoreticalPerformanceRepository
+  @Autowired private lateinit var theoreticalPerformanceRepository: JpaTheoreticalPerformanceRepository
 
   @Test
   fun `add theoretical performance to the database`() {
@@ -39,10 +36,12 @@ abstract class AddTheoreticalPerformanceShould : AcceptanceTestConfiguration() {
 
   private fun givenASeasonInDatabase(): Season = aSeason().also { seasonDatasource.save(it.toEntity()) }
 
-  private fun givenAConstructorInDatabase(): Constructor = aConstructor().also { constructorDatasource.save(it.toEntity()) }
+  private fun givenAConstructorInDatabase(): Constructor =
+    aConstructor().also { constructorDatasource.save(it.toEntity()) }
 
   private fun whenAddTheoreticalPerformanceRequest(season: Season, constructor: Constructor) {
-    val request = """
+    val request =
+      """
       {
         "seasonYear": ${season.year().value},
         "isAnalyzedSeason": true,
@@ -67,11 +66,11 @@ abstract class AddTheoreticalPerformanceShould : AcceptanceTestConfiguration() {
 
   private fun verifyTheoreticalPerformanceWasSaved(season: Season, constructor: Constructor) {
     val theoreticalPerformanceInDatabase = theoreticalPerformanceRepository.findBy(season.year())
-    val expectedTheoreticalPerformance = TheoreticalPerformance.create(
-      seasonYear = season.year().value,
-      isAnalyzedSeason = true,
-      constructorsPerformance = listOf(ConstructorPerformance(constructor, 0f))
-    )
+    val expectedTheoreticalPerformance =
+      TheoreticalPerformance.create(
+        seasonYear = season.year().value,
+        isAnalyzedSeason = true,
+        constructorsPerformance = listOf(ConstructorPerformance(constructor, 0f)))
     assertThat(theoreticalPerformanceInDatabase).isEqualTo(expectedTheoreticalPerformance)
   }
 }

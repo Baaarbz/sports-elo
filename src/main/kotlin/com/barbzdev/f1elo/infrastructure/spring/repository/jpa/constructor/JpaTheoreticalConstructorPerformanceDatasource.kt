@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface JpaTheoreticalConstructorPerformanceDatasource :
   JpaRepository<TheoreticalConstructorPerformanceEntity, String> {
-    fun findAllBySeason(season: SeasonEntity): List<TheoreticalConstructorPerformanceEntity>
-  }
+  fun findAllBySeason(season: SeasonEntity): List<TheoreticalConstructorPerformanceEntity>
+}
 
 @Entity
 @Table(name = "theoretical_constructor_performance")

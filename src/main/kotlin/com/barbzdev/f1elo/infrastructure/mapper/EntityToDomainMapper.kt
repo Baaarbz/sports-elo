@@ -82,8 +82,9 @@ object EntityToDomainMapper {
 
   fun List<TheoreticalConstructorPerformanceEntity>.toDomain(): TheoreticalPerformance? =
     if (isEmpty()) null
-    else TheoreticalPerformance.create(
-      isAnalyzedSeason = first().isAnalyzedSeason,
-      seasonYear = first().season.year,
-      constructorsPerformance = map { ConstructorPerformance(it.constructor.toDomain(), it.theoreticalPerformance) })
+    else
+      TheoreticalPerformance.create(
+        isAnalyzedSeason = first().isAnalyzedSeason,
+        seasonYear = first().season.year,
+        constructorsPerformance = map { ConstructorPerformance(it.constructor.toDomain(), it.theoreticalPerformance) })
 }

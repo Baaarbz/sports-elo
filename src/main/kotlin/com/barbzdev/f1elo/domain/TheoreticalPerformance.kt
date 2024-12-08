@@ -1,6 +1,5 @@
 package com.barbzdev.f1elo.domain
 
-import com.barbzdev.f1elo.domain.common.SeasonId
 import com.barbzdev.f1elo.domain.common.SeasonYear
 import com.barbzdev.f1elo.domain.exception.NonValidPerformanceException
 

@@ -27,12 +27,16 @@ class TheoreticalPerformanceController(
 ) : TheoreticalPerformanceControllerDocumentation {
 
   @PostMapping
-  override fun addTheoreticalPerformanceOfSeason(@RequestBody body: HttpTheoreticalPerformanceRequest): ResponseEntity<Unit> {
+  override fun addTheoreticalPerformanceOfSeason(
+    @RequestBody body: HttpTheoreticalPerformanceRequest
+  ): ResponseEntity<Unit> {
     val response = addTheoreticalPerformanceUseCase(body.mapToUseCaseRequest())
     return when (response) {
       is AddTheoreticalPerformanceSuccess -> ok().build()
       is AddTheoreticalPerformanceOverANonExistentSeason -> notFound().build()
-      is AddTheoreticalPerformanceAlreadyCreated, AddTheoreticalPerformanceOverAnInvalidConstructor, AddTheoreticalPerformanceOverAnInvalidPerformance -> badRequest().build()
+      is AddTheoreticalPerformanceAlreadyCreated,
+      AddTheoreticalPerformanceOverAnInvalidConstructor,
+      AddTheoreticalPerformanceOverAnInvalidPerformance -> badRequest().build()
     }
   }
 
@@ -48,13 +52,14 @@ class TheoreticalPerformanceController(
     TODO("Not yet implemented")
   }
 
-  private fun HttpTheoreticalPerformanceRequest.mapToUseCaseRequest() = AddTheoreticalPerformanceRequest(
-    seasonYear = seasonYear,
-    isAnalyzedData = isAnalyzedData,
-    theoreticalConstructorPerformances = theoreticalConstructorPerformances.map {
-      AddTheoreticalPerformanceConstructorPerformance(it.constructorId, it.performance)
-    }
-  )
+  private fun HttpTheoreticalPerformanceRequest.mapToUseCaseRequest() =
+    AddTheoreticalPerformanceRequest(
+      seasonYear = seasonYear,
+      isAnalyzedData = isAnalyzedData,
+      theoreticalConstructorPerformances =
+        theoreticalConstructorPerformances.map {
+          AddTheoreticalPerformanceConstructorPerformance(it.constructorId, it.performance)
+        })
 }
 
 data class HttpTheoreticalPerformanceRequest(

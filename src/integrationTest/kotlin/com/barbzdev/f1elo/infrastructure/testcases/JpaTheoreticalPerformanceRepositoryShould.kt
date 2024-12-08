@@ -15,13 +15,10 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 abstract class JpaTheoreticalPerformanceRepositoryShould : IntegrationTestConfiguration() {
-  @Autowired
-  private lateinit var repository: JpaTheoreticalPerformanceRepository
+  @Autowired private lateinit var repository: JpaTheoreticalPerformanceRepository
 
-  @Autowired
-  private lateinit var constructorDatasource: JpaConstructorDatasource
-  @Autowired
-  private lateinit var seasonDatasource: JpaSeasonDatasource
+  @Autowired private lateinit var constructorDatasource: JpaConstructorDatasource
+  @Autowired private lateinit var seasonDatasource: JpaSeasonDatasource
 
   @Test
   fun `save a theoretical performance`() {
@@ -50,9 +47,9 @@ abstract class JpaTheoreticalPerformanceRepositoryShould : IntegrationTestConfig
     val season = aSeason().also { seasonDatasource.save(it.toEntity()) }
     val aConstructor = aConstructor().also { constructorDatasource.save(it.toEntity()) }
     return TheoreticalPerformance.create(
-      seasonYear = season.year().value,
-      isAnalyzedSeason = true,
-      constructorsPerformance = listOf(ConstructorPerformance(aConstructor, 0f))
-    ).also { repository.save(it) }
+        seasonYear = season.year().value,
+        isAnalyzedSeason = true,
+        constructorsPerformance = listOf(ConstructorPerformance(aConstructor, 0f)))
+      .also { repository.save(it) }
   }
 }

@@ -6,12 +6,10 @@ import com.barbzdev.f1elo.factory.ConstructorFactory.aConstructor
 
 object TheoreticalPerformanceFactory {
 
-  fun aTheoreticalPerformance() = TheoreticalPerformance.create(
-    seasonYear = 2021,
-    isAnalyzedSeason = true,
-    constructorsPerformance = listOf(
-      ConstructorPerformance(aConstructor(), 0f),
-      ConstructorPerformance(aConstructor(), 0.234f)
-    )
-  )
+  fun aTheoreticalPerformance() =
+    TheoreticalPerformance.create(
+      seasonYear = 2021,
+      isAnalyzedSeason = true,
+      constructorsPerformance =
+        listOf(ConstructorPerformance(aConstructor(), 0f), ConstructorPerformance(aConstructor(), 0.234f)))
 }

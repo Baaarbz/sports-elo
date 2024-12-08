@@ -17,8 +17,8 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 
 class JpaDriverRepository(
-    private val driverDatasource: JpaDriverDatasource,
-    private val eloHistoryDatasource: JpaDriverEloHistoryDatasource
+  private val driverDatasource: JpaDriverDatasource,
+  private val eloHistoryDatasource: JpaDriverEloHistoryDatasource
 ) : DriverRepository {
   override fun findAll(page: Page, pageSize: PageSize, sortBy: SortBy, sortOrder: SortOrder): DomainPaginated<Driver> {
     val orderByColumn =

@@ -24,34 +24,33 @@ class AddTheoreticalPerformanceUseCase(
       return@instrumentation AddTheoreticalPerformanceAlreadyCreated
     }
 
-    runCatching {
-      request
-        .mapToDomain()
-        .save()
-    }.onFailure {
-      return@instrumentation when (it) {
-        is AddTheoreticalPerformanceConstructorNotFoundException -> AddTheoreticalPerformanceOverAnInvalidConstructor
-        is IllegalArgumentException -> AddTheoreticalPerformanceOverAnInvalidPerformance
-        else -> throw it
+    runCatching { request.mapToDomain().save() }
+      .onFailure {
+        return@instrumentation when (it) {
+          is AddTheoreticalPerformanceConstructorNotFoundException -> AddTheoreticalPerformanceOverAnInvalidConstructor
+          is IllegalArgumentException -> AddTheoreticalPerformanceOverAnInvalidPerformance
+          else -> throw it
+        }
       }
-    }
 
     AddTheoreticalPerformanceSuccess
   }
 
-  private fun AddTheoreticalPerformanceRequest.isSeasonNotAvailable() = seasonRepository.getSeasonIdBy(SeasonYear(seasonYear)) == null
+  private fun AddTheoreticalPerformanceRequest.isSeasonNotAvailable() =
+    seasonRepository.getSeasonIdBy(SeasonYear(seasonYear)) == null
 
-  private fun AddTheoreticalPerformanceRequest.mapToDomain(): TheoreticalPerformance = TheoreticalPerformance.create(
-    seasonYear = seasonYear,
-    isAnalyzedSeason = isAnalyzedData,
-    constructorsPerformance = theoreticalConstructorPerformances.map {
-      ConstructorPerformance(
-        constructor = constructorRepository.findBy(ConstructorId(it.constructorId))
-          ?: throw AddTheoreticalPerformanceConstructorNotFoundException(it.constructorId),
-        performance = it.performance
-      )
-    }
-  )
+  private fun AddTheoreticalPerformanceRequest.mapToDomain(): TheoreticalPerformance =
+    TheoreticalPerformance.create(
+      seasonYear = seasonYear,
+      isAnalyzedSeason = isAnalyzedData,
+      constructorsPerformance =
+        theoreticalConstructorPerformances.map {
+          ConstructorPerformance(
+            constructor =
+              constructorRepository.findBy(ConstructorId(it.constructorId))
+                ?: throw AddTheoreticalPerformanceConstructorNotFoundException(it.constructorId),
+            performance = it.performance)
+        })
 
   private fun TheoreticalPerformance.save() = theoreticalPerformanceRepository.save(this)
 }
@@ -65,8 +64,13 @@ data class AddTheoreticalPerformanceRequest(
 data class AddTheoreticalPerformanceConstructorPerformance(val constructorId: String, val performance: Float)
 
 sealed class AddTheoreticalPerformanceResponse
+
 data object AddTheoreticalPerformanceSuccess : AddTheoreticalPerformanceResponse()
+
 data object AddTheoreticalPerformanceOverANonExistentSeason : AddTheoreticalPerformanceResponse()
+
 data object AddTheoreticalPerformanceOverAnInvalidConstructor : AddTheoreticalPerformanceResponse()
+
 data object AddTheoreticalPerformanceOverAnInvalidPerformance : AddTheoreticalPerformanceResponse()
+
 data object AddTheoreticalPerformanceAlreadyCreated : AddTheoreticalPerformanceResponse()

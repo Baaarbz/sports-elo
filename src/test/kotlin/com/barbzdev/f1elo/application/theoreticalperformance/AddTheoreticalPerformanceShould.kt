@@ -24,12 +24,12 @@ class AddTheoreticalPerformanceShould {
   private val seasonRepository: SeasonRepository = mockk()
   private val constructorRepository: ConstructorRepository = mockk()
 
-  private val service = AddTheoreticalPerformanceUseCase(
-    instrumentation = instrumentationMock(),
-    theoreticalPerformanceRepository = theoreticalPerformanceRepository,
-    seasonRepository = seasonRepository,
-    constructorRepository = constructorRepository
-  )
+  private val service =
+    AddTheoreticalPerformanceUseCase(
+      instrumentation = instrumentationMock(),
+      theoreticalPerformanceRepository = theoreticalPerformanceRepository,
+      seasonRepository = seasonRepository,
+      constructorRepository = constructorRepository)
 
   @Test
   fun `add theoretical performance to the database`() {
@@ -37,7 +37,6 @@ class AddTheoreticalPerformanceShould {
     every { seasonRepository.getSeasonIdBy(any()) } returns aSeason().id()
     every { constructorRepository.findBy(any()) } returns ferrariConstructor
     every { theoreticalPerformanceRepository.findBy(any()) } returns null
-
 
     val response = service(request)
 
@@ -50,11 +49,7 @@ class AddTheoreticalPerformanceShould {
         TheoreticalPerformance.create(
           seasonYear = 2021,
           isAnalyzedSeason = true,
-          constructorsPerformance = listOf(
-            ConstructorPerformance(aConstructor(), 0.0f)
-          )
-        )
-      )
+          constructorsPerformance = listOf(ConstructorPerformance(aConstructor(), 0.0f))))
     }
   }
 
@@ -84,9 +79,7 @@ class AddTheoreticalPerformanceShould {
     val response = service(request)
 
     assertThat(response).isInstanceOf(AddTheoreticalPerformanceOverANonExistentSeason::class)
-    verify {
-      seasonRepository.getSeasonIdBy(SeasonYear(2021))
-    }
+    verify { seasonRepository.getSeasonIdBy(SeasonYear(2021)) }
     verify(exactly = 0) { constructorRepository.findBy(any()) }
     verify(exactly = 0) { theoreticalPerformanceRepository.save(any()) }
     verify(exactly = 0) { theoreticalPerformanceRepository.findBy(any()) }
@@ -111,14 +104,10 @@ class AddTheoreticalPerformanceShould {
 
   @Test
   fun `return AddTheoreticalPerformanceOverAnInvalidPerformance when performance is invalid`() {
-    val request = A_REQUEST.copy(
-      theoreticalConstructorPerformances = listOf(
-        AddTheoreticalPerformanceConstructorPerformance(
-          constructorId = "ferrari",
-          performance = -1.1f
-        )
-      )
-    )
+    val request =
+      A_REQUEST.copy(
+        theoreticalConstructorPerformances =
+          listOf(AddTheoreticalPerformanceConstructorPerformance(constructorId = "ferrari", performance = -1.1f)))
     every { seasonRepository.getSeasonIdBy(any()) } returns aSeason().id()
     every { theoreticalPerformanceRepository.findBy(any()) } returns null
     every { constructorRepository.findBy(any()) } returns ferrariConstructor
@@ -135,15 +124,11 @@ class AddTheoreticalPerformanceShould {
   }
 
   private companion object {
-    val A_REQUEST = AddTheoreticalPerformanceRequest(
-      seasonYear = 2021,
-      isAnalyzedData = true,
-      theoreticalConstructorPerformances = listOf(
-        AddTheoreticalPerformanceConstructorPerformance(
-          constructorId = "ferrari",
-          performance = 0.0f
-        )
-      )
-    )
+    val A_REQUEST =
+      AddTheoreticalPerformanceRequest(
+        seasonYear = 2021,
+        isAnalyzedData = true,
+        theoreticalConstructorPerformances =
+          listOf(AddTheoreticalPerformanceConstructorPerformance(constructorId = "ferrari", performance = 0.0f)))
   }
 }

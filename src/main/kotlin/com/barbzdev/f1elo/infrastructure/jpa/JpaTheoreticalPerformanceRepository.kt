@@ -28,8 +28,7 @@ class JpaTheoreticalPerformanceRepository(
       val constructor = constructorDatasource.findById(it.constructor.id().value).get()
       val season = seasonDatasource.findByYear(theoreticalPerformance.seasonYear().value)!!
       theoreticalConstructorPerformanceDatasource.save(
-        mapToTheoreticalConstructorPerformanceEntity(theoreticalPerformance, constructor, season)
-      )
+        mapToTheoreticalConstructorPerformanceEntity(theoreticalPerformance, constructor, season))
     }
   }
 }
