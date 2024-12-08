@@ -10,8 +10,10 @@ import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerfo
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceUseCase
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.badRequest
+import org.springframework.http.ResponseEntity.created
 import org.springframework.http.ResponseEntity.notFound
 import org.springframework.http.ResponseEntity.ok
+import org.springframework.http.ResponseEntity.status
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -32,7 +34,7 @@ class TheoreticalPerformanceController(
   ): ResponseEntity<Unit> {
     val response = addTheoreticalPerformanceUseCase(body.mapToUseCaseRequest())
     return when (response) {
-      is AddTheoreticalPerformanceSuccess -> ok().build()
+      is AddTheoreticalPerformanceSuccess -> status(201).build()
       is AddTheoreticalPerformanceOverANonExistentSeason -> notFound().build()
       is AddTheoreticalPerformanceAlreadyCreated,
       AddTheoreticalPerformanceOverAnInvalidConstructor,

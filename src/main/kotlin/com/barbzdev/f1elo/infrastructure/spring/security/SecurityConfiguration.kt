@@ -28,6 +28,7 @@ class SecurityConfiguration(
   fun configureSecurityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain =
     httpSecurity
       .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+      .csrf { it.disable() }
       .authorizeHttpRequests {
         it
           .requestMatchers(HttpMethod.GET, "/api/v1/drivers/**")
