@@ -1,5 +1,6 @@
 package com.barbzdev.f1elo.infrastructure.spring.controller.theoreticalperformance
 
+import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformance
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("api/v1/theoretical-performance")
-class TheoreticalPerformanceController : TheoreticalPerformanceControllerDocumentation {
+class TheoreticalPerformanceController(
+  private val addTheoreticalPerformance: AddTheoreticalPerformance,
+) : TheoreticalPerformanceControllerDocumentation {
 
   @PostMapping
   override fun addTheoreticalPerformanceOfSeason(body: HttpTheoreticalPerformanceRequest): ResponseEntity<Unit> {
@@ -31,7 +34,7 @@ class TheoreticalPerformanceController : TheoreticalPerformanceControllerDocumen
 }
 
 data class HttpTheoreticalPerformanceRequest(
-  val seasonYear: String,
+  val seasonYear: Int,
   val isAnalyzedData: Boolean,
   val theoreticalConstructorPerformances: List<HttpTheoreticalConstructorPerformance>
 )
@@ -39,7 +42,7 @@ data class HttpTheoreticalPerformanceRequest(
 data class HttpTheoreticalConstructorPerformance(val constructorId: String, val performance: Float)
 
 data class HttpGetTheoreticalPerformanceBySeasonYearResponse(
-  val seasonYear: String,
+  val seasonYear: Int,
   val isAnalyzedData: Boolean,
   val theoreticalConstructorPerformances: List<HttpTheoreticalConstructorPerformance>
 )

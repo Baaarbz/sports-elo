@@ -18,6 +18,7 @@ interface TheoreticalPerformanceControllerDocumentation {
           description = "Successfully add theoretical performance of a season",
           content = [Content()]),
         ApiResponse(responseCode = "404", description = "Season not found", content = [Content()]),
+        ApiResponse(responseCode = "400", description = "The request contains not valid data, for example, non existent constructor, not valid performance or the theoretical performance for the requested year already exists", content = [Content()]),
         ApiResponse(responseCode = "500", description = "Internal server error", content = [Content()])])
   fun addTheoreticalPerformanceOfSeason(body: HttpTheoreticalPerformanceRequest): ResponseEntity<Unit>
 
