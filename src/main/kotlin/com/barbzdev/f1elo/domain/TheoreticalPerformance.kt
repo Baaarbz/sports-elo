@@ -5,12 +5,12 @@ import com.barbzdev.f1elo.domain.common.SeasonYear
 class TheoreticalPerformance
 private constructor(
   private val seasonYear: SeasonYear,
-  private val isAnalyzedData: IsAnalyzedData,
+  private val isAnalyzedSeason: IsAnalyzedSeason,
   private val constructorsPerformance: List<ConstructorPerformance>
 ) {
   fun seasonYear() = seasonYear
 
-  fun isAnalyzedData() = isAnalyzedData.value
+  fun isAnalyzedSeason() = isAnalyzedSeason.value
 
   fun constructorsPerformance() = constructorsPerformance
 
@@ -24,7 +24,7 @@ private constructor(
     other as TheoreticalPerformance
 
     if (seasonYear != other.seasonYear) return false
-    if (isAnalyzedData != other.isAnalyzedData) return false
+    if (isAnalyzedSeason != other.isAnalyzedSeason) return false
     if (constructorsPerformance != other.constructorsPerformance) return false
 
     return true
@@ -32,26 +32,26 @@ private constructor(
 
   override fun hashCode(): Int {
     var result = seasonYear.hashCode()
-    result = 31 * result + isAnalyzedData.hashCode()
+    result = 31 * result + isAnalyzedSeason.hashCode()
     result = 31 * result + constructorsPerformance.hashCode()
     return result
   }
 
   override fun toString(): String {
-    return "TheoreticalPerformance(seasonYear=$seasonYear, isAnalyzedData=$isAnalyzedData, constructorsPerformance=$constructorsPerformance)"
+    return "TheoreticalPerformance(seasonYear=$seasonYear, isAnalyzedSeason=$isAnalyzedSeason, constructorsPerformance=$constructorsPerformance)"
   }
 
   companion object {
     fun create(
       seasonYear: Int,
-      isAnalyzedData: Boolean,
+      isAnalyzedSeason: Boolean,
       constructorsPerformance: List<ConstructorPerformance>
     ): TheoreticalPerformance {
-      return TheoreticalPerformance(SeasonYear(seasonYear), IsAnalyzedData(isAnalyzedData), constructorsPerformance)
+      return TheoreticalPerformance(SeasonYear(seasonYear), IsAnalyzedSeason(isAnalyzedSeason), constructorsPerformance)
     }
   }
 }
 
-data class IsAnalyzedData(val value: Boolean)
+data class IsAnalyzedSeason(val value: Boolean)
 
 data class ConstructorPerformance(val constructor: Constructor, val performance: Float)
