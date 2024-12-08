@@ -18,5 +18,5 @@ data class TheoreticalConstructorPerformanceEntity(
   @Column(name = "constructor_id") val constructorId: String,
   @Column(name = "season_id") val seasonId: String,
   @Column(name = "theoretical_performance") val theoreticalPerformance: Float,
-  @Column(name = "is_season_analyzed") val isSeasonAnalyzed: Boolean
+  @Column(name = "is_analyzed_season") val isAnalyzedSeason: Boolean
 )
