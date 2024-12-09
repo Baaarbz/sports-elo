@@ -5,6 +5,7 @@ import com.barbzdev.f1elo.testcases.AddTheoreticalPerformanceShould
 import com.barbzdev.f1elo.testcases.CalculateEloOfDriversBySeasonShould
 import com.barbzdev.f1elo.testcases.DeleteTheoreticalPerformanceBySeasonYearShould
 import com.barbzdev.f1elo.testcases.GetDriverByIdShould
+import com.barbzdev.f1elo.testcases.GetTheoreticalPerformanceBySeasonYearShould
 import com.barbzdev.f1elo.testcases.ListingDriversShould
 import org.junit.jupiter.api.Nested
 import org.testcontainers.junit.jupiter.Container
@@ -26,4 +27,6 @@ class ApplicationAcceptanceTest {
   @Nested inner class AddTheoreticalPerformance : AddTheoreticalPerformanceShould()
 
   @Nested inner class DeleteTheoreticalPerformanceBySeasonYear : DeleteTheoreticalPerformanceBySeasonYearShould()
+
+  @Nested inner class GetTheoreticalPerformanceBySeasonYear : GetTheoreticalPerformanceBySeasonYearShould()
 }
