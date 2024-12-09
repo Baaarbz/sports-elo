@@ -23,7 +23,7 @@ class HexagonalArchitectureShould {
     noClasses().that().resideInAPackage("..domain..").should().accessClassesThat().resideInAnyPackage("..application..")
 
   @ArchTest
-  val `applicatio  classes should not access infrastructure classes` =
+  val `application classes should not access infrastructure classes` =
     noClasses()
       .that()
       .resideInAPackage("..application..")
