@@ -64,7 +64,8 @@ class UseCaseConfiguration {
   ) = DeleteTheoreticalPerformanceBySeasonYearUseCase(instrumentation, theoreticalPerformanceRepository)
 
   @Bean
-  fun getTheoreticalPerformanceBySeasonYearUseCase(instrumentation: UseCaseInstrumentation,
-                                                   theoreticalPerformanceRepository: TheoreticalPerformanceRepository) =
-    GetTheoreticalPerformanceBySeasonYearUseCase(instrumentation, theoreticalPerformanceRepository)
+  fun getTheoreticalPerformanceBySeasonYearUseCase(
+    instrumentation: UseCaseInstrumentation,
+    theoreticalPerformanceRepository: TheoreticalPerformanceRepository
+  ) = GetTheoreticalPerformanceBySeasonYearUseCase(instrumentation, theoreticalPerformanceRepository)
 }

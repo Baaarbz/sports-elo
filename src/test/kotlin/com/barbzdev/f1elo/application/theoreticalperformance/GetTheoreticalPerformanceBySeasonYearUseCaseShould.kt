@@ -2,7 +2,6 @@ package com.barbzdev.f1elo.application.theoreticalperformance
 
 import assertk.assertThat
 import assertk.assertions.isInstanceOf
-import com.barbzdev.f1elo.domain.TheoreticalPerformance
 import com.barbzdev.f1elo.domain.common.SeasonYear
 import com.barbzdev.f1elo.domain.repository.TheoreticalPerformanceRepository
 import com.barbzdev.f1elo.factory.TheoreticalPerformanceFactory.aTheoreticalPerformance
@@ -17,8 +16,7 @@ class GetTheoreticalPerformanceBySeasonYearUseCaseShould {
   private val theoreticalPerformanceRepository: TheoreticalPerformanceRepository = mockk()
   private val service =
     GetTheoreticalPerformanceBySeasonYearUseCase(
-      instrumentation = instrumentationMock(),
-      repository = theoreticalPerformanceRepository)
+      instrumentation = instrumentationMock(), repository = theoreticalPerformanceRepository)
 
   @Test
   fun `return success when theoretical performance is found`() {
@@ -47,9 +45,7 @@ class GetTheoreticalPerformanceBySeasonYearUseCaseShould {
     val request = GetTheoreticalPerformanceBySeasonYearRequest(2021)
     every { theoreticalPerformanceRepository.findBy(SeasonYear(2021)) } throws RuntimeException()
 
-    assertThrows<RuntimeException> {
-      service(request)
-    }
+    assertThrows<RuntimeException> { service(request) }
     verify { theoreticalPerformanceRepository.findBy(SeasonYear(2021)) }
   }
 }

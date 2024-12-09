@@ -19,20 +19,18 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.beans.factory.annotation.Autowired
 
 abstract class GetTheoreticalPerformanceBySeasonYearShould : AcceptanceTestConfiguration() {
-  @Autowired
-  private lateinit var seasonDatasource: JpaSeasonDatasource
+  @Autowired private lateinit var seasonDatasource: JpaSeasonDatasource
 
-  @Autowired
-  private lateinit var constructorDatasource: JpaConstructorDatasource
+  @Autowired private lateinit var constructorDatasource: JpaConstructorDatasource
 
-  @Autowired
-  private lateinit var theoreticalPerformanceRepository: JpaTheoreticalPerformanceRepository
+  @Autowired private lateinit var theoreticalPerformanceRepository: JpaTheoreticalPerformanceRepository
 
   @Test
   fun `add theoretical performance to the database`() {
     val aSeasonInDatabase = givenASeasonInDatabase()
     val aConstructorInDatabase = givenAConstructorInDatabase()
-    val aTheoreticalPerformanceInDatabase = givenATheoreticalPerformanceInDatabase(aSeasonInDatabase, aConstructorInDatabase)
+    val aTheoreticalPerformanceInDatabase =
+      givenATheoreticalPerformanceInDatabase(aSeasonInDatabase, aConstructorInDatabase)
 
     val response = whenGetTheoreticalPerformanceRequest(aSeasonInDatabase)
 
@@ -49,28 +47,33 @@ abstract class GetTheoreticalPerformanceBySeasonYearShould : AcceptanceTestConfi
     aConstructor: Constructor
   ): TheoreticalPerformance {
     return TheoreticalPerformance.create(
-      seasonYear = aSeason.year().value,
-      isAnalyzedSeason = true,
-      constructorsPerformance = listOf(ConstructorPerformance(aConstructor, 0f)),
-      dataOriginUrl = "https://x.com/DeltaData_",
-      dataOriginSource = "DeltaData",
-    )
+        seasonYear = aSeason.year().value,
+        isAnalyzedSeason = true,
+        constructorsPerformance = listOf(ConstructorPerformance(aConstructor, 0f)),
+        dataOriginUrl = "https://x.com/DeltaData_",
+        dataOriginSource = "DeltaData",
+      )
       .also { theoreticalPerformanceRepository.save(it) }
   }
 
-  private fun whenGetTheoreticalPerformanceRequest(season: Season) = given()
-    .port(port.toInt())
-    .contentType(ContentType.JSON)
-    .`when`()
-    .get("/api/v1/theoretical-performance/${season.year().value}")
-    .then()
-    .statusCode(200)
-    .extract()
-    .body()
-    .asString()
+  private fun whenGetTheoreticalPerformanceRequest(season: Season) =
+    given()
+      .port(port.toInt())
+      .contentType(ContentType.JSON)
+      .`when`()
+      .get("/api/v1/theoretical-performance/${season.year().value}")
+      .then()
+      .statusCode(200)
+      .extract()
+      .body()
+      .asString()
 
-  private fun verifyGetTheoreticalPerformanceResponse(response: String, theoreticalPerformance: TheoreticalPerformance) {
-    val expectedResponse = """
+  private fun verifyGetTheoreticalPerformanceResponse(
+    response: String,
+    theoreticalPerformance: TheoreticalPerformance
+  ) {
+    val expectedResponse =
+      """
       {
         "seasonYear": ${theoreticalPerformance.seasonYear().value},
         "isAnalyzedSeason": ${theoreticalPerformance.isAnalyzedSeason()},
@@ -84,7 +87,8 @@ abstract class GetTheoreticalPerformanceBySeasonYearShould : AcceptanceTestConfi
             "performance": ${theoreticalPerformance.constructorsPerformance()[0].performance}
           }
         ]
-      }""".trimIndent()
+      }"""
+        .trimIndent()
 
     JSONAssert.assertEquals(expectedResponse, response, JSONCompareMode.NON_EXTENSIBLE)
   }

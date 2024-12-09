@@ -54,8 +54,7 @@ class TheoreticalPerformanceController(
   override fun deleteTheoreticalPerformanceBySeasonYear(@PathVariable seasonYear: Int): ResponseEntity<Unit> {
     val response =
       deleteTheoreticalPerformanceBySeasonYearUseCase.invoke(
-        DeleteTheoreticalPerformanceBySeasonYearRequest(seasonYear)
-      )
+        DeleteTheoreticalPerformanceBySeasonYearRequest(seasonYear))
     return when (response) {
       is DeleteTheoreticalPerformanceBySeasonYearSuccess -> status(200).build()
     }
@@ -67,8 +66,7 @@ class TheoreticalPerformanceController(
   ): ResponseEntity<HttpGetTheoreticalPerformanceBySeasonYearResponse> {
     val response =
       getTheoreticalPerformanceBySeasonYearUseCase.invoke(
-        GetTheoreticalPerformanceBySeasonYearRequest(seasonYear.toInt())
-      )
+        GetTheoreticalPerformanceBySeasonYearRequest(seasonYear.toInt()))
     return when (response) {
       is GetTheoreticalPerformanceBySeasonYearSuccess -> status(200).body(response.mapToHttpResponse())
       is GetTheoreticalPerformanceBySeasonYearNotFound -> notFound().build()
@@ -82,20 +80,19 @@ class TheoreticalPerformanceController(
       theoreticalConstructorPerformances =
         theoreticalConstructorPerformances.map {
           AddTheoreticalPerformanceConstructorPerformance(
-            constructorId = it.constructorId, performance = it.performance
-          )
+            constructorId = it.constructorId, performance = it.performance)
         },
-      dataOrigin = AddTheoreticalPerformanceDataOrigin(source = dataOrigin.source, url = dataOrigin.url)
-    )
+      dataOrigin = AddTheoreticalPerformanceDataOrigin(source = dataOrigin.source, url = dataOrigin.url))
 
-  private fun GetTheoreticalPerformanceBySeasonYearSuccess.mapToHttpResponse() = HttpGetTheoreticalPerformanceBySeasonYearResponse(
-    seasonYear = seasonYear,
-    isAnalyzedData = isAnalyzedData,
-    dataOrigin = HttpDataOrigin(source = dataOrigin!!.source, url = dataOrigin.url),
-    theoreticalConstructorPerformances = theoreticalConstructorPerformances.map {
-      HttpTheoreticalConstructorPerformance(constructorId = it.constructorId, performance = it.performance)
-    }
-  )
+  private fun GetTheoreticalPerformanceBySeasonYearSuccess.mapToHttpResponse() =
+    HttpGetTheoreticalPerformanceBySeasonYearResponse(
+      seasonYear = seasonYear,
+      isAnalyzedData = isAnalyzedData,
+      dataOrigin = HttpDataOrigin(source = dataOrigin!!.source, url = dataOrigin.url),
+      theoreticalConstructorPerformances =
+        theoreticalConstructorPerformances.map {
+          HttpTheoreticalConstructorPerformance(constructorId = it.constructorId, performance = it.performance)
+        })
 }
 
 data class HttpTheoreticalPerformanceRequest(
