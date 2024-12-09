@@ -51,7 +51,9 @@ class AddTheoreticalPerformanceUseCase(
               constructorRepository.findBy(ConstructorId(it.constructorId))
                 ?: throw AddTheoreticalPerformanceConstructorNotFoundException(it.constructorId),
             performance = it.performance)
-        })
+        },
+      dataOriginSource = dataOrigin.source,
+      dataOriginUrl = dataOrigin.url)
 
   private fun TheoreticalPerformance.save() = theoreticalPerformanceRepository.save(this)
 }
@@ -59,10 +61,13 @@ class AddTheoreticalPerformanceUseCase(
 data class AddTheoreticalPerformanceRequest(
   val seasonYear: Int,
   val isAnalyzedData: Boolean,
+  val dataOrigin: AddTheoreticalPerformanceDataOrigin,
   val theoreticalConstructorPerformances: List<AddTheoreticalPerformanceConstructorPerformance>
 )
 
 data class AddTheoreticalPerformanceConstructorPerformance(val constructorId: String, val performance: Float)
+
+data class AddTheoreticalPerformanceDataOrigin(val source: String, val url: String)
 
 sealed class AddTheoreticalPerformanceResponse
 

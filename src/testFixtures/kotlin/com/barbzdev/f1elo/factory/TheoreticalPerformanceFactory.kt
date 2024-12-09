@@ -12,11 +12,17 @@ object TheoreticalPerformanceFactory {
       seasonYear = (1960..2024).random(),
       isAnalyzedSeason = true,
       constructorsPerformance =
-        listOf(ConstructorPerformance(aConstructor(), 0f), ConstructorPerformance(aConstructor(), 0.234f)))
+        listOf(ConstructorPerformance(aConstructor(), 0f), ConstructorPerformance(aConstructor(), 0.234f)),
+      dataOriginUrl = "https://x.com/DeltaData_",
+      dataOriginSource = "DeltaData",
+    )
 
   fun aTheoreticalPerformance(seasonYear: Int, constructor: Constructor) =
     TheoreticalPerformance.create(
       seasonYear = seasonYear,
       isAnalyzedSeason = true,
-      constructorsPerformance = listOf(ConstructorPerformance(constructor, 0f)))
+      constructorsPerformance = listOf(ConstructorPerformance(constructor, 0f)),
+      dataOriginUrl = "https://x.com/DeltaData_",
+      dataOriginSource = "DeltaData",
+    )
 }

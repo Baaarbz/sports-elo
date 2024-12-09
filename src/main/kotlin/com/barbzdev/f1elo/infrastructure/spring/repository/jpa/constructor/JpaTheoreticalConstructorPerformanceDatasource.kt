@@ -23,5 +23,7 @@ data class TheoreticalConstructorPerformanceEntity(
   @ManyToOne @JoinColumn(name = "constructor_id") val constructor: ConstructorEntity,
   @ManyToOne @JoinColumn(name = "season_id") val season: SeasonEntity,
   @Column(name = "theoretical_performance") val theoreticalPerformance: Float,
-  @Column(name = "is_analyzed_season") val isAnalyzedSeason: Boolean
+  @Column(name = "is_analyzed_season") val isAnalyzedSeason: Boolean,
+  @Column(name = "data_origin_source") val dataOriginSource: String?,
+  @Column(name = "data_origin_url") val dataOriginUrl: String?,
 )

@@ -49,7 +49,10 @@ abstract class JpaTheoreticalPerformanceRepositoryShould : IntegrationTestConfig
     return TheoreticalPerformance.create(
         seasonYear = givenASeasonInDatabase().year().value,
         isAnalyzedSeason = true,
-        constructorsPerformance = listOf(ConstructorPerformance(givenAConstructorInDatabase(), 0f)))
+        constructorsPerformance = listOf(ConstructorPerformance(givenAConstructorInDatabase(), 0f)),
+        dataOriginUrl = "https://x.com/DeltaData_",
+        dataOriginSource = "DeltaData",
+      )
       .also { repository.save(it) }
   }
 

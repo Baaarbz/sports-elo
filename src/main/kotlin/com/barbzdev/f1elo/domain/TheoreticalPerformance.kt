@@ -7,13 +7,16 @@ class TheoreticalPerformance
 private constructor(
   private val seasonYear: SeasonYear,
   private val isAnalyzedSeason: IsAnalyzedSeason,
-  private val constructorsPerformance: List<ConstructorPerformance>
+  private val constructorsPerformance: List<ConstructorPerformance>,
+  private val dataOrigin: DataOrigin?
 ) {
   fun seasonYear() = seasonYear
 
   fun isAnalyzedSeason() = isAnalyzedSeason.value
 
   fun constructorsPerformance() = constructorsPerformance
+
+  fun dataOrigin() = dataOrigin
 
   fun getConstructorPerformance(constructorId: ConstructorId): Float? =
     constructorsPerformance.find { it.constructor.id() == constructorId }?.performance
@@ -27,6 +30,7 @@ private constructor(
     if (seasonYear != other.seasonYear) return false
     if (isAnalyzedSeason != other.isAnalyzedSeason) return false
     if (constructorsPerformance != other.constructorsPerformance) return false
+    if (dataOrigin != other.dataOrigin) return false
 
     return true
   }
@@ -35,20 +39,30 @@ private constructor(
     var result = seasonYear.hashCode()
     result = 31 * result + isAnalyzedSeason.hashCode()
     result = 31 * result + constructorsPerformance.hashCode()
+    result = 31 * result + dataOrigin.hashCode()
     return result
   }
 
-  override fun toString(): String {
-    return "TheoreticalPerformance(seasonYear=$seasonYear, isAnalyzedSeason=$isAnalyzedSeason, constructorsPerformance=$constructorsPerformance)"
-  }
+  override fun toString(): String =
+    "TheoreticalPerformance(seasonYear=$seasonYear, isAnalyzedSeason=$isAnalyzedSeason, constructorsPerformance=$constructorsPerformance, dataOrigin=$dataOrigin)"
 
   companion object {
     fun create(
       seasonYear: Int,
       isAnalyzedSeason: Boolean,
-      constructorsPerformance: List<ConstructorPerformance>
+      constructorsPerformance: List<ConstructorPerformance>,
+      dataOriginSource: String?,
+      dataOriginUrl: String?
     ): TheoreticalPerformance {
-      return TheoreticalPerformance(SeasonYear(seasonYear), IsAnalyzedSeason(isAnalyzedSeason), constructorsPerformance)
+      val dataOrigin =
+        if (dataOriginUrl == null || dataOriginSource == null) null
+        else DataOrigin(source = dataOriginSource, url = dataOriginUrl)
+      return TheoreticalPerformance(
+        seasonYear = SeasonYear(seasonYear),
+        isAnalyzedSeason = IsAnalyzedSeason(isAnalyzedSeason),
+        constructorsPerformance = constructorsPerformance,
+        dataOrigin = dataOrigin,
+      )
     }
   }
 }
@@ -60,3 +74,5 @@ data class ConstructorPerformance(val constructor: Constructor, val performance:
     require(performance >= 0) { throw NonValidPerformanceException(performance) }
   }
 }
+
+data class DataOrigin(val source: String, val url: String)

@@ -45,6 +45,10 @@ abstract class AddTheoreticalPerformanceShould : AcceptanceTestConfiguration() {
       {
         "seasonYear": ${season.year().value},
         "isAnalyzedData": true,
+        "dataOrigin": {
+          "source": "DeltaData",
+          "url": "https://x.com/DeltaData_"
+        },
         "theoreticalConstructorPerformances": [
           {
             "constructorId": "${constructor.id().value}",
@@ -72,7 +76,9 @@ abstract class AddTheoreticalPerformanceShould : AcceptanceTestConfiguration() {
       TheoreticalPerformance.create(
         seasonYear = season.year().value,
         isAnalyzedSeason = true,
-        constructorsPerformance = listOf(ConstructorPerformance(constructor, 0f)))
+        constructorsPerformance = listOf(ConstructorPerformance(constructor, 0f)),
+        dataOriginSource = "DeltaData",
+        dataOriginUrl = "https://x.com/DeltaData_")
     assertThat(theoreticalPerformanceInDatabase).isEqualTo(expectedTheoreticalPerformance)
   }
 }

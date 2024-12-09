@@ -51,7 +51,10 @@ class AddTheoreticalPerformanceShould {
         TheoreticalPerformance.create(
           seasonYear = 2021,
           isAnalyzedSeason = true,
-          constructorsPerformance = listOf(ConstructorPerformance(ferrariConstructor, 0.0f))))
+          constructorsPerformance = listOf(ConstructorPerformance(ferrariConstructor, 0.0f)),
+          dataOriginUrl = "https://x.com/DeltaData_",
+          dataOriginSource = "DeltaData",
+        ))
     }
   }
 
@@ -131,6 +134,15 @@ class AddTheoreticalPerformanceShould {
         seasonYear = 2021,
         isAnalyzedData = true,
         theoreticalConstructorPerformances =
-          listOf(AddTheoreticalPerformanceConstructorPerformance(constructorId = "ferrari", performance = 0.0f)))
+          listOf(
+            AddTheoreticalPerformanceConstructorPerformance(
+              constructorId = "ferrari",
+              performance = 0.0f,
+            )),
+        dataOrigin =
+          AddTheoreticalPerformanceDataOrigin(
+            source = "DeltaData",
+            url = "https://x.com/DeltaData_",
+          ))
   }
 }
