@@ -15,7 +15,7 @@ interface JpaTheoreticalConstructorPerformanceDatasource :
   JpaRepository<TheoreticalConstructorPerformanceEntity, String> {
   fun findAllBySeason(season: SeasonEntity): List<TheoreticalConstructorPerformanceEntity>
 
-  fun deleteBySeason(season: SeasonEntity)
+  fun deleteAllBySeason(season: SeasonEntity)
 }
 
 @Entity
