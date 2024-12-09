@@ -40,6 +40,16 @@ abstract class JpaTheoreticalPerformanceRepositoryShould : IntegrationTestConfig
     assertThat(theoreticalPerformanceBySeasonYear).isEqualTo(theoreticalPerformanceInDatabase)
   }
 
+  @Test
+  fun `delete a theoretical performance by season year`() {
+    val theoreticalPerformanceInDatabase = givenATheoreticalPerformanceInDatabase()
+
+    repository.deleteBy(theoreticalPerformanceInDatabase.seasonYear())
+
+    val theoreticalPerformanceBySeasonYear = repository.findBy(theoreticalPerformanceInDatabase.seasonYear())
+    assertThat(theoreticalPerformanceBySeasonYear).isNull()
+  }
+
   private fun verifyTheoreticalPerformanceWasSaved(expectedTheoreticalPerformance: TheoreticalPerformance) {
     val actualSavedTheoreticalPerformance = repository.findBy(expectedTheoreticalPerformance.seasonYear())
     assertThat(actualSavedTheoreticalPerformance).isEqualTo(expectedTheoreticalPerformance)

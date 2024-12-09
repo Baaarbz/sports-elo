@@ -5,6 +5,7 @@ import com.barbzdev.f1elo.application.data.GatherRacesBySeasonUseCase
 import com.barbzdev.f1elo.application.driver.GetDriverByIdUseCase
 import com.barbzdev.f1elo.application.driver.ListingDriversUseCase
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceUseCase
+import com.barbzdev.f1elo.application.theoreticalperformance.DeleteTheoreticalPerformanceBySeasonYearUseCase
 import com.barbzdev.f1elo.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.ConstructorRepository
@@ -54,4 +55,10 @@ class UseCaseConfiguration {
   ) =
     AddTheoreticalPerformanceUseCase(
       instrumentation, theoreticalPerformanceRepository, seasonRepository, constructorRepository)
+
+  @Bean
+  fun deleteTheoreticalPerformanceBySeasonYearUseCase(
+    instrumentation: UseCaseInstrumentation,
+    theoreticalPerformanceRepository: TheoreticalPerformanceRepository
+  ) = DeleteTheoreticalPerformanceBySeasonYearUseCase(instrumentation, theoreticalPerformanceRepository)
 }

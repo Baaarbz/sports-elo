@@ -15,7 +15,8 @@ class JpaTheoreticalPerformanceRepository(
   private val constructorDatasource: JpaConstructorDatasource
 ) : TheoreticalPerformanceRepository {
   override fun deleteBy(season: SeasonYear) {
-    TODO("Not yet implemented")
+    val seasonEntity = seasonDatasource.findByYear(season.value) ?: return
+    theoreticalConstructorPerformanceDatasource.deleteBySeason(seasonEntity)
   }
 
   override fun findBy(season: SeasonYear): TheoreticalPerformance? {
