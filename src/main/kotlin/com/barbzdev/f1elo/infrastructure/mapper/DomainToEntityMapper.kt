@@ -114,5 +114,8 @@ object DomainToEntityMapper {
       constructor = constructor,
       season = season,
       theoreticalPerformance = theoreticalPerformance.getConstructorPerformance(ConstructorId(constructor.id))!!,
-      isAnalyzedSeason = theoreticalPerformance.isAnalyzedSeason())
+      isAnalyzedSeason = theoreticalPerformance.isAnalyzedSeason(),
+      dataOriginSource = theoreticalPerformance.dataOrigin()?.source,
+      dataOriginUrl = theoreticalPerformance.dataOrigin()?.url,
+    )
 }

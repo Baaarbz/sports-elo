@@ -11,7 +11,6 @@ import com.barbzdev.f1elo.domain.Season
 import com.barbzdev.f1elo.domain.TheoreticalPerformance
 import com.barbzdev.f1elo.domain.common.Elo
 import com.barbzdev.f1elo.domain.common.Nationality
-import com.barbzdev.f1elo.infrastructure.mapper.EntityToDomainMapper.toDomain
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.circuit.CircuitEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.ConstructorEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.TheoreticalConstructorPerformanceEntity
@@ -86,5 +85,7 @@ object EntityToDomainMapper {
       TheoreticalPerformance.create(
         isAnalyzedSeason = first().isAnalyzedSeason,
         seasonYear = first().season.year,
-        constructorsPerformance = map { ConstructorPerformance(it.constructor.toDomain(), it.theoreticalPerformance) })
+        constructorsPerformance = map { ConstructorPerformance(it.constructor.toDomain(), it.theoreticalPerformance) },
+        dataOriginUrl = first().dataOriginUrl,
+        dataOriginSource = first().dataOriginSource)
 }

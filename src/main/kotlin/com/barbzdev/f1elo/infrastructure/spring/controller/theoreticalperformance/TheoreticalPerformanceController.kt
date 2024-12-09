@@ -2,6 +2,7 @@ package com.barbzdev.f1elo.infrastructure.spring.controller.theoreticalperforman
 
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceAlreadyCreated
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceConstructorPerformance
+import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceDataOrigin
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceOverANonExistentSeason
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceOverAnInvalidConstructor
 import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerformanceOverAnInvalidPerformance
@@ -58,20 +59,26 @@ class TheoreticalPerformanceController(
       isAnalyzedData = isAnalyzedData,
       theoreticalConstructorPerformances =
         theoreticalConstructorPerformances.map {
-          AddTheoreticalPerformanceConstructorPerformance(it.constructorId, it.performance)
-        })
+          AddTheoreticalPerformanceConstructorPerformance(
+            constructorId = it.constructorId, performance = it.performance)
+        },
+      dataOrigin = AddTheoreticalPerformanceDataOrigin(source = dataOrigin.source, url = dataOrigin.url))
 }
 
 data class HttpTheoreticalPerformanceRequest(
   val seasonYear: Int,
   val isAnalyzedData: Boolean,
+  val dataOrigin: HttpDataOrigin,
   val theoreticalConstructorPerformances: List<HttpTheoreticalConstructorPerformance>
 )
 
 data class HttpTheoreticalConstructorPerformance(val constructorId: String, val performance: Float)
 
+data class HttpDataOrigin(val source: String, val url: String)
+
 data class HttpGetTheoreticalPerformanceBySeasonYearResponse(
   val seasonYear: Int,
   val isAnalyzedData: Boolean,
+  val dataOrigin: HttpDataOrigin,
   val theoreticalConstructorPerformances: List<HttpTheoreticalConstructorPerformance>
 )
