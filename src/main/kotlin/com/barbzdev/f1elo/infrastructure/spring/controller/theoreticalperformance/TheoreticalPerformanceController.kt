@@ -12,6 +12,10 @@ import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerfo
 import com.barbzdev.f1elo.application.theoreticalperformance.DeleteTheoreticalPerformanceBySeasonYearRequest
 import com.barbzdev.f1elo.application.theoreticalperformance.DeleteTheoreticalPerformanceBySeasonYearSuccess
 import com.barbzdev.f1elo.application.theoreticalperformance.DeleteTheoreticalPerformanceBySeasonYearUseCase
+import com.barbzdev.f1elo.application.theoreticalperformance.GetTheoreticalPerformanceBySeasonYearNotFound
+import com.barbzdev.f1elo.application.theoreticalperformance.GetTheoreticalPerformanceBySeasonYearRequest
+import com.barbzdev.f1elo.application.theoreticalperformance.GetTheoreticalPerformanceBySeasonYearSuccess
+import com.barbzdev.f1elo.application.theoreticalperformance.GetTheoreticalPerformanceBySeasonYearUseCase
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.badRequest
 import org.springframework.http.ResponseEntity.notFound
@@ -28,7 +32,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("api/v1/theoretical-performance")
 class TheoreticalPerformanceController(
   private val addTheoreticalPerformanceUseCase: AddTheoreticalPerformanceUseCase,
-  private val deleteTheoreticalPerformanceBySeasonYearUseCase: DeleteTheoreticalPerformanceBySeasonYearUseCase
+  private val deleteTheoreticalPerformanceBySeasonYearUseCase: DeleteTheoreticalPerformanceBySeasonYearUseCase,
+  private val getTheoreticalPerformanceBySeasonYearUseCase: GetTheoreticalPerformanceBySeasonYearUseCase
 ) : TheoreticalPerformanceControllerDocumentation {
 
   @PostMapping
@@ -49,7 +54,8 @@ class TheoreticalPerformanceController(
   override fun deleteTheoreticalPerformanceBySeasonYear(@PathVariable seasonYear: Int): ResponseEntity<Unit> {
     val response =
       deleteTheoreticalPerformanceBySeasonYearUseCase.invoke(
-        DeleteTheoreticalPerformanceBySeasonYearRequest(seasonYear))
+        DeleteTheoreticalPerformanceBySeasonYearRequest(seasonYear)
+      )
     return when (response) {
       is DeleteTheoreticalPerformanceBySeasonYearSuccess -> status(200).build()
     }
@@ -59,7 +65,14 @@ class TheoreticalPerformanceController(
   override fun getTheoreticalPerformanceOfSeasonYear(
     @PathVariable seasonYear: String
   ): ResponseEntity<HttpGetTheoreticalPerformanceBySeasonYearResponse> {
-    TODO("Not yet implemented")
+    val response =
+      getTheoreticalPerformanceBySeasonYearUseCase.invoke(
+        GetTheoreticalPerformanceBySeasonYearRequest(seasonYear.toInt())
+      )
+    return when (response) {
+      is GetTheoreticalPerformanceBySeasonYearSuccess -> status(200).body(response.mapToHttpResponse())
+      is GetTheoreticalPerformanceBySeasonYearNotFound -> notFound().build()
+    }
   }
 
   private fun HttpTheoreticalPerformanceRequest.mapToUseCaseRequest() =
@@ -69,9 +82,20 @@ class TheoreticalPerformanceController(
       theoreticalConstructorPerformances =
         theoreticalConstructorPerformances.map {
           AddTheoreticalPerformanceConstructorPerformance(
-            constructorId = it.constructorId, performance = it.performance)
+            constructorId = it.constructorId, performance = it.performance
+          )
         },
-      dataOrigin = AddTheoreticalPerformanceDataOrigin(source = dataOrigin.source, url = dataOrigin.url))
+      dataOrigin = AddTheoreticalPerformanceDataOrigin(source = dataOrigin.source, url = dataOrigin.url)
+    )
+
+  private fun GetTheoreticalPerformanceBySeasonYearSuccess.mapToHttpResponse() = HttpGetTheoreticalPerformanceBySeasonYearResponse(
+    seasonYear = seasonYear,
+    isAnalyzedData = isAnalyzedData,
+    dataOrigin = HttpDataOrigin(source = dataOrigin!!.source, url = dataOrigin.url),
+    theoreticalConstructorPerformances = theoreticalConstructorPerformances.map {
+      HttpTheoreticalConstructorPerformance(constructorId = it.constructorId, performance = it.performance)
+    }
+  )
 }
 
 data class HttpTheoreticalPerformanceRequest(
