@@ -1,5 +1,7 @@
 package com.barbzdev.f1elo.application.theoreticalperformance
 
+import com.barbzdev.f1elo.domain.TheoreticalPerformance
+import com.barbzdev.f1elo.domain.common.SeasonYear
 import com.barbzdev.f1elo.domain.observability.UseCaseInstrumentation
 import com.barbzdev.f1elo.domain.repository.TheoreticalPerformanceRepository
 
@@ -9,8 +11,32 @@ class GetTheoreticalPerformanceBySeasonYearUseCase(
 ) {
   operator fun invoke(request: GetTheoreticalPerformanceBySeasonYearRequest): GetTheoreticalPerformanceBySeasonYearResponse =
     instrumentation {
-      TODO("Not yet implemented")
+      request
+        .findTheoreticalPerformanceBySeasonYear()
+        ?.mapToResponse()
+        ?: GetTheoreticalPerformanceBySeasonYearNotFound
     }
+
+  private fun GetTheoreticalPerformanceBySeasonYearRequest.findTheoreticalPerformanceBySeasonYear(): TheoreticalPerformance? =
+    repository.findBy(SeasonYear(season))
+
+  private fun TheoreticalPerformance.mapToResponse(): GetTheoreticalPerformanceBySeasonYearResponse =
+    GetTheoreticalPerformanceBySeasonYearSuccess(
+      seasonYear = seasonYear().value,
+      isAnalyzedData = isAnalyzedSeason(),
+      theoreticalConstructorPerformances = constructorsPerformance().map {
+        GetTheoreticalPerformanceBySeasonYearConstructorPerformance(
+          constructorId = it.constructor.id().value,
+          performance = it.performance
+        )
+      },
+      dataOrigin = dataOrigin()?.let {
+        GetTheoreticalPerformanceBySeasonYearDataOrigin(
+          source = it.source,
+          url = it.url
+        )
+      }
+    )
 }
 
 data class GetTheoreticalPerformanceBySeasonYearRequest(val season: Int)
