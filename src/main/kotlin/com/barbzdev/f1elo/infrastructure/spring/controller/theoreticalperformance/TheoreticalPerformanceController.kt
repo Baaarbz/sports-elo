@@ -12,7 +12,6 @@ import com.barbzdev.f1elo.application.theoreticalperformance.AddTheoreticalPerfo
 import com.barbzdev.f1elo.application.theoreticalperformance.DeleteTheoreticalPerformanceBySeasonYearRequest
 import com.barbzdev.f1elo.application.theoreticalperformance.DeleteTheoreticalPerformanceBySeasonYearSuccess
 import com.barbzdev.f1elo.application.theoreticalperformance.DeleteTheoreticalPerformanceBySeasonYearUseCase
-import com.barbzdev.f1elo.domain.common.SeasonYear
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.badRequest
 import org.springframework.http.ResponseEntity.notFound
@@ -48,7 +47,9 @@ class TheoreticalPerformanceController(
 
   @DeleteMapping("{seasonYear}")
   override fun deleteTheoreticalPerformanceBySeasonYear(@PathVariable seasonYear: Int): ResponseEntity<Unit> {
-    val response = deleteTheoreticalPerformanceBySeasonYearUseCase.invoke(DeleteTheoreticalPerformanceBySeasonYearRequest(seasonYear))
+    val response =
+      deleteTheoreticalPerformanceBySeasonYearUseCase.invoke(
+        DeleteTheoreticalPerformanceBySeasonYearRequest(seasonYear))
     return when (response) {
       is DeleteTheoreticalPerformanceBySeasonYearSuccess -> status(200).build()
     }
