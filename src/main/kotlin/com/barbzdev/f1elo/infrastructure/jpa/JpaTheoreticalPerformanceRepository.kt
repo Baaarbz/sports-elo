@@ -8,14 +8,17 @@ import com.barbzdev.f1elo.infrastructure.mapper.EntityToDomainMapper.toDomain
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.JpaConstructorDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.JpaTheoreticalConstructorPerformanceDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.JpaSeasonDatasource
+import org.springframework.transaction.annotation.Transactional
 
-class JpaTheoreticalPerformanceRepository(
+open class JpaTheoreticalPerformanceRepository(
   private val theoreticalConstructorPerformanceDatasource: JpaTheoreticalConstructorPerformanceDatasource,
   private val seasonDatasource: JpaSeasonDatasource,
   private val constructorDatasource: JpaConstructorDatasource
 ) : TheoreticalPerformanceRepository {
+  @Transactional
   override fun deleteBy(season: SeasonYear) {
-    TODO("Not yet implemented")
+    val seasonEntity = seasonDatasource.findByYear(season.value) ?: return
+    theoreticalConstructorPerformanceDatasource.deleteAllBySeason(seasonEntity)
   }
 
   override fun findBy(season: SeasonYear): TheoreticalPerformance? {

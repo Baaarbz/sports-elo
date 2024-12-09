@@ -38,7 +38,7 @@ interface TheoreticalPerformanceControllerDocumentation {
           content = [Content()]),
         ApiResponse(responseCode = "404", description = "Season not found", content = [Content()]),
         ApiResponse(responseCode = "500", description = "Internal server error", content = [Content()])])
-  fun deleteTheoreticalPerformanceBySeasonYear(seasonYear: String): ResponseEntity<Unit>
+  fun deleteTheoreticalPerformanceBySeasonYear(seasonYear: Int): ResponseEntity<Unit>
 
   @Operation(
     summary = "Get theoretical performance of a season",

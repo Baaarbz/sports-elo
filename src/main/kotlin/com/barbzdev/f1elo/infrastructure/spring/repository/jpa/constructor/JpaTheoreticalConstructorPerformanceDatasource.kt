@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository
 interface JpaTheoreticalConstructorPerformanceDatasource :
   JpaRepository<TheoreticalConstructorPerformanceEntity, String> {
   fun findAllBySeason(season: SeasonEntity): List<TheoreticalConstructorPerformanceEntity>
+
+  fun deleteAllBySeason(season: SeasonEntity)
 }
 
 @Entity

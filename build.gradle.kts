@@ -91,7 +91,7 @@ java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
 tasks.withType<Test> { useJUnitPlatform() }
 
 tasks.named("check") {
-  dependsOn("jacocoIntegrationTestReport", "jacocoAcceptanceTestReport")
+  dependsOn("jacocoIntegrationTestReport", "jacocoAcceptanceTestReport", "jacocoArchitectureTestReport")
 }
 
 tasks.withType(Test::class) {
