@@ -76,7 +76,7 @@ abstract class GetTheoreticalPerformanceBySeasonYearShould : AcceptanceTestConfi
       """
       {
         "seasonYear": ${theoreticalPerformance.seasonYear().value},
-        "isAnalyzedSeason": ${theoreticalPerformance.isAnalyzedSeason()},
+        "isAnalyzedData": ${theoreticalPerformance.isAnalyzedSeason()},
         "dataOrigin": {
           "url": "${theoreticalPerformance.dataOrigin()!!.url}",
           "source": "${theoreticalPerformance.dataOrigin()!!.source}"
