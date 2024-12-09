@@ -33,6 +33,8 @@ class SecurityConfiguration(
         it
           .requestMatchers(HttpMethod.GET, "/api/v1/drivers/**")
           .permitAll()
+          .requestMatchers(HttpMethod.GET, "/api/v1/theoretical-performance/**")
+          .permitAll()
           .requestMatchers(
             "/swagger-ui.html",
             "/swagger-resources/**",
