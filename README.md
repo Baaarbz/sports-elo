@@ -15,6 +15,8 @@
   * [Assumptions](#assumptions)
   * [Ways of calculating the rating](#ways-of-calculating-the-rating)
   * [Milestones](#milestones)
+    * [Nice to have](#nice-to-have)
+  * [License Summary](#license-summary)
   * [References](#references)
 <!-- TOC -->
 
