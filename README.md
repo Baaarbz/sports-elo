@@ -27,6 +27,7 @@ This project is a personal project to calculate the ELO of the Formula 1 drivers
 
 - Rookie drivers will start with 1000 ELO/rating
 - Indy 500 drivers will be ignored
+- If we don't have the data analysed of a season with the theoretical performance of the car, we will use the World Constructors' Championship as a reference, applying a difference of 0.2s per car.
 
 ## Ways of calculating the rating
 - [ELO System](docs/elo.md)
@@ -36,15 +37,18 @@ This project is a personal project to calculate the ELO of the Formula 1 drivers
 ## Milestones
 
 - ✅ **[v1.0.0](https://github.com/Baaarbz/f1-elo/releases/tag/1.0.0) (Dec 1st of 2023):** Publish the first stage of the API with the ELO system implemented.
-  - ✅ **[v1.1.0](https://github.com/Baaarbz/f1-elo/releases/tag/1.1.0) (Dec 9th of 2023):** Support for theoretical performance.
-  - ✅ **[v1.2.0](https://github.com/Baaarbz/f1-elo/releases/tag/1.2.0) (Dec 9th of 2023):** More features for theoretical performance.
-  - ⬜ **v1.3.0 (Dec 9th of 2023):** Reprocess rating system.
 - ⬜ v2.0.0: Implement the iRating system.
-
 - ⬜ v3.0.0: Implement the TrueSkill system.
 
-### Future features
+### Nice to have
+- ✅ Support for theoretical performance. Added in minor versions [1.1.0](https://github.com/Baaarbz/f1-elo/releases/tag/1.1.0) and [1.2.0](https://github.com/Baaarbz/f1-elo/releases/tag/1.2.0)
+- ⬜ Mechanism to reset and reprocess all the data, been able to reprocess only one rating system.
 - ⬜ Implement in the elo record also information about how much win/lose the driver and against whom.
+- ⬜ Do not save in database Indy 500 drivers and delete relative data.
+- ⬜ Blue/Green deployment using Docker Swarm.
+- ⬜ Improvements in performance (optimization of SQL queries and code process).
+- ⬜ Take into account DNS and DNF in the calculation of the rating, mechanical issues should not impact negatively to drivers.
+- ⬜ Create open source libraries to calculate ratings.
 
 
 ## References
