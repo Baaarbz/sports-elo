@@ -65,7 +65,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 10,
         "w": 4,
         "x": 0,
         "y": 0
@@ -88,7 +88,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0-79146",
+      "pluginVersion": "11.5.0-80050",
       "targets": [
         {
           "datasource": {
@@ -146,7 +146,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 10,
         "w": 7,
         "x": 4,
         "y": 0
@@ -169,7 +169,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0-79146",
+      "pluginVersion": "11.5.0-80050",
       "targets": [
         {
           "datasource": {
@@ -177,14 +177,14 @@
             "uid": "fe4jzw2kbpb7ke"
           },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "backend_f1elo_use_case_success_total{use_case=~\"$use_case\"}",
+          "editorMode": "code",
+          "expr": "sum(increase(backend_f1elo_use_case_success_total{use_case=~\"$use_case\"}[$__range])) OR vector(0)",
           "format": "table",
           "fullMetaSearch": false,
           "hide": true,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{use_case}}",
+          "legendFormat": "__auto",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -195,13 +195,13 @@
             "uid": "fe4jzw2kbpb7ke"
           },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "backend_f1elo_use_case_failure_total{use_case=~\"$use_case\"} OR vector(0)",
+          "editorMode": "code",
+          "expr": "sum(increase(backend_f1elo_use_case_failure_total{use_case=~\"$use_case\"}[$__range])) OR vector(0)",
           "fullMetaSearch": false,
           "hide": true,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{label_name}}",
+          "legendFormat": "__auto",
           "range": true,
           "refId": "B",
           "useBackend": false
@@ -274,7 +274,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 10,
         "w": 7,
         "x": 11,
         "y": 0
@@ -297,7 +297,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0-79146",
+      "pluginVersion": "11.5.0-80050",
       "targets": [
         {
           "datasource": {
@@ -305,8 +305,8 @@
             "uid": "fe4jzw2kbpb7ke"
           },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "backend_f1elo_use_case_success_total{use_case=~\"$use_case\"}",
+          "editorMode": "code",
+          "expr": "sum(increase(backend_f1elo_use_case_success_total{use_case=~\"$use_case\"}[$__range])) OR vector(0)",
           "format": "table",
           "fullMetaSearch": false,
           "hide": true,
@@ -323,8 +323,8 @@
             "uid": "fe4jzw2kbpb7ke"
           },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "backend_f1elo_use_case_failure_total{use_case=~\"$use_case\"} OR vector(0)",
+          "editorMode": "code",
+          "expr": "sum(increase(backend_f1elo_use_case_failure_total{use_case=~\"$use_case\"}[$__range])) OR vector(0)",
           "fullMetaSearch": false,
           "hide": true,
           "includeNullMetadata": true,
@@ -387,7 +387,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 10,
         "w": 6,
         "x": 18,
         "y": 0
@@ -416,7 +416,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0-79146",
+      "pluginVersion": "11.5.0-80050",
       "targets": [
         {
           "datasource": {
@@ -425,7 +425,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "backend_f1elo_use_case_success_total",
+          "expr": "sum by(use_case) (increase(backend_f1elo_use_case_success_total[$__range]))",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "{{use_case}}",
@@ -464,7 +464,7 @@
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "linear",
+            "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -480,58 +480,36 @@
               "mode": "off"
             }
           },
-          "decimals": 2,
           "fieldMinMax": false,
           "mappings": [],
-          "max": 100,
-          "min": 0,
           "thresholds": {
-            "mode": "percentage",
+            "mode": "absolute",
             "steps": [
               {
-                "color": "semi-dark-red",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 95
-              },
-              {
                 "color": "green",
-                "value": 99
+                "value": null
               }
             ]
           },
-          "unit": "percent"
+          "unit": "s"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "C"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "${__field.labels.use_case}"
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
-        "h": 11,
+        "h": 15,
         "w": 12,
         "x": 0,
-        "y": 9
+        "y": 10
       },
-      "id": 9,
+      "id": 13,
       "options": {
         "legend": {
           "calcs": [
-            "min",
+            "logmin",
             "max",
-            "mean"
+            "mean",
+            "p95",
+            "p99"
           ],
           "displayMode": "table",
           "placement": "bottom",
@@ -542,7 +520,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0-79146",
+      "pluginVersion": "11.5.0-80050",
       "targets": [
         {
           "datasource": {
@@ -550,50 +528,17 @@
             "uid": "fe4jzw2kbpb7ke"
           },
           "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "backend_f1elo_use_case_success_total{use_case=~\"$use_case\"}",
-          "format": "table",
+          "editorMode": "builder",
+          "expr": "http_server_requests_seconds_max",
           "fullMetaSearch": false,
-          "hide": true,
           "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "{{use_case}}",
+          "legendFormat": "{{method}}::{{uri}}",
           "range": true,
           "refId": "A",
           "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "fe4jzw2kbpb7ke"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "backend_f1elo_use_case_failure_total{use_case=~\"$use_case\"} OR vector(0)",
-          "fullMetaSearch": false,
-          "hide": true,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "{{use_case}}",
-          "range": true,
-          "refId": "B",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "name": "Expression",
-            "type": "__expr__",
-            "uid": "__expr__"
-          },
-          "downsampler": "mean",
-          "expression": "($A * 100)/ ($A +$B)",
-          "hide": false,
-          "refId": "C",
-          "type": "math",
-          "upsampler": "fillna"
         }
       ],
-      "title": "Use case success rate",
+      "title": "HTTP Request latency per URI",
       "type": "timeseries"
     },
     {
@@ -654,10 +599,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 11,
+        "h": 15,
         "w": 12,
         "x": 12,
-        "y": 9
+        "y": 10
       },
       "id": 8,
       "options": {
@@ -678,7 +623,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0-79146",
+      "pluginVersion": "11.5.0-80050",
       "targets": [
         {
           "datasource": {
@@ -699,110 +644,6 @@
         }
       ],
       "title": "Use case execution time",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "fe4jzw2kbpb7ke"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "smooth",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 14,
-        "w": 24,
-        "x": 0,
-        "y": 20
-      },
-      "id": 13,
-      "options": {
-        "legend": {
-          "calcs": [
-            "logmin",
-            "max",
-            "mean",
-            "p95",
-            "p99"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.4.0-79146",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "fe4jzw2kbpb7ke"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "http_server_requests_seconds_max",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "legendFormat": "{{method}}::{{uri}}",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "title": "HTTP Request latency per URI",
       "type": "timeseries"
     },
     {
@@ -874,7 +715,7 @@
         "h": 13,
         "w": 8,
         "x": 0,
-        "y": 34
+        "y": 25
       },
       "id": 10,
       "options": {
@@ -889,7 +730,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0-79146",
+      "pluginVersion": "11.5.0-80050",
       "targets": [
         {
           "datasource": {
@@ -979,7 +820,7 @@
         "h": 13,
         "w": 8,
         "x": 8,
-        "y": 34
+        "y": 25
       },
       "id": 14,
       "options": {
@@ -994,7 +835,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0-79146",
+      "pluginVersion": "11.5.0-80050",
       "targets": [
         {
           "datasource": {
@@ -1087,7 +928,7 @@
         "h": 13,
         "w": 8,
         "x": 16,
-        "y": 34
+        "y": 25
       },
       "id": 11,
       "options": {
@@ -1102,7 +943,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0-79146",
+      "pluginVersion": "11.5.0-80050",
       "targets": [
         {
           "datasource": {
@@ -1142,7 +983,6 @@
     }
   ],
   "preload": true,
-  "refresh": "30s",
   "schemaVersion": 40,
   "tags": [],
   "templating": {
@@ -1150,9 +990,7 @@
       {
         "current": {
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": "$__all"
         },
         "datasource": {
           "type": "prometheus",
@@ -1213,6 +1051,6 @@
   "timezone": "browser",
   "title": "Backend Health",
   "uid": "fe4lhc1icrt34b",
-  "version": 45,
+  "version": 52,
   "weekStart": ""
 }
