@@ -50,6 +50,15 @@ This project is a personal project to calculate the ELO of the Formula 1 drivers
 - ⬜ Take into account DNS and DNF in the calculation of the rating, mechanical issues should not impact negatively to drivers.
 - ⬜ Create open source libraries to calculate ratings.
 
+## License Summary
+
+This project is licensed under the MIT License with the addition of a "Commons Clause." Below is a brief summary of what this means:
+
+* **Permissions**: You are free to use, copy, modify, merge, publish, distribute, sublicense, provided that the original copyright notice and this license are included in all copies or substantial portions of the software.
+* **Restrictions**: The "Commons Clause" adds a condition that prohibits selling the software itself. This means you cannot charge fees for products or services whose primary value comes from the functionality of this software. For example, you cannot offer it as a paid hosted service or sell it directly.
+* **Warranty Disclaimer**: The software is provided "as is," without warranty of any kind. The authors are not liable for any damages or issues arising from its use.
+
+For full details, please refer to the LICENSE file.
 
 ## References
 

@@ -54,7 +54,7 @@ dependencies {
     exclude(module = "mockito-core")
   }
   testImplementation("org.springframework.boot:spring-boot-testcontainers")
-  testImplementation("org.springframework.cloud:spring-cloud-contract-wiremock:4.1.5")
+  testImplementation("org.springframework.cloud:spring-cloud-contract-wiremock:4.2.0")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 
   testImplementation("org.testcontainers:postgresql")
