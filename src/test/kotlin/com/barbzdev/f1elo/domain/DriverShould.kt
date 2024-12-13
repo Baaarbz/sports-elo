@@ -142,8 +142,6 @@ class DriverShould {
       .isEqualToIgnoringGivenProperties(Elo(rating = 2400, occurredOn = "2023-05-07"), Elo::occurredOn)
   }
 
-
-
   @Test
   fun `reset elo record of the driver`() {
     val anEloRecord = mapOf(2000 to "2023-03-05", 1900 to "2023-03-19", 2300 to "2023-03-26", 2100 to "2023-04-30")
