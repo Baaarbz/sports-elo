@@ -1,5 +1,7 @@
 #!/bin/bash
 
+docker stop -a
+
 docker compose -f f1-elo/deploy/infrastructure/docker-compose.yml up -d --build
 
 while ! docker compose -f f1-elo/deploy/infrastructure/docker-compose.yml ps | grep -q "Up"; do

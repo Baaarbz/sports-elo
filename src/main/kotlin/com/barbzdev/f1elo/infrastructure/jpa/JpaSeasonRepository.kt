@@ -58,6 +58,8 @@ open class JpaSeasonRepository(
     return this.toDomain().addRacesOfSeason(racesOfSeason)
   }
 
+  override fun findAllSeasonsYears(): List<SeasonYear> = seasonDatasource.findAll().map { SeasonYear(it.year) }
+
   @Transactional override fun save(season: Season) = season.saveSeason().saveRaces()
 
   private fun Season.saveSeason(): Season {

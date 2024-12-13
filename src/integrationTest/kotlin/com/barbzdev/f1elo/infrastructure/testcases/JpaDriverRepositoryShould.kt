@@ -54,6 +54,16 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
     assertThat(drivers).isEqualTo(expected)
   }
 
+  @Test
+  fun `find all drivers`() {
+    val driver1 = givenADriverInDatabase()
+    val driver2 = givenADriverInDatabase()
+
+    val drivers = repository.findAll()
+
+    assertThat(drivers).containsExactlyInAnyOrder(driver1, driver2)
+  }
+
   private fun givenADriverInDatabase(): Driver = aDriver().also { repository.save(it) }
 
   private fun verifyDriverWasSaved(expectedDriverEntitySaved: Driver) {
