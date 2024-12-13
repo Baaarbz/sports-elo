@@ -67,6 +67,7 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
   }
 
   private fun givenADriverInDatabase(): Driver = aDriver().also { repository.save(it) }
+
   private fun givenADriverInDatabase(driver: Driver) = repository.save(driver)
 
   private fun verifyDriverWasSaved(expectedDriverEntitySaved: Driver) {
