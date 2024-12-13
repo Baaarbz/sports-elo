@@ -50,6 +50,12 @@ class JpaDriverRepository(
       totalPages = jpaPaginated.totalPages)
   }
 
+  override fun findAll(): List<Driver> =
+    driverDatasource.findAll().map { driverEntity ->
+      val eloRecordEntity = eloHistoryDatasource.findAllByDriver(driverEntity)
+      driverEntity.toDomain(eloRecordEntity)
+    }
+
   override fun findBy(id: DriverId): Driver? =
     driverDatasource.findById(id.value).getOrNull()?.let {
       val eloRecordEntity = eloHistoryDatasource.findAllByDriver(it)

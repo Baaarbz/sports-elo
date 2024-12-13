@@ -14,4 +14,6 @@ interface SeasonRepository {
   fun save(season: Season)
 
   fun findBy(year: SeasonYear): Season?
+
+  fun findAllSeasonsYears(): List<SeasonYear>
 }

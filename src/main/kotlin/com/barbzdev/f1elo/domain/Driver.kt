@@ -34,7 +34,7 @@ private constructor(
 
   fun currentElo() = currentElo
 
-  fun eloRecord() = eloRecord
+  fun eloRecord() = eloRecord.sortedBy { it.occurredOn }
 
   fun highestElo(): Elo = eloRecord.maxByOrNull { it.rating }!!
 
@@ -51,6 +51,19 @@ private constructor(
       infoUrl,
       Elo(value, occurredOn),
       eloRecord.plus(Elo(value, occurredOn)))
+
+  fun resetElo(): Driver {
+    return Driver(
+      id,
+      fullName,
+      code,
+      permanentNumber,
+      birthDate,
+      nationality,
+      infoUrl,
+      eloRecord().first(),
+      listOf(eloRecord().first()))
+  }
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
