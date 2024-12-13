@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("api/v1/data")
-class TheoreticalPerformanceController(private val eventPublisher: ApplicationEventPublisher) :
+class DataController(private val eventPublisher: ApplicationEventPublisher) :
   DataControllerDocumentation {
 
   @PostMapping("reprocess-ratings")
