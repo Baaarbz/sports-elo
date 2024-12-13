@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("api/v1/data")
-class DataController(private val eventPublisher: ApplicationEventPublisher) :
-  DataControllerDocumentation {
+class DataController(private val eventPublisher: ApplicationEventPublisher) : DataControllerDocumentation {
 
   @PostMapping("reprocess-ratings")
   override fun startRatingsReprocessing(body: HttpReprocessRatingsRequest): ResponseEntity<Unit> {
