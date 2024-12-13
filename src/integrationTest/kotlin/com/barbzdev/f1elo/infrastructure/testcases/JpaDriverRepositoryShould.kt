@@ -7,6 +7,8 @@ import com.barbzdev.f1elo.domain.common.PageSize
 import com.barbzdev.f1elo.domain.common.SortBy
 import com.barbzdev.f1elo.domain.common.SortOrder
 import com.barbzdev.f1elo.factory.DriverFactory.aDriver
+import com.barbzdev.f1elo.factory.DriverFactory.hamilton
+import com.barbzdev.f1elo.factory.DriverFactory.verstappen
 import com.barbzdev.f1elo.infrastructure.IntegrationTestConfiguration
 import com.barbzdev.f1elo.infrastructure.jpa.JpaDriverRepository
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
@@ -56,15 +58,16 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
 
   @Test
   fun `find all drivers`() {
-    val driver1 = givenADriverInDatabase()
-    val driver2 = givenADriverInDatabase()
+    givenADriverInDatabase(hamilton)
+    givenADriverInDatabase(verstappen)
 
     val drivers = repository.findAll()
 
-    assertThat(drivers).containsExactlyInAnyOrder(driver1, driver2)
+    assertThat(drivers).containsExactlyInAnyOrder(hamilton, verstappen)
   }
 
   private fun givenADriverInDatabase(): Driver = aDriver().also { repository.save(it) }
+  private fun givenADriverInDatabase(driver: Driver) = repository.save(driver)
 
   private fun verifyDriverWasSaved(expectedDriverEntitySaved: Driver) {
     val actualSavedDrivers = datasource.findAll()
