@@ -141,4 +141,30 @@ class DriverShould {
     assertThat(updatedDriver.eloRecord().last())
       .isEqualToIgnoringGivenProperties(Elo(rating = 2400, occurredOn = "2023-05-07"), Elo::occurredOn)
   }
+
+
+
+  @Test
+  fun `reset elo record of the driver`() {
+    val anEloRecord = mapOf(2000 to "2023-03-05", 1900 to "2023-03-19", 2300 to "2023-03-26", 2100 to "2023-04-30")
+    val aDriver =
+      Driver.create(
+        id = "max_verstappen",
+        givenName = "Max",
+        familyName = "Verstappen",
+        code = "VER",
+        permanentNumber = "33",
+        birthDate = "1997-09-30",
+        nationality = "Dutch",
+        infoUrl = "http://en.wikipedia.org/wiki/Max_Verstappen",
+        currentElo = 2100,
+        currentEloOccurredOn = "2023-04-30",
+        eloRecord = anEloRecord)
+
+    val driverWithEloReset = aDriver.resetElo()
+
+    assertThat(driverWithEloReset.highestElo()).isEqualTo(Elo(rating = 2000, occurredOn = "2023-03-05"))
+    assertThat(driverWithEloReset.lowestElo()).isEqualTo(Elo(rating = 2000, occurredOn = "2023-03-05"))
+    assertThat(driverWithEloReset.currentElo()).isEqualTo(Elo(rating = 2000, occurredOn = "2023-03-05"))
+  }
 }
