@@ -97,6 +97,22 @@ private constructor(
     )
   }
 
+  fun resetIRating(): Driver {
+    return Driver(
+      id,
+      fullName,
+      code,
+      permanentNumber,
+      birthDate,
+      nationality,
+      infoUrl,
+      currentElo,
+      eloRecord,
+      iRatingRecord().first(),
+      listOf(iRatingRecord().first()),
+    )
+  }
+
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (javaClass != other?.javaClass) return false

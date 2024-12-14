@@ -11,6 +11,7 @@ import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.circuit.JpaCircui
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.JpaConstructorDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverEloHistoryDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverIRatingHistoryDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.JpaRaceDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.JpaRaceResultDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.JpaSeasonDatasource
@@ -24,7 +25,8 @@ open class JpaSeasonRepository(
   private val constructorDatasource: JpaConstructorDatasource,
   private val circuitDatasource: JpaCircuitDatasource,
   private val raceResultDatasource: JpaRaceResultDatasource,
-  private val eloHistoryDatasource: JpaDriverEloHistoryDatasource
+  private val eloHistoryDatasource: JpaDriverEloHistoryDatasource,
+  private val iRatingHistoryDatasource: JpaDriverIRatingHistoryDatasource
 ) : SeasonRepository {
 
   override fun getLastSeasonLoaded(): Season? =
@@ -51,7 +53,8 @@ open class JpaSeasonRepository(
       val raceResults =
         raceResultDatasource.findAllByRace(raceEntity).map {
           val eloRecordEntity = eloHistoryDatasource.findAllByDriver(it.driver)
-          it.toDomain(eloRecordEntity)
+          val iRatingRecordEntity = iRatingHistoryDatasource.findAllByDriver(it.driver)
+          it.toDomain(eloRecordEntity, iRatingRecordEntity)
         }
       racesOfSeason.add(raceEntity.toDomain(raceResults))
     }
@@ -75,6 +78,7 @@ open class JpaSeasonRepository(
         raceResultDatasource.save(result.toEntity(this, race))
         driverDatasource.save(result.driver.toEntity())
         eloHistoryDatasource.saveAll(result.driver.eloRecord().map { it.toEntity(result.driver) })
+        iRatingHistoryDatasource.saveAll(result.driver.iRatingRecord().map { it.toEntity(result.driver) })
         constructorDatasource.save(result.constructor.toEntity())
       }
     }

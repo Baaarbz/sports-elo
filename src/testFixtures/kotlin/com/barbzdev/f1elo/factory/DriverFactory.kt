@@ -5,9 +5,12 @@ import com.barbzdev.f1elo.domain.Driver.Companion.createRookie
 
 object DriverFactory {
   private val anEloRecord =
-    mapOf(2000 to "2023-03-05", 1900 to "2023-03-19", 2300 to "2023-03-26", 2100 to "2023-04-30")
+    mapOf("2023-03-05" to 2000, "2023-03-19" to 1900, "2023-03-26" to 2300, "2023-04-30" to 2100)
 
-  private val simpleEloRecord = mapOf(2000 to "1900-01-01")
+  private val anIRatingRecord =
+    mapOf("2023-03-05" to 2000, "2023-03-19" to 1900, "2023-03-26" to 2300, "2023-04-30" to 2100)
+
+  private val simpleEloRecord = mapOf("1900-01-01" to 2000)
 
   private val drivers =
     listOf(
@@ -22,7 +25,11 @@ object DriverFactory {
         infoUrl = "http://en.wikipedia.org/wiki/Kimi_R%C3%A4ikk%C3%B6nen",
         currentElo = 2100,
         currentEloOccurredOn = "2023-04-30",
-        eloRecord = anEloRecord),
+        eloRecord = anEloRecord,
+        currentIRating = 2000,
+        currentIRatingOccurredOn = "2023-04-30",
+        iRatingRecord = anIRatingRecord,
+      ),
       createRookie(
         id = "michael_schumacher",
         givenName = "German",
@@ -44,7 +51,11 @@ object DriverFactory {
         infoUrl = "https://en.wikipedia.org/wiki/Fernando_Alonso",
         currentElo = 2100,
         currentEloOccurredOn = "2023-04-30",
-        eloRecord = anEloRecord),
+        eloRecord = anEloRecord,
+        currentIRating = 2000,
+        currentIRatingOccurredOn = "2023-04-30",
+        iRatingRecord = anIRatingRecord,
+      ),
       create(
         id = "max_verstappen",
         givenName = "Max",
@@ -56,7 +67,11 @@ object DriverFactory {
         infoUrl = "http://en.wikipedia.org/wiki/Max_Verstappen",
         currentElo = 2100,
         currentEloOccurredOn = "2023-04-30",
-        eloRecord = anEloRecord),
+        eloRecord = anEloRecord,
+        currentIRating = 2000,
+        currentIRatingOccurredOn = "2023-04-30",
+        iRatingRecord = anIRatingRecord,
+      ),
       create(
         id = "hamilton",
         givenName = "Lewis",
@@ -68,7 +83,11 @@ object DriverFactory {
         infoUrl = "https://en.wikipedia.org/wiki/Lewis_Hamilton",
         currentElo = 2100,
         currentEloOccurredOn = "2023-04-30",
-        eloRecord = anEloRecord))
+        eloRecord = anEloRecord,
+        currentIRating = 2000,
+        currentIRatingOccurredOn = "2023-04-30",
+        iRatingRecord = anIRatingRecord,
+      ))
 
   fun aDriver() = drivers.random()
 
@@ -84,7 +103,11 @@ object DriverFactory {
       infoUrl = "https://en.wikipedia.org/wiki/Fernando_Alonso",
       currentElo = 2000,
       currentEloOccurredOn = "2023-04-30",
-      eloRecord = simpleEloRecord)
+      eloRecord = simpleEloRecord,
+      currentIRating = 2000,
+      currentIRatingOccurredOn = "2023-04-30",
+      iRatingRecord = anIRatingRecord,
+    )
 
   val verstappen =
     create(
@@ -98,7 +121,11 @@ object DriverFactory {
       infoUrl = "http://en.wikipedia.org/wiki/Max_Verstappen",
       currentElo = 2000,
       currentEloOccurredOn = "2023-04-30",
-      eloRecord = simpleEloRecord)
+      eloRecord = simpleEloRecord,
+      currentIRating = 2000,
+      currentIRatingOccurredOn = "2023-04-30",
+      iRatingRecord = anIRatingRecord,
+    )
 
   val raikkonen =
     create(
@@ -112,7 +139,11 @@ object DriverFactory {
       infoUrl = "http://en.wikipedia.org/wiki/Kimi_R%C3%A4ikk%C3%B6nen",
       currentElo = 2000,
       currentEloOccurredOn = "2023-04-30",
-      eloRecord = anEloRecord)
+      eloRecord = anEloRecord,
+      currentIRating = 2000,
+      currentIRatingOccurredOn = "2023-04-30",
+      iRatingRecord = anIRatingRecord,
+    )
 
   val hamilton =
     create(
@@ -126,5 +157,9 @@ object DriverFactory {
       infoUrl = "https://en.wikipedia.org/wiki/Lewis_Hamilton",
       currentElo = 2000,
       currentEloOccurredOn = "2023-04-30",
-      eloRecord = simpleEloRecord)
+      eloRecord = simpleEloRecord,
+      currentIRating = 2000,
+      currentIRatingOccurredOn = "2023-04-30",
+      iRatingRecord = anIRatingRecord,
+    )
 }

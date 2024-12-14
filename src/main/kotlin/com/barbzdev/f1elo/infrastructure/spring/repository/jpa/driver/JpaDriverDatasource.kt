@@ -22,6 +22,16 @@ interface JpaDriverDatasource : JpaRepository<DriverEntity, String> {
     """,
     nativeQuery = true)
   fun findAllJoinDriverEloHistory(pageable: Pageable): Page<DriverEntity>
+
+  @Query(
+    """
+    SELECT d.*, MIN(dirh.irating) as lowest_irating, MAX(dirh.irating) as highest_irating
+    FROM drivers d
+    JOIN drivers_irating_history dirh ON d.id = dirh.driver_id
+    GROUP BY d.id
+    """,
+    nativeQuery = true)
+  fun findAllJoinDriverIRatingHistory(pageable: Pageable): Page<DriverEntity>
 }
 
 @Entity
@@ -36,5 +46,7 @@ data class DriverEntity(
   val nationality: String,
   @Column(name = "info_url") val infoUrl: String,
   @Column(name = "current_elo") val currentElo: Int,
-  @Column(name = "current_elo_occurred_on") val currentEloOccurredOn: LocalDate
+  @Column(name = "current_elo_occurred_on") val currentEloOccurredOn: LocalDate,
+  @Column(name = "current_irating") val currentIRating: Int,
+  @Column(name = "current_irating_occurred_on") val currentIRatingOccurredOn: LocalDate
 )

@@ -10,12 +10,14 @@ import com.barbzdev.f1elo.domain.RaceResultStatus
 import com.barbzdev.f1elo.domain.Season
 import com.barbzdev.f1elo.domain.TheoreticalPerformance
 import com.barbzdev.f1elo.domain.common.Elo
+import com.barbzdev.f1elo.domain.common.IRating
 import com.barbzdev.f1elo.domain.common.Nationality
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.circuit.CircuitEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.ConstructorEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.TheoreticalConstructorPerformanceEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.DriverEloHistoryEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.DriverEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.DriverIRatingHistoryEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.RaceEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.RaceResultEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.SeasonEntity
@@ -43,10 +45,13 @@ object EntityToDomainMapper {
       latitude = latitude,
       longitude = longitude)
 
-  fun RaceResultEntity.toDomain(eloRecord: List<DriverEloHistoryEntity>) =
+  fun RaceResultEntity.toDomain(
+    eloRecord: List<DriverEloHistoryEntity>,
+    iRatingRecord: List<DriverIRatingHistoryEntity>
+  ) =
     RaceResult(
       id = id,
-      driver = driver.toDomain(eloRecord),
+      driver = driver.toDomain(eloRecord, iRatingRecord),
       position = position,
       constructor = constructor.toDomain(),
       number = number,
@@ -63,7 +68,7 @@ object EntityToDomainMapper {
   fun ConstructorEntity.toDomain() =
     Constructor.create(id = id, name = name, nationality = Nationality.fromCountryCode(nationality), infoUrl = infoUrl)
 
-  fun DriverEntity.toDomain(eloRecord: List<DriverEloHistoryEntity>) =
+  fun DriverEntity.toDomain(eloRecord: List<DriverEloHistoryEntity>, iRatingRecord: List<DriverIRatingHistoryEntity>) =
     Driver.create(
       id = id,
       familyName = familyName,
@@ -75,9 +80,14 @@ object EntityToDomainMapper {
       infoUrl = infoUrl,
       currentElo = currentElo,
       currentEloOccurredOn = currentEloOccurredOn.toString(),
-      eloRecord = eloRecord.map { it.toDomain() })
+      eloRecord = eloRecord.map { it.toDomain() },
+      currentIRating = currentIRating,
+      currentIRatingOccurredOn = currentIRatingOccurredOn.toString(),
+      iRatingRecord = iRatingRecord.map { it.toDomain() })
 
   private fun DriverEloHistoryEntity.toDomain() = Elo(value = elo, occurredOn = occurredOn.toString())
+
+  private fun DriverIRatingHistoryEntity.toDomain() = IRating(value = iRating, occurredOn = occurredOn.toString())
 
   fun List<TheoreticalConstructorPerformanceEntity>.toDomain(): TheoreticalPerformance? =
     if (isEmpty()) null
