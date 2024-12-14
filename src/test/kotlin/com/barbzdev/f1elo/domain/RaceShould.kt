@@ -32,7 +32,7 @@ class RaceShould {
       assertThat(aRace.infoUrl().value).isEqualTo("https://en.wikipedia.org/wiki/2023_Australian_Grand_Prix")
       assertThat(aRace.name().value).isEqualTo("Australian Grand Prix")
       assertThat(aRace.circuit()).isEqualTo(aCircuit)
-      assertThat(aRace.occurredOn().value).isEqualTo("2010-03-28")
+      assertThat(aRace.occurredOn().date).isEqualTo("2010-03-28")
       assertThat(aRace.results()).isEmpty()
       assertThat(aRace.id()).isNotNull()
     }

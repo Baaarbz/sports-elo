@@ -69,8 +69,8 @@ class DriverShould {
           nationality = "German",
           infoUrl = "http://en.wikipedia.org/wiki/Michael_Schumacher",
           debutDate = "1991-08-25"))
-    assertThat(aDriver.currentElo()).isEqualTo(Elo(rating = 1000, occurredOn = "1991-08-25"))
-    assertThat(aDriver.eloRecord()).containsOnly(Elo(rating = 1000, occurredOn = "1991-08-25"))
+    assertThat(aDriver.currentElo()).isEqualTo(Elo(value = 1000, occurredOn = "1991-08-25"))
+    assertThat(aDriver.eloRecord()).containsOnly(Elo(value = 1000, occurredOn = "1991-08-25"))
   }
 
   @Test
@@ -92,7 +92,7 @@ class DriverShould {
 
     val highestElo = aDriver.highestElo()
 
-    assertThat(highestElo).isEqualTo(Elo(rating = 2300, occurredOn = "2023-03-26"))
+    assertThat(highestElo).isEqualTo(Elo(value = 2300, occurredOn = "2023-03-26"))
   }
 
   @Test
@@ -114,7 +114,7 @@ class DriverShould {
 
     val lowestElo = aDriver.lowestElo()
 
-    assertThat(lowestElo).isEqualTo(Elo(rating = 1900, occurredOn = "2023-03-19"))
+    assertThat(lowestElo).isEqualTo(Elo(value = 1900, occurredOn = "2023-03-19"))
   }
 
   @Test
@@ -137,9 +137,9 @@ class DriverShould {
     val updatedDriver = outdatedDriver.updateElo(value = 2400, occurredOn = "2023-05-07")
 
     assertThat(updatedDriver.currentElo())
-      .isEqualToIgnoringGivenProperties(Elo(rating = 2400, occurredOn = "2023-05-07"), Elo::occurredOn)
+      .isEqualToIgnoringGivenProperties(Elo(value = 2400, occurredOn = "2023-05-07"), Elo::occurredOn)
     assertThat(updatedDriver.eloRecord().last())
-      .isEqualToIgnoringGivenProperties(Elo(rating = 2400, occurredOn = "2023-05-07"), Elo::occurredOn)
+      .isEqualToIgnoringGivenProperties(Elo(value = 2400, occurredOn = "2023-05-07"), Elo::occurredOn)
   }
 
   @Test
@@ -161,8 +161,8 @@ class DriverShould {
 
     val driverWithEloReset = aDriver.resetElo()
 
-    assertThat(driverWithEloReset.highestElo()).isEqualTo(Elo(rating = 2000, occurredOn = "2023-03-05"))
-    assertThat(driverWithEloReset.lowestElo()).isEqualTo(Elo(rating = 2000, occurredOn = "2023-03-05"))
-    assertThat(driverWithEloReset.currentElo()).isEqualTo(Elo(rating = 2000, occurredOn = "2023-03-05"))
+    assertThat(driverWithEloReset.highestElo()).isEqualTo(Elo(value = 2000, occurredOn = "2023-03-05"))
+    assertThat(driverWithEloReset.lowestElo()).isEqualTo(Elo(value = 2000, occurredOn = "2023-03-05"))
+    assertThat(driverWithEloReset.currentElo()).isEqualTo(Elo(value = 2000, occurredOn = "2023-03-05"))
   }
 }

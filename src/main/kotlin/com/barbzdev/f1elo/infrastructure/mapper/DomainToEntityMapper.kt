@@ -84,12 +84,12 @@ object DomainToEntityMapper {
       birthDate = birthDate().toLocalDate(),
       nationality = nationality().countryCode,
       infoUrl = infoUrl().value,
-      currentElo = currentElo().rating,
+      currentElo = currentElo().value,
       currentEloOccurredOn = currentElo().toLocalDate())
 
   fun Elo.toEntity(driver: Driver) =
     DriverEloHistoryEntity(
-      elo = rating,
+      elo = value,
       occurredOn = toLocalDate(),
       driver =
         DriverEntity(
@@ -101,7 +101,7 @@ object DomainToEntityMapper {
           birthDate = driver.birthDate().toLocalDate(),
           nationality = driver.nationality().countryCode,
           infoUrl = driver.infoUrl().value,
-          currentElo = driver.currentElo().rating,
+          currentElo = driver.currentElo().value,
           currentEloOccurredOn = driver.currentElo().toLocalDate()))
 
   fun mapToTheoreticalConstructorPerformanceEntity(

@@ -2,13 +2,13 @@ package com.barbzdev.f1elo.domain.common
 
 import java.time.LocalDate
 
-abstract class OccurredOn(val value: String) {
+abstract class OccurredOn(val date: String) {
   init {
-    require(value.isNotBlank()) { "OccurredOn cannot be blank" }
-    require(isValidDate(value)) { "Invalid date format. YYYY-MM-DD" }
+    require(date.isNotBlank()) { "OccurredOn cannot be blank" }
+    require(isValidDate(date)) { "Invalid date format. YYYY-MM-DD" }
   }
 
-  fun toLocalDate() = LocalDate.parse(value)
+  fun toLocalDate(): LocalDate = LocalDate.parse(date)
 
   private fun isValidDate(date: String): Boolean = dateRegex.matches(date)
 

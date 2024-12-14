@@ -77,7 +77,7 @@ object EntityToDomainMapper {
       currentEloOccurredOn = currentEloOccurredOn.toString(),
       eloRecord = eloRecord.map { it.toDomain() })
 
-  private fun DriverEloHistoryEntity.toDomain() = Elo(rating = elo, occurredOn = occurredOn.toString())
+  private fun DriverEloHistoryEntity.toDomain() = Elo(value = elo, occurredOn = occurredOn.toString())
 
   fun List<TheoreticalConstructorPerformanceEntity>.toDomain(): TheoreticalPerformance? =
     if (isEmpty()) null

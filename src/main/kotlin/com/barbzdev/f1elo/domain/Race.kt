@@ -145,7 +145,7 @@ data class RaceName(val value: String) {
   }
 }
 
-data class RaceDate(private val date: String) : OccurredOn(date)
+data class RaceDate(private val value: String) : OccurredOn(value)
 
 data class RaceResult(
   val id: String,

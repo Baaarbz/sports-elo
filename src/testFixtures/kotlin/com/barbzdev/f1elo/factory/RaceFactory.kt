@@ -132,7 +132,7 @@ object RaceFactory {
     F1Race(
       round = this.round().value,
       raceName = this.name().value,
-      date = this.occurredOn().value,
+      date = this.occurredOn().date,
       url = this.infoUrl().value,
       circuit = this.circuit().toF1Circuit(),
       results = this.results().map { it.toF1Result() },
@@ -191,6 +191,6 @@ object RaceFactory {
       url = this.infoUrl().value,
       givenName = this.fullName().givenName,
       familyName = this.fullName().familyName,
-      dateOfBirth = this.birthDate().date,
+      dateOfBirth = this.birthDate().value,
       nationality = this.nationality().name)
 }
