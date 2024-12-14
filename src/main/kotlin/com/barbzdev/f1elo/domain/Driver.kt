@@ -1,6 +1,7 @@
 package com.barbzdev.f1elo.domain
 
 import com.barbzdev.f1elo.domain.common.Elo
+import com.barbzdev.f1elo.domain.common.IRating
 import com.barbzdev.f1elo.domain.common.InfoUrl
 import com.barbzdev.f1elo.domain.common.Nationality
 import com.barbzdev.f1elo.domain.common.OccurredOn
@@ -15,7 +16,9 @@ private constructor(
   private val nationality: Nationality,
   private val infoUrl: InfoUrl,
   private val currentElo: Elo,
-  private val eloRecord: List<Elo>
+  private val eloRecord: List<Elo>,
+  private val currentIRating: IRating,
+  private val iRatingRecord: List<IRating>
 ) {
 
   fun id() = id
@@ -36,9 +39,17 @@ private constructor(
 
   fun eloRecord() = eloRecord.sortedBy { it.occurredOn }
 
-  fun highestElo(): Elo = eloRecord.maxByOrNull { it.rating }!!
+  fun currentIRating() = currentIRating
 
-  fun lowestElo(): Elo = eloRecord.minByOrNull { it.rating }!!
+  fun iRatingRecord() = iRatingRecord.sortedBy { it.occurredOn }
+
+  fun highestElo(): Elo = eloRecord.maxByOrNull { it.value }!!
+
+  fun highestIRating(): IRating = iRatingRecord.maxByOrNull { it.value }!!
+
+  fun lowestElo(): Elo = eloRecord.minByOrNull { it.value }!!
+
+  fun lowestIRating(): IRating = iRatingRecord.minByOrNull { it.value }!!
 
   fun updateElo(value: Int, occurredOn: String): Driver =
     Driver(
@@ -50,7 +61,25 @@ private constructor(
       nationality,
       infoUrl,
       Elo(value, occurredOn),
-      eloRecord.plus(Elo(value, occurredOn)))
+      eloRecord.plus(Elo(value, occurredOn)),
+      currentIRating,
+      iRatingRecord,
+    )
+
+  fun updateIRating(value: Int, occurredOn: String): Driver =
+    Driver(
+      id,
+      fullName,
+      code,
+      permanentNumber,
+      birthDate,
+      nationality,
+      infoUrl,
+      currentElo,
+      eloRecord,
+      IRating(value, occurredOn),
+      iRatingRecord.plus(IRating(value, occurredOn)),
+    )
 
   fun resetElo(): Driver {
     return Driver(
@@ -62,7 +91,26 @@ private constructor(
       nationality,
       infoUrl,
       eloRecord().first(),
-      listOf(eloRecord().first()))
+      listOf(eloRecord().first()),
+      currentIRating,
+      iRatingRecord,
+    )
+  }
+
+  fun resetIRating(): Driver {
+    return Driver(
+      id,
+      fullName,
+      code,
+      permanentNumber,
+      birthDate,
+      nationality,
+      infoUrl,
+      currentElo,
+      eloRecord,
+      iRatingRecord().first(),
+      listOf(iRatingRecord().first()),
+    )
   }
 
   override fun equals(other: Any?): Boolean {
@@ -80,6 +128,8 @@ private constructor(
     if (infoUrl != other.infoUrl) return false
     if (currentElo != other.currentElo) return false
     if (eloRecord != other.eloRecord) return false
+    if (currentIRating != other.currentIRating) return false
+    if (iRatingRecord != other.iRatingRecord) return false
 
     return true
   }
@@ -94,11 +144,14 @@ private constructor(
     result = 31 * result + infoUrl.hashCode()
     result = 31 * result + currentElo.hashCode()
     result = 31 * result + eloRecord.hashCode()
+    result = 31 * result + currentIRating.hashCode()
+    result = 31 * result + iRatingRecord.hashCode()
     return result
   }
 
-  override fun toString(): String =
-    "Driver(id=$id, fullName=$fullName, code=$code, permanentNumber=$permanentNumber, birthDate=$birthDate, nationality=$nationality, infoUrl=$infoUrl, currentElo=$currentElo, eloRecord=$eloRecord)"
+  override fun toString(): String {
+    return "Driver(id=$id, fullName=$fullName, code=$code, permanentNumber=$permanentNumber, birthDate=$birthDate, nationality=$nationality, infoUrl=$infoUrl, currentElo=$currentElo, eloRecord=$eloRecord, currentIRating=$currentIRating, iRatingRecord=$iRatingRecord)"
+  }
 
   companion object {
     fun createRookie(
@@ -121,7 +174,10 @@ private constructor(
         nationality = Nationality.fromGentilic(nationality),
         infoUrl = InfoUrl(infoUrl),
         currentElo = Elo(BASE_ELO, debutDate),
-        eloRecord = listOf(Elo(BASE_ELO, debutDate)))
+        eloRecord = listOf(Elo(BASE_ELO, debutDate)),
+        currentIRating = IRating(BASE_IRATING, debutDate),
+        iRatingRecord = listOf(IRating(BASE_IRATING, debutDate)),
+      )
 
     fun create(
       id: String,
@@ -134,7 +190,10 @@ private constructor(
       infoUrl: String,
       currentElo: Int,
       currentEloOccurredOn: String,
-      eloRecord: Map<Int, String>,
+      eloRecord: Map<String, Int>,
+      currentIRating: Int,
+      currentIRatingOccurredOn: String,
+      iRatingRecord: Map<String, Int>,
     ) =
       Driver(
         id = DriverId(id),
@@ -145,7 +204,9 @@ private constructor(
         nationality = Nationality.fromGentilic(nationality),
         infoUrl = InfoUrl(infoUrl),
         currentElo = Elo(currentElo, currentEloOccurredOn),
-        eloRecord = eloRecord.map { (elo, date) -> Elo(elo, date) }.toList(),
+        eloRecord = eloRecord.map { (date, elo) -> Elo(elo, date) }.toList(),
+        currentIRating = IRating(currentIRating, currentIRatingOccurredOn),
+        iRatingRecord = iRatingRecord.map { (date, iRating) -> IRating(iRating, date) },
       )
 
     fun create(
@@ -160,6 +221,9 @@ private constructor(
       currentElo: Int,
       currentEloOccurredOn: String,
       eloRecord: List<Elo>,
+      currentIRating: Int,
+      currentIRatingOccurredOn: String,
+      iRatingRecord: List<IRating>,
     ) =
       Driver(
         id = DriverId(id),
@@ -170,10 +234,13 @@ private constructor(
         nationality = nationality,
         infoUrl = InfoUrl(infoUrl),
         currentElo = Elo(currentElo, currentEloOccurredOn),
-        eloRecord = eloRecord.map { (elo, date) -> Elo(elo, date) }.toList(),
+        eloRecord = eloRecord,
+        currentIRating = IRating(currentIRating, currentIRatingOccurredOn),
+        iRatingRecord = iRatingRecord,
       )
 
     private const val BASE_ELO = 1000
+    private const val BASE_IRATING = 1000
   }
 }
 
@@ -190,7 +257,7 @@ data class DriverFullName(val givenName: String, val familyName: String) {
   }
 }
 
-data class BirthDate(val date: String) : OccurredOn(date)
+data class BirthDate(val value: String) : OccurredOn(value)
 
 data class DriverCode(val value: String) {
   init {

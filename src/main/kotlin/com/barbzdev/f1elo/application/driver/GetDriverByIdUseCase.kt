@@ -31,10 +31,10 @@ class GetDriverByIdUseCase(
           value = nationality().name,
         ),
       infoUrl = infoUrl().value,
-      currentElo = GetDriverByIdElo(rating = currentElo().rating, occurredOn = currentElo().toLocalDate()),
-      highestElo = highestElo().let { GetDriverByIdElo(rating = it.rating, occurredOn = it.toLocalDate()) },
-      lowestElo = lowestElo().let { GetDriverByIdElo(rating = it.rating, occurredOn = it.toLocalDate()) },
-      eloRecord = eloRecord().map { GetDriverByIdElo(rating = it.rating, occurredOn = it.toLocalDate()) })
+      currentElo = GetDriverByIdElo(rating = currentElo().value, occurredOn = currentElo().toLocalDate()),
+      highestElo = highestElo().let { GetDriverByIdElo(rating = it.value, occurredOn = it.toLocalDate()) },
+      lowestElo = lowestElo().let { GetDriverByIdElo(rating = it.value, occurredOn = it.toLocalDate()) },
+      eloRecord = eloRecord().map { GetDriverByIdElo(rating = it.value, occurredOn = it.toLocalDate()) })
 }
 
 data class GetDriverByIdRequest(val driverId: String)

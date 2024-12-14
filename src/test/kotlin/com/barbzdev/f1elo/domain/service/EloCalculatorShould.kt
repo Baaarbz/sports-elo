@@ -22,8 +22,8 @@ class EloCalculatorShould {
     val result = eloCalculator.calculateEloRatingsByPosition(givenMapOfPositionDrivers, RaceDate(ANY_RACE_DATE))
 
     assertAll {
-      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().rating).isEqualTo(2016)
-      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().rating).isEqualTo(1984)
+      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().value).isEqualTo(2016)
+      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().value).isEqualTo(1984)
     }
     verifyCurrentEloOccurredOn(result)
   }
@@ -35,9 +35,9 @@ class EloCalculatorShould {
     val result = eloCalculator.calculateEloRatingsByPosition(givenMapOfPositionDrivers, RaceDate(ANY_RACE_DATE))
 
     assertAll {
-      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().rating).isEqualTo(2024)
-      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().rating).isEqualTo(2000)
-      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().rating).isEqualTo(1976)
+      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().value).isEqualTo(2024)
+      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().value).isEqualTo(2000)
+      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().value).isEqualTo(1976)
     }
     verifyCurrentEloOccurredOn(result)
   }
@@ -50,10 +50,10 @@ class EloCalculatorShould {
     val result = eloCalculator.calculateEloRatingsByPosition(givenMapOfPositionDrivers, RaceDate(ANY_RACE_DATE))
 
     assertAll {
-      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().rating).isEqualTo(2024)
-      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().rating).isEqualTo(2008)
-      assertThat(result.find { it.id() == verstappen.id() }!!.currentElo().rating).isEqualTo(1992)
-      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().rating).isEqualTo(1976)
+      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().value).isEqualTo(2024)
+      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().value).isEqualTo(2008)
+      assertThat(result.find { it.id() == verstappen.id() }!!.currentElo().value).isEqualTo(1992)
+      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().value).isEqualTo(1976)
     }
     verifyCurrentEloOccurredOn(result)
   }
@@ -65,9 +65,9 @@ class EloCalculatorShould {
     val result = eloCalculator.calculateEloRatingsByPosition(givenMapOfPositionDrivers, RaceDate(ANY_RACE_DATE))
 
     assertAll {
-      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().rating).isEqualTo(2008)
-      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().rating).isEqualTo(2008)
-      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().rating).isEqualTo(1984)
+      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().value).isEqualTo(2008)
+      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().value).isEqualTo(2008)
+      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().value).isEqualTo(1984)
     }
     verifyCurrentEloOccurredOn(result)
   }
@@ -79,8 +79,8 @@ class EloCalculatorShould {
     val result = eloCalculator.calculateEloRatingsByPosition(givenMapOfPositionDrivers, RaceDate(ANY_RACE_DATE))
 
     assertAll {
-      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().rating).isEqualTo(1992)
-      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().rating).isEqualTo(2008)
+      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().value).isEqualTo(1992)
+      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().value).isEqualTo(2008)
     }
     verifyCurrentEloOccurredOn(result)
   }

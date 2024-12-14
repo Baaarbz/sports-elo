@@ -42,9 +42,9 @@ class ListingDriversUseCase(
             id = driver.id().value,
             fullName =
               ListingDriverFullName(familyName = driver.fullName().familyName, givenName = driver.fullName().givenName),
-            currentElo = driver.currentElo().rating,
-            highestElo = driver.highestElo().rating,
-            lowestElo = driver.lowestElo().rating,
+            currentElo = driver.currentElo().value,
+            highestElo = driver.highestElo().value,
+            lowestElo = driver.lowestElo().value,
             lastRaceDate = driver.currentElo().toLocalDate())
         },
       page = this.page,

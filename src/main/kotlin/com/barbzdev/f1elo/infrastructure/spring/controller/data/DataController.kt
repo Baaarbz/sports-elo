@@ -5,6 +5,7 @@ import com.barbzdev.f1elo.infrastructure.spring.event.IRatingReprocessingEvent
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 class DataController(private val eventPublisher: ApplicationEventPublisher) : DataControllerDocumentation {
 
   @PostMapping("reprocess-ratings")
-  override fun startRatingsReprocessing(body: HttpReprocessRatingsRequest): ResponseEntity<Unit> {
+  override fun startRatingsReprocessing(@RequestBody body: HttpReprocessRatingsRequest): ResponseEntity<Unit> {
     if (body.iRating) eventPublisher.publishEvent(IRatingReprocessingEvent)
     if (body.elo) eventPublisher.publishEvent(EloReprocessingEvent)
 

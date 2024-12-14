@@ -7,6 +7,7 @@ import com.barbzdev.f1elo.factory.DriverFactory.aDriver
 import com.barbzdev.f1elo.infrastructure.mapper.DomainToEntityMapper.toEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverEloHistoryDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverIRatingHistoryDatasource
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -17,14 +18,18 @@ import org.junit.jupiter.api.Test
 class JpaDriverRepositoryShould {
   private val driverDatasource: JpaDriverDatasource = mockk()
   private val eloHistoryDatasource: JpaDriverEloHistoryDatasource = mockk(relaxed = true)
+  private val iRatingHistoryDatasource: JpaDriverIRatingHistoryDatasource = mockk(relaxed = true)
 
-  private val jpaDriverRepository = JpaDriverRepository(driverDatasource, eloHistoryDatasource)
+  private val jpaDriverRepository =
+    JpaDriverRepository(driverDatasource, eloHistoryDatasource, iRatingHistoryDatasource)
 
   @Test
   fun `return a driver by id`() {
     val aDriver = aDriver()
     every { driverDatasource.findById(any()) } returns Optional.of(aDriver.toEntity())
     every { eloHistoryDatasource.findAllByDriver(any()) } returns aDriver.eloRecord().map { it.toEntity(aDriver) }
+    every { iRatingHistoryDatasource.findAllByDriver(any()) } returns
+      aDriver.iRatingRecord().map { it.toEntity(aDriver) }
 
     val response = jpaDriverRepository.findBy(aDriver.id())
 

@@ -9,6 +9,7 @@ import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.JpaCo
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.JpaTheoreticalConstructorPerformanceDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverEloHistoryDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverIRatingHistoryDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.JpaRaceDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.JpaRaceResultDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.JpaSeasonDatasource
@@ -25,7 +26,8 @@ class JpaRepositoryConfiguration {
     constructorDatasource: JpaConstructorDatasource,
     circuitDatasource: JpaCircuitDatasource,
     raceResultDatasource: JpaRaceResultDatasource,
-    eloHistoryDatasource: JpaDriverEloHistoryDatasource
+    eloHistoryDatasource: JpaDriverEloHistoryDatasource,
+    iRatingHistoryDatasource: JpaDriverIRatingHistoryDatasource
   ) =
     JpaSeasonRepository(
       seasonDatasource = seasonDatasource,
@@ -34,11 +36,20 @@ class JpaRepositoryConfiguration {
       constructorDatasource = constructorDatasource,
       circuitDatasource = circuitDatasource,
       raceResultDatasource = raceResultDatasource,
-      eloHistoryDatasource = eloHistoryDatasource)
+      eloHistoryDatasource = eloHistoryDatasource,
+      iRatingHistoryDatasource = iRatingHistoryDatasource,
+    )
 
   @Bean
-  fun jpaDriverRepository(driverDatasource: JpaDriverDatasource, eloHistoryDatasource: JpaDriverEloHistoryDatasource) =
-    JpaDriverRepository(driverDatasource = driverDatasource, eloHistoryDatasource = eloHistoryDatasource)
+  fun jpaDriverRepository(
+    driverDatasource: JpaDriverDatasource,
+    eloHistoryDatasource: JpaDriverEloHistoryDatasource,
+    iRatingHistoryDatasource: JpaDriverIRatingHistoryDatasource
+  ) =
+    JpaDriverRepository(
+      driverDatasource = driverDatasource,
+      eloHistoryDatasource = eloHistoryDatasource,
+      iRatingHistoryDatasource = iRatingHistoryDatasource)
 
   @Bean
   fun jpaTheoreticalPerformanceRepository(

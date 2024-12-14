@@ -9,6 +9,7 @@ import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.circuit.JpaCircui
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.JpaConstructorDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverEloHistoryDatasource
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.JpaDriverIRatingHistoryDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.JpaRaceDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.JpaRaceResultDatasource
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.JpaSeasonDatasource
@@ -25,6 +26,7 @@ class JpaSeasonRepositoryShould {
   private val circuitDatasource: JpaCircuitDatasource = mockk(relaxed = true)
   private val raceResultDatasource: JpaRaceResultDatasource = mockk(relaxed = true)
   private val eloHistoryDatasource: JpaDriverEloHistoryDatasource = mockk(relaxed = true)
+  private val iRatingHistoryDatasource: JpaDriverIRatingHistoryDatasource = mockk(relaxed = true)
 
   private val jpaSeasonRepository =
     JpaSeasonRepository(
@@ -34,7 +36,9 @@ class JpaSeasonRepositoryShould {
       constructorDatasource,
       circuitDatasource,
       raceResultDatasource,
-      eloHistoryDatasource)
+      eloHistoryDatasource,
+      iRatingHistoryDatasource,
+    )
 
   @Test
   fun `return the last season loaded`() {

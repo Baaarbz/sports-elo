@@ -29,15 +29,15 @@ class EloCalculator {
       val eloDeltaPerDriver = accumulatedEloDeltaForPosition / drivers.size
       drivers.forEach {
         val driver = mapOfDrivers[it.id()]!!
-        val newDriverElo = driver.currentElo().rating + eloDeltaPerDriver
-        mapOfDrivers[driver.id()] = driver.updateElo(newDriverElo, raceDate.value)
+        val newDriverElo = driver.currentElo().value + eloDeltaPerDriver
+        mapOfDrivers[driver.id()] = driver.updateElo(newDriverElo, raceDate.date)
       }
     }
 
     return mapOfDrivers.values.toList()
   }
 
-  private fun List<Driver>.getAverageElo(): Int = this.map { it.currentElo().rating }.average().toInt()
+  private fun List<Driver>.getAverageElo(): Int = this.map { it.currentElo().value }.average().toInt()
 
   fun calculateEloDelta(elo: Int, rivalElo: Int, raceResult: RaceResult, kReducer: Int): Int {
     val qA = calculateQ(rating = elo)

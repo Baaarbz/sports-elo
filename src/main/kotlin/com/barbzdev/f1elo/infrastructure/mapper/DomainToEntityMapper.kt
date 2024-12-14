@@ -9,11 +9,13 @@ import com.barbzdev.f1elo.domain.RaceResult
 import com.barbzdev.f1elo.domain.Season
 import com.barbzdev.f1elo.domain.TheoreticalPerformance
 import com.barbzdev.f1elo.domain.common.Elo
+import com.barbzdev.f1elo.domain.common.IRating
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.circuit.CircuitEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.ConstructorEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.constructor.TheoreticalConstructorPerformanceEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.DriverEloHistoryEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.DriverEntity
+import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.driver.DriverIRatingHistoryEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.RaceEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.race.RaceResultEntity
 import com.barbzdev.f1elo.infrastructure.spring.repository.jpa.season.SeasonEntity
@@ -84,25 +86,16 @@ object DomainToEntityMapper {
       birthDate = birthDate().toLocalDate(),
       nationality = nationality().countryCode,
       infoUrl = infoUrl().value,
-      currentElo = currentElo().rating,
-      currentEloOccurredOn = currentElo().toLocalDate())
+      currentElo = currentElo().value,
+      currentEloOccurredOn = currentElo().toLocalDate(),
+      currentIRating = currentIRating().value,
+      currentIRatingOccurredOn = currentIRating().toLocalDate())
 
   fun Elo.toEntity(driver: Driver) =
-    DriverEloHistoryEntity(
-      elo = rating,
-      occurredOn = toLocalDate(),
-      driver =
-        DriverEntity(
-          id = driver.id().value,
-          familyName = driver.fullName().familyName,
-          givenName = driver.fullName().givenName,
-          code = driver.code()?.value,
-          permanentNumber = driver.permanentNumber()?.value,
-          birthDate = driver.birthDate().toLocalDate(),
-          nationality = driver.nationality().countryCode,
-          infoUrl = driver.infoUrl().value,
-          currentElo = driver.currentElo().rating,
-          currentEloOccurredOn = driver.currentElo().toLocalDate()))
+    DriverEloHistoryEntity(elo = value, occurredOn = toLocalDate(), driver = driver.toEntity())
+
+  fun IRating.toEntity(driver: Driver) =
+    DriverIRatingHistoryEntity(iRating = value, occurredOn = toLocalDate(), driver = driver.toEntity())
 
   fun mapToTheoreticalConstructorPerformanceEntity(
     theoreticalPerformance: TheoreticalPerformance,
