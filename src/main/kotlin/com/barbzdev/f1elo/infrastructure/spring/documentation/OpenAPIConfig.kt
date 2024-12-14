@@ -4,6 +4,8 @@ import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Contact
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.info.License
+import io.swagger.v3.oas.models.security.SecurityRequirement
+import io.swagger.v3.oas.models.security.SecurityScheme
 import io.swagger.v3.oas.models.servers.Server
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -37,6 +39,14 @@ class OpenAPIConfig {
           "This API will be responsible of calculating the ELO for the Formula 1. This is a non official API")
         .license(mitLicense)
 
-    return OpenAPI().info(info).servers(listOf(devServer, prodServer))
+    val basicAuthScheme = SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("basic")
+
+    val securityRequirement = SecurityRequirement().addList("basicAuth")
+
+    return OpenAPI()
+      .info(info)
+      .servers(listOf(devServer, prodServer))
+      .components(io.swagger.v3.oas.models.Components().addSecuritySchemes("basicAuth", basicAuthScheme))
+      .addSecurityItem(securityRequirement)
   }
 }
