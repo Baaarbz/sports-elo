@@ -14,7 +14,7 @@ private constructor(
 
   fun isAnalyzedSeason() = isAnalyzedSeason.value
 
-  fun constructorsPerformance() = constructorsPerformance
+  fun constructorsPerformance() = constructorsPerformance.sortedBy { it.performance }
 
   fun dataOrigin() = dataOrigin
 
