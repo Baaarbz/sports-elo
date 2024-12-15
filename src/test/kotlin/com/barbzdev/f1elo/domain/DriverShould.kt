@@ -193,9 +193,9 @@ class DriverShould {
 
     val driverWithEloReset = aDriver.resetElo()
 
-    assertThat(driverWithEloReset.highestElo()).isEqualTo(Elo(value = 2000, occurredOn = "2023-03-05"))
-    assertThat(driverWithEloReset.lowestElo()).isEqualTo(Elo(value = 2000, occurredOn = "2023-03-05"))
-    assertThat(driverWithEloReset.currentElo()).isEqualTo(Elo(value = 2000, occurredOn = "2023-03-05"))
+    assertThat(driverWithEloReset.highestElo()).isEqualTo(Elo(value = 1000, occurredOn = "2023-03-05"))
+    assertThat(driverWithEloReset.lowestElo()).isEqualTo(Elo(value = 1000, occurredOn = "2023-03-05"))
+    assertThat(driverWithEloReset.currentElo()).isEqualTo(Elo(value = 1000, occurredOn = "2023-03-05"))
   }
 
   @Test
@@ -306,8 +306,8 @@ class DriverShould {
 
     val driverWithIRatingReset = aDriver.resetIRating()
 
-    assertThat(driverWithIRatingReset.highestIRating()).isEqualTo(IRating(value = 2000, occurredOn = "2023-03-05"))
-    assertThat(driverWithIRatingReset.lowestIRating()).isEqualTo(IRating(value = 2000, occurredOn = "2023-03-05"))
-    assertThat(driverWithIRatingReset.currentIRating()).isEqualTo(IRating(value = 2000, occurredOn = "2023-03-05"))
+    assertThat(driverWithIRatingReset.highestIRating()).isEqualTo(IRating(value = 1000, occurredOn = "2023-03-05"))
+    assertThat(driverWithIRatingReset.lowestIRating()).isEqualTo(IRating(value = 1000, occurredOn = "2023-03-05"))
+    assertThat(driverWithIRatingReset.currentIRating()).isEqualTo(IRating(value = 1000, occurredOn = "2023-03-05"))
   }
 }
