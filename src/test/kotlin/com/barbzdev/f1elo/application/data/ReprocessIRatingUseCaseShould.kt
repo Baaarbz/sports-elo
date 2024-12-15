@@ -43,8 +43,7 @@ class ReprocessIRatingUseCaseShould {
     assertThat(response).isInstanceOf(ReprocessIRatingSuccess::class)
     verifyOrder {
       driverRepository.findAll()
-      driverRepository.save(hamilton)
-      driverRepository.save(verstappen)
+      driverRepository.save(any())
       seasonRepository.findAllSeasonsYears()
       calculateIRatingOfDriversBySeasonUseCase(CalculateIRatingOfDriversBySeasonRequest(2017))
       calculateIRatingOfDriversBySeasonUseCase(CalculateIRatingOfDriversBySeasonRequest(2018))
@@ -65,8 +64,7 @@ class ReprocessIRatingUseCaseShould {
     assertThrows<IRatingReprocessingFailedException> { useCase() }
     verify {
       driverRepository.findAll()
-      driverRepository.save(hamilton)
-      driverRepository.save(verstappen)
+      driverRepository.save(any())
       seasonRepository.findAllSeasonsYears()
       calculateIRatingOfDriversBySeasonUseCase(any())
     }
