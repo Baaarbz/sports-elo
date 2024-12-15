@@ -43,7 +43,7 @@ class CalculateIRatingOfDriversBySeasonUseCase(
         iRatingCalculator.calculateIRatingDelta(
           result.driver.currentIRating(), constructorPerformance, sof, result.position, results().size)
 
-      val updatedDriver = result.driver.updateIRating(iRatingDelta, raceDate.date)
+      val updatedDriver = result.driver.updateIRating(result.driver.currentIRating().value + iRatingDelta, raceDate.date)
       updatedDrivers.add(updatedDriver)
     }
     return updatedDrivers
