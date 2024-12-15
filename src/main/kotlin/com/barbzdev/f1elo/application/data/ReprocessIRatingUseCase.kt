@@ -23,8 +23,8 @@ class ReprocessIRatingUseCase(
 
   private fun resetIRatingOfAllDrivers() {
     driverRepository.findAll().forEach {
-      it.resetIRating()
-      driverRepository.save(it)
+      val resetDriver = it.resetIRating()
+      driverRepository.save(resetDriver)
     }
   }
 

@@ -23,8 +23,8 @@ class ReprocessEloUseCase(
 
   private fun resetEloOfAllDrivers() {
     driverRepository.findAll().forEach {
-      it.resetElo()
-      driverRepository.save(it)
+      val resetDriver = it.resetElo()
+      driverRepository.save(resetDriver)
     }
   }
 
