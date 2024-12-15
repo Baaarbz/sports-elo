@@ -44,8 +44,8 @@ class TheoreticalPerformanceController(
     return when (response) {
       is AddTheoreticalPerformanceSuccess -> status(201).build()
       is AddTheoreticalPerformanceOverANonExistentSeason -> notFound().build()
-      is AddTheoreticalPerformanceAlreadyCreated,
-      AddTheoreticalPerformanceOverAnInvalidConstructor,
+      is AddTheoreticalPerformanceAlreadyCreated -> status(409).build()
+      is AddTheoreticalPerformanceOverAnInvalidConstructor,
       AddTheoreticalPerformanceOverAnInvalidPerformance -> badRequest().build()
     }
   }
