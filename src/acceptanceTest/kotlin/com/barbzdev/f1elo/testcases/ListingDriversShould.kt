@@ -57,6 +57,9 @@ abstract class ListingDriversShould : AcceptanceTestConfiguration() {
             "currentElo": 2000,
             "highestElo": 2000,
             "lowestElo": 2000,
+            "currentIRating": 2000,
+            "highestIRating": 2000,
+            "lowestIRating": 2000,
             "lastRaceDate": "2023-04-30"
           },
           {
@@ -68,6 +71,9 @@ abstract class ListingDriversShould : AcceptanceTestConfiguration() {
             "currentElo": 2000,
             "highestElo": 2000,
             "lowestElo": 2000,
+            "currentIRating": 2000,
+            "highestIRating": 2000,
+            "lowestIRating": 2000,
             "lastRaceDate": "2023-04-30"
           }
         ],
