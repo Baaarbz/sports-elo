@@ -28,6 +28,9 @@ class JpaDriverRepository(
         "currentElo" -> "current_elo"
         "highestElo" -> "highest_elo"
         "lowestElo" -> "lowest_elo"
+        "currentIRating" -> "current_irating"
+        "highestIRating" -> "highest_irating"
+        "lowestIRating" -> "lowest_irating"
         "id" -> "id"
         else -> throw IllegalArgumentException("Invalid sortBy value for find all drivers query")
       }
