@@ -6,6 +6,7 @@ import com.barbzdev.f1elo.infrastructure.testcases.JpaConstructorRepositoryShoul
 import com.barbzdev.f1elo.infrastructure.testcases.JpaDriverRepositoryShould
 import com.barbzdev.f1elo.infrastructure.testcases.JpaSeasonRepositoryShould
 import com.barbzdev.f1elo.infrastructure.testcases.JpaTheoreticalPerformanceRepositoryShould
+import com.barbzdev.f1elo.infrastructure.testcases.RatingReprocessingEventListenerShould
 import com.barbzdev.f1elo.infrastructure.testcases.SpringSeasonDomainEventPublisherShould
 import org.junit.jupiter.api.Nested
 import org.testcontainers.junit.jupiter.Container
@@ -29,4 +30,6 @@ class ApplicationIntegrationTest {
   @Nested inner class JpaTheoreticalPerformanceRepository : JpaTheoreticalPerformanceRepositoryShould()
 
   @Nested inner class JpaConstructorRepository : JpaConstructorRepositoryShould()
+
+  @Nested inner class RatingReprocessingEventListener : RatingReprocessingEventListenerShould()
 }

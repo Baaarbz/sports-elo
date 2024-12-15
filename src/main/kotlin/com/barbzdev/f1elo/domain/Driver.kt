@@ -82,6 +82,7 @@ private constructor(
     )
 
   fun resetElo(): Driver {
+    val resetElo = Elo(BASE_ELO, eloRecord().first().occurredOn)
     return Driver(
       id,
       fullName,
@@ -90,14 +91,15 @@ private constructor(
       birthDate,
       nationality,
       infoUrl,
-      eloRecord().first(),
-      listOf(eloRecord().first()),
+      resetElo,
+      listOf(resetElo),
       currentIRating,
       iRatingRecord,
     )
   }
 
   fun resetIRating(): Driver {
+    val resetIRating = IRating(BASE_IRATING, iRatingRecord().first().occurredOn)
     return Driver(
       id,
       fullName,
@@ -108,8 +110,8 @@ private constructor(
       infoUrl,
       currentElo,
       eloRecord,
-      iRatingRecord().first(),
-      listOf(iRatingRecord().first()),
+      resetIRating,
+      listOf(resetIRating),
     )
   }
 
