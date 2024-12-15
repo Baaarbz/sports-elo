@@ -29,7 +29,7 @@ This project is a personal project to calculate the ELO of the Formula 1 drivers
 
 - Rookie drivers will start with 1000 ELO/rating
 - Indy 500 drivers will be ignored
-- If we don't have the data analysed of a season with the theoretical performance of the car, we will use the World Constructors' Championship as a reference, applying a difference of 0.2s per car.
+- If we don't have the data analysed of a season with the theoretical performance of the car, ~~we will use the World Constructors' Championship as a reference, applying a difference of 0.2s per car.~~ we will set the theoretical performance to 0
 
 ## Ways of calculating the rating
 - [ELO System](docs/elo.md)

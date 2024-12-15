@@ -106,7 +106,8 @@ object DomainToEntityMapper {
       id = UUID.randomUUID().toString(),
       constructor = constructor,
       season = season,
-      theoreticalPerformance = theoreticalPerformance.getConstructorPerformance(ConstructorId(constructor.id))!!,
+      theoreticalPerformance =
+        theoreticalPerformance.getConstructorPerformance(ConstructorId(constructor.id))!!.performance,
       isAnalyzedSeason = theoreticalPerformance.isAnalyzedSeason(),
       dataOriginSource = theoreticalPerformance.dataOrigin()?.source,
       dataOriginUrl = theoreticalPerformance.dataOrigin()?.url,

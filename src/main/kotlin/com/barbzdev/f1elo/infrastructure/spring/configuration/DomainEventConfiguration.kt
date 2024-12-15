@@ -1,6 +1,7 @@
 package com.barbzdev.f1elo.infrastructure.spring.configuration
 
 import com.barbzdev.f1elo.application.data.CalculateEloOfDriversBySeasonUseCase
+import com.barbzdev.f1elo.application.data.CalculateIRatingOfDriversBySeasonUseCase
 import com.barbzdev.f1elo.infrastructure.spring.event.listener.SpringDomainEventListener
 import com.barbzdev.f1elo.infrastructure.spring.event.publisher.SpringSeasonDomainEventPublisher
 import org.springframework.context.ApplicationEventPublisher
@@ -15,6 +16,8 @@ class DomainEventConfiguration {
     SpringSeasonDomainEventPublisher(applicationEventPublisher)
 
   @Bean
-  fun seasonDomainEventListener(calculateEloOfDriversBySeasonUseCase: CalculateEloOfDriversBySeasonUseCase) =
-    SpringDomainEventListener(calculateEloOfDriversBySeasonUseCase)
+  fun seasonDomainEventListener(
+    calculateEloOfDriversBySeasonUseCase: CalculateEloOfDriversBySeasonUseCase,
+    calculateIRatingOfDriversBySeasonUseCase: CalculateIRatingOfDriversBySeasonUseCase
+  ) = SpringDomainEventListener(calculateEloOfDriversBySeasonUseCase, calculateIRatingOfDriversBySeasonUseCase)
 }

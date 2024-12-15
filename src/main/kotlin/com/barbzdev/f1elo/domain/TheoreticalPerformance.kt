@@ -18,8 +18,8 @@ private constructor(
 
   fun dataOrigin() = dataOrigin
 
-  fun getConstructorPerformance(constructorId: ConstructorId): Float? =
-    constructorsPerformance.find { it.constructor.id() == constructorId }?.performance
+  fun getConstructorPerformance(constructorId: ConstructorId): ConstructorPerformance? =
+    constructorsPerformance.find { it.constructor.id() == constructorId }
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
