@@ -14,18 +14,13 @@ class DataControllerShould {
   private val dataController = DataController(eventPublisher)
 
   @Test
-  fun `start elo reprocessing`() {
-    val response = dataController.startRatingsReprocessing("elo")
+  fun `start ratings reprocessing`() {
+    val body = HttpReprocessRatingsRequest(iRating = true, elo = true)
 
-    assertEquals(202, response.statusCode.value())
-    verify { eventPublisher.publishEvent(EloReprocessingEvent) }
-  }
-
-  @Test
-  fun `start iRating reprocessing`() {
-    val response = dataController.startRatingsReprocessing("irating")
+    val response = dataController.startRatingsReprocessing(body)
 
     assertEquals(202, response.statusCode.value())
     verify { eventPublisher.publishEvent(IRatingReprocessingEvent) }
+    verify { eventPublisher.publishEvent(EloReprocessingEvent) }
   }
 }

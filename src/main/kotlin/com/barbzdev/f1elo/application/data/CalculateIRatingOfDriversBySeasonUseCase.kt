@@ -33,11 +33,11 @@ class CalculateIRatingOfDriversBySeasonUseCase(
   private fun Race.calculateIRatingOfDrivers(seasonYear: Int): List<Driver> {
     val updatedDrivers = mutableListOf<Driver>()
     val sof = iRatingCalculator.calculateSOF(this.results().map { it.driver.currentIRating() })
-    val theoreticalPerformances = theoreticalPerformanceRepository.findBy(SeasonYear(seasonYear))!!
+    val theoreticalPerformances = theoreticalPerformanceRepository.findBy(SeasonYear(seasonYear))
     val raceDate = this.occurredOn()
     results().forEach { result ->
       val constructorPerformance =
-        theoreticalPerformances.getConstructorPerformance(result.constructor.id())
+        theoreticalPerformances?.getConstructorPerformance(result.constructor.id())
           ?: ConstructorPerformance(result.constructor, 0f)
       val iRatingDelta =
         iRatingCalculator.calculateIRatingDelta(

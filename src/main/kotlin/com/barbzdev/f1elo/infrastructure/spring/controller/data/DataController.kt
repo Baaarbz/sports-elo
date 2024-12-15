@@ -4,8 +4,8 @@ import com.barbzdev.f1elo.infrastructure.spring.event.EloReprocessingEvent
 import com.barbzdev.f1elo.infrastructure.spring.event.IRatingReprocessingEvent
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("api/v1/data")
 class DataController(private val eventPublisher: ApplicationEventPublisher) : DataControllerDocumentation {
 
-  @PostMapping("reprocess-ratings/{rating}")
-  override fun startRatingsReprocessing(@PathVariable rating: String): ResponseEntity<Unit> {
-    when (rating.lowercase()) {
-      "irating" -> eventPublisher.publishEvent(IRatingReprocessingEvent)
-      "elo" -> eventPublisher.publishEvent(EloReprocessingEvent)
-    }
+  @PostMapping("reprocess-ratings")
+  override fun startRatingsReprocessing(@RequestBody body: HttpReprocessRatingsRequest): ResponseEntity<Unit> {
+    if (body.iRating) eventPublisher.publishEvent(IRatingReprocessingEvent)
+    if (body.elo) eventPublisher.publishEvent(EloReprocessingEvent)
 
     return ResponseEntity.accepted().build()
   }
