@@ -15,9 +15,10 @@ import org.springframework.stereotype.Repository
 interface JpaDriverDatasource : JpaRepository<DriverEntity, String> {
   @Query(
     """
-    SELECT d.*, MIN(deh.elo) as lowest_elo, MAX(deh.elo) as highest_elo
+    SELECT d.*, MIN(deh.elo) as lowest_elo, MAX(deh.elo) as highest_elo, MIN(dirh.irating) as lowest_irating, MAX(dirh.irating) as highest_irating
     FROM drivers d
     JOIN drivers_elo_history deh ON d.id = deh.driver_id
+    JOIN drivers_irating_history dirh ON d.id = dirh.driver_id
     GROUP BY d.id
     """,
     nativeQuery = true)
