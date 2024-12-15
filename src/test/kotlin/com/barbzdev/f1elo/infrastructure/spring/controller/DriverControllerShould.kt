@@ -2,6 +2,7 @@ package com.barbzdev.f1elo.infrastructure.spring.controller
 
 import com.barbzdev.f1elo.application.driver.GetDriverByIdElo
 import com.barbzdev.f1elo.application.driver.GetDriverByIdFullName
+import com.barbzdev.f1elo.application.driver.GetDriverByIdIRating
 import com.barbzdev.f1elo.application.driver.GetDriverByIdNationality
 import com.barbzdev.f1elo.application.driver.GetDriverByIdNotFound
 import com.barbzdev.f1elo.application.driver.GetDriverByIdSuccess
@@ -18,6 +19,7 @@ import com.barbzdev.f1elo.infrastructure.spring.controller.driver.HttpElo
 import com.barbzdev.f1elo.infrastructure.spring.controller.driver.HttpFullName
 import com.barbzdev.f1elo.infrastructure.spring.controller.driver.HttpGetDriverListingResponse
 import com.barbzdev.f1elo.infrastructure.spring.controller.driver.HttpGetDriverResponse
+import com.barbzdev.f1elo.infrastructure.spring.controller.driver.HttpIRating
 import com.barbzdev.f1elo.infrastructure.spring.controller.driver.HttpNationality
 import io.mockk.every
 import io.mockk.mockk
@@ -44,7 +46,11 @@ class DriverControllerShould {
               currentElo = 2016,
               highestElo = 2016,
               lowestElo = 2016,
-              lastRaceDate = LocalDate.of(2021, 1, 1)),
+              lastRaceDate = LocalDate.of(2021, 1, 1),
+              currentIRating = 2016,
+              highestIRating = 2016,
+              lowestIRating = 2016,
+            ),
           ),
         page = 0,
         pageSize = 25,
@@ -66,7 +72,11 @@ class DriverControllerShould {
                 currentElo = 2016,
                 highestElo = 2016,
                 lowestElo = 2016,
-                lastRaceDate = LocalDate.of(2021, 1, 1))),
+                lastRaceDate = LocalDate.of(2021, 1, 1),
+                currentIRating = 2016,
+                highestIRating = 2016,
+                lowestIRating = 2016),
+            ),
           page = 0,
           pageSize = 25,
           totalElements = 2,
@@ -105,7 +115,11 @@ class DriverControllerShould {
         currentElo = GetDriverByIdElo(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
         highestElo = GetDriverByIdElo(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
         lowestElo = GetDriverByIdElo(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
-        eloRecord = listOf(GetDriverByIdElo(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1))))
+        eloRecord = listOf(GetDriverByIdElo(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1))),
+        currentIRating = GetDriverByIdIRating(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
+        highestIRating = GetDriverByIdIRating(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
+        lowestIRating = GetDriverByIdIRating(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
+        iRatingRecord = listOf(GetDriverByIdIRating(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1))))
     every { getDriverByIdUseCase.invoke(any()) } returns getDriverByIdSuccessResponse
 
     val result = controller.getDriver("alonso")
@@ -122,7 +136,11 @@ class DriverControllerShould {
         currentElo = HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
         highestElo = HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
         lowestElo = HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
-        eloRecord = listOf(HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1))))
+        eloRecord = listOf(HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1))),
+        currentIRating = HttpIRating(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
+        highestIRating = HttpIRating(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
+        lowestIRating = HttpIRating(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
+        iRatingRecord = listOf(HttpIRating(value = 2016, occurredOn = LocalDate.of(2021, 1, 1))))
     assertThat(result.statusCode.value()).isEqualTo(HttpStatus.OK.value())
     assertThat(result.body).isEqualTo(expected)
   }

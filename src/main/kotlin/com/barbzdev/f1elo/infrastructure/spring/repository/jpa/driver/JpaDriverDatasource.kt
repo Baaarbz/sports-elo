@@ -17,22 +17,12 @@ interface JpaDriverDatasource : JpaRepository<DriverEntity, String> {
     """
     SELECT d.*, MIN(deh.elo) as lowest_elo, MAX(deh.elo) as highest_elo, MIN(dirh.irating) as lowest_irating, MAX(dirh.irating) as highest_irating
     FROM drivers d
-    JOIN drivers_elo_history deh ON d.id = deh.driver_id
-    JOIN drivers_irating_history dirh ON d.id = dirh.driver_id
+    FULL JOIN drivers_elo_history deh ON d.id = deh.driver_id
+    FULL JOIN drivers_irating_history dirh ON d.id = dirh.driver_id
     GROUP BY d.id
     """,
     nativeQuery = true)
-  fun findAllJoinDriverEloHistory(pageable: Pageable): Page<DriverEntity>
-
-  @Query(
-    """
-    SELECT d.*, MIN(dirh.irating) as lowest_irating, MAX(dirh.irating) as highest_irating
-    FROM drivers d
-    JOIN drivers_irating_history dirh ON d.id = dirh.driver_id
-    GROUP BY d.id
-    """,
-    nativeQuery = true)
-  fun findAllJoinDriverIRatingHistory(pageable: Pageable): Page<DriverEntity>
+  fun findAllJoinDriverRatingsHistory(pageable: Pageable): Page<DriverEntity>
 }
 
 @Entity

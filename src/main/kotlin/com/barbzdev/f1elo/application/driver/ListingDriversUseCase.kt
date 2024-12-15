@@ -45,7 +45,11 @@ class ListingDriversUseCase(
             currentElo = driver.currentElo().value,
             highestElo = driver.highestElo().value,
             lowestElo = driver.lowestElo().value,
-            lastRaceDate = driver.currentElo().toLocalDate())
+            lastRaceDate = driver.currentElo().toLocalDate(),
+            currentIRating = driver.currentIRating().value,
+            highestIRating = driver.highestIRating().value,
+            lowestIRating = driver.lowestIRating().value,
+          )
         },
       page = this.page,
       pageSize = this.pageSize,
@@ -82,6 +86,9 @@ data class ListingDriver(
   val currentElo: Int,
   val highestElo: Int,
   val lowestElo: Int,
+  val currentIRating: Int,
+  val highestIRating: Int,
+  val lowestIRating: Int,
   val lastRaceDate: LocalDate
 )
 

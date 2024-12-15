@@ -46,7 +46,19 @@ class GetDriverByIdUseCaseShould {
           GetDriverByIdElo(rating = aDriver.highestElo().value, occurredOn = aDriver.highestElo().toLocalDate()),
         lowestElo =
           GetDriverByIdElo(rating = aDriver.lowestElo().value, occurredOn = aDriver.lowestElo().toLocalDate()),
-        eloRecord = aDriver.eloRecord().map { GetDriverByIdElo(rating = it.value, occurredOn = it.toLocalDate()) })
+        eloRecord = aDriver.eloRecord().map { GetDriverByIdElo(rating = it.value, occurredOn = it.toLocalDate()) },
+        currentIRating =
+          GetDriverByIdIRating(
+            rating = aDriver.currentIRating().value, occurredOn = aDriver.currentIRating().toLocalDate()),
+        highestIRating =
+          GetDriverByIdIRating(
+            rating = aDriver.highestIRating().value, occurredOn = aDriver.highestIRating().toLocalDate()),
+        lowestIRating =
+          GetDriverByIdIRating(
+            rating = aDriver.lowestIRating().value, occurredOn = aDriver.lowestIRating().toLocalDate()),
+        iRatingRecord =
+          aDriver.iRatingRecord().map { GetDriverByIdIRating(rating = it.value, occurredOn = it.toLocalDate()) },
+      )
     assertThat(response).isInstanceOf(GetDriverByIdSuccess::class)
     assertThat(response).isEqualTo(expected)
   }

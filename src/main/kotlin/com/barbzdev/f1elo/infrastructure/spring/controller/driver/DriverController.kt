@@ -58,7 +58,11 @@ class DriverController(
             currentElo = driver.currentElo,
             highestElo = driver.highestElo,
             lowestElo = driver.lowestElo,
-            lastRaceDate = driver.lastRaceDate)
+            lastRaceDate = driver.lastRaceDate,
+            currentIRating = driver.currentIRating,
+            highestIRating = driver.highestIRating,
+            lowestIRating = driver.lowestIRating,
+          )
         },
       page = this.page,
       pageSize = this.pageSize,
@@ -79,7 +83,12 @@ class DriverController(
       currentElo = HttpElo(value = currentElo.rating, occurredOn = currentElo.occurredOn),
       highestElo = HttpElo(value = highestElo.rating, occurredOn = highestElo.occurredOn),
       lowestElo = HttpElo(value = lowestElo.rating, occurredOn = lowestElo.occurredOn),
-      eloRecord = eloRecord.map { HttpElo(value = it.rating, occurredOn = it.occurredOn) })
+      eloRecord = eloRecord.map { HttpElo(value = it.rating, occurredOn = it.occurredOn) },
+      currentIRating = HttpIRating(value = currentIRating.rating, occurredOn = currentIRating.occurredOn),
+      highestIRating = HttpIRating(value = highestIRating.rating, occurredOn = highestIRating.occurredOn),
+      lowestIRating = HttpIRating(value = lowestIRating.rating, occurredOn = lowestIRating.occurredOn),
+      iRatingRecord = iRatingRecord.map { HttpIRating(value = it.rating, occurredOn = it.occurredOn) },
+    )
 }
 
 data class HttpGetDriverListingResponse(
@@ -96,6 +105,9 @@ data class HttpDriversListing(
   val currentElo: Int,
   val highestElo: Int,
   val lowestElo: Int,
+  val currentIRating: Int,
+  val highestIRating: Int,
+  val lowestIRating: Int,
   val lastRaceDate: LocalDate,
 )
 
@@ -110,11 +122,17 @@ data class HttpGetDriverResponse(
   val currentElo: HttpElo,
   val highestElo: HttpElo,
   val lowestElo: HttpElo,
-  val eloRecord: List<HttpElo>
+  val eloRecord: List<HttpElo>,
+  val currentIRating: HttpIRating,
+  val highestIRating: HttpIRating,
+  val lowestIRating: HttpIRating,
+  val iRatingRecord: List<HttpIRating>
 )
 
 data class HttpFullName(val familyName: String, val givenName: String)
 
 data class HttpElo(val value: Int, val occurredOn: LocalDate)
+
+data class HttpIRating(val value: Int, val occurredOn: LocalDate)
 
 data class HttpNationality(val countryCode: String, val countryName: String, val value: String)

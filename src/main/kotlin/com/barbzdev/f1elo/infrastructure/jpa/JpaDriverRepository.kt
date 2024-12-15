@@ -42,7 +42,7 @@ class JpaDriverRepository(
       }
     val pageable = PageRequest.of(page.value, pageSize.value, sortDirection, orderByColumn)
 
-    val jpaPaginated = driverDatasource.findAllJoinDriverEloHistory(pageable)
+    val jpaPaginated = driverDatasource.findAllJoinDriverRatingsHistory(pageable)
     return DomainPaginated(
       elements =
         jpaPaginated.toList().map { driverEntity ->

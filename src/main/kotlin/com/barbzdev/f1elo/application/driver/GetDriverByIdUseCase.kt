@@ -34,7 +34,13 @@ class GetDriverByIdUseCase(
       currentElo = GetDriverByIdElo(rating = currentElo().value, occurredOn = currentElo().toLocalDate()),
       highestElo = highestElo().let { GetDriverByIdElo(rating = it.value, occurredOn = it.toLocalDate()) },
       lowestElo = lowestElo().let { GetDriverByIdElo(rating = it.value, occurredOn = it.toLocalDate()) },
-      eloRecord = eloRecord().map { GetDriverByIdElo(rating = it.value, occurredOn = it.toLocalDate()) })
+      eloRecord = eloRecord().map { GetDriverByIdElo(rating = it.value, occurredOn = it.toLocalDate()) },
+      currentIRating =
+        GetDriverByIdIRating(rating = currentIRating().value, occurredOn = currentIRating().toLocalDate()),
+      highestIRating = highestIRating().let { GetDriverByIdIRating(rating = it.value, occurredOn = it.toLocalDate()) },
+      lowestIRating = lowestIRating().let { GetDriverByIdIRating(rating = it.value, occurredOn = it.toLocalDate()) },
+      iRatingRecord = iRatingRecord().map { GetDriverByIdIRating(rating = it.value, occurredOn = it.toLocalDate()) },
+    )
 }
 
 data class GetDriverByIdRequest(val driverId: String)
@@ -55,9 +61,15 @@ data class GetDriverByIdSuccess(
   val highestElo: GetDriverByIdElo,
   val lowestElo: GetDriverByIdElo,
   val eloRecord: List<GetDriverByIdElo>,
+  val currentIRating: GetDriverByIdIRating,
+  val highestIRating: GetDriverByIdIRating,
+  val lowestIRating: GetDriverByIdIRating,
+  val iRatingRecord: List<GetDriverByIdIRating>,
 ) : GetDriverByIdResponse()
 
 data class GetDriverByIdElo(val rating: Int, val occurredOn: LocalDate)
+
+data class GetDriverByIdIRating(val rating: Int, val occurredOn: LocalDate)
 
 data class GetDriverByIdFullName(val familyName: String, val givenName: String)
 

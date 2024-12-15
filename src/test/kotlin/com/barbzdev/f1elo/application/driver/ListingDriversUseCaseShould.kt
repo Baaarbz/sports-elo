@@ -42,7 +42,11 @@ class ListingDriversUseCaseShould {
               currentElo = driver.currentElo().value,
               highestElo = driver.highestElo().value,
               lowestElo = driver.lowestElo().value,
-              lastRaceDate = driver.currentElo().toLocalDate())
+              lastRaceDate = driver.currentElo().toLocalDate(),
+              currentIRating = driver.currentIRating().value,
+              highestIRating = driver.highestIRating().value,
+              lowestIRating = driver.lowestIRating().value,
+            )
           },
         page = 0,
         pageSize = 25,
