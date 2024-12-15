@@ -38,13 +38,13 @@ This project is a personal project to calculate the ELO of the Formula 1 drivers
 
 ## Milestones
 
-- ✅ **[v1.0.0](https://github.com/Baaarbz/f1-elo/releases/tag/1.0.0) (Dec 1st of 2023):** Publish the first stage of the API with the ELO system implemented.
-- ⬜ v2.0.0: Implement the iRating system.
+- ✅ **[v1.0.0](https://github.com/Baaarbz/f1-elo/releases/tag/1.0.0) (Dec 1st of 2024):** Publish the first stage of the API with the ELO system implemented.
+- ✅ **[v2.0.0](https://github.com/Baaarbz/f1-elo/releases/tag/2.0.0) (Dec 15th of 2024)**: Implement the iRating system.
 - ⬜ v3.0.0: Implement the TrueSkill system.
 
 ### Nice to have
 - ✅ Support for theoretical performance. Added in minor versions [1.1.0](https://github.com/Baaarbz/f1-elo/releases/tag/1.1.0) and [1.2.0](https://github.com/Baaarbz/f1-elo/releases/tag/1.2.0)
-- ⬜ Mechanism to reset and reprocess all the data, been able to reprocess only one rating system.
+- ✅ Mechanism to reset and reprocess all the data, been able to reprocess only one rating system. Added in version [v2.0.0](https://github.com/Baaarbz/f1-elo/releases/tag/2.0.0)
 - ⬜ Implement in the elo record also information about how much win/lose the driver and against whom.
 - ⬜ Do not save in database Indy 500 drivers and delete relative data.
 - ⬜ Blue/Green deployment using Docker Swarm.
