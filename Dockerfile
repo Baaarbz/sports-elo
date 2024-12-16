@@ -1,4 +1,4 @@
-FROM docker.io/openjdk:21-jdk
+FROM docker.io/openjdk:25-jdk
 
 LABEL org.opencontainers.image.authors="github.com/baaarbz","linkedin.com/in/eduardobarbosatarrio/"
 
