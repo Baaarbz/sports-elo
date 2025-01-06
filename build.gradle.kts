@@ -66,7 +66,7 @@ dependencies {
   testImplementation("com.ninja-squad:springmockk:4.0.2")
 
   testImplementation("com.willowtreeapps.assertk:assertk:0.28.1")
-  testImplementation("org.assertj:assertj-core:3.27.0")
+  testImplementation("org.assertj:assertj-core:3.27.2")
 
   testImplementation("org.awaitility:awaitility:4.2.2")
 
