@@ -68,7 +68,7 @@ dependencies {
   testImplementation("com.willowtreeapps.assertk:assertk:0.28.1")
   testImplementation("org.assertj:assertj-core:3.27.3")
 
-  testImplementation("org.awaitility:awaitility:4.2.2")
+  testImplementation("org.awaitility:awaitility:4.3.0")
 
   testImplementation("io.rest-assured:rest-assured:5.5.1")
 
