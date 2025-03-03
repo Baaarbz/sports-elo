@@ -62,7 +62,7 @@ dependencies {
   testFixturesImplementation("org.testcontainers:postgresql")
   testFixturesImplementation("org.testcontainers:junit-jupiter")
 
-  testImplementation("io.mockk:mockk:1.13.16")
+  testImplementation("io.mockk:mockk:1.13.17")
   testImplementation("com.ninja-squad:springmockk:4.0.2")
 
   testImplementation("com.willowtreeapps.assertk:assertk:0.28.1")
