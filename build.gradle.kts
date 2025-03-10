@@ -34,7 +34,7 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-actuator")
   implementation("org.springframework.boot:spring-boot-starter-security")
 
-  implementation("io.micrometer:micrometer-registry-prometheus:1.14.4")
+  implementation("io.micrometer:micrometer-registry-prometheus:1.14.5")
 
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
