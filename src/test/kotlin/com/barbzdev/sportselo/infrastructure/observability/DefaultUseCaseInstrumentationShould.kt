@@ -4,11 +4,12 @@ import assertk.assertThat
 import assertk.assertions.isBetween
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
-import com.barbzdev.sportselo.domain.observability.MetricClient
-import com.barbzdev.sportselo.domain.observability.MetricEnum.USE_CASE_ELAPSED_TIME
-import com.barbzdev.sportselo.domain.observability.MetricEnum.USE_CASE_FAILURE
-import com.barbzdev.sportselo.domain.observability.MetricEnum.USE_CASE_SUCCESS
-import com.barbzdev.sportselo.domain.observability.UseCaseInstrumentation
+import com.barbzdev.sportselo.core.domain.observability.DefaultUseCaseInstrumentation
+import com.barbzdev.sportselo.core.domain.observability.MetricClient
+import com.barbzdev.sportselo.core.domain.observability.MetricEnum.USE_CASE_ELAPSED_TIME
+import com.barbzdev.sportselo.core.domain.observability.MetricEnum.USE_CASE_FAILURE
+import com.barbzdev.sportselo.core.domain.observability.MetricEnum.USE_CASE_SUCCESS
+import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify

@@ -2,13 +2,12 @@ package com.barbzdev.sportselo.application.theoreticalperformance
 
 import assertk.assertThat
 import assertk.assertions.isInstanceOf
-import com.barbzdev.sportselo.domain.ConstructorId
-import com.barbzdev.sportselo.domain.ConstructorPerformance
-import com.barbzdev.sportselo.domain.TheoreticalPerformance
-import com.barbzdev.sportselo.domain.common.SeasonYear
-import com.barbzdev.sportselo.domain.repository.ConstructorRepository
-import com.barbzdev.sportselo.domain.repository.SeasonRepository
-import com.barbzdev.sportselo.domain.repository.TheoreticalPerformanceRepository
+import com.barbzdev.sportselo.formulaone.domain.ConstructorId
+import com.barbzdev.sportselo.formulaone.domain.ConstructorPerformance
+import com.barbzdev.sportselo.formulaone.domain.TheoreticalPerformance
+import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear
+import com.barbzdev.sportselo.formulaone.domain.repository.ConstructorRepository
+import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
 import com.barbzdev.sportselo.factory.ConstructorFactory.ferrariConstructor
 import com.barbzdev.sportselo.factory.SeasonFactory.aSeason
 import com.barbzdev.sportselo.factory.TheoreticalPerformanceFactory.aTheoreticalPerformance

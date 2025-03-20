@@ -1,8 +1,8 @@
 package com.barbzdev.sportselo
 
-import com.barbzdev.sportselo.domain.repository.DriverRepository
-import com.barbzdev.sportselo.domain.repository.SeasonRepository
-import com.barbzdev.sportselo.infrastructure.spring.SpringApplication
+import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
+import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
+import com.barbzdev.sportselo.core.infrastructure.framework.SpringApplication
 import org.flywaydb.core.Flyway
 import org.junit.jupiter.api.AfterEach
 import org.springframework.beans.factory.annotation.Autowired

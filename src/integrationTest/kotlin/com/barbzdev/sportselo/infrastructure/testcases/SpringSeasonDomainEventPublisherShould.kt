@@ -1,11 +1,11 @@
 package com.barbzdev.sportselo.infrastructure.testcases
 
-import com.barbzdev.sportselo.domain.event.SeasonLoadedDomainEvent
+import com.barbzdev.sportselo.formulaone.domain.event.SeasonLoadedDomainEvent
 import com.barbzdev.sportselo.factory.SeasonFactory.aSeason
 import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
-import com.barbzdev.sportselo.infrastructure.spring.event.SpringSeasonLoadedDomainEvent
-import com.barbzdev.sportselo.infrastructure.spring.event.listener.SpringDomainEventListener
-import com.barbzdev.sportselo.infrastructure.spring.event.publisher.SpringSeasonDomainEventPublisher
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.event.SpringSeasonLoadedDomainEvent
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.event.SpringDomainEventListener
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.event.SpringSeasonDomainEventPublisher
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.verify
 import org.junit.jupiter.api.Test

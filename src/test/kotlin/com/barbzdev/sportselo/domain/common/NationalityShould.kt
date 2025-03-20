@@ -2,6 +2,7 @@ package com.barbzdev.sportselo.domain.common
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.Nationality
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 

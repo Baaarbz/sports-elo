@@ -1,7 +1,7 @@
 package com.barbzdev.sportselo.factory
 
-import com.barbzdev.sportselo.domain.Driver.Companion.create
-import com.barbzdev.sportselo.domain.Driver.Companion.createRookie
+import com.barbzdev.sportselo.formulaone.domain.Driver.Companion.create
+import com.barbzdev.sportselo.formulaone.domain.Driver.Companion.createRookie
 
 object DriverFactory {
   private val anEloRecord =

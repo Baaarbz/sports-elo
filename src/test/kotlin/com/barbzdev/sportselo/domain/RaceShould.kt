@@ -5,6 +5,10 @@ import assertk.assertThat
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNotNull
+import com.barbzdev.sportselo.formulaone.domain.Circuit
+import com.barbzdev.sportselo.formulaone.domain.Constructor
+import com.barbzdev.sportselo.formulaone.domain.Driver
+import com.barbzdev.sportselo.formulaone.domain.Race
 import org.junit.jupiter.api.Test
 
 class RaceShould {

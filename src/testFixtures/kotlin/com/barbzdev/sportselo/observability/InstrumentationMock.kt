@@ -1,6 +1,6 @@
 package com.barbzdev.sportselo.observability
 
-import com.barbzdev.sportselo.domain.observability.UseCaseInstrumentation
+import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever

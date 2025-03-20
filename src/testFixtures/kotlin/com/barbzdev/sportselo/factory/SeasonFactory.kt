@@ -1,7 +1,7 @@
 package com.barbzdev.sportselo.factory
 
-import com.barbzdev.sportselo.domain.Season
-import com.barbzdev.sportselo.domain.repository.F1Season
+import com.barbzdev.sportselo.formulaone.domain.Season
+import com.barbzdev.sportselo.formulaone.domain.repository.F1Season
 import com.barbzdev.sportselo.factory.RaceFactory.raceOf2014
 import com.barbzdev.sportselo.factory.RaceFactory.races
 

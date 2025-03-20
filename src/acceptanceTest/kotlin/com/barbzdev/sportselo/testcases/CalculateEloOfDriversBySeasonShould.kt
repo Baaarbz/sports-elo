@@ -2,9 +2,9 @@ package com.barbzdev.sportselo.testcases
 
 import com.barbzdev.sportselo.AcceptanceTestConfiguration
 import com.barbzdev.sportselo.domain.DriverId
-import com.barbzdev.sportselo.domain.event.SeasonLoadedDomainEvent
+import com.barbzdev.sportselo.formulaone.domain.event.SeasonLoadedDomainEvent
 import com.barbzdev.sportselo.factory.SeasonFactory.seasonOf2014
-import com.barbzdev.sportselo.infrastructure.spring.event.publisher.SpringSeasonDomainEventPublisher
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.event.SpringSeasonDomainEventPublisher
 import org.assertj.core.api.Assertions.assertThat
 import org.awaitility.Awaitility.await
 import org.junit.jupiter.api.Test

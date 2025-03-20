@@ -1,20 +1,20 @@
 package com.barbzdev.sportselo.factory
 
-import com.barbzdev.sportselo.domain.Circuit
-import com.barbzdev.sportselo.domain.Constructor
-import com.barbzdev.sportselo.domain.Driver
-import com.barbzdev.sportselo.domain.Race
+import com.barbzdev.sportselo.formulaone.domain.Circuit
+import com.barbzdev.sportselo.formulaone.domain.Constructor
+import com.barbzdev.sportselo.formulaone.domain.Driver
+import com.barbzdev.sportselo.formulaone.domain.Race
 import com.barbzdev.sportselo.domain.RaceResult
-import com.barbzdev.sportselo.domain.Season
-import com.barbzdev.sportselo.domain.repository.F1AverageSpeed
-import com.barbzdev.sportselo.domain.repository.F1Circuit
-import com.barbzdev.sportselo.domain.repository.F1Constructor
-import com.barbzdev.sportselo.domain.repository.F1Driver
-import com.barbzdev.sportselo.domain.repository.F1FastestLap
-import com.barbzdev.sportselo.domain.repository.F1Location
-import com.barbzdev.sportselo.domain.repository.F1Race
-import com.barbzdev.sportselo.domain.repository.F1Result
-import com.barbzdev.sportselo.domain.repository.F1Time
+import com.barbzdev.sportselo.formulaone.domain.Season
+import com.barbzdev.sportselo.formulaone.domain.repository.F1AverageSpeed
+import com.barbzdev.sportselo.formulaone.domain.repository.F1Circuit
+import com.barbzdev.sportselo.formulaone.domain.repository.F1Constructor
+import com.barbzdev.sportselo.formulaone.domain.repository.F1Driver
+import com.barbzdev.sportselo.formulaone.domain.repository.F1FastestLap
+import com.barbzdev.sportselo.formulaone.domain.repository.F1Location
+import com.barbzdev.sportselo.formulaone.domain.repository.F1Race
+import com.barbzdev.sportselo.formulaone.domain.repository.F1Result
+import com.barbzdev.sportselo.formulaone.domain.repository.F1Time
 import com.barbzdev.sportselo.factory.CircuitFactory.interlagos
 import com.barbzdev.sportselo.factory.ConstructorFactory.ferrariConstructor
 import com.barbzdev.sportselo.factory.DriverFactory.alonso
@@ -149,7 +149,8 @@ object RaceFactory {
           country = this.country().value,
           locality = this.locality().value,
           lat = this.location().longitude,
-          long = this.location().longitude))
+          long = this.location().longitude)
+    )
 
   private fun Constructor.toF1Constructor() =
     F1Constructor(
@@ -191,6 +192,6 @@ object RaceFactory {
       url = this.infoUrl().value,
       givenName = this.fullName().givenName,
       familyName = this.fullName().familyName,
-      dateOfBirth = this.birthDate().value,
+      dateOfBirth = this.birthDate().date,
       nationality = this.nationality().name)
 }

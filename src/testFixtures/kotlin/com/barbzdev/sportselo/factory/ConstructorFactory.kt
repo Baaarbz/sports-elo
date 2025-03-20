@@ -1,6 +1,6 @@
 package com.barbzdev.sportselo.factory
 
-import com.barbzdev.sportselo.domain.Constructor.Companion.create
+import com.barbzdev.sportselo.formulaone.domain.Constructor.Companion.create
 
 object ConstructorFactory {
   private val constructors =

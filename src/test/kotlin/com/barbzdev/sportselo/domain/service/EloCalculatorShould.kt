@@ -3,8 +3,10 @@ package com.barbzdev.sportselo.domain.service
 import assertk.assertAll
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import com.barbzdev.sportselo.domain.Driver
-import com.barbzdev.sportselo.domain.RaceDate
+import com.barbzdev.sportselo.core.domain.service.EloCalculator
+import com.barbzdev.sportselo.core.domain.service.RaceResult
+import com.barbzdev.sportselo.formulaone.domain.Driver
+import com.barbzdev.sportselo.formulaone.domain.valueobject.race.RaceDate
 import com.barbzdev.sportselo.factory.DriverFactory.alonso
 import com.barbzdev.sportselo.factory.DriverFactory.hamilton
 import com.barbzdev.sportselo.factory.DriverFactory.raikkonen
@@ -94,7 +96,7 @@ class EloCalculatorShould {
     val driverElo = 2000
     val rivalElo = 2000
 
-    val result = eloCalculator.calculateEloDelta(driverElo, rivalElo, RaceResult.WIN, 1)
+    val result = eloCalculator.calculate(driverElo, rivalElo, RaceResult.WIN, 1)
 
     val expectedEloDelta = 16
     assertThat(result).isEqualTo(expectedEloDelta)
@@ -105,7 +107,7 @@ class EloCalculatorShould {
     val driverElo = 2000
     val rivalElo = 2000
 
-    val result = eloCalculator.calculateEloDelta(driverElo, rivalElo, RaceResult.LOSE, 1)
+    val result = eloCalculator.calculate(driverElo, rivalElo, RaceResult.LOSE, 1)
 
     val expectedEloDelta = -16
     assertThat(result).isEqualTo(expectedEloDelta)
@@ -116,7 +118,7 @@ class EloCalculatorShould {
     val driverElo = 2000
     val rivalElo = 2000
 
-    val result = eloCalculator.calculateEloDelta(driverElo, rivalElo, RaceResult.DRAW, 1)
+    val result = eloCalculator.calculate(driverElo, rivalElo, RaceResult.DRAW, 1)
 
     val expectedEloDelta = 0
     assertThat(result).isEqualTo(expectedEloDelta)

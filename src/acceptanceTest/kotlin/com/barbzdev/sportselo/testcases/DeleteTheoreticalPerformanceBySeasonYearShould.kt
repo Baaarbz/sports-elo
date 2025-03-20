@@ -1,16 +1,16 @@
 package com.barbzdev.sportselo.testcases
 
 import com.barbzdev.sportselo.AcceptanceTestConfiguration
-import com.barbzdev.sportselo.domain.Constructor
-import com.barbzdev.sportselo.domain.ConstructorPerformance
-import com.barbzdev.sportselo.domain.Season
-import com.barbzdev.sportselo.domain.TheoreticalPerformance
+import com.barbzdev.sportselo.formulaone.domain.Constructor
+import com.barbzdev.sportselo.formulaone.domain.ConstructorPerformance
+import com.barbzdev.sportselo.formulaone.domain.Season
+import com.barbzdev.sportselo.formulaone.domain.TheoreticalPerformance
 import com.barbzdev.sportselo.factory.ConstructorFactory.aConstructor
 import com.barbzdev.sportselo.factory.SeasonFactory.aSeason
-import com.barbzdev.sportselo.infrastructure.jpa.JpaTheoreticalPerformanceRepository
-import com.barbzdev.sportselo.infrastructure.mapper.DomainToEntityMapper.toEntity
-import com.barbzdev.sportselo.infrastructure.spring.repository.jpa.constructor.JpaConstructorDatasource
-import com.barbzdev.sportselo.infrastructure.spring.repository.jpa.season.JpaSeasonDatasource
+import com.barbzdev.sportselo.formulaone.infrastructure.jpa.JpaTheoreticalPerformanceRepository
+import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMapper.toEntity
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.constructor.JpaConstructorDatasource
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.JpaSeasonDatasource
 import io.restassured.RestAssured.given
 import io.restassured.http.ContentType
 import org.assertj.core.api.Assertions.assertThat
@@ -41,8 +41,8 @@ abstract class DeleteTheoreticalPerformanceBySeasonYearShould : AcceptanceTestCo
     aConstructor().also { constructorDatasource.save(it.toEntity()) }
 
   private fun givenATheoreticalPerformanceInDatabase(
-    aSeason: Season,
-    aConstructor: Constructor
+      aSeason: Season,
+      aConstructor: Constructor
   ): TheoreticalPerformance {
     return TheoreticalPerformance.create(
         seasonYear = aSeason.year().value,

@@ -1,7 +1,6 @@
 package com.barbzdev.sportselo.domain.service
 
-import com.barbzdev.sportselo.domain.ConstructorPerformance
-import com.barbzdev.sportselo.domain.common.IRating
+import com.barbzdev.sportselo.formulaone.domain.ConstructorPerformance
 import com.barbzdev.sportselo.factory.ConstructorFactory.aConstructor
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

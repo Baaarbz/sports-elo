@@ -1,8 +1,8 @@
 package com.barbzdev.sportselo.factory
 
-import com.barbzdev.sportselo.domain.Constructor
-import com.barbzdev.sportselo.domain.ConstructorPerformance
-import com.barbzdev.sportselo.domain.TheoreticalPerformance
+import com.barbzdev.sportselo.formulaone.domain.Constructor
+import com.barbzdev.sportselo.formulaone.domain.ConstructorPerformance
+import com.barbzdev.sportselo.formulaone.domain.TheoreticalPerformance
 import com.barbzdev.sportselo.factory.ConstructorFactory.aConstructor
 
 object TheoreticalPerformanceFactory {

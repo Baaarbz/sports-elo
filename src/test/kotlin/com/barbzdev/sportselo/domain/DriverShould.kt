@@ -5,7 +5,7 @@ import assertk.assertions.containsOnly
 import assertk.assertions.isEqualTo
 import assertk.assertions.isEqualToIgnoringGivenProperties
 import com.barbzdev.sportselo.core.domain.valueobject.Elo
-import com.barbzdev.sportselo.domain.common.IRating
+import com.barbzdev.sportselo.formulaone.domain.Driver
 import org.junit.jupiter.api.Test
 
 class DriverShould {

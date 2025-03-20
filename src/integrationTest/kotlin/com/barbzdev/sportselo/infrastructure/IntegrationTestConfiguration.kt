@@ -1,6 +1,6 @@
 package com.barbzdev.sportselo.infrastructure
 
-import com.barbzdev.sportselo.infrastructure.spring.SpringApplication
+import com.barbzdev.sportselo.core.infrastructure.framework.SpringApplication
 import org.flywaydb.core.Flyway
 import org.junit.jupiter.api.AfterEach
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,6 +1,6 @@
 package com.barbzdev.sportselo.factory
 
-import com.barbzdev.sportselo.domain.Circuit.Companion.create
+import com.barbzdev.sportselo.formulaone.domain.Circuit.Companion.create
 
 object CircuitFactory {
   private val circuits =

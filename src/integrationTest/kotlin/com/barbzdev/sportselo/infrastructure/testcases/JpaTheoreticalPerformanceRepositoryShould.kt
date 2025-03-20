@@ -1,15 +1,15 @@
 package com.barbzdev.sportselo.infrastructure.testcases
 
-import com.barbzdev.sportselo.domain.ConstructorPerformance
-import com.barbzdev.sportselo.domain.TheoreticalPerformance
+import com.barbzdev.sportselo.formulaone.domain.ConstructorPerformance
+import com.barbzdev.sportselo.formulaone.domain.TheoreticalPerformance
 import com.barbzdev.sportselo.factory.ConstructorFactory.aConstructor
 import com.barbzdev.sportselo.factory.SeasonFactory.aSeason
 import com.barbzdev.sportselo.factory.TheoreticalPerformanceFactory.aTheoreticalPerformance
 import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
-import com.barbzdev.sportselo.infrastructure.jpa.JpaTheoreticalPerformanceRepository
-import com.barbzdev.sportselo.infrastructure.mapper.DomainToEntityMapper.toEntity
-import com.barbzdev.sportselo.infrastructure.spring.repository.jpa.constructor.JpaConstructorDatasource
-import com.barbzdev.sportselo.infrastructure.spring.repository.jpa.season.JpaSeasonDatasource
+import com.barbzdev.sportselo.formulaone.infrastructure.jpa.JpaTheoreticalPerformanceRepository
+import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMapper.toEntity
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.constructor.JpaConstructorDatasource
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.JpaSeasonDatasource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

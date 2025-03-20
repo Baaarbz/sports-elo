@@ -1,9 +1,10 @@
 package com.barbzdev.sportselo.infrastructure.spring.event.listener
 
-import com.barbzdev.sportselo.application.data.ReprocessEloUseCase
-import com.barbzdev.sportselo.application.data.ReprocessIRatingUseCase
-import com.barbzdev.sportselo.infrastructure.spring.event.EloReprocessingEvent
-import com.barbzdev.sportselo.infrastructure.spring.event.IRatingReprocessingEvent
+import com.barbzdev.sportselo.formulaone.application.data.ReprocessEloUseCase
+import com.barbzdev.sportselo.formulaone.application.data.ReprocessIRatingUseCase
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.event.EloReprocessingEvent
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.event.IRatingReprocessingEvent
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.event.RatingReprocessingEventListener
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test

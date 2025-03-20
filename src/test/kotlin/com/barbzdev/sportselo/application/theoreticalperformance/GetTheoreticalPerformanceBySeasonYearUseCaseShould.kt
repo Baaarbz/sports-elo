@@ -2,8 +2,7 @@ package com.barbzdev.sportselo.application.theoreticalperformance
 
 import assertk.assertThat
 import assertk.assertions.isInstanceOf
-import com.barbzdev.sportselo.domain.common.SeasonYear
-import com.barbzdev.sportselo.domain.repository.TheoreticalPerformanceRepository
+import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear
 import com.barbzdev.sportselo.factory.TheoreticalPerformanceFactory.aTheoreticalPerformance
 import com.barbzdev.sportselo.observability.instrumentationMock
 import io.mockk.every
