@@ -1,1 +1,1 @@
-rootProject.name = "f1-elo"
+rootProject.name = "sports-elo"
