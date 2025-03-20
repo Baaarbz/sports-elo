@@ -1,0 +1,78 @@
+package com.barbzdev.sportselo.infrastructure.testcases
+
+import com.barbzdev.sportselo.domain.Driver
+import com.barbzdev.sportselo.domain.common.DomainPaginated
+import com.barbzdev.sportselo.domain.common.Page
+import com.barbzdev.sportselo.domain.common.PageSize
+import com.barbzdev.sportselo.domain.common.SortBy
+import com.barbzdev.sportselo.domain.common.SortOrder
+import com.barbzdev.sportselo.factory.DriverFactory.aDriver
+import com.barbzdev.sportselo.factory.DriverFactory.hamilton
+import com.barbzdev.sportselo.factory.DriverFactory.verstappen
+import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
+import com.barbzdev.sportselo.infrastructure.jpa.JpaDriverRepository
+import com.barbzdev.sportselo.infrastructure.mapper.DomainToEntityMapper.toEntity
+import com.barbzdev.sportselo.infrastructure.spring.repository.jpa.driver.JpaDriverDatasource
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+
+abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
+  @Autowired private lateinit var repository: JpaDriverRepository
+
+  @Autowired private lateinit var datasource: JpaDriverDatasource
+
+  @Test
+  fun `save a driver`() {
+    val aDriverToSave = aDriver()
+
+    repository.save(aDriverToSave)
+
+    verifyDriverWasSaved(aDriverToSave)
+  }
+
+  @Test
+  fun `get a driver by id`() {
+    val driverInDatabase = givenADriverInDatabase()
+
+    val driverById = repository.findBy(driverInDatabase.id())
+
+    assertThat(driverById).isEqualTo(driverInDatabase)
+  }
+
+  @Test
+  fun `get all drivers`() {
+    val driverInDatabase = givenADriverInDatabase()
+
+    val drivers = repository.findAll(Page(0), PageSize(1), SortBy("id"), SortOrder("asc"))
+
+    val expected =
+      DomainPaginated(
+        elements = listOf(driverInDatabase),
+        page = 0,
+        pageSize = 1,
+        totalElements = drivers.totalElements,
+        totalPages = drivers.totalPages)
+    assertThat(drivers).isEqualTo(expected)
+  }
+
+  @Test
+  fun `find all drivers`() {
+    givenADriverInDatabase(hamilton)
+    givenADriverInDatabase(verstappen)
+
+    val drivers = repository.findAll()
+
+    assertThat(drivers).containsExactlyInAnyOrder(hamilton, verstappen)
+  }
+
+  private fun givenADriverInDatabase(): Driver = aDriver().also { repository.save(it) }
+
+  private fun givenADriverInDatabase(driver: Driver) = repository.save(driver)
+
+  private fun verifyDriverWasSaved(expectedDriverEntitySaved: Driver) {
+    val actualSavedDrivers = datasource.findAll()
+    val expectedDriver = expectedDriverEntitySaved.toEntity()
+    assertThat(actualSavedDrivers).contains(expectedDriver)
+  }
+}
