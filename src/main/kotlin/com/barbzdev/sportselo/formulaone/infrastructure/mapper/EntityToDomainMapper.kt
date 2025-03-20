@@ -85,16 +85,4 @@ object EntityToDomainMapper {
       iRatingRecord = iRatingRecord.map { it.toDomain() })
 
   private fun DriverEloHistoryEntity.toDomain() = Elo(value = elo, occurredOn = occurredOn.toString())
-
-  private fun DriverIRatingHistoryEntity.toDomain() = IRating(value = iRating, occurredOn = occurredOn.toString())
-
-  fun List<TheoreticalConstructorPerformanceEntity>.toDomain(): TheoreticalPerformance? =
-    if (isEmpty()) null
-    else
-      TheoreticalPerformance.create(
-        isAnalyzedSeason = first().isAnalyzedSeason,
-        seasonYear = first().season.year,
-        constructorsPerformance = map { ConstructorPerformance(it.constructor.toDomain(), it.theoreticalPerformance) },
-        dataOriginUrl = first().dataOriginUrl,
-        dataOriginSource = first().dataOriginSource)
 }

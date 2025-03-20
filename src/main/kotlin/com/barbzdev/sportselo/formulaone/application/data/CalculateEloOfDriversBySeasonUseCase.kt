@@ -10,6 +10,7 @@ import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
 import com.barbzdev.sportselo.core.domain.service.EloCalculator
+import com.barbzdev.sportselo.core.domain.service.Result
 
 class CalculateEloOfDriversBySeasonUseCase(
   private val seasonRepository: SeasonRepository,
@@ -31,20 +32,6 @@ class CalculateEloOfDriversBySeasonUseCase(
   private fun List<Race>.orderByRoundAsc() = this.sortedBy { it.round().value }
 
   private fun Race.groupDriversByTeam() = this.results().groupBy { it.constructor }
-
-  private fun Map<Constructor, List<RaceResult>>.calculateEloOfDrivers(occurredOn: RaceDate): List<Driver> {
-    val updatedDrivers = mutableListOf<Driver>()
-    this.forEach { (_, results) ->
-      val mapDriversByPosition =
-        results
-          .groupBy { it.position }
-          .mapValues { it.value.map { result -> driverRepository.findBy(result.driver.id())!! } }
-
-      val eloOfDriversUpdated = eloCalculator.calculateEloRatingsByPosition(mapDriversByPosition, occurredOn)
-      updatedDrivers.addAll(eloOfDriversUpdated)
-    }
-    return updatedDrivers
-  }
 
   private fun List<Driver>.updateDriversElo() = this.forEach { driverRepository.save(it) }
 }

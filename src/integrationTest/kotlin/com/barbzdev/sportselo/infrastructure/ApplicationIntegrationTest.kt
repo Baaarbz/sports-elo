@@ -5,7 +5,6 @@ import com.barbzdev.sportselo.infrastructure.testcases.HttpJolpiF1RepositoryShou
 import com.barbzdev.sportselo.infrastructure.testcases.JpaConstructorRepositoryShould
 import com.barbzdev.sportselo.infrastructure.testcases.JpaDriverRepositoryShould
 import com.barbzdev.sportselo.infrastructure.testcases.JpaSeasonRepositoryShould
-import com.barbzdev.sportselo.infrastructure.testcases.JpaTheoreticalPerformanceRepositoryShould
 import com.barbzdev.sportselo.infrastructure.testcases.RatingReprocessingEventListenerShould
 import com.barbzdev.sportselo.infrastructure.testcases.SpringSeasonDomainEventPublisherShould
 import org.junit.jupiter.api.Nested

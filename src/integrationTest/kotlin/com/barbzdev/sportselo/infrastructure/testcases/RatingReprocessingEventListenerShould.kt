@@ -14,18 +14,10 @@ import org.springframework.context.ApplicationEventPublisher
 
 abstract class RatingReprocessingEventListenerShould : IntegrationTestConfiguration() {
 
-  @MockkBean(relaxed = true) private lateinit var reprocessIRatingUseCase: ReprocessIRatingUseCase
   @MockkBean(relaxed = true) private lateinit var reprocessEloUseCase: ReprocessEloUseCase
 
   @Autowired private lateinit var eventPublisher: ApplicationEventPublisher
   @Autowired private lateinit var reprocessingEventListener: RatingReprocessingEventListener
-
-  @Test
-  fun `handle reprocess iRating event`() {
-    eventPublisher.publishEvent(IRatingReprocessingEvent)
-
-    verify { reprocessIRatingUseCase.invoke() }
-  }
 
   @Test
   fun `handle reprocess ELO event`() {

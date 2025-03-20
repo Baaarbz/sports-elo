@@ -3,6 +3,7 @@ package com.barbzdev.sportselo.formulaone.application.driver
 import com.barbzdev.sportselo.formulaone.domain.Driver
 import com.barbzdev.sportselo.domain.DriverId
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
+import com.barbzdev.sportselo.core.domain.valueobject.SportsmanId
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import java.time.LocalDate
 
@@ -15,7 +16,7 @@ class GetDriverByIdUseCase(
     request.findDriver()?.toResponse() ?: GetDriverByIdNotFound
   }
 
-  private fun GetDriverByIdRequest.findDriver() = driverRepository.findBy(DriverId(driverId))
+  private fun GetDriverByIdRequest.findDriver() = driverRepository.findBy(SportsmanId(driverId))
 
   private fun Driver.toResponse() =
     GetDriverByIdSuccess(
@@ -23,7 +24,7 @@ class GetDriverByIdUseCase(
       fullName = GetDriverByIdFullName(familyName = fullName().familyName, givenName = fullName().givenName),
       code = code()?.value,
       permanentNumber = permanentNumber()?.value,
-      birthDate = birthDate().toLocalDate(),
+      birthDate = birthDate().date.toLocalDate(),
       nationality =
         GetDriverByIdNationality(
           countryCode = nationality().countryCode,
@@ -31,15 +32,10 @@ class GetDriverByIdUseCase(
           value = nationality().name,
         ),
       infoUrl = infoUrl().value,
-      currentElo = GetDriverByIdElo(rating = currentElo().value, occurredOn = currentElo().toLocalDate()),
-      highestElo = highestElo().let { GetDriverByIdElo(rating = it.value, occurredOn = it.toLocalDate()) },
-      lowestElo = lowestElo().let { GetDriverByIdElo(rating = it.value, occurredOn = it.toLocalDate()) },
-      eloRecord = eloRecord().map { GetDriverByIdElo(rating = it.value, occurredOn = it.toLocalDate()) },
-      currentIRating =
-        GetDriverByIdIRating(rating = currentIRating().value, occurredOn = currentIRating().toLocalDate()),
-      highestIRating = highestIRating().let { GetDriverByIdIRating(rating = it.value, occurredOn = it.toLocalDate()) },
-      lowestIRating = lowestIRating().let { GetDriverByIdIRating(rating = it.value, occurredOn = it.toLocalDate()) },
-      iRatingRecord = iRatingRecord().map { GetDriverByIdIRating(rating = it.value, occurredOn = it.toLocalDate()) },
+      currentElo = GetDriverByIdElo(rating = currentElo().value, occurredOn = currentElo().occurredOn.toLocalDate()),
+      highestElo = highestElo().let { GetDriverByIdElo(rating = it.value, occurredOn = it.occurredOn.toLocalDate()) },
+      lowestElo = lowestElo().let { GetDriverByIdElo(rating = it.value, occurredOn = it.occurredOn.toLocalDate()) },
+      eloRecord = eloRecord().map { GetDriverByIdElo(rating = it.value, occurredOn = it.occurredOn.toLocalDate()) }
     )
 }
 
