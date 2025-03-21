@@ -4,10 +4,9 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.barbzdev.sportselo.domain.DriverId
 import com.barbzdev.sportselo.factory.DriverFactory.aDriver
-import com.barbzdev.sportselo.formulaone.infrastructure.jpa.JpaDriverRepository
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverRepository
 import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMapper.toEntity
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverDatasource
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverEloHistoryDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverIRatingHistoryDatasource
 import io.mockk.every
 import io.mockk.mockk

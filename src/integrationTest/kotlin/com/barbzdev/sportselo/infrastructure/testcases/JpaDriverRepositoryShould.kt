@@ -10,7 +10,7 @@ import com.barbzdev.sportselo.factory.DriverFactory.aDriver
 import com.barbzdev.sportselo.factory.DriverFactory.hamilton
 import com.barbzdev.sportselo.factory.DriverFactory.verstappen
 import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
-import com.barbzdev.sportselo.formulaone.infrastructure.jpa.JpaDriverRepository
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverRepository
 import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMapper.toEntity
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverDatasource
 import org.assertj.core.api.Assertions.assertThat

@@ -6,13 +6,10 @@ import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonId
 import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear
 import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
 import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMapper.toEntity
-import com.barbzdev.sportselo.formulaone.infrastructure.mapper.EntityToDomainMapper.toDomain
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.circuit.JpaCircuitDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.constructor.JpaConstructorDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverDatasource
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverEloHistoryDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverIRatingHistoryDatasource
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.race.JpaRaceDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.race.JpaRaceResultDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.JpaSeasonDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.SeasonEntity
@@ -25,8 +22,6 @@ open class JpaSeasonRepository(
   private val constructorDatasource: JpaConstructorDatasource,
   private val circuitDatasource: JpaCircuitDatasource,
   private val raceResultDatasource: JpaRaceResultDatasource,
-  private val eloHistoryDatasource: JpaDriverEloHistoryDatasource,
-  private val iRatingHistoryDatasource: JpaDriverIRatingHistoryDatasource
 ) : SeasonRepository {
 
   override fun getLastSeasonLoaded(): Season? =
@@ -72,8 +67,6 @@ open class JpaSeasonRepository(
 
   private fun Season.saveRaces() {
     races().forEach { race ->
-      raceDatasource.save(race.toEntity(this))
-      circuitDatasource.save(race.circuit().toEntity())
       race.results().forEach { result ->
         raceResultDatasource.save(result.toEntity(this, race))
         driverDatasource.save(result.driver.toEntity())

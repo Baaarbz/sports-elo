@@ -3,10 +3,10 @@ package com.barbzdev.sportselo.application
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
-import com.barbzdev.sportselo.formulaone.application.data.GatherRacesBySeasonSuccess
-import com.barbzdev.sportselo.formulaone.application.data.GatherRacesBySeasonUpToDate
-import com.barbzdev.sportselo.formulaone.application.data.GatherRacesBySeasonUseCase
-import com.barbzdev.sportselo.formulaone.application.data.GatherRacesOverASeasonNonExistent
+import com.barbzdev.sportselo.formulaone.application.GatherRacesBySeasonSuccess
+import com.barbzdev.sportselo.formulaone.application.GatherRacesBySeasonUpToDate
+import com.barbzdev.sportselo.formulaone.application.GatherRacesBySeasonUseCase
+import com.barbzdev.sportselo.formulaone.application.GatherRacesOverASeasonNonExistent
 import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear
 import com.barbzdev.sportselo.formulaone.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation

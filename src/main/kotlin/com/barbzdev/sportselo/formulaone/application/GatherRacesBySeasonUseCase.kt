@@ -1,4 +1,4 @@
-package com.barbzdev.sportselo.formulaone.application.data
+package com.barbzdev.sportselo.formulaone.application
 
 import com.barbzdev.sportselo.formulaone.domain.Circuit
 import com.barbzdev.sportselo.formulaone.domain.Constructor
@@ -26,15 +26,15 @@ class GatherRacesBySeasonUseCase(
 ) {
 
   operator fun invoke(): GatherRacesBySeasonResponse = instrumentation {
-    val seasonToLoad = getSeasonToLoad() ?: return@instrumentation GatherRacesOverASeasonNonExistent
+    val seasonToLoad = getSeasonToLoad() ?: return@instrumentation GatherRacesBySeasonResponse.NonExistent
 
     if (seasonToLoad.isCurrentSeason()) {
-      return@instrumentation GatherRacesBySeasonUpToDate
+      return@instrumentation GatherRacesBySeasonResponse.UpToDate
     }
 
     seasonToLoad.loadF1RacesOfSeason().toDomain().saveSeasonLoaded(seasonToLoad).publishSeasonLoadedDomainEvent()
 
-    GatherRacesBySeasonSuccess
+    GatherRacesBySeasonResponse.Success
   }
 
   private fun List<Race>.saveSeasonLoaded(seasonToLoad: Season): Season {
@@ -118,10 +118,8 @@ class GatherRacesBySeasonUseCase(
   }
 }
 
-sealed class GatherRacesBySeasonResponse
-
-data object GatherRacesBySeasonUpToDate : GatherRacesBySeasonResponse()
-
-data object GatherRacesBySeasonSuccess : GatherRacesBySeasonResponse()
-
-data object GatherRacesOverASeasonNonExistent : GatherRacesBySeasonResponse()
+sealed class GatherRacesBySeasonResponse {
+  data object UpToDate : GatherRacesBySeasonResponse()
+  data object Success : GatherRacesBySeasonResponse()
+  data object NonExistent : GatherRacesBySeasonResponse()
+}

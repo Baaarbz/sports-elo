@@ -7,7 +7,6 @@ import com.barbzdev.sportselo.formulaone.domain.Season
 import com.barbzdev.sportselo.formulaone.domain.TheoreticalPerformance
 import com.barbzdev.sportselo.factory.ConstructorFactory.aConstructor
 import com.barbzdev.sportselo.factory.SeasonFactory.aSeason
-import com.barbzdev.sportselo.formulaone.infrastructure.jpa.JpaTheoreticalPerformanceRepository
 import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMapper.toEntity
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.constructor.JpaConstructorDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.JpaSeasonDatasource

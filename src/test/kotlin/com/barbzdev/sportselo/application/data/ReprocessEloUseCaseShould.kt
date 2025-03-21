@@ -10,12 +10,12 @@ import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
 import com.barbzdev.sportselo.factory.DriverFactory.hamilton
 import com.barbzdev.sportselo.factory.DriverFactory.verstappen
 import com.barbzdev.sportselo.factory.SeasonFactory.aSeason
-import com.barbzdev.sportselo.formulaone.application.data.CalculateEloOfDriversBySeasonRequest
-import com.barbzdev.sportselo.formulaone.application.data.CalculateEloOfDriversBySeasonUseCase
-import com.barbzdev.sportselo.formulaone.application.data.CalculateEloOfDriversOfANonExistentSeason
-import com.barbzdev.sportselo.formulaone.application.data.CalculateEloOfDriversOfBySeasonSuccess
+import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonRequest
+import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonUseCase
+import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversOfANonExistentSeason
+import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversOfBySeasonSuccess
 import com.barbzdev.sportselo.formulaone.application.data.ReprocessEloSuccess
-import com.barbzdev.sportselo.formulaone.application.data.ReprocessEloUseCase
+import com.barbzdev.sportselo.formulaone.application.ReprocessEloUseCase
 import com.barbzdev.sportselo.observability.instrumentationMock
 import io.mockk.every
 import io.mockk.just

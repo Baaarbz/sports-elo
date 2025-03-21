@@ -5,9 +5,9 @@ import com.barbzdev.sportselo.core.domain.valueobject.Elo
 import com.barbzdev.sportselo.core.domain.valueobject.SportsmanFullName
 import com.barbzdev.sportselo.core.domain.valueobject.SportsmanId
 import com.barbzdev.sportselo.formulaone.domain.valueobject.InfoUrl
-import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.Nationality
 import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.BirthDate
 import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.DriverCode
+import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.Nationality
 import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.PermanentNumber
 
 class Driver
@@ -115,7 +115,7 @@ private constructor(
       nationality: String,
       infoUrl: String,
       debutDate: String
-    ) : Driver{
+    ): Driver {
       val startingElo = Elo.create(BASE_ELO, debutDate)
       return Driver(
         id = SportsmanId(id),
@@ -127,6 +127,33 @@ private constructor(
         infoUrl = InfoUrl(infoUrl),
         currentElo = startingElo,
         eloRecord = listOf(startingElo),
+      )
+    }
+
+    fun create(
+      id: String,
+      givenName: String,
+      familyName: String,
+      code: String?,
+      permanentNumber: String?,
+      birthDate: String,
+      nationality: Nationality,
+      infoUrl: String,
+      currentElo: Int,
+      currentEloOccurredOn: String,
+      eloRecord: List<Elo>,
+    ): Driver {
+      val elo = Elo.create(currentElo, currentEloOccurredOn)
+      return Driver(
+        id = SportsmanId(id),
+        fullName = SportsmanFullName(givenName, familyName),
+        code = code?.let { DriverCode(it) },
+        permanentNumber = permanentNumber?.let { PermanentNumber(it) },
+        birthDate = BirthDate.create(birthDate),
+        nationality = nationality,
+        infoUrl = InfoUrl(infoUrl),
+        currentElo = elo,
+        eloRecord = eloRecord,
       )
     }
   }

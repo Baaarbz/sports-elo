@@ -9,9 +9,7 @@ import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMap
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.circuit.JpaCircuitDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.constructor.JpaConstructorDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverDatasource
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverEloHistoryDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverIRatingHistoryDatasource
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.race.JpaRaceDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.race.JpaRaceResultDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.JpaSeasonDatasource
 import io.mockk.every

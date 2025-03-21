@@ -1,10 +1,17 @@
 package com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
+import jakarta.persistence.IdClass
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
+import java.io.Serializable
 import java.time.LocalDate
+import java.util.Optional
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -15,14 +22,31 @@ import org.springframework.stereotype.Repository
 interface JpaDriverDatasource : JpaRepository<DriverEntity, String> {
   @Query(
     """
-    SELECT d.*, MIN(deh.elo) as lowest_elo, MAX(deh.elo) as highest_elo, MIN(dirh.irating) as lowest_irating, MAX(dirh.irating) as highest_irating
-    FROM drivers d
-    FULL JOIN drivers_elo_history deh ON d.id = deh.driver_id
-    FULL JOIN drivers_irating_history dirh ON d.id = dirh.driver_id
-    GROUP BY d.id
+    SELECT d, MIN(deh.elo) as lowest_elo, MAX(deh.elo) as highest_elo
+    FROM DriverEntity d
+    LEFT JOIN FETCH d.eloHistory AS deh
     """,
-    nativeQuery = true)
-  fun findAllJoinDriverRatingsHistory(pageable: Pageable): Page<DriverEntity>
+  )
+  fun findAllJoinDriverEloHistory(pageable: Pageable): Page<DriverEntity>
+
+  @Query(
+    """
+    SELECT d
+    FROM DriverEntity d
+    LEFT JOIN FETCH d.eloHistory AS deh
+    """,
+  )
+  fun findAllJoinDriverEloHistory(): List<DriverEntity>
+
+  @Query(
+    """
+    SELECT d as highest_elo
+    FROM DriverEntity d
+    LEFT JOIN FETCH d.eloHistory AS deh
+    where d.id = :id
+    """,
+  )
+  fun findByIdJoinDriverEloHistory(id: String): Optional<DriverEntity>
 }
 
 @Entity
@@ -38,6 +62,21 @@ data class DriverEntity(
   @Column(name = "info_url") val infoUrl: String,
   @Column(name = "current_elo") val currentElo: Int,
   @Column(name = "current_elo_occurred_on") val currentEloOccurredOn: LocalDate,
-  @Column(name = "current_irating") val currentIRating: Int,
-  @Column(name = "current_irating_occurred_on") val currentIRatingOccurredOn: LocalDate
+  @OneToMany(mappedBy = "driver", cascade = [CascadeType.ALL], orphanRemoval = true)
+  val eloHistory: List<DriverEloHistoryEntity>,
 )
+
+@Entity
+@IdClass(DriverEloHistoryId::class)
+@Table(name = "drivers_elo_history")
+data class DriverEloHistoryEntity(
+  @Id
+  @ManyToOne
+  @JoinColumn(name = "driver_id")
+  val driver: DriverEntity,
+  @Id val elo: Int,
+  @Id @Column(name = "occurred_on") val occurredOn: LocalDate,
+)
+
+data class DriverEloHistoryId(val driver: String = "", val elo: Int = 0, val occurredOn: LocalDate = LocalDate.now()) :
+  Serializable

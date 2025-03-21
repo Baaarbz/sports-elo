@@ -2,11 +2,11 @@ package com.barbzdev.sportselo.formulaone.infrastructure.framework.configuration
 
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
 import com.barbzdev.sportselo.core.domain.service.EloCalculator
-import com.barbzdev.sportselo.formulaone.application.data.CalculateEloOfDriversBySeasonUseCase
-import com.barbzdev.sportselo.formulaone.application.data.GatherRacesBySeasonUseCase
-import com.barbzdev.sportselo.formulaone.application.data.ReprocessEloUseCase
-import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdUseCase
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriversUseCase
+import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonUseCase
+import com.barbzdev.sportselo.formulaone.application.GatherRacesBySeasonUseCase
+import com.barbzdev.sportselo.formulaone.application.ReprocessEloUseCase
+import com.barbzdev.sportselo.formulaone.application.GetDriverByIdUseCase
+import com.barbzdev.sportselo.formulaone.application.ListingDriversUseCase
 import com.barbzdev.sportselo.formulaone.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.F1Repository

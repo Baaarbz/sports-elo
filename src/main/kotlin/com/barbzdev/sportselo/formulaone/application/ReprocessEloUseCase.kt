@@ -1,10 +1,11 @@
-package com.barbzdev.sportselo.formulaone.application.data
+package com.barbzdev.sportselo.formulaone.application
 
-import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear
 import com.barbzdev.sportselo.core.domain.exception.EloReprocessingFailedException
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
+import com.barbzdev.sportselo.formulaone.domain.Driver
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
+import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear
 
 class ReprocessEloUseCase(
   private val calculateEloOfDriversBySeasonUseCase: CalculateEloOfDriversBySeasonUseCase,
@@ -18,13 +19,13 @@ class ReprocessEloUseCase(
 
     getAllExistingSeasonsYears().reprocessEloOfDriversBySeason()
 
-    ReprocessEloSuccess
+    ReprocessEloResponse.Success
   }
 
   private fun resetEloOfAllDrivers() {
+    val driversWithResetElo = mutableListOf<Driver>()
     driverRepository.findAll().forEach {
-      val resetDriver = it.resetElo()
-      driverRepository.save(resetDriver)
+      driversWithResetElo.add(it.resetElo())
     }
   }
 
@@ -33,11 +34,11 @@ class ReprocessEloUseCase(
   private fun List<SeasonYear>.reprocessEloOfDriversBySeason() {
     forEach {
       val response = calculateEloOfDriversBySeasonUseCase(CalculateEloOfDriversBySeasonRequest(it.value))
-      if (response !is CalculateEloOfDriversOfBySeasonSuccess) throw EloReprocessingFailedException(it.value)
+      if (response !is CalculateEloOfDriversBySeasonResponse.Success) throw EloReprocessingFailedException(it.value)
     }
   }
 }
 
-sealed class ReprocessEloResponse
-
-data object ReprocessEloSuccess : ReprocessEloResponse()
+sealed class ReprocessEloResponse {
+  data object Success : ReprocessEloResponse()
+}

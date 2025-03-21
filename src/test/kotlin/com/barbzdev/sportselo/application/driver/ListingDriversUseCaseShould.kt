@@ -11,11 +11,11 @@ import com.barbzdev.sportselo.core.domain.util.SortOrder
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.factory.DriverFactory.aDriver
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriver
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriverFullName
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriversRequest
+import com.barbzdev.sportselo.formulaone.application.ListingDriver
+import com.barbzdev.sportselo.formulaone.application.ListingDriverFullName
+import com.barbzdev.sportselo.formulaone.application.ListingDriversRequest
 import com.barbzdev.sportselo.formulaone.application.driver.ListingDriversSuccess
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriversUseCase
+import com.barbzdev.sportselo.formulaone.application.ListingDriversUseCase
 import com.barbzdev.sportselo.formulaone.application.driver.NotValidDriverListingRequestResponse
 import com.barbzdev.sportselo.formulaone.application.driver.NotValidDriverListingSortingRequestResponse
 import com.barbzdev.sportselo.observability.instrumentationMock

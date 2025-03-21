@@ -1,12 +1,12 @@
 package com.barbzdev.sportselo.formulaone.infrastructure.framework.controller.driver
 
 import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdNotFound
-import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdRequest
+import com.barbzdev.sportselo.formulaone.application.GetDriverByIdRequest
 import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdSuccess
-import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdUseCase
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriversRequest
+import com.barbzdev.sportselo.formulaone.application.GetDriverByIdUseCase
+import com.barbzdev.sportselo.formulaone.application.ListingDriversRequest
 import com.barbzdev.sportselo.formulaone.application.driver.ListingDriversSuccess
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriversUseCase
+import com.barbzdev.sportselo.formulaone.application.ListingDriversUseCase
 import com.barbzdev.sportselo.formulaone.application.driver.NotValidDriverListingRequestResponse
 import com.barbzdev.sportselo.formulaone.application.driver.NotValidDriverListingSortingRequestResponse
 import java.time.LocalDate
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("api/v1/drivers")
 class DriverController(
-  private val listingDriversUseCase: ListingDriversUseCase,
-  private val getDriverByIdUseCase: GetDriverByIdUseCase
+    private val listingDriversUseCase: ListingDriversUseCase,
+    private val getDriverByIdUseCase: GetDriverByIdUseCase
 ) : DriverControllerDocumentation {
 
   @GetMapping

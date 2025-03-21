@@ -1,16 +1,16 @@
 package com.barbzdev.sportselo.infrastructure.spring.controller
 
-import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdElo
-import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdFullName
-import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdIRating
-import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdNationality
+import com.barbzdev.sportselo.formulaone.application.GetDriverByIdElo
+import com.barbzdev.sportselo.formulaone.application.GetDriverByIdFullName
+import com.barbzdev.sportselo.formulaone.application.GetDriverByIdIRating
+import com.barbzdev.sportselo.formulaone.application.GetDriverByIdNationality
 import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdNotFound
 import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdSuccess
-import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdUseCase
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriver
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriverFullName
+import com.barbzdev.sportselo.formulaone.application.GetDriverByIdUseCase
+import com.barbzdev.sportselo.formulaone.application.ListingDriver
+import com.barbzdev.sportselo.formulaone.application.ListingDriverFullName
 import com.barbzdev.sportselo.formulaone.application.driver.ListingDriversSuccess
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriversUseCase
+import com.barbzdev.sportselo.formulaone.application.ListingDriversUseCase
 import com.barbzdev.sportselo.formulaone.application.driver.NotValidDriverListingRequestResponse
 import com.barbzdev.sportselo.formulaone.application.driver.NotValidDriverListingSortingRequestResponse
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.controller.driver.DriverController

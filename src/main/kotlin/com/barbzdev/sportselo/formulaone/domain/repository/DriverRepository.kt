@@ -16,4 +16,6 @@ interface DriverRepository {
   fun findBy(id: SportsmanId): Driver?
 
   fun save(driver: Driver)
+
+  fun saveAll(drivers: List<Driver>)
 }
