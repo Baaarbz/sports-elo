@@ -1,129 +1,125 @@
 package com.barbzdev.sportselo.core.domain.service
 
-import assertk.assertAll
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import com.barbzdev.sportselo.core.domain.service.EloCalculator
-import com.barbzdev.sportselo.formulaone.domain.Driver
-import com.barbzdev.sportselo.formulaone.domain.valueobject.race.RaceDate
-import com.barbzdev.sportselo.formulaone.factory.DriverFactory.alonso
-import com.barbzdev.sportselo.formulaone.factory.DriverFactory.hamilton
-import com.barbzdev.sportselo.formulaone.factory.DriverFactory.raikkonen
-import com.barbzdev.sportselo.formulaone.factory.DriverFactory.verstappen
+import com.barbzdev.sportselo.core.domain.service.Result.DRAW
+import com.barbzdev.sportselo.core.domain.service.Result.LOSE
+import com.barbzdev.sportselo.core.domain.service.Result.WIN
+import com.barbzdev.sportselo.core.domain.valueobject.Elo
+import com.barbzdev.sportselo.core.domain.valueobject.OccurredOn.Companion.now
 import org.junit.jupiter.api.Test
 
 class EloCalculatorShould {
 
   private val eloCalculator = EloCalculator()
 
-//  @Test
-//  fun `calculate elo for team of 2 drivers with 2 cars`() {
-//    val givenMapOfPositionDrivers = mapOf(1 to listOf(alonso), 2 to listOf(hamilton))
-//
-//    val result = eloCalculator.calculateEloRatingsByPosition(givenMapOfPositionDrivers, RaceDate(ANY_RACE_DATE))
-//
-//    assertAll {
-//      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().value).isEqualTo(2016)
-//      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().value).isEqualTo(1984)
-//    }
-//    verifyCurrentEloOccurredOn(result)
-//  }
-//
-//  @Test
-//  fun `calculate elo for team of 3 drivers with 3 cars`() {
-//    val givenMapOfPositionDrivers = mapOf(1 to listOf(raikkonen), 2 to listOf(hamilton), 3 to listOf(alonso))
-//
-//    val result = eloCalculator.calculateEloRatingsByPosition(givenMapOfPositionDrivers, RaceDate(ANY_RACE_DATE))
-//
-//    assertAll {
-//      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().value).isEqualTo(2024)
-//      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().value).isEqualTo(2000)
-//      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().value).isEqualTo(1976)
-//    }
-//    verifyCurrentEloOccurredOn(result)
-//  }
-//
-//  @Test
-//  fun `calculate elo for team of 4 drivers with 4 cars`() {
-//    val givenMapOfPositionDrivers =
-//      mapOf(1 to listOf(alonso), 2 to listOf(hamilton), 3 to listOf(verstappen), 4 to listOf(raikkonen))
-//
-//    val result = eloCalculator.calculateEloRatingsByPosition(givenMapOfPositionDrivers, RaceDate(ANY_RACE_DATE))
-//
-//    assertAll {
-//      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().value).isEqualTo(2024)
-//      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().value).isEqualTo(2008)
-//      assertThat(result.find { it.id() == verstappen.id() }!!.currentElo().value).isEqualTo(1992)
-//      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().value).isEqualTo(1976)
-//    }
-//    verifyCurrentEloOccurredOn(result)
-//  }
-//
-//  @Test
-//  fun `calculate elo for team with one car with 2 drivers and other with 1 driver, non repeating drivers`() {
-//    val givenMapOfPositionDrivers = mapOf(1 to listOf(alonso, hamilton), 2 to listOf(raikkonen))
-//
-//    val result = eloCalculator.calculateEloRatingsByPosition(givenMapOfPositionDrivers, RaceDate(ANY_RACE_DATE))
-//
-//    assertAll {
-//      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().value).isEqualTo(2008)
-//      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().value).isEqualTo(2008)
-//      assertThat(result.find { it.id() == raikkonen.id() }!!.currentElo().value).isEqualTo(1984)
-//    }
-//    verifyCurrentEloOccurredOn(result)
-//  }
-//
-//  @Test
-//  fun `calculate elo for team with one car with 2 drivers and other with 1 driver, repeating drivers`() {
-//    val givenMapOfPositionDrivers = mapOf(1 to listOf(alonso, hamilton), 2 to listOf(alonso))
-//
-//    val result = eloCalculator.calculateEloRatingsByPosition(givenMapOfPositionDrivers, RaceDate(ANY_RACE_DATE))
-//
-//    assertAll {
-//      assertThat(result.find { it.id() == alonso.id() }!!.currentElo().value).isEqualTo(1992)
-//      assertThat(result.find { it.id() == hamilton.id() }!!.currentElo().value).isEqualTo(2008)
-//    }
-//    verifyCurrentEloOccurredOn(result)
-//  }
-//
-//  private fun verifyCurrentEloOccurredOn(actualDrivers: List<Driver>) {
-//    actualDrivers.forEach { driver -> assertThat(driver.currentElo().occurredOn).isEqualTo(ANY_RACE_DATE) }
-//  }
-//
-//  @Test
-//  fun `calculate delta rating for a driver who wins against rival`() {
-//    val driverElo = 2000
-//    val rivalElo = 2000
-//
-//    val result = eloCalculator.calculate(driverElo, rivalElo, RaceResult.WIN, 1)
-//
-//    val expectedEloDelta = 16
-//    assertThat(result).isEqualTo(expectedEloDelta)
-//  }
-//
-//  @Test
-//  fun `calculate delta rating for a driver who loses against rival`() {
-//    val driverElo = 2000
-//    val rivalElo = 2000
-//
-//    val result = eloCalculator.calculate(driverElo, rivalElo, RaceResult.LOSE, 1)
-//
-//    val expectedEloDelta = -16
-//    assertThat(result).isEqualTo(expectedEloDelta)
-//  }
-//
-//  @Test
-//  fun `calculate delta rating for a driver who draws against rival`() {
-//    val driverElo = 2000
-//    val rivalElo = 2000
-//
-//    val result = eloCalculator.calculate(driverElo, rivalElo, RaceResult.DRAW, 1)
-//
-//    val expectedEloDelta = 0
-//    assertThat(result).isEqualTo(expectedEloDelta)
-//  }
-//
-//  private companion object {
-//    const val ANY_RACE_DATE = "2024-01-01"
-//  }
+  @Test
+  fun `calculate elo 1v1 method WIN`() {
+    val eloToUpdate = Elo(2000, now())
+    val eloRival = Elo(2000, now())
+
+    val eloDelta = eloCalculator.calculate(eloToUpdate, eloRival, WIN)
+
+    assertThat(eloDelta).isEqualTo(16)
+  }
+
+  @Test
+  fun `calculate elo 1v1 method DRAW`() {
+    val eloToUpdate = Elo(2000, now())
+    val eloRival = Elo(2000, now())
+
+    val eloDelta = eloCalculator.calculate(eloToUpdate, eloRival, DRAW)
+
+    assertThat(eloDelta).isEqualTo(0)
+  }
+
+  @Test
+  fun `calculate elo 1v1 method LOSE`() {
+    val eloToUpdate = Elo(2000, now())
+    val eloRival = Elo(2000, now())
+
+    val eloDelta = eloCalculator.calculate(eloToUpdate, eloRival, LOSE)
+
+    assertThat(eloDelta).isEqualTo(-16)
+  }
+
+  @Test
+  fun `calculate elo teams method WIN`() {
+    val eloToUpdate = listOf(Elo(2000, now()), Elo(1000, now()), Elo(1250, now()))
+    val eloRival = listOf(Elo(2000, now()), Elo(1000, now()), Elo(1250, now()))
+
+    val eloDelta = eloCalculator.calculate(eloToUpdate, eloRival, WIN)
+
+    assertThat(eloDelta).isEqualTo(16)
+  }
+
+  @Test
+  fun `calculate elo teams method DRAW`() {
+    val eloToUpdate = listOf(Elo(2000, now()), Elo(1000, now()), Elo(1250, now()))
+    val eloRival = listOf(Elo(2000, now()), Elo(1000, now()), Elo(1250, now()))
+
+    val eloDelta = eloCalculator.calculate(eloToUpdate, eloRival, DRAW)
+
+    assertThat(eloDelta).isEqualTo(0)
+  }
+
+  @Test
+  fun `calculate elo teams method LOSE`() {
+    val eloToUpdate = listOf(Elo(2000, now()), Elo(1000, now()), Elo(1250, now()))
+    val eloRival = listOf(Elo(2000, now()), Elo(1000, now()), Elo(1250, now()))
+
+    val eloDelta = eloCalculator.calculate(eloToUpdate, eloRival, LOSE)
+
+    assertThat(eloDelta).isEqualTo(-16)
+  }
+
+  @Test
+  fun `calculate elo motorsports method first position`() {
+    val eloToUpdate = Elo(2000, now())
+    val eloRivals = listOf(Elo(2000, now()), Elo(2000, now()), Elo(2000, now()), Elo(2000, now()))
+
+    val eloDelta = eloCalculator.calculate(eloToUpdate, eloRivals, 1)
+
+    assertThat(eloDelta).isEqualTo(22)
+  }
+
+  @Test
+  fun `calculate elo motorsports method second position`() {
+    val eloToUpdate = Elo(2000, now())
+    val eloRivals = listOf(Elo(2000, now()), Elo(2000, now()), Elo(2000, now()), Elo(2000, now()))
+
+    val eloDelta = eloCalculator.calculate(eloToUpdate, eloRivals, 2)
+
+    assertThat(eloDelta).isEqualTo(11)
+  }
+
+  @Test
+  fun `calculate elo motorsports method third position`() {
+    val eloToUpdate = Elo(2000, now())
+    val eloRivals = listOf(Elo(2000, now()), Elo(2000, now()), Elo(2000, now()), Elo(2000, now()))
+
+    val eloDelta = eloCalculator.calculate(eloToUpdate, eloRivals, 3)
+
+    assertThat(eloDelta).isEqualTo(0)
+  }
+
+  @Test
+  fun `calculate elo motorsports method fourth position`() {
+    val eloToUpdate = Elo(2000, now())
+    val eloRivals = listOf(Elo(2000, now()), Elo(2000, now()), Elo(2000, now()), Elo(2000, now()))
+
+    val eloDelta = eloCalculator.calculate(eloToUpdate, eloRivals, 4)
+
+    assertThat(eloDelta).isEqualTo(-11)
+  }
+
+  @Test
+  fun `calculate elo motorsports method fifth position`() {
+    val eloToUpdate = Elo(2000, now())
+    val eloRivals = listOf(Elo(2000, now()), Elo(2000, now()), Elo(2000, now()), Elo(2000, now()))
+
+    val eloDelta = eloCalculator.calculate(eloToUpdate, eloRivals, 5)
+
+    assertThat(eloDelta).isEqualTo(-22)
+  }
 }

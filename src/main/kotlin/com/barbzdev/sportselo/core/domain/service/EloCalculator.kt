@@ -14,7 +14,7 @@ class EloCalculator {
     val sof = allEloCompetitors.map { it.value }.average()
     val k = 30.0 + (70.0 / allEloCompetitors.size)
 
-    val expectedPerformance = 1.0 / (1.0 + 10.0.pow((sof) / 400.0))
+    val expectedPerformance = 1.0 / (1.0 + 10.0.pow((sof - elo.value) / 400.0))
 
     val actualPerformance = 1.0 - ((sportsmanResult - 1.0) / (allEloCompetitors.size - 1.0))
     return round(k * (actualPerformance - expectedPerformance)).toInt()
@@ -27,7 +27,11 @@ class EloCalculator {
     return calculate(averageTeamElo, averageRivalElo, result)
   }
 
-  fun calculate(elo: Int, rivalElo: Int, result: Result): Int {
+  fun calculate(elo: Elo, rivalElo: Elo, result: Result): Int {
+    return calculate(elo.value, rivalElo.value, result)
+  }
+
+  private fun calculate(elo: Int, rivalElo: Int, result: Result): Int {
     val qA = calculateQ(rating = elo)
     val qB = calculateQ(rating = rivalElo)
 
