@@ -4,61 +4,195 @@
 
 > [!NOTE]
 > ### Disclaimer
-> This is a personal project, I am not affiliated with Formula 1 or any of its teams. The data used in this project is
-> from the [Jolpica F1 API](https://github.com/jolpica/jolpica-f1). I run personally with the expenses of the server,
-> domain and so on. If you like this project and want to support it, you can buy me a coffee.
+> This is a personal project, I am not affiliated with any sports organization or team. The data used in this project is
+> from various public APIs including the Jolpica F1 API for Formula 1. I personally cover the expenses for the server,
+> domain, etc. If you like this project and want to support it, you can buy me a coffee.
 
-**Formula 1 ELO system. Who are the GOATs? Let's see!**
+**A multi-sport ELO rating system to identify the greatest athletes across different sports.**
 <!-- TOC -->
+
 * [F1 Elo](#f1-elo)
-  * [About the project](#about-the-project)
-  * [Assumptions](#assumptions)
-  * [Ways of calculating the rating](#ways-of-calculating-the-rating)
-  * [Milestones](#milestones)
-    * [Nice to have](#nice-to-have)
-  * [License Summary](#license-summary)
-  * [References](#references)
+    * [About the project](#about-the-project)
+    * [Assumptions](#assumptions)
+    * [Ways of calculating the rating](#ways-of-calculating-the-rating)
+    * [Milestones](#milestones)
+        * [Nice to have](#nice-to-have)
+    * [License Summary](#license-summary)
+    * [References](#references)
+
 <!-- TOC -->
 
 ## About the project
 
-This project is a personal project to calculate the ELO of the Formula 1 drivers, inspired in the next video of [Mr V's Garage](https://www.youtube.com/live/U16a8tdrbII?t=1046s) and motivated to know who are the greatest of all time. 
-<br/>The system will count with 3 different ways to calculate the rating of the drivers: ELO System, iRating system and TrueSkill system.
+This project calculates ELO ratings for athletes across various sports, inspired
+by [Mr V's Garage](https://www.youtube.com/live/U16a8tdrbII?t=1046s) and motivated by the desire to quantitatively
+compare athletes within their respective sports. Initially focused on Formula 1, the system is expanding to include
+multiple sports such as MotoGP, NBA, football leagues (Serie A, Premier League, La Liga), boxing, and more. Each sport
+uses a rating calculation method appropriate to its competitive structure, allowing for meaningful comparisons within
+each discipline.
 
-## Assumptions
+> [!NOTE]
+> All rookie athlete in any sport will start with 1000 ELO>
 
-- Rookie drivers will start with 1000 ELO/rating
-- Indy 500 drivers will be ignored
-- If we don't have the data analysed of a season with the theoretical performance of the car, ~~we will use the World Constructors' Championship as a reference, applying a difference of 0.2s per car.~~ we will set the theoretical performance to 0
+### Formula 1 - Corner cases
 
-## Ways of calculating the rating
-- [ELO System](docs/elo.md)
-- [iRating System](docs/irating.md)
-- [TrueSkill System](docs/trueskill.md)
+The [Jolpica F1 API](https://github.com/jolpica/jolpica-f1) also retrieves in the first years of F1 Indy 500 races,
+those races/drivers will be ignored, and the data will be deleted. The reason is that the Indy 500 was part of the F1
+championship in the first years, and the drivers were not the same as the regular F1 drivers.
 
-## Milestones
+## Rating Calculation Methods
 
-- ✅ **[v1.0.0](https://github.com/Baaarbz/f1-elo/releases/tag/1.0.0) (Dec 1st of 2024):** Publish the first stage of the API with the ELO system implemented.
-- ✅ **[v2.0.0](https://github.com/Baaarbz/f1-elo/releases/tag/2.0.0) (Dec 15th of 2024)**: Implement the iRating system.
-- ⬜ v3.0.0: Implement the TrueSkill system.
+The system employs different calculation methods based on the type of competition:
+
+### Individual 1v1 Sports (Tennis, Boxing, etc.)
+
+Standard ELO rating system for direct competition:
+$$
+R'=R+K(S-E)\\
+$$
+$$
+E=\cfrac{Q_A}{(Q_A + Q_B)}\\
+$$
+$$
+Q = 10^{\cfrac{R}{(400)}}
+$$
+
+| Parameters | Description                                                                        |
+|------------|------------------------------------------------------------------------------------|
+| $Q_A$      | $Q_A$ for athlete                                                                  |
+| $Q_B$      | $Q_B$ for rival athlete                                                            |
+| $R'$       | New athlete rating                                                                 |
+| $R$        | Old athlete rating                                                                 |
+| $K$        | Multiplier used. Value $K=32$                                                      |
+| $S$        | Value depending on the result against the rival ${Win: 1 // Draw: 0.5 // Lose: 0}$ |
+| $K(S-E)$   | Rating winnings or losings for athlete                                             |
+
+### Team Sports (Football, Basketball, etc.)
+
+Team average ELO is calculated, then applied to update individual player ratings based on match results
+
+$$
+R'=R+K(S-E)\\
+$$
+$$
+E=\cfrac{Q_A}{(Q_A + Q_B)}\\
+$$
+$$
+Q = 10^{\cfrac{R}{(400)}}
+$$
+
+| Parameters | Description                                                                        |
+|------------|------------------------------------------------------------------------------------|
+| $Q_A$      | $Q_A$ for team                                                                     |
+| $Q_B$      | $Q_B$ for rival team                                                               |
+| $R'$       | New team rating                                                                    |
+| $R$        | Old team rating                                                                    |
+| $K$        | Multiplier used. Value $K=32$                                                      |
+| $S$        | Value depending on the result against the rival ${Win: 1 // Draw: 0.5 // Lose: 0}$ |
+| $K(S-E)$   | Rating winnings or losings for team (it will be applied to all the team athletes   |
+
+### Motorsports (Formula 1, MotoGP, etc.)
+System based in iRating that accounts for position finishing and field strength.
+
+
+| Variable     | Description                                                                     |
+|--------------|---------------------------------------------------------------------------------|
+| $R_{before}$ | Driver current iRating before the race                                          |
+| $SoF$        | Strength of Field, calculated as the average iRating of all drivers in the race |
+| $Position$   | Driver final position in the race                                               |
+| $N$          | Number of drivers in the race                                                   |
+
+#### Calculate Expected Finish Probability
+
+_Driver Expected Performance_ against the $SoF$ can be modeled with a probability using the logistic formula:
+$$E=\cfrac{1}{1 + 10^\cfrac{SoF - R_{before}}{400}}\\$$
+$E$ represents driver expected performance or "win" probability against the field based on his iRating relative to the
+$SoF$.
+
+#### Determine the Scaling Factor ($K$-Factor)
+
+This factor influences how much driver's iRating can change in a single race. For motorsports, a typical $K$-factor
+might be
+set between 30 and 100, depending on field size and competition level.
+Let’s define a scalable $K$-factor based on the field size:
+$$ K=30+\cfrac{70}{N} $$
+
+#### Calculate Actual vs. Expected Performance
+
+Define an Actual Performance Score ($S$) based on your position:
+$$ S=1−\cfrac{Position−1}{N−1} $$
+This way, the winner gets $S=1$, and the last-place finisher gets $S=0$, with values in between for other positions.
+
+#### Calculate iRating Change
+
+Finally, use the Elo-based adjustment for the iRating change:
+$$ΔR=K*(S−E)$$
+This $ΔR$ is your iRating gain (positive) or loss (negative).
+
+#### Update iRating
+
+New iRating:
+$$R_{after}=R_{before}+ΔR$$
+
+#### Example Calculation
+
+Let’s say:
+
+1. Driver initial iRating $R_{before}$ is 1500.
+   The race $SoF$ is 1600.
+   Driver finish in 5th place out of 20 drivers.
+
+2. Expected Finish Probability:
+   $$E=\cfrac{1}{1+10\cfrac{(1600−1500)}{400}}=\cfrac{1}{1+10\cfrac{100}{400}}≈0.36$$
+
+3. Scaling Factor ($K$-Factor):
+   $$K=30+\cfrac{70}{20}=30+3.5=33.5$$
+
+4. Actual Performance Score ($S$):
+   $$S=1−\cfrac{5−1}{20−1}=1−\cfrac{4}{19}≈0.79$$
+
+5. Calculate iRating Change:
+   $$ΔR=33.5×(0.79−0.36)=33.5×0.43≈14.4$$
+
+6. Updated iRating:
+   $$R_{after}=1500+14.4=1514.4$$
+
+This approximation captures the essence of iRating adjustments in iRacing. The parameters (such as $K$-factor) can be
+further tuned to match observed iRacing behavior more closely.
+
+## Roadmap
+✅ Formula 1
+⬜ MotoGP
+⬜ Football Leagues: Starting with major European leagues:
+      ⬜ La Liga
+      ⬜ Premiere League
+      ⬜ Serie A
+⬜ Basketball (NBA)
+⬜ UFC
+⬜ Boxing
+...
 
 ### Nice to have
-- ✅ Support for theoretical performance. Added in minor versions [1.1.0](https://github.com/Baaarbz/f1-elo/releases/tag/1.1.0) and [1.2.0](https://github.com/Baaarbz/f1-elo/releases/tag/1.2.0)
-- ✅ Mechanism to reset and reprocess all the data, been able to reprocess only one rating system. Added in version [v2.0.0](https://github.com/Baaarbz/f1-elo/releases/tag/2.0.0)
+- ✅ Mechanism to reset and reprocess all the data, been able to reprocess only one rating system. Added in
+  version [v2.0.0](https://github.com/Baaarbz/f1-elo/releases/tag/2.0.0)
 - ⬜ Implement in the elo record also information about how much win/lose the driver and against whom.
-- ⬜ Do not save in database Indy 500 drivers and delete relative data.
 - ⬜ Blue/Green deployment using Docker Swarm.
-- ⬜ Improvements in performance (optimization of SQL queries and code process).
-- ⬜ Take into account DNS and DNF in the calculation of the rating, mechanical issues should not impact negatively to drivers.
+- ⬜ Take into account DNS and DNF in the calculation of the rating, mechanical issues should not impact negatively to
+  motorsports.
 - ⬜ Create open source libraries to calculate ratings.
 
 ## License Summary
 
-This project is licensed under the MIT License with the addition of a "Commons Clause." Below is a brief summary of what this means:
+This project is licensed under the MIT License with the addition of a "Commons Clause." Below is a brief summary of what
+this means:
 
-* **Permissions**: You are free to use, copy, modify, merge, publish, distribute, sublicense, provided that the original copyright notice and this license are included in all copies or substantial portions of the software.
-* **Restrictions**: The "Commons Clause" adds a condition that prohibits selling the software itself. This means you cannot charge fees for products or services whose primary value comes from the functionality of this software. For example, you cannot offer it as a paid hosted service or sell it directly.
-* **Warranty Disclaimer**: The software is provided "as is," without warranty of any kind. The authors are not liable for any damages or issues arising from its use.
+* **Permissions**: You are free to use, copy, modify, merge, publish, distribute, sublicense, provided that the original
+  copyright notice and this license are included in all copies or substantial portions of the software.
+* **Restrictions**: The "Commons Clause" adds a condition that prohibits selling the software itself. This means you
+  cannot charge fees for products or services whose primary value comes from the functionality of this software. For
+  example, you cannot offer it as a paid hosted service or sell it directly.
+* **Warranty Disclaimer**: The software is provided "as is," without warranty of any kind. The authors are not liable
+  for any damages or issues arising from its use.
 
 For full details, please refer to the LICENSE file.
 
@@ -67,7 +201,5 @@ For full details, please refer to the LICENSE file.
 [Elo Rating System](https://stanislav-stankovic.medium.com/elo-rating-system-6196cc59941e) <br/>
 [Jolpica F1 API](https://github.com/jolpica/jolpica-f1)<br/>
 [Mr V's Garage inspiring video](https://www.youtube.com/live/U16a8tdrbII?t=1046s)<br/>
-[TrueSkill System](https://www.microsoft.com/en-us/research/project/trueskill-ranking-system/)<br/>
-[TrueSkill System Paper](https://www.microsoft.com/en-us/research/wp-content/uploads/2007/01/NIPS2006_0688.pdf)<br/>
 [ELO System](https://en.wikipedia.org/wiki/Elo_rating_system)<br/>
 [iRating System](https://www.iracing.com/license-progression/) <br/>
