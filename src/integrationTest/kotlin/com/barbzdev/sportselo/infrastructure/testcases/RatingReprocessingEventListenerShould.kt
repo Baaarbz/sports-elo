@@ -15,7 +15,6 @@ abstract class RatingReprocessingEventListenerShould : IntegrationTestConfigurat
   @MockkBean(relaxed = true) private lateinit var reprocessEloUseCase: ReprocessEloUseCase
 
   @Autowired private lateinit var eventPublisher: ApplicationEventPublisher
-  @Autowired private lateinit var reprocessingEventListener: RatingReprocessingEventListener
 
   @Test
   fun `handle reprocess ELO event`() {

@@ -4,16 +4,21 @@ import com.barbzdev.sportselo.formulaone.domain.Season
 import com.barbzdev.sportselo.formulaone.factory.SeasonFactory.aSeason
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.JpaSeasonDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.JpaSeasonRepository
-import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMapper.toEntity
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.mapper.SeasonMapper
 import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 abstract class JpaSeasonRepositoryShould : IntegrationTestConfiguration() {
-  @Autowired private lateinit var repository: JpaSeasonRepository
+  @Autowired
+  private lateinit var repository: JpaSeasonRepository
 
-  @Autowired private lateinit var datasource: JpaSeasonDatasource
+  @Autowired
+  private lateinit var datasource: JpaSeasonDatasource
+
+  @Autowired
+  private lateinit var seasonMapper: SeasonMapper
 
   @Test
   fun `save a season`() {
@@ -64,7 +69,7 @@ abstract class JpaSeasonRepositoryShould : IntegrationTestConfiguration() {
 
   private fun verifySeasonWasSaved(expectedSeasonEntitySaved: Season) {
     val actualSavedSeason = datasource.findAll()
-    val expectedSeason = expectedSeasonEntitySaved.toEntity()
+    val expectedSeason = seasonMapper.toEntity(expectedSeasonEntitySaved)
     assertThat(actualSavedSeason).contains(expectedSeason)
   }
 }

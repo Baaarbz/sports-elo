@@ -1,2 +1,0 @@
-CREATE INDEX idx_season_id ON theoretical_constructor_performance(season_id);
-CREATE INDEX idx_constructor_id ON theoretical_constructor_performance(constructor_id);

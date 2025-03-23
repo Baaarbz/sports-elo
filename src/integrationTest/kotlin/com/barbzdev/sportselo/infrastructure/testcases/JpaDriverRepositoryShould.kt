@@ -11,16 +11,21 @@ import com.barbzdev.sportselo.formulaone.factory.DriverFactory.hamilton
 import com.barbzdev.sportselo.formulaone.factory.DriverFactory.verstappen
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverRepository
-import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMapper.toEntity
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.mapper.DriverMapper
 import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
-  @Autowired private lateinit var repository: JpaDriverRepository
+  @Autowired
+  private lateinit var repository: JpaDriverRepository
 
-  @Autowired private lateinit var datasource: JpaDriverDatasource
+  @Autowired
+  private lateinit var datasource: JpaDriverDatasource
+
+  @Autowired
+  private lateinit var driverMapper: DriverMapper
 
   @Test
   fun `save a driver`() {
@@ -52,7 +57,8 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
         page = 0,
         pageSize = 1,
         totalElements = drivers.totalElements,
-        totalPages = drivers.totalPages)
+        totalPages = drivers.totalPages
+      )
     assertThat(drivers).isEqualTo(expected)
   }
 
@@ -72,7 +78,7 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
 
   private fun verifyDriverWasSaved(expectedDriverEntitySaved: Driver) {
     val actualSavedDrivers = datasource.findAll()
-    val expectedDriver = expectedDriverEntitySaved.toEntity()
+    val expectedDriver = driverMapper.toEntity(expectedDriverEntitySaved)
     assertThat(actualSavedDrivers).contains(expectedDriver)
   }
 }

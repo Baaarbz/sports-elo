@@ -2,7 +2,6 @@ package com.barbzdev.sportselo.infrastructure
 
 import com.barbzdev.sportselo.helper.DockerComposeHelper
 import com.barbzdev.sportselo.infrastructure.testcases.HttpJolpiF1RepositoryShould
-import com.barbzdev.sportselo.infrastructure.testcases.JpaConstructorRepositoryShould
 import com.barbzdev.sportselo.infrastructure.testcases.JpaDriverRepositoryShould
 import com.barbzdev.sportselo.infrastructure.testcases.JpaSeasonRepositoryShould
 import com.barbzdev.sportselo.infrastructure.testcases.RatingReprocessingEventListenerShould
@@ -25,10 +24,6 @@ class ApplicationIntegrationTest {
   @Nested inner class JpaDriverRepository : JpaDriverRepositoryShould()
 
   @Nested inner class SpringSeasonDomainEventPublisher : SpringSeasonDomainEventPublisherShould()
-
-  @Nested inner class JpaTheoreticalPerformanceRepository : JpaTheoreticalPerformanceRepositoryShould()
-
-  @Nested inner class JpaConstructorRepository : JpaConstructorRepositoryShould()
 
   @Nested inner class RatingReprocessingEventListener : RatingReprocessingEventListenerShould()
 }
