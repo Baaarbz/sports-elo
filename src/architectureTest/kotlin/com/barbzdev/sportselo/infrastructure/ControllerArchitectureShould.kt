@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @Suppress("VariableNaming")
-@AnalyzeClasses(packages = ["com.barbzdev.f1elo"], importOptions = [DoNotIncludeTests::class])
+@AnalyzeClasses(packages = ["com.barbzdev.sportselo"], importOptions = [DoNotIncludeTests::class])
 class ControllerArchitectureShould {
   @ArchTest
   val `classes with name ending in Controller should be annotated with @RestController` =

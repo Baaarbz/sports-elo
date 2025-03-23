@@ -6,7 +6,7 @@ import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses
 
 @Suppress("VariableNaming")
-@AnalyzeClasses(packages = ["com.barbzdev.f1elo"], importOptions = [DoNotIncludeTests::class])
+@AnalyzeClasses(packages = ["com.barbzdev.sportselo"], importOptions = [DoNotIncludeTests::class])
 class HexagonalArchitectureShould {
 
   @ArchTest

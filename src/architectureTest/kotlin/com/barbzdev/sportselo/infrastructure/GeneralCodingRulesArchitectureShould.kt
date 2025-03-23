@@ -6,7 +6,7 @@ import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.library.GeneralCodingRules
 
 @Suppress("VariableNaming")
-@AnalyzeClasses(packages = ["com.barbzdev.f1elo"], importOptions = [DoNotIncludeTests::class])
+@AnalyzeClasses(packages = ["com.barbzdev.sportselo"], importOptions = [DoNotIncludeTests::class])
 class GeneralCodingRulesArchitectureShould {
   @ArchTest
   val `no classes should access standard streams` = GeneralCodingRules.NO_CLASSES_SHOULD_ACCESS_STANDARD_STREAMS
