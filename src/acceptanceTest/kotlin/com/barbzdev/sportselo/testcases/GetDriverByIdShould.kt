@@ -78,36 +78,6 @@ abstract class GetDriverByIdShould : AcceptanceTestConfiguration() {
             "value": 2000,
             "occurredOn": "1900-01-01"
           }
-        ],
-        "currentIRating": {
-          "value": 2000,
-          "occurredOn": "2023-04-30"
-        },
-        "highestIRating": {
-          "value": 2300,
-          "occurredOn": "2023-03-26"
-        },
-        "lowestIRating": {
-          "value": 1900,
-          "occurredOn": "2023-03-19"
-        },
-        "iratingRecord": [
-          {
-            "value": 2000,
-            "occurredOn": "2023-03-05"
-          },
-          {
-            "value": 1900,
-            "occurredOn": "2023-03-19"
-          },
-          {
-            "value": 2300,
-            "occurredOn": "2023-03-26"
-          },
-          {
-            "value": 2100,
-            "occurredOn": "2023-04-30"
-          }
         ]
       }
       """
