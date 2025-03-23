@@ -16,7 +16,7 @@ class DataControllerShould {
 
   @Test
   fun `start elo reprocessing`() {
-    val body = HttpReprocessEloRequest(iRating = true, elo = true)
+    val body = HttpReprocessEloRequest(elo = true)
 
     val response = dataController.startEloReprocessing(body)
 
