@@ -1,10 +1,10 @@
 package com.barbzdev.sportselo.infrastructure
 
 import com.barbzdev.sportselo.helper.DockerComposeHelper
+import com.barbzdev.sportselo.infrastructure.testcases.EloReprocessingEventListenerShould
 import com.barbzdev.sportselo.infrastructure.testcases.HttpJolpiF1RepositoryShould
 import com.barbzdev.sportselo.infrastructure.testcases.JpaDriverRepositoryShould
 import com.barbzdev.sportselo.infrastructure.testcases.JpaSeasonRepositoryShould
-import com.barbzdev.sportselo.infrastructure.testcases.EloReprocessingEventListenerShould
 import com.barbzdev.sportselo.infrastructure.testcases.SpringSeasonDomainEventPublisherShould
 import org.junit.jupiter.api.Nested
 import org.testcontainers.junit.jupiter.Container

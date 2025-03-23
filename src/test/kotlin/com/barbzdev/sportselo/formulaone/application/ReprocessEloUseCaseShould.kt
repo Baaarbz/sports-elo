@@ -4,11 +4,6 @@ import assertk.assertThat
 import assertk.assertions.isInstanceOf
 import com.barbzdev.sportselo.core.domain.exception.EloReprocessingFailedException
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonRequest
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonResponse
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonUseCase
-import com.barbzdev.sportselo.formulaone.application.ReprocessEloResponse
-import com.barbzdev.sportselo.formulaone.application.ReprocessEloUseCase
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
 import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear

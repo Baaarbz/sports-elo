@@ -5,7 +5,6 @@ import assertk.assertions.containsOnly
 import assertk.assertions.isEqualTo
 import com.barbzdev.sportselo.core.domain.valueobject.Elo
 import com.barbzdev.sportselo.core.domain.valueobject.OccurredOn
-import com.barbzdev.sportselo.formulaone.domain.Driver
 import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.Nationality.BRITISH
 import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.Nationality.DUTCH
 import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.Nationality.FINNISH

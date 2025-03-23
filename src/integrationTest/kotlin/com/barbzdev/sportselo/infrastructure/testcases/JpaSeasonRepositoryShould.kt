@@ -11,14 +11,11 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 abstract class JpaSeasonRepositoryShould : IntegrationTestConfiguration() {
-  @Autowired
-  private lateinit var repository: JpaSeasonRepository
+  @Autowired private lateinit var repository: JpaSeasonRepository
 
-  @Autowired
-  private lateinit var datasource: JpaSeasonDatasource
+  @Autowired private lateinit var datasource: JpaSeasonDatasource
 
-  @Autowired
-  private lateinit var seasonMapper: SeasonMapper
+  @Autowired private lateinit var seasonMapper: SeasonMapper
 
   @Test
   fun `save a season`() {
@@ -67,10 +64,10 @@ abstract class JpaSeasonRepositoryShould : IntegrationTestConfiguration() {
 
   private fun givenASeasonInDatabase(): Season = aSeason().also { repository.save(it) }
 
-
   private fun verifySeasonWasSaved(expectedSeasonSaved: Season) {
-    val seasonEntity = datasource.findByYearWithRaces(expectedSeasonSaved.year().value)
-      ?: throw IllegalStateException("Season not found")
+    val seasonEntity =
+      datasource.findByYearWithRaces(expectedSeasonSaved.year().value)
+        ?: throw IllegalStateException("Season not found")
     val racesWithResults = datasource.findRaceResultsBySeasonId(seasonEntity.id)
 
     val raceMap = racesWithResults.associateBy { it.id }

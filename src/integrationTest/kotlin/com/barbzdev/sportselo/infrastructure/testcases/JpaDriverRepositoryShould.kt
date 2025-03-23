@@ -5,7 +5,6 @@ import com.barbzdev.sportselo.core.domain.util.Page
 import com.barbzdev.sportselo.core.domain.util.PageSize
 import com.barbzdev.sportselo.core.domain.util.SortBy
 import com.barbzdev.sportselo.core.domain.util.SortOrder
-import com.barbzdev.sportselo.core.domain.valueobject.SportsmanId
 import com.barbzdev.sportselo.formulaone.domain.Driver
 import com.barbzdev.sportselo.formulaone.factory.DriverFactory.aDriver
 import com.barbzdev.sportselo.formulaone.factory.DriverFactory.hamilton
@@ -14,20 +13,16 @@ import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverRepository
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.mapper.DriverMapper
 import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
-import jakarta.transaction.Transactional
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
-  @Autowired
-  private lateinit var repository: JpaDriverRepository
+  @Autowired private lateinit var repository: JpaDriverRepository
 
-  @Autowired
-  private lateinit var datasource: JpaDriverDatasource
+  @Autowired private lateinit var datasource: JpaDriverDatasource
 
-  @Autowired
-  private lateinit var driverMapper: DriverMapper
+  @Autowired private lateinit var driverMapper: DriverMapper
 
   @Test
   fun `save a driver`() {
@@ -59,8 +54,7 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
         page = 0,
         pageSize = 1,
         totalElements = drivers.totalElements,
-        totalPages = drivers.totalPages
-      )
+        totalPages = drivers.totalPages)
     assertThat(drivers).isEqualTo(expected)
   }
 

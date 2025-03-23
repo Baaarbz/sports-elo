@@ -24,65 +24,66 @@ class SeasonMapper(
     val driverCache = mutableMapOf<String, DriverEntity>()
     val constructorCache = mutableMapOf<String, ConstructorEntity>()
 
-    val seasonEntity = SeasonEntity(
-      id = domain.id().value,
-      year = domain.year().value,
-      infoUrl = domain.infoUrl().value,
-      races = emptyList()
-    )
+    val seasonEntity =
+      SeasonEntity(
+        id = domain.id().value, year = domain.year().value, infoUrl = domain.infoUrl().value, races = emptyList())
 
     val racesEntityMap = mutableMapOf<String, RaceEntity>()
-    val racesEntity = domain.races().map { race ->
-      val raceEntity = RaceEntity(
-        id = race.id().value,
-        season = seasonEntity,
-        round = race.round().value,
-        circuit = circuitMapper.toEntity(race.circuit()),
-        infoUrl = race.infoUrl().value,
-        occurredOn = race.occurredOn().date.toLocalDate(),
-        name = race.name().value,
-        raceResults = emptyList()
-      )
-      racesEntityMap[race.id().value] = raceEntity
-      raceEntity
-    }
-
-    val raceResultsEntity = domain.races().flatMap { race ->
-      race.results().map { raceResult ->
-        val driverEntity = driverCache.getOrPut(raceResult.driver.id().value) {
-          driverMapper.toEntity(raceResult.driver)
-        }
-
-        val constructorEntity = constructorCache.getOrPut(raceResult.constructor.id().value) {
-          constructorMapper.toEntity(raceResult.constructor)
-        }
-
-        RaceResultEntity(
-          id = raceResult.id,
-          driver = driverEntity,
-          constructor = constructorEntity,
-          grid = raceResult.grid,
-          laps = raceResult.laps,
-          number = raceResult.number,
-          points = raceResult.points,
-          position = raceResult.position,
-          status = raceResult.status.text,
-          timeInMillis = raceResult.timeInMillis,
-          race = racesEntityMap[race.id().value]!!,
-          fastestLapInMillis = raceResult.fastestLapInMillis,
-          averageSpeed = raceResult.averageSpeed,
-          averageSpeedUnit = raceResult.averageSpeedUnit,
-        )
+    val racesEntity =
+      domain.races().map { race ->
+        val raceEntity =
+          RaceEntity(
+            id = race.id().value,
+            season = seasonEntity,
+            round = race.round().value,
+            circuit = circuitMapper.toEntity(race.circuit()),
+            infoUrl = race.infoUrl().value,
+            occurredOn = race.occurredOn().date.toLocalDate(),
+            name = race.name().value,
+            raceResults = emptyList())
+        racesEntityMap[race.id().value] = raceEntity
+        raceEntity
       }
-    }
 
-    val updatedRaceEntity = racesEntity.map { raceEntity ->
-      val raceResultsForThisRace = raceResultsEntity.filter { it.race.id == raceEntity.id }
-      raceEntity.copy(raceResults = raceResultsForThisRace)
-    }
+    val raceResultsEntity =
+      domain.races().flatMap { race ->
+        race.results().map { raceResult ->
+          val driverEntity =
+            driverCache.getOrPut(raceResult.driver.id().value) { driverMapper.toEntity(raceResult.driver) }
+
+          val constructorEntity =
+            constructorCache.getOrPut(raceResult.constructor.id().value) {
+              constructorMapper.toEntity(raceResult.constructor)
+            }
+
+          RaceResultEntity(
+            id = raceResult.id,
+            driver = driverEntity,
+            constructor = constructorEntity,
+            grid = raceResult.grid,
+            laps = raceResult.laps,
+            number = raceResult.number,
+            points = raceResult.points,
+            position = raceResult.position,
+            status = raceResult.status.text,
+            timeInMillis = raceResult.timeInMillis,
+            race = racesEntityMap[race.id().value]!!,
+            fastestLapInMillis = raceResult.fastestLapInMillis,
+            averageSpeed = raceResult.averageSpeed,
+            averageSpeedUnit = raceResult.averageSpeedUnit,
+          )
+        }
+      }
+
+    val updatedRaceEntity =
+      racesEntity.map { raceEntity ->
+        val raceResultsForThisRace = raceResultsEntity.filter { it.race.id == raceEntity.id }
+        raceEntity.copy(raceResults = raceResultsForThisRace)
+      }
 
     return seasonEntity.copy(races = updatedRaceEntity)
   }
+
   override fun toDomain(entity: SeasonEntity): Season {
     val circuitCache = mutableMapOf<String, Circuit>()
     val driverCache = mutableMapOf<String, Driver>()
@@ -92,46 +93,43 @@ class SeasonMapper(
 
     val races = mutableListOf<Race>()
     entity.races.forEach { raceEntity ->
-      val circuit = circuitCache.getOrPut(raceEntity.circuit.id) {
-        circuitMapper.toDomain(raceEntity.circuit)
-      }
+      val circuit = circuitCache.getOrPut(raceEntity.circuit.id) { circuitMapper.toDomain(raceEntity.circuit) }
 
-      val race = Race.create(
-        id = raceEntity.id,
-        round = raceEntity.round,
-        name = raceEntity.name,
-        infoUrl = raceEntity.infoUrl,
-        occurredOn = raceEntity.occurredOn.toString(),
-        circuit = circuit,
-        results = emptyList()
-      )
+      val race =
+        Race.create(
+          id = raceEntity.id,
+          round = raceEntity.round,
+          name = raceEntity.name,
+          infoUrl = raceEntity.infoUrl,
+          occurredOn = raceEntity.occurredOn.toString(),
+          circuit = circuit,
+          results = emptyList())
 
       val raceResults = mutableListOf<RaceResult>()
 
       raceEntity.raceResults.forEach { resultEntity ->
-        val driver = driverCache.getOrPut(resultEntity.driver.id) {
-          driverMapper.toDomain(resultEntity.driver)
-        }
+        val driver = driverCache.getOrPut(resultEntity.driver.id) { driverMapper.toDomain(resultEntity.driver) }
 
-        val constructor = constructorCache.getOrPut(resultEntity.constructor.id) {
-          constructorMapper.toDomain(resultEntity.constructor)
-        }
+        val constructor =
+          constructorCache.getOrPut(resultEntity.constructor.id) {
+            constructorMapper.toDomain(resultEntity.constructor)
+          }
 
-        val raceResult = RaceResult(
-          id = resultEntity.id,
-          driver = driver,
-          constructor = constructor,
-          position = resultEntity.position,
-          number = resultEntity.number,
-          grid = resultEntity.grid,
-          points = resultEntity.points,
-          laps = resultEntity.laps,
-          status = RaceResultStatus.fromText(resultEntity.status),
-          timeInMillis = resultEntity.timeInMillis,
-          fastestLapInMillis = resultEntity.fastestLapInMillis,
-          averageSpeed = resultEntity.averageSpeed,
-          averageSpeedUnit = resultEntity.averageSpeedUnit
-        )
+        val raceResult =
+          RaceResult(
+            id = resultEntity.id,
+            driver = driver,
+            constructor = constructor,
+            position = resultEntity.position,
+            number = resultEntity.number,
+            grid = resultEntity.grid,
+            points = resultEntity.points,
+            laps = resultEntity.laps,
+            status = RaceResultStatus.fromText(resultEntity.status),
+            timeInMillis = resultEntity.timeInMillis,
+            fastestLapInMillis = resultEntity.fastestLapInMillis,
+            averageSpeed = resultEntity.averageSpeed,
+            averageSpeedUnit = resultEntity.averageSpeedUnit)
         raceResults.add(raceResult)
       }
       val sortedResults = raceResults.sortedBy { it.position }

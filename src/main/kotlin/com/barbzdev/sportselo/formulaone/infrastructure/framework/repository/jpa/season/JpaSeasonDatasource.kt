@@ -16,7 +16,8 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface JpaSeasonDatasource : JpaRepository<SeasonEntity, String> {
-  @Query("""
+  @Query(
+    """
     SELECT DISTINCT s
     FROM SeasonEntity s
     LEFT JOIN FETCH s.races r
@@ -26,7 +27,8 @@ interface JpaSeasonDatasource : JpaRepository<SeasonEntity, String> {
   """)
   fun findLastSeasonWithRaces(): SeasonEntity?
 
-  @Query("""
+  @Query(
+    """
     SELECT DISTINCT r
     FROM RaceEntity r
     LEFT JOIN FETCH r.raceResults rs
@@ -36,7 +38,8 @@ interface JpaSeasonDatasource : JpaRepository<SeasonEntity, String> {
   """)
   fun findRaceResultsBySeasonId(seasonId: String): List<RaceEntity>
 
-  @Query("""
+  @Query(
+    """
     SELECT DISTINCT s
     FROM SeasonEntity s
     LEFT JOIN FETCH s.races r
@@ -67,7 +70,9 @@ data class RaceEntity(
   val round: Int,
   @Column(name = "info_url") val infoUrl: String,
   val name: String,
-  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE]) @JoinColumn(name = "circuit_id") val circuit: CircuitEntity,
+  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+  @JoinColumn(name = "circuit_id")
+  val circuit: CircuitEntity,
   @Column(name = "occurred_on") val occurredOn: LocalDate,
   @OneToMany(mappedBy = "race", cascade = [CascadeType.ALL], orphanRemoval = true)
   val raceResults: List<RaceResultEntity>,
@@ -82,11 +87,15 @@ data class RaceEntity(
 data class RaceResultEntity(
   @Id val id: String,
   @ManyToOne @JoinColumn(name = "race_id") val race: RaceEntity,
-  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE]) @JoinColumn(name = "driver_id") val driver: DriverEntity,
+  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+  @JoinColumn(name = "driver_id")
+  val driver: DriverEntity,
   val position: Int,
   val number: String,
   val points: Float,
-  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE]) @JoinColumn(name = "constructor_id") val constructor: ConstructorEntity,
+  @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+  @JoinColumn(name = "constructor_id")
+  val constructor: ConstructorEntity,
   val grid: Int,
   val laps: Int,
   val status: String,

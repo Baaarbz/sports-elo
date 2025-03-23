@@ -5,9 +5,6 @@ import assertk.assertions.isInstanceOf
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
 import com.barbzdev.sportselo.core.domain.service.EloCalculator
 import com.barbzdev.sportselo.core.domain.valueobject.Elo
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonRequest
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonResponse
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonUseCase
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
 import com.barbzdev.sportselo.formulaone.factory.SeasonFactory.aSeason

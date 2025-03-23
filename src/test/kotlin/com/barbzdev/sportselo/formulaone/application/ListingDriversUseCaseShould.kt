@@ -9,11 +9,6 @@ import com.barbzdev.sportselo.core.domain.util.Page
 import com.barbzdev.sportselo.core.domain.util.PageSize
 import com.barbzdev.sportselo.core.domain.util.SortBy
 import com.barbzdev.sportselo.core.domain.util.SortOrder
-import com.barbzdev.sportselo.formulaone.application.ListingDriver
-import com.barbzdev.sportselo.formulaone.application.ListingDriverFullName
-import com.barbzdev.sportselo.formulaone.application.ListingDriversRequest
-import com.barbzdev.sportselo.formulaone.application.ListingDriversResponse
-import com.barbzdev.sportselo.formulaone.application.ListingDriversUseCase
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.factory.DriverFactory.aDriver
 import com.barbzdev.sportselo.observability.instrumentationMock

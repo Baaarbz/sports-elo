@@ -4,12 +4,6 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
-import com.barbzdev.sportselo.formulaone.application.GetDriverByIdElo
-import com.barbzdev.sportselo.formulaone.application.GetDriverByIdFullName
-import com.barbzdev.sportselo.formulaone.application.GetDriverByIdNationality
-import com.barbzdev.sportselo.formulaone.application.GetDriverByIdRequest
-import com.barbzdev.sportselo.formulaone.application.GetDriverByIdResponse
-import com.barbzdev.sportselo.formulaone.application.GetDriverByIdUseCase
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.factory.DriverFactory.aDriver
 import com.barbzdev.sportselo.observability.instrumentationMock

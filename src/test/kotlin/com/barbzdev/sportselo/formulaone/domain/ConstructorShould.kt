@@ -1,6 +1,5 @@
 package com.barbzdev.sportselo.formulaone.domain
 
-import com.barbzdev.sportselo.formulaone.domain.Constructor
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
