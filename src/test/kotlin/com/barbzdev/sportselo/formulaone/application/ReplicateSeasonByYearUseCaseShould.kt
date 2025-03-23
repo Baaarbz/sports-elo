@@ -4,8 +4,6 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
-import com.barbzdev.sportselo.formulaone.application.GatherRacesBySeasonResponse
-import com.barbzdev.sportselo.formulaone.application.ReplicateSeasonByYearUseCase
 import com.barbzdev.sportselo.formulaone.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.F1Repository
@@ -44,7 +42,7 @@ class ReplicateSeasonByYearUseCaseShould {
 
     val result = replicateSeasonByYearUseCase.invoke()
 
-    assertThat(result).isInstanceOf(GatherRacesBySeasonResponse.NonExistent::class)
+    assertThat(result).isInstanceOf(ReplicateSeasonByYearResponse.NonExistent::class)
     verify(exactly = 1) {
       seasonRepository.getLastYearLoaded()
       f1Repository.gatherAllSeasons()
@@ -64,7 +62,7 @@ class ReplicateSeasonByYearUseCaseShould {
 
     val result = replicateSeasonByYearUseCase.invoke()
 
-    assertThat(result).isInstanceOf(GatherRacesBySeasonResponse.UpToDate::class)
+    assertThat(result).isInstanceOf(ReplicateSeasonByYearResponse.UpToDate::class)
     verify(exactly = 1) {
       seasonRepository.getLastYearLoaded()
       f1Repository.gatherAllSeasons()
@@ -85,12 +83,11 @@ class ReplicateSeasonByYearUseCaseShould {
     every { f1Repository.gatherAllSeasons() } returns f1Seasons
     every { f1Repository.gatherRacesBySeason(any()) } returns RaceFactory.aF1RacesFrom(aSeasonToLoad)
     every { driverRepository.findBy(any()) } returns null
-    every { driverRepository.save(any()) } just Runs
     every { seasonRepository.save(any()) } just Runs
 
     val result = replicateSeasonByYearUseCase.invoke()
 
-    assertThat(result).isInstanceOf(GatherRacesBySeasonResponse.Success::class)
+    assertThat(result).isInstanceOf(ReplicateSeasonByYearResponse.Success::class)
     verifyOrder {
       seasonRepository.getLastYearLoaded()
       f1Repository.gatherAllSeasons()
@@ -112,12 +109,11 @@ class ReplicateSeasonByYearUseCaseShould {
     every { f1Repository.gatherAllSeasons() } returns f1Seasons
     every { f1Repository.gatherRacesBySeason(any()) } returns RaceFactory.aF1RacesFrom(aSeasonToLoad)
     every { driverRepository.findBy(any()) } returns null
-    every { driverRepository.save(any()) } just Runs
     every { seasonRepository.save(any()) } just Runs
 
     val result = replicateSeasonByYearUseCase.invoke()
 
-    assertThat(result).isInstanceOf(GatherRacesBySeasonResponse.Success::class)
+    assertThat(result).isInstanceOf(ReplicateSeasonByYearResponse.Success::class)
     verify {
       seasonRepository.save(withArg { savedSeason -> assertThat(savedSeason.year()).isEqualTo(aSeasonToLoad.year()) })
     }

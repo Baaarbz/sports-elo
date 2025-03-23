@@ -25,16 +25,16 @@ class ReplicateSeasonByYearUseCase(
   private val instrumentation: UseCaseInstrumentation
 ) {
 
-  operator fun invoke(): GatherRacesBySeasonResponse = instrumentation {
-    val seasonToLoad = getSeasonToLoad() ?: return@instrumentation GatherRacesBySeasonResponse.NonExistent
+  operator fun invoke(): ReplicateSeasonByYearResponse = instrumentation {
+    val seasonToLoad = getSeasonToLoad() ?: return@instrumentation ReplicateSeasonByYearResponse.NonExistent
 
     if (seasonToLoad.isCurrentSeason()) {
-      return@instrumentation GatherRacesBySeasonResponse.UpToDate
+      return@instrumentation ReplicateSeasonByYearResponse.UpToDate
     }
 
     seasonToLoad.loadF1RacesOfSeason().toDomain().saveSeasonLoaded(seasonToLoad).publishSeasonLoadedDomainEvent()
 
-    GatherRacesBySeasonResponse.Success
+    ReplicateSeasonByYearResponse.Success
   }
 
   private fun List<Race>.saveSeasonLoaded(seasonToLoad: Season): Season {
@@ -93,9 +93,6 @@ class ReplicateSeasonByYearUseCase(
           nationality = nationality,
           infoUrl = url,
           debutDate = raceDate)
-        .saveIt()
-
-  private fun Driver.saveIt() = driverRepository.save(this).let { this }
 
   private fun F1Circuit.toCircuit() =
     Circuit.create(
@@ -118,10 +115,10 @@ class ReplicateSeasonByYearUseCase(
   }
 }
 
-sealed class GatherRacesBySeasonResponse {
-  data object UpToDate : GatherRacesBySeasonResponse()
+sealed class ReplicateSeasonByYearResponse {
+  data object UpToDate : ReplicateSeasonByYearResponse()
 
-  data object Success : GatherRacesBySeasonResponse()
+  data object Success : ReplicateSeasonByYearResponse()
 
-  data object NonExistent : GatherRacesBySeasonResponse()
+  data object NonExistent : ReplicateSeasonByYearResponse()
 }
