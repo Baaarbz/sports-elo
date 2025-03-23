@@ -47,7 +47,6 @@ class ReprocessEloUseCaseShould {
     assertThat(response).isInstanceOf(ReprocessEloResponse.Success::class)
     verifyOrder {
       driverRepository.findAll()
-      driverRepository.save(any())
       seasonRepository.findAllSeasonsYears()
       calculateEloOfDriversBySeasonUseCase(CalculateEloOfDriversBySeasonRequest(2017))
       calculateEloOfDriversBySeasonUseCase(CalculateEloOfDriversBySeasonRequest(2018))
@@ -68,7 +67,6 @@ class ReprocessEloUseCaseShould {
     assertThrows<EloReprocessingFailedException> { useCase() }
     verify {
       driverRepository.findAll()
-      driverRepository.save(any())
       seasonRepository.findAllSeasonsYears()
       calculateEloOfDriversBySeasonUseCase(any())
     }

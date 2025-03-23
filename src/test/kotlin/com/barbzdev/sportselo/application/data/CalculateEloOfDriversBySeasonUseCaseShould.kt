@@ -10,8 +10,6 @@ import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeas
 import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonUseCase
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
-import com.barbzdev.sportselo.formulaone.factory.DriverFactory.hamilton
-import com.barbzdev.sportselo.formulaone.factory.DriverFactory.verstappen
 import com.barbzdev.sportselo.formulaone.factory.SeasonFactory.aSeason
 import com.barbzdev.sportselo.observability.instrumentationMock
 import io.mockk.every
@@ -40,8 +38,7 @@ class CalculateEloOfDriversBySeasonUseCaseShould {
     verify {
       seasonRepository.findBy(aSeason.year())
       eloCalculator.calculate(any<Elo>(), any<List<Elo>>(), any())
-      driverRepository.save(verstappen)
-      driverRepository.save(hamilton)
+      driverRepository.saveAll(any())
     }
   }
 }

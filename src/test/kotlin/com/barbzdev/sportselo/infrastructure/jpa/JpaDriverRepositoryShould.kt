@@ -22,21 +22,21 @@ class JpaDriverRepositoryShould {
   @Test
   fun `return a driver by id`() {
     val aDriver = aDriver()
-    every { driverDatasource.findById(any()) } returns Optional.of(driverMapper.toEntity(aDriver))
+    every { driverDatasource.findByIdJoinDriverEloHistory(any()) } returns Optional.of(driverMapper.toEntity(aDriver))
 
     val response = jpaDriverRepository.findBy(aDriver.id())
 
-    verify { driverDatasource.findById(aDriver.id().value) }
+    verify { driverDatasource.findByIdJoinDriverEloHistory(aDriver.id().value) }
     assertThat(response).isEqualTo(aDriver)
   }
 
   @Test
   fun `return null if driver does not exists`() {
-    every { driverDatasource.findById(any()) } returns Optional.empty()
+    every { driverDatasource.findByIdJoinDriverEloHistory(any()) } returns Optional.empty()
 
     val response = jpaDriverRepository.findBy(SportsmanId("non_existent"))
 
-    verify(exactly = 1) { driverDatasource.findById("non_existent") }
+    verify(exactly = 1) { driverDatasource.findByIdJoinDriverEloHistory("non_existent") }
     assertThat(response).isEqualTo(null)
   }
 }

@@ -37,7 +37,7 @@ class RaceShould {
       assertThat(aRace.infoUrl().value).isEqualTo("https://en.wikipedia.org/wiki/2023_Australian_Grand_Prix")
       assertThat(aRace.name().value).isEqualTo("Australian Grand Prix")
       assertThat(aRace.circuit()).isEqualTo(aCircuit)
-      assertThat(aRace.occurredOn().date).isEqualTo("2010-03-28")
+      assertThat(aRace.occurredOn().date.value).isEqualTo("2010-03-28")
       assertThat(aRace.results()).isEmpty()
       assertThat(aRace.id()).isNotNull()
     }
@@ -45,8 +45,7 @@ class RaceShould {
 
   @Test
   fun `add a result to a race`() {
-    val aDriver =
-      Driver.createRookie(
+    val aDriver =      Driver.createRookie(
         id = "michael_schumacher",
         givenName = "German",
         familyName = "Schumacher",
@@ -55,32 +54,28 @@ class RaceShould {
         birthDate = "1969-01-03",
         nationality = "German",
         infoUrl = "http://en.wikipedia.org/wiki/Michael_Schumacher",
-        debutDate = "1991-08-25")
-    val aConstructor =
-      Constructor.create(
+        debutDate = "1991-08-25",)
+    val aConstructor =      Constructor.create(
         id = "ferrari",
         name = "Ferrari",
         nationality = "Italian",
-        infoUrl = "http://en.wikipedia.org/wiki/Scuderia_Ferrari")
-    val aCircuit =
-      Circuit.create(
+        infoUrl = "http://en.wikipedia.org/wiki/Scuderia_Ferrari",)
+    val aCircuit =      Circuit.create(
         id = "albert_park",
         name = "Albert Park",
         latitude = "-37.8497",
         longitude = "144.968",
         country = "Australia",
         locality = "Melbourne",
-        infoUrl = "https://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit")
-    val aRace =
-      Race.create(
+        infoUrl = "https://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit",)
+    val aRace =      Race.create(
         round = 1,
         infoUrl = "https://en.wikipedia.org/wiki/2023_Australian_Grand_Prix",
         name = "Australian Grand Prix",
         circuit = aCircuit,
-        occurredOn = "2010-03-28")
+        occurredOn = "2010-03-28",)
 
-    val updatedRace =
-      aRace.addResult(
+    val updatedRace =      aRace.addResult(
         number = "7",
         driver = aDriver,
         position = 1,
@@ -92,7 +87,7 @@ class RaceShould {
         timeInMillis = 6000000,
         fastestLapInMillis = 60000,
         averageSpeed = 200f,
-        averageSpeedUnit = "kph")
+        averageSpeedUnit = "kph",)
 
     assertThat(updatedRace.results().size).isEqualTo(1)
     assertThat(updatedRace.results().first().driver).isEqualTo(aDriver)

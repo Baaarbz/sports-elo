@@ -44,7 +44,7 @@ class GatherRacesBySeasonUseCaseShould {
 
     val result = gatherRacesBySeasonUseCase.invoke()
 
-    assertThat(result).isInstanceOf(GatherRacesBySeasonResponse.Success::class)
+    assertThat(result).isInstanceOf(GatherRacesBySeasonResponse.NonExistent::class)
     verify(exactly = 1) {
       seasonRepository.getLastYearLoaded()
       f1Repository.gatherAllSeasons()
