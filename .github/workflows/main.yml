@@ -144,6 +144,6 @@ jobs:
             export POSTGRES_USER=$POSTGRES_USER
             export AUTH_USERNAME=$AUTH_USERNAME
             export AUTH_PASSWORD=$AUTH_PASSWORD
-            git clone https://baaarbz:${{ secrets.GITHUB_TOKEN }}@github.com/Baaarbz/f1-elo.git
-            sh f1-elo/deploy/deploy.sh
-            rm -rf f1-elo
+            git clone https://baaarbz:${{ secrets.GITHUB_TOKEN }}@github.com/Baaarbz/sports-elo.git
+            sh sports-elo/deploy/deploy.sh
+            rm -rf sports-elo
