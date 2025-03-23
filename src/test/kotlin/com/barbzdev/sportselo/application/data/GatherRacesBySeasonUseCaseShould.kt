@@ -3,20 +3,18 @@ package com.barbzdev.sportselo.application
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
-import com.barbzdev.sportselo.formulaone.application.GatherRacesBySeasonSuccess
-import com.barbzdev.sportselo.formulaone.application.GatherRacesBySeasonUpToDate
-import com.barbzdev.sportselo.formulaone.application.GatherRacesBySeasonUseCase
-import com.barbzdev.sportselo.formulaone.application.GatherRacesOverASeasonNonExistent
-import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear
-import com.barbzdev.sportselo.formulaone.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
+import com.barbzdev.sportselo.formulaone.application.GatherRacesBySeasonResponse
+import com.barbzdev.sportselo.formulaone.application.GatherRacesBySeasonUseCase
+import com.barbzdev.sportselo.formulaone.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.F1Repository
 import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
-import com.barbzdev.sportselo.factory.RaceFactory
-import com.barbzdev.sportselo.factory.SeasonFactory.aF1Season
-import com.barbzdev.sportselo.factory.SeasonFactory.aSeason
-import com.barbzdev.sportselo.factory.SeasonFactory.f1Seasons
+import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear
+import com.barbzdev.sportselo.formulaone.factory.RaceFactory
+import com.barbzdev.sportselo.formulaone.factory.SeasonFactory.aF1Season
+import com.barbzdev.sportselo.formulaone.factory.SeasonFactory.aSeason
+import com.barbzdev.sportselo.formulaone.factory.SeasonFactory.f1Seasons
 import com.barbzdev.sportselo.observability.instrumentationMock
 import io.mockk.Runs
 import io.mockk.every
@@ -46,7 +44,7 @@ class GatherRacesBySeasonUseCaseShould {
 
     val result = gatherRacesBySeasonUseCase.invoke()
 
-    assertThat(result).isInstanceOf(GatherRacesOverASeasonNonExistent::class)
+    assertThat(result).isInstanceOf(GatherRacesBySeasonResponse.Success::class)
     verify(exactly = 1) {
       seasonRepository.getLastYearLoaded()
       f1Repository.gatherAllSeasons()
@@ -66,7 +64,7 @@ class GatherRacesBySeasonUseCaseShould {
 
     val result = gatherRacesBySeasonUseCase.invoke()
 
-    assertThat(result).isInstanceOf(GatherRacesBySeasonUpToDate::class)
+    assertThat(result).isInstanceOf(GatherRacesBySeasonResponse.UpToDate::class)
     verify(exactly = 1) {
       seasonRepository.getLastYearLoaded()
       f1Repository.gatherAllSeasons()
@@ -92,7 +90,7 @@ class GatherRacesBySeasonUseCaseShould {
 
     val result = gatherRacesBySeasonUseCase.invoke()
 
-    assertThat(result).isInstanceOf(GatherRacesBySeasonSuccess::class)
+    assertThat(result).isInstanceOf(GatherRacesBySeasonResponse.Success::class)
     verifyOrder {
       seasonRepository.getLastYearLoaded()
       f1Repository.gatherAllSeasons()
@@ -119,7 +117,7 @@ class GatherRacesBySeasonUseCaseShould {
 
     val result = gatherRacesBySeasonUseCase.invoke()
 
-    assertThat(result).isInstanceOf(GatherRacesBySeasonSuccess::class)
+    assertThat(result).isInstanceOf(GatherRacesBySeasonResponse.Success::class)
     verify {
       seasonRepository.save(withArg { savedSeason -> assertThat(savedSeason.year()).isEqualTo(aSeasonToLoad.year()) })
     }

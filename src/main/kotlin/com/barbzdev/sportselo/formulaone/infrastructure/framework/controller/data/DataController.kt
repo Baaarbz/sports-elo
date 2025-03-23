@@ -1,7 +1,6 @@
 package com.barbzdev.sportselo.formulaone.infrastructure.framework.controller.data
 
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.event.EloReprocessingEvent
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.event.IRatingReprocessingEvent
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,7 +14,6 @@ class DataController(private val eventPublisher: ApplicationEventPublisher) : Da
 
   @PostMapping("reprocess-ratings")
   override fun startRatingsReprocessing(@RequestBody body: HttpReprocessRatingsRequest): ResponseEntity<Unit> {
-    if (body.iRating) eventPublisher.publishEvent(IRatingReprocessingEvent)
     if (body.elo) eventPublisher.publishEvent(EloReprocessingEvent)
 
     return ResponseEntity.accepted().build()

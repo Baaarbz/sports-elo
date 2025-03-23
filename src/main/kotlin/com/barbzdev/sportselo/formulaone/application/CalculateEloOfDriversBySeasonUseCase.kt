@@ -32,9 +32,7 @@ class CalculateEloOfDriversBySeasonUseCase(
     val updatedDrivers = mutableListOf<Driver>()
     for (result in race.results()) {
       val driverToUpdate = result.driver
-      val rivalsElo = race.results()
-        .filter { it.driver != driverToUpdate }
-        .map { it.driver.currentElo() }
+      val rivalsElo = race.results().filter { it.driver != driverToUpdate }.map { it.driver.currentElo() }
 
       val eloDelta = eloCalculator.calculate(driverToUpdate.currentElo(), rivalsElo, result.position)
       updatedDrivers.add(driverToUpdate.updateElo(eloDelta, race.occurredOn().date.value))
@@ -48,5 +46,6 @@ data class CalculateEloOfDriversBySeasonRequest(val season: Int)
 
 sealed class CalculateEloOfDriversBySeasonResponse {
   data object SeasonNotFound : CalculateEloOfDriversBySeasonResponse()
+
   data object Success : CalculateEloOfDriversBySeasonResponse()
 }

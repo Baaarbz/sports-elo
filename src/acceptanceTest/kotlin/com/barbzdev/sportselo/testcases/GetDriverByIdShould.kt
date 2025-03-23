@@ -1,7 +1,7 @@
 package com.barbzdev.sportselo.testcases
 
 import com.barbzdev.sportselo.AcceptanceTestConfiguration
-import com.barbzdev.sportselo.factory.DriverFactory.hamilton
+import com.barbzdev.sportselo.formulaone.factory.DriverFactory.hamilton
 import io.restassured.RestAssured.given
 import io.restassured.http.ContentType
 import org.intellij.lang.annotations.Language

@@ -70,10 +70,7 @@ data class DriverEntity(
 @IdClass(DriverEloHistoryId::class)
 @Table(name = "drivers_elo_history")
 data class DriverEloHistoryEntity(
-  @Id
-  @ManyToOne
-  @JoinColumn(name = "driver_id")
-  val driver: DriverEntity,
+  @Id @ManyToOne @JoinColumn(name = "driver_id") val driver: DriverEntity,
   @Id val elo: Int,
   @Id @Column(name = "occurred_on") val occurredOn: LocalDate,
 )

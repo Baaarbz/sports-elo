@@ -3,15 +3,16 @@ package com.barbzdev.sportselo.application.data
 import assertk.assertThat
 import assertk.assertions.isInstanceOf
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
+import com.barbzdev.sportselo.core.domain.service.EloCalculator
+import com.barbzdev.sportselo.core.domain.valueobject.Elo
+import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonRequest
+import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonResponse
+import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonUseCase
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
-import com.barbzdev.sportselo.core.domain.service.EloCalculator
-import com.barbzdev.sportselo.factory.DriverFactory.hamilton
-import com.barbzdev.sportselo.factory.DriverFactory.verstappen
-import com.barbzdev.sportselo.factory.SeasonFactory.aSeason
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonRequest
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonUseCase
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversOfBySeasonSuccess
+import com.barbzdev.sportselo.formulaone.factory.DriverFactory.hamilton
+import com.barbzdev.sportselo.formulaone.factory.DriverFactory.verstappen
+import com.barbzdev.sportselo.formulaone.factory.SeasonFactory.aSeason
 import com.barbzdev.sportselo.observability.instrumentationMock
 import io.mockk.every
 import io.mockk.mockk
@@ -30,16 +31,15 @@ class CalculateEloOfDriversBySeasonUseCaseShould {
   @Test
   fun `calculate elo of drivers when season is found`() {
     val aSeason = aSeason()
-    val drivers = listOf(verstappen, hamilton)
     every { seasonRepository.findBy(any()) } returns aSeason
-    every { eloCalculator.calculateEloRatingsByPosition(any(), any()) } returns drivers
+    every { eloCalculator.calculate(any<Elo>(), any<List<Elo>>(), any()) } returns 10
 
     val response = useCase(CalculateEloOfDriversBySeasonRequest(aSeason.year().value))
 
-    assertThat(response).isInstanceOf(CalculateEloOfDriversOfBySeasonSuccess::class)
+    assertThat(response).isInstanceOf(CalculateEloOfDriversBySeasonResponse.Success::class)
     verify {
       seasonRepository.findBy(aSeason.year())
-      eloCalculator.calculateEloRatingsByPosition(any(), any())
+      eloCalculator.calculate(any<Elo>(), any<List<Elo>>(), any())
       driverRepository.save(verstappen)
       driverRepository.save(hamilton)
     }

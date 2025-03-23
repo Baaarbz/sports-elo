@@ -1,10 +1,9 @@
 package com.barbzdev.sportselo.infrastructure.testcases
 
-import com.barbzdev.sportselo.factory.ConstructorFactory.aConstructor
-import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
-import com.barbzdev.sportselo.formulaone.infrastructure.jpa.JpaConstructorRepository
-import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMapper.toEntity
+import com.barbzdev.sportselo.formulaone.factory.ConstructorFactory.aConstructor
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.constructor.JpaConstructorDatasource
+import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMapper.toEntity
+import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

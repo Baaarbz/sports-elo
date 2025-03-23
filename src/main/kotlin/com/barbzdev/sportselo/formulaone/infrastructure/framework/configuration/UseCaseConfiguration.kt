@@ -4,9 +4,9 @@ import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
 import com.barbzdev.sportselo.core.domain.service.EloCalculator
 import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonUseCase
 import com.barbzdev.sportselo.formulaone.application.GatherRacesBySeasonUseCase
-import com.barbzdev.sportselo.formulaone.application.ReprocessEloUseCase
 import com.barbzdev.sportselo.formulaone.application.GetDriverByIdUseCase
 import com.barbzdev.sportselo.formulaone.application.ListingDriversUseCase
+import com.barbzdev.sportselo.formulaone.application.ReprocessEloUseCase
 import com.barbzdev.sportselo.formulaone.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.F1Repository
@@ -25,8 +25,7 @@ class UseCaseConfiguration {
     useCaseInstrumentation: UseCaseInstrumentation
   ) =
     GatherRacesBySeasonUseCase(
-      f1Repository, seasonRepository, driverRepository, seasonDomainEventPublisher, useCaseInstrumentation
-    )
+      f1Repository, seasonRepository, driverRepository, seasonDomainEventPublisher, useCaseInstrumentation)
 
   @Bean
   fun calculateEloOfDriversBySeasonUseCase(
@@ -43,7 +42,6 @@ class UseCaseConfiguration {
   @Bean
   fun getDriverByIdUseCase(driverRepository: DriverRepository, useCaseInstrumentation: UseCaseInstrumentation) =
     GetDriverByIdUseCase(driverRepository, useCaseInstrumentation)
-
 
   @Bean
   fun reprocessEloUseCase(

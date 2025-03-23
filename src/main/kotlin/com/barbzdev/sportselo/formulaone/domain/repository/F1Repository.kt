@@ -14,14 +14,14 @@ data class F1Season(
 )
 
 data class F1Race(
-    val season: Int,
-    val round: Int,
-    val url: String,
-    val raceName: String,
-    val circuit: F1Circuit,
-    val date: String,
-    val time: String?,
-    val results: List<F1Result>
+  val season: Int,
+  val round: Int,
+  val url: String,
+  val raceName: String,
+  val circuit: F1Circuit,
+  val date: String,
+  val time: String?,
+  val results: List<F1Result>
 )
 
 data class F1Circuit(val circuitId: String, val url: String, val circuitName: String, val location: F1Location)
@@ -29,16 +29,16 @@ data class F1Circuit(val circuitId: String, val url: String, val circuitName: St
 data class F1Location(val lat: String, val long: String, val locality: String, val country: String)
 
 data class F1Result(
-    val number: String,
-    val position: String,
-    val points: Float,
-    val driver: F1Driver,
-    val constructor: F1Constructor,
-    val grid: Int,
-    val laps: Int,
-    val status: String,
-    val time: F1Time?,
-    val fastestLap: F1FastestLap?
+  val number: String,
+  val position: String,
+  val points: Float,
+  val driver: F1Driver,
+  val constructor: F1Constructor,
+  val grid: Int,
+  val laps: Int,
+  val status: String,
+  val time: F1Time?,
+  val fastestLap: F1FastestLap?
 )
 
 data class F1Driver(

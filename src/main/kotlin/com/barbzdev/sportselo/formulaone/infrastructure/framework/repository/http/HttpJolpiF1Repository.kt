@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.web.client.RestClient
 
 class HttpJolpiF1Repository(private val restClient: RestClient, private val jolpiF1Properties: JolpiF1Properties) :
-    F1Repository {
+  F1Repository {
   override fun gatherRacesBySeason(season: Season): List<F1Race> {
     val responses = mutableListOf<RaceResultResponse>()
     val limit = 100

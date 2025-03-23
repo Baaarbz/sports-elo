@@ -2,20 +2,19 @@ package com.barbzdev.sportselo.application.data
 
 import assertk.assertThat
 import assertk.assertions.isInstanceOf
-import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear
 import com.barbzdev.sportselo.core.domain.exception.EloReprocessingFailedException
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
+import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonRequest
+import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonResponse
+import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonUseCase
+import com.barbzdev.sportselo.formulaone.application.ReprocessEloResponse
+import com.barbzdev.sportselo.formulaone.application.ReprocessEloUseCase
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
-import com.barbzdev.sportselo.factory.DriverFactory.hamilton
-import com.barbzdev.sportselo.factory.DriverFactory.verstappen
-import com.barbzdev.sportselo.factory.SeasonFactory.aSeason
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonRequest
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversBySeasonUseCase
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversOfANonExistentSeason
-import com.barbzdev.sportselo.formulaone.application.CalculateEloOfDriversOfBySeasonSuccess
-import com.barbzdev.sportselo.formulaone.application.data.ReprocessEloSuccess
-import com.barbzdev.sportselo.formulaone.application.ReprocessEloUseCase
+import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear
+import com.barbzdev.sportselo.formulaone.factory.DriverFactory.hamilton
+import com.barbzdev.sportselo.formulaone.factory.DriverFactory.verstappen
+import com.barbzdev.sportselo.formulaone.factory.SeasonFactory.aSeason
 import com.barbzdev.sportselo.observability.instrumentationMock
 import io.mockk.every
 import io.mockk.just
@@ -39,13 +38,13 @@ class ReprocessEloUseCaseShould {
   fun `reprocess elo successfully`() {
     val seasons = listOf(SeasonYear(2021), SeasonYear(2022), SeasonYear(2017), SeasonYear(2018), SeasonYear(2023))
     every { seasonRepository.findAllSeasonsYears() } returns seasons
-    every { calculateEloOfDriversBySeasonUseCase(any()) } returns CalculateEloOfDriversOfBySeasonSuccess
+    every { calculateEloOfDriversBySeasonUseCase(any()) } returns CalculateEloOfDriversBySeasonResponse.Success
     every { driverRepository.findAll() } returns listOf(hamilton, verstappen)
     every { driverRepository.save(any()) } just runs
 
     val response = useCase()
 
-    assertThat(response).isInstanceOf(ReprocessEloSuccess::class)
+    assertThat(response).isInstanceOf(ReprocessEloResponse.Success::class)
     verifyOrder {
       driverRepository.findAll()
       driverRepository.save(any())
@@ -62,7 +61,7 @@ class ReprocessEloUseCaseShould {
   fun `throw EloReprocessingFailedException when reprocessing fails`() {
     val seasons = listOf(aSeason().year())
     every { seasonRepository.findAllSeasonsYears() } returns seasons
-    every { calculateEloOfDriversBySeasonUseCase(any()) } returns CalculateEloOfDriversOfANonExistentSeason
+    every { calculateEloOfDriversBySeasonUseCase(any()) } returns CalculateEloOfDriversBySeasonResponse.SeasonNotFound
     every { driverRepository.findAll() } returns listOf(hamilton, verstappen)
     every { driverRepository.save(any()) } just runs
 

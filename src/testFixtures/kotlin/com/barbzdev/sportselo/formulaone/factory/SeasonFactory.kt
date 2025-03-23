@@ -1,9 +1,9 @@
-package com.barbzdev.sportselo.factory
+package com.barbzdev.sportselo.formulaone.factory
 
 import com.barbzdev.sportselo.formulaone.domain.Season
 import com.barbzdev.sportselo.formulaone.domain.repository.F1Season
-import com.barbzdev.sportselo.factory.RaceFactory.raceOf2014
-import com.barbzdev.sportselo.factory.RaceFactory.races
+import com.barbzdev.sportselo.formulaone.factory.RaceFactory.raceOf2014
+import com.barbzdev.sportselo.formulaone.factory.RaceFactory.races
 
 object SeasonFactory {
   private val seasons =

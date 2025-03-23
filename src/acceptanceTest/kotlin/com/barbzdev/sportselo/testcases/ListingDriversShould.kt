@@ -1,7 +1,7 @@
 package com.barbzdev.sportselo.testcases
 
 import com.barbzdev.sportselo.AcceptanceTestConfiguration
-import com.barbzdev.sportselo.factory.SeasonFactory.seasonOf2014
+import com.barbzdev.sportselo.formulaone.factory.SeasonFactory.seasonOf2014
 import io.restassured.RestAssured.given
 import io.restassured.http.ContentType
 import org.intellij.lang.annotations.Language

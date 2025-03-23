@@ -9,6 +9,7 @@ import com.barbzdev.sportselo.formulaone.domain.Circuit
 import com.barbzdev.sportselo.formulaone.domain.Constructor
 import com.barbzdev.sportselo.formulaone.domain.Driver
 import com.barbzdev.sportselo.formulaone.domain.Race
+import com.barbzdev.sportselo.formulaone.domain.valueobject.race.RaceResultStatus
 import org.junit.jupiter.api.Test
 
 class RaceShould {

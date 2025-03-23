@@ -37,21 +37,21 @@ class ListingDriversUseCase(
   private fun DomainPaginated<Driver>.toResponse() =
     ListingDriversResponse.Success(
       drivers =
-      this.elements.map { driver ->
-        ListingDriver(
-          id = driver.id().value,
-          fullName = ListingDriverFullName(familyName = driver.fullName().familyName, givenName = driver.fullName().givenName),
-          currentElo = driver.currentElo().value,
-          highestElo = driver.highestElo().value,
-          lowestElo = driver.lowestElo().value,
-          lastRaceDate = driver.currentElo().occurredOn.toLocalDate(),
-        )
-      },
+        this.elements.map { driver ->
+          ListingDriver(
+            id = driver.id().value,
+            fullName =
+              ListingDriverFullName(familyName = driver.fullName().familyName, givenName = driver.fullName().givenName),
+            currentElo = driver.currentElo().value,
+            highestElo = driver.highestElo().value,
+            lowestElo = driver.lowestElo().value,
+            lastRaceDate = driver.currentElo().occurredOn.toLocalDate(),
+          )
+        },
       page = this.page,
       pageSize = this.pageSize,
       totalElements = this.totalElements,
-      totalPages = this.totalPages
-    )
+      totalPages = this.totalPages)
 
   private companion object {
     val SUPPORTED_PAGE_LIMIT = intArrayOf(10, 25, 50, 100)
@@ -65,7 +65,9 @@ data class ListingDriversRequest(val page: Int, val pageSize: Int, val sortBy: S
 
 sealed class ListingDriversResponse {
   data object BadRequest : ListingDriversResponse()
+
   data object BadSortingRequest : ListingDriversResponse()
+
   data class Success(
     val drivers: List<ListingDriver>,
     val page: Int,

@@ -24,9 +24,7 @@ class ReprocessEloUseCase(
 
   private fun resetEloOfAllDrivers() {
     val driversWithResetElo = mutableListOf<Driver>()
-    driverRepository.findAll().forEach {
-      driversWithResetElo.add(it.resetElo())
-    }
+    driverRepository.findAll().forEach { driversWithResetElo.add(it.resetElo()) }
   }
 
   private fun getAllExistingSeasonsYears() = seasonRepository.findAllSeasonsYears().sortedBy { it.value }

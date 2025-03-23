@@ -4,40 +4,22 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.barbzdev.sportselo.formulaone.domain.Season.Companion.create
 import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear
-import com.barbzdev.sportselo.formulaone.infrastructure.jpa.JpaSeasonRepository
-import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMapper.toEntity
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.circuit.JpaCircuitDatasource
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.constructor.JpaConstructorDatasource
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverDatasource
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverIRatingHistoryDatasource
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.race.JpaRaceResultDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.JpaSeasonDatasource
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.JpaSeasonRepository
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.mapper.CircuitMapper
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.mapper.ConstructorMapper
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.mapper.DriverMapper
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.mapper.SeasonMapper
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verifyOrder
+import io.mockk.verify
 import org.junit.jupiter.api.Test
 
 class JpaSeasonRepositoryShould {
   private val seasonDatasource: JpaSeasonDatasource = mockk()
-  private val raceDatasource: JpaRaceDatasource = mockk()
-  private val driverDatasource: JpaDriverDatasource = mockk(relaxed = true)
-  private val constructorDatasource: JpaConstructorDatasource = mockk(relaxed = true)
-  private val circuitDatasource: JpaCircuitDatasource = mockk(relaxed = true)
-  private val raceResultDatasource: JpaRaceResultDatasource = mockk(relaxed = true)
-  private val eloHistoryDatasource: JpaDriverEloHistoryDatasource = mockk(relaxed = true)
-  private val iRatingHistoryDatasource: JpaDriverIRatingHistoryDatasource = mockk(relaxed = true)
+  private val seasonMapper: SeasonMapper = SeasonMapper(CircuitMapper(), DriverMapper(), ConstructorMapper())
 
-  private val jpaSeasonRepository =
-    JpaSeasonRepository(
-      seasonDatasource,
-      raceDatasource,
-      driverDatasource,
-      constructorDatasource,
-      circuitDatasource,
-      raceResultDatasource,
-      eloHistoryDatasource,
-      iRatingHistoryDatasource,
-    )
+  private val jpaSeasonRepository = JpaSeasonRepository(seasonDatasource, seasonMapper)
 
   @Test
   fun `return the last season loaded`() {
@@ -50,16 +32,12 @@ class JpaSeasonRepositoryShould {
         create(2003, "https://www.url.com/season/2003"),
         expectedSeason)
     seasonsInDatasource.shuffle()
-    every { seasonDatasource.findAll() } returns seasonsInDatasource.map { it.toEntity() }
-    every { raceDatasource.findAllBySeason(any()) } returns emptyList()
+    every { seasonDatasource.findAll() } returns seasonsInDatasource.map { seasonMapper.toEntity(it) }
 
     val response = jpaSeasonRepository.getLastSeasonLoaded()
 
     assertThat(response).isEqualTo(expectedSeason)
-    verifyOrder {
-      seasonDatasource.findAll()
-      raceDatasource.findAllBySeason(expectedSeason.toEntity())
-    }
+    verify { seasonDatasource.findAll() }
   }
 
   @Test
@@ -82,12 +60,12 @@ class JpaSeasonRepositoryShould {
         create(2003, "https://www.url.com/season/2003"),
         expectedSeason)
     seasonsInDatasource.shuffle()
-    every { seasonDatasource.findAll() } returns seasonsInDatasource.map { it.toEntity() }
+    every { seasonDatasource.findAll() } returns seasonsInDatasource.map { seasonMapper.toEntity(it) }
 
     val response = jpaSeasonRepository.getLastYearLoaded()
 
     assertThat(response).isEqualTo(SeasonYear(2004))
-    verifyOrder { seasonDatasource.findAll() }
+    verify { seasonDatasource.findAll() }
   }
 
   @Test

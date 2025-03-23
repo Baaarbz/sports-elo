@@ -11,7 +11,6 @@ private constructor(
   private val year: SeasonYear,
   private val infoUrl: InfoUrl,
   private val races: List<Race>
-
 ) {
   fun id() = id
 

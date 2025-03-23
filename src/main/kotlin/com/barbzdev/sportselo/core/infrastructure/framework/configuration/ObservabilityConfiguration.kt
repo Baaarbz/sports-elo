@@ -1,7 +1,7 @@
 package com.barbzdev.sportselo.core.infrastructure.framework.configuration
 
-import com.barbzdev.sportselo.core.domain.observability.MetricClient
 import com.barbzdev.sportselo.core.domain.observability.DefaultUseCaseInstrumentation
+import com.barbzdev.sportselo.core.domain.observability.MetricClient
 import com.barbzdev.sportselo.core.infrastructure.observability.MicrometerMetricClient
 import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.binder.jvm.JvmThreadMetrics

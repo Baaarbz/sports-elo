@@ -1,18 +1,18 @@
 package com.barbzdev.sportselo.infrastructure.testcases
 
-import com.barbzdev.sportselo.formulaone.domain.Driver
 import com.barbzdev.sportselo.core.domain.util.DomainPaginated
 import com.barbzdev.sportselo.core.domain.util.Page
 import com.barbzdev.sportselo.core.domain.util.PageSize
 import com.barbzdev.sportselo.core.domain.util.SortBy
 import com.barbzdev.sportselo.core.domain.util.SortOrder
-import com.barbzdev.sportselo.factory.DriverFactory.aDriver
-import com.barbzdev.sportselo.factory.DriverFactory.hamilton
-import com.barbzdev.sportselo.factory.DriverFactory.verstappen
-import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
+import com.barbzdev.sportselo.formulaone.domain.Driver
+import com.barbzdev.sportselo.formulaone.factory.DriverFactory.aDriver
+import com.barbzdev.sportselo.formulaone.factory.DriverFactory.hamilton
+import com.barbzdev.sportselo.formulaone.factory.DriverFactory.verstappen
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverDatasource
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverRepository
 import com.barbzdev.sportselo.formulaone.infrastructure.mapper.DomainToEntityMapper.toEntity
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverDatasource
+import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

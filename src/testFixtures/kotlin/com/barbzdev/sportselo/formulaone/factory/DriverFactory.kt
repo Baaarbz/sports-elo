@@ -1,16 +1,23 @@
-package com.barbzdev.sportselo.factory
+package com.barbzdev.sportselo.formulaone.factory
 
+import com.barbzdev.sportselo.core.domain.valueobject.Elo
+import com.barbzdev.sportselo.core.domain.valueobject.OccurredOn
 import com.barbzdev.sportselo.formulaone.domain.Driver.Companion.create
 import com.barbzdev.sportselo.formulaone.domain.Driver.Companion.createRookie
+import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.Nationality.BRITISH
+import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.Nationality.DUTCH
+import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.Nationality.FINNISH
+import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.Nationality.SPANISH
 
 object DriverFactory {
-  private val anEloRecord =
-    mapOf("2023-03-05" to 2000, "2023-03-19" to 1900, "2023-03-26" to 2300, "2023-04-30" to 2100)
+  private val AN_ELO_RECORD =
+    listOf(
+      Elo(2000, OccurredOn("2023-03-05")),
+      Elo(1900, OccurredOn("2023-03-19")),
+      Elo(2300, OccurredOn("2023-03-26")),
+      Elo(2100, OccurredOn("2023-04-30")))
 
-  private val anIRatingRecord =
-    mapOf("2023-03-05" to 2000, "2023-03-19" to 1900, "2023-03-26" to 2300, "2023-04-30" to 2100)
-
-  private val simpleEloRecord = mapOf("1900-01-01" to 2000)
+  private val SIMPLE_ELO_RECORD = listOf(Elo(2000, OccurredOn("1900-01-01")))
 
   private val drivers =
     listOf(
@@ -21,14 +28,11 @@ object DriverFactory {
         code = "RAI",
         permanentNumber = "7",
         birthDate = "1979-10-17",
-        nationality = "Finnish",
+        nationality = FINNISH,
         infoUrl = "http://en.wikipedia.org/wiki/Kimi_R%C3%A4ikk%C3%B6nen",
         currentElo = 2100,
         currentEloOccurredOn = "2023-04-30",
-        eloRecord = anEloRecord,
-        currentIRating = 2000,
-        currentIRatingOccurredOn = "2023-04-30",
-        iRatingRecord = anIRatingRecord,
+        eloRecord = AN_ELO_RECORD,
       ),
       createRookie(
         id = "michael_schumacher",
@@ -47,15 +51,11 @@ object DriverFactory {
         code = "ALO",
         permanentNumber = "14",
         birthDate = "1981-07-29",
-        nationality = "Spanish",
+        nationality = SPANISH,
         infoUrl = "https://en.wikipedia.org/wiki/Fernando_Alonso",
         currentElo = 2100,
         currentEloOccurredOn = "2023-04-30",
-        eloRecord = anEloRecord,
-        currentIRating = 2000,
-        currentIRatingOccurredOn = "2023-04-30",
-        iRatingRecord = anIRatingRecord,
-      ),
+        eloRecord = AN_ELO_RECORD),
       create(
         id = "max_verstappen",
         givenName = "Max",
@@ -63,15 +63,11 @@ object DriverFactory {
         code = "VER",
         permanentNumber = "33",
         birthDate = "1997-09-30",
-        nationality = "Dutch",
+        nationality = DUTCH,
         infoUrl = "http://en.wikipedia.org/wiki/Max_Verstappen",
         currentElo = 2100,
         currentEloOccurredOn = "2023-04-30",
-        eloRecord = anEloRecord,
-        currentIRating = 2000,
-        currentIRatingOccurredOn = "2023-04-30",
-        iRatingRecord = anIRatingRecord,
-      ),
+        eloRecord = AN_ELO_RECORD),
       create(
         id = "hamilton",
         givenName = "Lewis",
@@ -79,14 +75,11 @@ object DriverFactory {
         code = "HAM",
         permanentNumber = "44",
         birthDate = "1985-01-07",
-        nationality = "British",
+        nationality = BRITISH,
         infoUrl = "https://en.wikipedia.org/wiki/Lewis_Hamilton",
         currentElo = 2100,
         currentEloOccurredOn = "2023-04-30",
-        eloRecord = anEloRecord,
-        currentIRating = 2000,
-        currentIRatingOccurredOn = "2023-04-30",
-        iRatingRecord = anIRatingRecord,
+        eloRecord = AN_ELO_RECORD,
       ))
 
   fun aDriver() = drivers.random()
@@ -99,14 +92,11 @@ object DriverFactory {
       code = "ALO",
       permanentNumber = "14",
       birthDate = "1981-07-29",
-      nationality = "Spanish",
+      nationality = SPANISH,
       infoUrl = "https://en.wikipedia.org/wiki/Fernando_Alonso",
       currentElo = 2000,
       currentEloOccurredOn = "2023-04-30",
-      eloRecord = simpleEloRecord,
-      currentIRating = 2000,
-      currentIRatingOccurredOn = "2023-04-30",
-      iRatingRecord = anIRatingRecord,
+      eloRecord = SIMPLE_ELO_RECORD,
     )
 
   val verstappen =
@@ -117,14 +107,11 @@ object DriverFactory {
       code = "VER",
       permanentNumber = "33",
       birthDate = "1997-09-30",
-      nationality = "Dutch",
+      nationality = DUTCH,
       infoUrl = "http://en.wikipedia.org/wiki/Max_Verstappen",
       currentElo = 2000,
       currentEloOccurredOn = "2023-04-30",
-      eloRecord = simpleEloRecord,
-      currentIRating = 2000,
-      currentIRatingOccurredOn = "2023-04-30",
-      iRatingRecord = anIRatingRecord,
+      eloRecord = SIMPLE_ELO_RECORD,
     )
 
   val raikkonen =
@@ -135,14 +122,11 @@ object DriverFactory {
       code = "RAI",
       permanentNumber = "7",
       birthDate = "1979-10-17",
-      nationality = "Finnish",
+      nationality = FINNISH,
       infoUrl = "http://en.wikipedia.org/wiki/Kimi_R%C3%A4ikk%C3%B6nen",
       currentElo = 2000,
       currentEloOccurredOn = "2023-04-30",
-      eloRecord = anEloRecord,
-      currentIRating = 2000,
-      currentIRatingOccurredOn = "2023-04-30",
-      iRatingRecord = anIRatingRecord,
+      eloRecord = AN_ELO_RECORD,
     )
 
   val hamilton =
@@ -153,13 +137,10 @@ object DriverFactory {
       code = "HAM",
       permanentNumber = "44",
       birthDate = "1985-01-07",
-      nationality = "British",
+      nationality = BRITISH,
       infoUrl = "https://en.wikipedia.org/wiki/Lewis_Hamilton",
       currentElo = 2000,
       currentEloOccurredOn = "2023-04-30",
-      eloRecord = simpleEloRecord,
-      currentIRating = 2000,
-      currentIRatingOccurredOn = "2023-04-30",
-      iRatingRecord = anIRatingRecord,
+      eloRecord = SIMPLE_ELO_RECORD,
     )
 }

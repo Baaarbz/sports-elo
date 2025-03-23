@@ -9,8 +9,11 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @EnableScheduling
 @EnableConfigurationProperties
 @EnableAsync
-@SpringBootApplication(scanBasePackages = ["com.barbzdev.sportselo.core.infrastructure.framework", "com.barbzdev.sportselo.formulaone.infrastructure.framework"])
-
+@SpringBootApplication(
+  scanBasePackages =
+    [
+      "com.barbzdev.sportselo.core.infrastructure.framework",
+      "com.barbzdev.sportselo.formulaone.infrastructure.framework"])
 class SpringApplication
 
 fun main(args: Array<String>) {

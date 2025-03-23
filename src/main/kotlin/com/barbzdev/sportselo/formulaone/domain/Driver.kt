@@ -21,12 +21,13 @@ private constructor(
   private val birthDate: BirthDate,
   private val nationality: Nationality,
   private val infoUrl: InfoUrl,
-) : Sportsman(
-  id = id,
-  fullName = fullName,
-  currentElo = currentElo,
-  eloRecord = eloRecord,
-) {
+) :
+  Sportsman(
+    id = id,
+    fullName = fullName,
+    currentElo = currentElo,
+    eloRecord = eloRecord,
+  ) {
 
   fun code() = code
 
@@ -158,4 +159,3 @@ private constructor(
     }
   }
 }
-

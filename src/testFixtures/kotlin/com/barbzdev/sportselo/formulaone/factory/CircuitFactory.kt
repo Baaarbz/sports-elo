@@ -1,4 +1,4 @@
-package com.barbzdev.sportselo.factory
+package com.barbzdev.sportselo.formulaone.factory
 
 import com.barbzdev.sportselo.formulaone.domain.Circuit.Companion.create
 

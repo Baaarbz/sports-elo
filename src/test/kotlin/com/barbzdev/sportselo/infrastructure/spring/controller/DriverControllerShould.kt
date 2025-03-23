@@ -2,24 +2,19 @@ package com.barbzdev.sportselo.infrastructure.spring.controller
 
 import com.barbzdev.sportselo.formulaone.application.GetDriverByIdElo
 import com.barbzdev.sportselo.formulaone.application.GetDriverByIdFullName
-import com.barbzdev.sportselo.formulaone.application.GetDriverByIdIRating
 import com.barbzdev.sportselo.formulaone.application.GetDriverByIdNationality
-import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdNotFound
-import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdSuccess
+import com.barbzdev.sportselo.formulaone.application.GetDriverByIdResponse
 import com.barbzdev.sportselo.formulaone.application.GetDriverByIdUseCase
 import com.barbzdev.sportselo.formulaone.application.ListingDriver
 import com.barbzdev.sportselo.formulaone.application.ListingDriverFullName
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriversSuccess
+import com.barbzdev.sportselo.formulaone.application.ListingDriversResponse
 import com.barbzdev.sportselo.formulaone.application.ListingDriversUseCase
-import com.barbzdev.sportselo.formulaone.application.driver.NotValidDriverListingRequestResponse
-import com.barbzdev.sportselo.formulaone.application.driver.NotValidDriverListingSortingRequestResponse
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.controller.driver.DriverController
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.controller.driver.HttpDriversListing
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.controller.driver.HttpElo
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.controller.driver.HttpFullName
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.controller.driver.HttpGetDriverListingResponse
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.controller.driver.HttpGetDriverResponse
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.controller.driver.HttpIRating
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.controller.driver.HttpNationality
 import io.mockk.every
 import io.mockk.mockk
@@ -37,7 +32,7 @@ class DriverControllerShould {
   @Test
   fun `return drivers when use case success`() {
     val responseUseCase =
-      ListingDriversSuccess(
+      ListingDriversResponse.Success(
         drivers =
           listOf(
             ListingDriver(
@@ -46,11 +41,7 @@ class DriverControllerShould {
               currentElo = 2016,
               highestElo = 2016,
               lowestElo = 2016,
-              lastRaceDate = LocalDate.of(2021, 1, 1),
-              currentIRating = 2016,
-              highestIRating = 2016,
-              lowestIRating = 2016,
-            ),
+              lastRaceDate = LocalDate.of(2021, 1, 1)),
           ),
         page = 0,
         pageSize = 25,
@@ -72,21 +63,17 @@ class DriverControllerShould {
                 currentElo = 2016,
                 highestElo = 2016,
                 lowestElo = 2016,
-                lastRaceDate = LocalDate.of(2021, 1, 1),
-                currentIRating = 2016,
-                highestIRating = 2016,
-                lowestIRating = 2016),
+                lastRaceDate = LocalDate.of(2021, 1, 1)),
             ),
           page = 0,
           pageSize = 25,
           totalElements = 2,
-          totalPages = 1)
-      )
+          totalPages = 1))
   }
 
   @Test
   fun `return bad request when use case returns NotValidDriverListingRequestResponse`() {
-    every { listingDriversUseCase.invoke(any()) } returns NotValidDriverListingRequestResponse
+    every { listingDriversUseCase.invoke(any()) } returns ListingDriversResponse.BadRequest
 
     val result = controller.getDriversListing(-1, 25, "id", "asc")
 
@@ -95,7 +82,7 @@ class DriverControllerShould {
 
   @Test
   fun `return bad request when use case returns NotValidDriverListingSortingRequestResponse`() {
-    every { listingDriversUseCase.invoke(any()) } returns NotValidDriverListingSortingRequestResponse
+    every { listingDriversUseCase.invoke(any()) } returns ListingDriversResponse.BadSortingRequest
 
     val result = controller.getDriversListing(-1, 25, "not-valid", "asc")
 
@@ -105,7 +92,7 @@ class DriverControllerShould {
   @Test
   fun `return driver when use case success`() {
     val getDriverByIdSuccessResponse =
-      GetDriverByIdSuccess(
+      GetDriverByIdResponse.Success(
         id = "alonso",
         fullName = GetDriverByIdFullName(familyName = "Alonso", givenName = "Fernando"),
         code = "ALO",
@@ -117,10 +104,7 @@ class DriverControllerShould {
         highestElo = GetDriverByIdElo(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
         lowestElo = GetDriverByIdElo(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
         eloRecord = listOf(GetDriverByIdElo(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1))),
-        currentIRating = GetDriverByIdIRating(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
-        highestIRating = GetDriverByIdIRating(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
-        lowestIRating = GetDriverByIdIRating(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
-        iRatingRecord = listOf(GetDriverByIdIRating(rating = 2016, occurredOn = LocalDate.of(2021, 1, 1))))
+      )
     every { getDriverByIdUseCase.invoke(any()) } returns getDriverByIdSuccessResponse
 
     val result = controller.getDriver("alonso")
@@ -138,17 +122,14 @@ class DriverControllerShould {
         highestElo = HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
         lowestElo = HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
         eloRecord = listOf(HttpElo(value = 2016, occurredOn = LocalDate.of(2021, 1, 1))),
-        currentIRating = HttpIRating(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
-        highestIRating = HttpIRating(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
-        lowestIRating = HttpIRating(value = 2016, occurredOn = LocalDate.of(2021, 1, 1)),
-        iRatingRecord = listOf(HttpIRating(value = 2016, occurredOn = LocalDate.of(2021, 1, 1))))
+      )
     assertThat(result.statusCode.value()).isEqualTo(HttpStatus.OK.value())
     assertThat(result.body).isEqualTo(expected)
   }
 
   @Test
   fun `return not found when use case returns GetDriverByIdNotFound`() {
-    every { getDriverByIdUseCase.invoke(any()) } returns GetDriverByIdNotFound
+    every { getDriverByIdUseCase.invoke(any()) } returns GetDriverByIdResponse.NotFound
 
     val result = controller.getDriver("non-existing-id")
 

@@ -3,21 +3,19 @@ package com.barbzdev.sportselo.application.driver
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
+import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
 import com.barbzdev.sportselo.core.domain.util.DomainPaginated
 import com.barbzdev.sportselo.core.domain.util.Page
 import com.barbzdev.sportselo.core.domain.util.PageSize
 import com.barbzdev.sportselo.core.domain.util.SortBy
 import com.barbzdev.sportselo.core.domain.util.SortOrder
-import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
-import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
-import com.barbzdev.sportselo.factory.DriverFactory.aDriver
 import com.barbzdev.sportselo.formulaone.application.ListingDriver
 import com.barbzdev.sportselo.formulaone.application.ListingDriverFullName
 import com.barbzdev.sportselo.formulaone.application.ListingDriversRequest
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriversSuccess
+import com.barbzdev.sportselo.formulaone.application.ListingDriversResponse
 import com.barbzdev.sportselo.formulaone.application.ListingDriversUseCase
-import com.barbzdev.sportselo.formulaone.application.driver.NotValidDriverListingRequestResponse
-import com.barbzdev.sportselo.formulaone.application.driver.NotValidDriverListingSortingRequestResponse
+import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
+import com.barbzdev.sportselo.formulaone.factory.DriverFactory.aDriver
 import com.barbzdev.sportselo.observability.instrumentationMock
 import io.mockk.every
 import io.mockk.mockk
@@ -38,7 +36,7 @@ class ListingDriversUseCaseShould {
     val result = listingDriversUseCase.invoke(ListingDriversRequest(0, 25, "id", "desc"))
 
     val expected =
-      ListingDriversSuccess(
+      ListingDriversResponse.Success(
         drivers =
           drivers.map { driver ->
             ListingDriver(
@@ -49,11 +47,7 @@ class ListingDriversUseCaseShould {
               currentElo = driver.currentElo().value,
               highestElo = driver.highestElo().value,
               lowestElo = driver.lowestElo().value,
-              lastRaceDate = driver.currentElo().toLocalDate(),
-              currentIRating = driver.currentIRating().value,
-              highestIRating = driver.highestIRating().value,
-              lowestIRating = driver.lowestIRating().value,
-            )
+              lastRaceDate = driver.currentElo().occurredOn.toLocalDate())
           },
         page = 0,
         pageSize = 25,
@@ -69,7 +63,7 @@ class ListingDriversUseCaseShould {
 
     val result = listingDriversUseCase.invoke(notValidPageRequest)
 
-    assertThat(result).isInstanceOf(NotValidDriverListingRequestResponse::class)
+    assertThat(result).isInstanceOf(ListingDriversResponse.BadRequest::class)
   }
 
   @Test
@@ -78,7 +72,7 @@ class ListingDriversUseCaseShould {
 
     val result = listingDriversUseCase.invoke(notValidPageSizeRequest)
 
-    assertThat(result).isInstanceOf(NotValidDriverListingRequestResponse::class)
+    assertThat(result).isInstanceOf(ListingDriversResponse.BadRequest::class)
   }
 
   @Test
@@ -87,7 +81,7 @@ class ListingDriversUseCaseShould {
 
     val result = listingDriversUseCase.invoke(notValidPageSizeRequest)
 
-    assertThat(result).isInstanceOf(NotValidDriverListingSortingRequestResponse::class)
+    assertThat(result).isInstanceOf(ListingDriversResponse.BadSortingRequest::class)
   }
 
   @Test
@@ -96,6 +90,6 @@ class ListingDriversUseCaseShould {
 
     val result = listingDriversUseCase.invoke(notValidPageSizeRequest)
 
-    assertThat(result).isInstanceOf(NotValidDriverListingSortingRequestResponse::class)
+    assertThat(result).isInstanceOf(ListingDriversResponse.BadSortingRequest::class)
   }
 }

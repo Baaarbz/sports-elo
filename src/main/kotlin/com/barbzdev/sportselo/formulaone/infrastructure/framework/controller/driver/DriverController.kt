@@ -1,14 +1,11 @@
 package com.barbzdev.sportselo.formulaone.infrastructure.framework.controller.driver
 
-import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdNotFound
 import com.barbzdev.sportselo.formulaone.application.GetDriverByIdRequest
-import com.barbzdev.sportselo.formulaone.application.driver.GetDriverByIdSuccess
+import com.barbzdev.sportselo.formulaone.application.GetDriverByIdResponse
 import com.barbzdev.sportselo.formulaone.application.GetDriverByIdUseCase
 import com.barbzdev.sportselo.formulaone.application.ListingDriversRequest
-import com.barbzdev.sportselo.formulaone.application.driver.ListingDriversSuccess
+import com.barbzdev.sportselo.formulaone.application.ListingDriversResponse
 import com.barbzdev.sportselo.formulaone.application.ListingDriversUseCase
-import com.barbzdev.sportselo.formulaone.application.driver.NotValidDriverListingRequestResponse
-import com.barbzdev.sportselo.formulaone.application.driver.NotValidDriverListingSortingRequestResponse
 import java.time.LocalDate
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("api/v1/drivers")
 class DriverController(
-    private val listingDriversUseCase: ListingDriversUseCase,
-    private val getDriverByIdUseCase: GetDriverByIdUseCase
+  private val listingDriversUseCase: ListingDriversUseCase,
+  private val getDriverByIdUseCase: GetDriverByIdUseCase
 ) : DriverControllerDocumentation {
 
   @GetMapping
@@ -33,9 +30,9 @@ class DriverController(
   ): ResponseEntity<HttpGetDriverListingResponse> {
     val listingDriversResponse = listingDriversUseCase.invoke(ListingDriversRequest(page, pageSize, sortBy, sortOrder))
     return when (listingDriversResponse) {
-      is ListingDriversSuccess -> ResponseEntity.ok(listingDriversResponse.toHttpResponse())
-      is NotValidDriverListingRequestResponse,
-      NotValidDriverListingSortingRequestResponse -> ResponseEntity.badRequest().build()
+      is ListingDriversResponse.Success -> ResponseEntity.ok(listingDriversResponse.toHttpResponse())
+      is ListingDriversResponse.BadSortingRequest -> ResponseEntity.badRequest().build()
+      is ListingDriversResponse.BadRequest -> ResponseEntity.badRequest().build()
     }
   }
 
@@ -43,12 +40,12 @@ class DriverController(
   override fun getDriver(@PathVariable driverId: String): ResponseEntity<HttpGetDriverResponse> {
     val driverResponse = getDriverByIdUseCase.invoke(GetDriverByIdRequest(driverId))
     return when (driverResponse) {
-      is GetDriverByIdSuccess -> ResponseEntity.ok(driverResponse.toHttpResponse())
-      is GetDriverByIdNotFound -> ResponseEntity.notFound().build()
+      is GetDriverByIdResponse.Success -> ResponseEntity.ok(driverResponse.toHttpResponse())
+      is GetDriverByIdResponse.NotFound -> ResponseEntity.notFound().build()
     }
   }
 
-  private fun ListingDriversSuccess.toHttpResponse() =
+  private fun ListingDriversResponse.Success.toHttpResponse() =
     HttpGetDriverListingResponse(
       drivers =
         this.drivers.map { driver ->
@@ -59,9 +56,6 @@ class DriverController(
             highestElo = driver.highestElo,
             lowestElo = driver.lowestElo,
             lastRaceDate = driver.lastRaceDate,
-            currentIRating = driver.currentIRating,
-            highestIRating = driver.highestIRating,
-            lowestIRating = driver.lowestIRating,
           )
         },
       page = this.page,
@@ -69,7 +63,7 @@ class DriverController(
       totalElements = this.totalElements,
       totalPages = this.totalPages)
 
-  private fun GetDriverByIdSuccess.toHttpResponse() =
+  private fun GetDriverByIdResponse.Success.toHttpResponse() =
     HttpGetDriverResponse(
       id = id,
       fullName = HttpFullName(familyName = fullName.familyName, givenName = fullName.givenName),
@@ -83,50 +77,38 @@ class DriverController(
       currentElo = HttpElo(value = currentElo.rating, occurredOn = currentElo.occurredOn),
       highestElo = HttpElo(value = highestElo.rating, occurredOn = highestElo.occurredOn),
       lowestElo = HttpElo(value = lowestElo.rating, occurredOn = lowestElo.occurredOn),
-      eloRecord = eloRecord.map { HttpElo(value = it.rating, occurredOn = it.occurredOn) },
-      currentIRating = HttpIRating(value = currentIRating.rating, occurredOn = currentIRating.occurredOn),
-      highestIRating = HttpIRating(value = highestIRating.rating, occurredOn = highestIRating.occurredOn),
-      lowestIRating = HttpIRating(value = lowestIRating.rating, occurredOn = lowestIRating.occurredOn),
-      iRatingRecord = iRatingRecord.map { HttpIRating(value = it.rating, occurredOn = it.occurredOn) },
-    )
+      eloRecord = eloRecord.map { HttpElo(value = it.rating, occurredOn = it.occurredOn) })
 }
 
 data class HttpGetDriverListingResponse(
-    val drivers: List<HttpDriversListing>,
-    val page: Int,
-    val pageSize: Int,
-    val totalElements: Long,
-    val totalPages: Int
+  val drivers: List<HttpDriversListing>,
+  val page: Int,
+  val pageSize: Int,
+  val totalElements: Long,
+  val totalPages: Int
 )
 
 data class HttpDriversListing(
-    val id: String,
-    val fullName: HttpFullName,
-    val currentElo: Int,
-    val highestElo: Int,
-    val lowestElo: Int,
-    val currentIRating: Int,
-    val highestIRating: Int,
-    val lowestIRating: Int,
-    val lastRaceDate: LocalDate,
+  val id: String,
+  val fullName: HttpFullName,
+  val currentElo: Int,
+  val highestElo: Int,
+  val lowestElo: Int,
+  val lastRaceDate: LocalDate,
 )
 
 data class HttpGetDriverResponse(
-    val id: String,
-    val fullName: HttpFullName,
-    val code: String?,
-    val permanentNumber: String?,
-    val birthDate: LocalDate,
-    val nationality: HttpNationality,
-    val infoUrl: String,
-    val currentElo: HttpElo,
-    val highestElo: HttpElo,
-    val lowestElo: HttpElo,
-    val eloRecord: List<HttpElo>,
-    val currentIRating: HttpIRating,
-    val highestIRating: HttpIRating,
-    val lowestIRating: HttpIRating,
-    val iRatingRecord: List<HttpIRating>
+  val id: String,
+  val fullName: HttpFullName,
+  val code: String?,
+  val permanentNumber: String?,
+  val birthDate: LocalDate,
+  val nationality: HttpNationality,
+  val infoUrl: String,
+  val currentElo: HttpElo,
+  val highestElo: HttpElo,
+  val lowestElo: HttpElo,
+  val eloRecord: List<HttpElo>,
 )
 
 data class HttpFullName(val familyName: String, val givenName: String)

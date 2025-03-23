@@ -30,4 +30,3 @@ abstract class Sportsman(
     const val BASE_ELO = 1_000
   }
 }
-

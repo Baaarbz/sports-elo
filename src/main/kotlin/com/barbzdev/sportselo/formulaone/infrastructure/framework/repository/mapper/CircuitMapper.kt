@@ -1,10 +1,10 @@
-package com.barbzdev.sportselo.formulaone.infrastructure.mapper
+package com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.mapper
 
 import com.barbzdev.sportselo.core.domain.util.EntityMapper
 import com.barbzdev.sportselo.formulaone.domain.Circuit
-import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.circuit.CircuitEntity
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.CircuitEntity
 
-class CircuitMapper: EntityMapper<Circuit, CircuitEntity> {
+class CircuitMapper : EntityMapper<Circuit, CircuitEntity> {
 
   override fun toEntity(domain: Circuit): CircuitEntity {
     return CircuitEntity(
@@ -14,8 +14,7 @@ class CircuitMapper: EntityMapper<Circuit, CircuitEntity> {
       longitude = domain.location().longitude,
       country = domain.country().value,
       infoUrl = domain.infoUrl().value,
-      locality = domain.locality().value
-    )
+      locality = domain.locality().value)
   }
 
   override fun toDomain(entity: CircuitEntity): Circuit {
@@ -26,7 +25,6 @@ class CircuitMapper: EntityMapper<Circuit, CircuitEntity> {
       longitude = entity.longitude,
       country = entity.country,
       infoUrl = entity.infoUrl,
-      locality = entity.locality
-    )
+      locality = entity.locality)
   }
 }

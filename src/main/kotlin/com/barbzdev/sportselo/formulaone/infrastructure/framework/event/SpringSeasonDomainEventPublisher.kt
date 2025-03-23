@@ -5,7 +5,7 @@ import com.barbzdev.sportselo.formulaone.domain.event.SeasonLoadedDomainEvent
 import org.springframework.context.ApplicationEventPublisher
 
 class SpringSeasonDomainEventPublisher(private val eventPublisher: ApplicationEventPublisher) :
-    SeasonDomainEventPublisher {
+  SeasonDomainEventPublisher {
   override fun publish(event: SeasonLoadedDomainEvent) =
     eventPublisher.publishEvent(SpringSeasonLoadedDomainEvent(event.season))
 }

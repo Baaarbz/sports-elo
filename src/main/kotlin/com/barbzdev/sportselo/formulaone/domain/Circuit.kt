@@ -69,8 +69,7 @@ private constructor(
         CircuitLocation(latitude, longitude),
         CircuitCountry(country),
         CircuitLocality(locality),
-        InfoUrl(infoUrl)
-      )
+        InfoUrl(infoUrl))
   }
 }
 

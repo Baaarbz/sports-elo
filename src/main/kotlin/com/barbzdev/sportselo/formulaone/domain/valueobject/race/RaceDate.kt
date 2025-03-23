@@ -7,9 +7,9 @@ data class RaceDate(val date: OccurredOn) {
     require(date.value.isNotBlank())
   }
 
-    companion object {
+  companion object {
     fun create(value: String): RaceDate {
       return RaceDate(OccurredOn(value))
     }
-    }
+  }
 }

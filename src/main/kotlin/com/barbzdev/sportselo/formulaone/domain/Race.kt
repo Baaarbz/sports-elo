@@ -61,8 +61,7 @@ private constructor(
         timeInMillis = timeInMillis,
         fastestLapInMillis = fastestLapInMillis,
         averageSpeed = averageSpeed,
-        averageSpeedUnit = averageSpeedUnit
-      )
+        averageSpeedUnit = averageSpeedUnit)
     return Race(id, round, infoUrl, name, circuit, occurredOn, results.plus(result))
   }
 
@@ -107,8 +106,7 @@ private constructor(
         name = RaceName(name),
         circuit = circuit,
         occurredOn = RaceDate.create(occurredOn),
-        results = emptyList()
-      )
+        results = emptyList())
 
     fun create(
       id: String,
@@ -126,8 +124,6 @@ private constructor(
         name = RaceName(name),
         circuit = circuit,
         occurredOn = RaceDate.create(occurredOn),
-        results = results
-      )
+        results = results)
   }
 }
-

@@ -1,5 +1,7 @@
 package com.barbzdev.sportselo.formulaone.application
 
+import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
+import com.barbzdev.sportselo.core.domain.valueobject.SportsmanId
 import com.barbzdev.sportselo.formulaone.domain.Circuit
 import com.barbzdev.sportselo.formulaone.domain.Constructor
 import com.barbzdev.sportselo.formulaone.domain.Driver
@@ -7,8 +9,6 @@ import com.barbzdev.sportselo.formulaone.domain.Race
 import com.barbzdev.sportselo.formulaone.domain.Season
 import com.barbzdev.sportselo.formulaone.domain.event.SeasonDomainEventPublisher
 import com.barbzdev.sportselo.formulaone.domain.event.SeasonLoadedDomainEvent
-import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
-import com.barbzdev.sportselo.core.domain.valueobject.SportsmanId
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.F1Circuit
 import com.barbzdev.sportselo.formulaone.domain.repository.F1Constructor
@@ -120,6 +120,8 @@ class GatherRacesBySeasonUseCase(
 
 sealed class GatherRacesBySeasonResponse {
   data object UpToDate : GatherRacesBySeasonResponse()
+
   data object Success : GatherRacesBySeasonResponse()
+
   data object NonExistent : GatherRacesBySeasonResponse()
 }

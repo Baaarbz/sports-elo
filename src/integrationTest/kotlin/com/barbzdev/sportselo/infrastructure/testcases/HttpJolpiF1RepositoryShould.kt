@@ -9,9 +9,9 @@ import com.barbzdev.sportselo.formulaone.domain.repository.F1Race
 import com.barbzdev.sportselo.formulaone.domain.repository.F1Result
 import com.barbzdev.sportselo.formulaone.domain.repository.F1Season
 import com.barbzdev.sportselo.formulaone.domain.repository.F1Time
-import com.barbzdev.sportselo.factory.SeasonFactory
-import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
+import com.barbzdev.sportselo.formulaone.factory.SeasonFactory
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.http.HttpJolpiF1Repository
+import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
 import com.github.tomakehurst.wiremock.client.WireMock.aResponse
 import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.stubFor
@@ -218,8 +218,7 @@ abstract class HttpJolpiF1RepositoryShould : IntegrationTestConfiguration() {
               circuitId = "silverstone",
               url = "http://en.wikipedia.org/wiki/Silverstone_Circuit",
               circuitName = "Silverstone Circuit",
-              location = F1Location("52.0786", "-1.01694", "Silverstone", "UK")
-            ),
+              location = F1Location("52.0786", "-1.01694", "Silverstone", "UK")),
           date = "1950-05-13",
           results =
             listOf(
@@ -273,10 +272,8 @@ abstract class HttpJolpiF1RepositoryShould : IntegrationTestConfiguration() {
                 laps = 70,
                 status = "Finished",
                 time = F1Time(millis = 8006200, time = "+2.600"),
-                fastestLap = null)
-            ),
-          time = null)
-      )
+                fastestLap = null)),
+          time = null))
 
     @Language("JSON")
     const val SEASON_RESULTS_RESPONSE =
@@ -328,7 +325,6 @@ abstract class HttpJolpiF1RepositoryShould : IntegrationTestConfiguration() {
         F1Season(season = 1952, url = "http://en.wikipedia.org/wiki/1952_Formula_One_season"),
         F1Season(season = 1953, url = "http://en.wikipedia.org/wiki/1953_Formula_One_season"),
         F1Season(season = 1954, url = "http://en.wikipedia.org/wiki/1954_Formula_One_season"),
-        F1Season(season = 1955, url = "http://en.wikipedia.org/wiki/1955_Formula_One_season")
-      )
+        F1Season(season = 1955, url = "http://en.wikipedia.org/wiki/1955_Formula_One_season"))
   }
 }
