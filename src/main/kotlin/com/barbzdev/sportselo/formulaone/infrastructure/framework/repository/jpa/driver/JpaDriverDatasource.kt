@@ -3,6 +3,7 @@ package com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jp
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.JoinColumn
@@ -66,9 +67,18 @@ data class DriverEntity(
   @Column(name = "highest_elo_occurred_on") val highestEloOccurredOn: LocalDate,
   @Column(name = "lowest_elo") val lowestElo: Int,
   @Column(name = "lowest_elo_occurred_on") val lowestEloOccurredOn: LocalDate,
-  @OneToMany(mappedBy = "driver", cascade = [CascadeType.ALL], orphanRemoval = true)
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "driver", cascade = [CascadeType.ALL], orphanRemoval = true)
   val eloHistory: List<DriverEloHistoryEntity>,
-)
+) {
+  override fun toString(): String {
+    return "DriverEntity(id='$id', givenName='$givenName', familyName='$familyName', " +
+      "code=$code, permanentNumber=$permanentNumber, birthDate=$birthDate, " +
+      "nationality='$nationality', infoUrl='$infoUrl', currentElo=$currentElo, " +
+      "currentEloOccurredOn=$currentEloOccurredOn, highestElo=$highestElo, " +
+      "highestEloOccurredOn=$highestEloOccurredOn, lowestElo=$lowestElo, " +
+      "lowestEloOccurredOn=$lowestEloOccurredOn, eloHistory=<omitted>)"
+  }
+}
 
 @Entity
 @IdClass(DriverEloHistoryId::class)
@@ -77,7 +87,11 @@ data class DriverEloHistoryEntity(
   @Id @ManyToOne @JoinColumn(name = "driver_id") val driver: DriverEntity,
   @Id val elo: Int,
   @Id @Column(name = "occurred_on") val occurredOn: LocalDate,
-)
+) {
+  override fun toString(): String {
+    return "DriverEloHistoryEntity(driver.id=${driver.id}, elo=$elo, occurredOn=$occurredOn)"
+  }
+}
 
 data class DriverEloHistoryId(val driver: String = "", val elo: Int = 0, val occurredOn: LocalDate = LocalDate.now()) :
   Serializable

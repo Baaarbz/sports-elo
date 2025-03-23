@@ -65,6 +65,10 @@ private constructor(
     return Race(id, round, infoUrl, name, circuit, occurredOn, results.plus(result))
   }
 
+  fun addResults(results: List<RaceResult>): Race {
+    return Race(id, round, infoUrl, name, circuit, occurredOn, results)
+  }
+
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (javaClass != other?.javaClass) return false

@@ -67,9 +67,18 @@ abstract class JpaSeasonRepositoryShould : IntegrationTestConfiguration() {
 
   private fun givenASeasonInDatabase(): Season = aSeason().also { repository.save(it) }
 
-  private fun verifySeasonWasSaved(expectedSeasonEntitySaved: Season) {
-    val actualSavedSeason = datasource.findAll()
-    val expectedSeason = seasonMapper.toEntity(expectedSeasonEntitySaved)
-    assertThat(actualSavedSeason).contains(expectedSeason)
+
+  private fun verifySeasonWasSaved(expectedSeasonSaved: Season) {
+    val seasonEntity = datasource.findByYearWithRaces(expectedSeasonSaved.year().value)
+      ?: throw IllegalStateException("Season not found")
+    val racesWithResults = datasource.findRaceResultsBySeasonId(seasonEntity.id)
+
+    val raceMap = racesWithResults.associateBy { it.id }
+
+    val updatedRaces = seasonEntity.races.map { raceMap[it.id] ?: it }
+    val seasonWithResults = seasonEntity.copy(races = updatedRaces)
+
+    val actualSeason = seasonMapper.toDomain(seasonWithResults)
+    assertThat(actualSeason).isEqualTo(expectedSeasonSaved)
   }
 }

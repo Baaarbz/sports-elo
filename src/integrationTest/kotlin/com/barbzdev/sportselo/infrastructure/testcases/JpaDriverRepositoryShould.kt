@@ -80,7 +80,7 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
 
   private fun verifyDriverWasSaved(expectedDriverSaved: Driver) {
     val actualSavedDrivers = datasource.findByIdJoinDriverEloHistory(expectedDriverSaved.id().value)
-    val expectedDriver = driverMapper.toEntity(expectedDriverSaved)
-    assertThat(actualSavedDrivers).contains(expectedDriver)
+    val actualSavedDriverAsDomain = driverMapper.toDomain(actualSavedDrivers.get())
+    assertThat(actualSavedDriverAsDomain).isEqualTo(expectedDriverSaved)
   }
 }

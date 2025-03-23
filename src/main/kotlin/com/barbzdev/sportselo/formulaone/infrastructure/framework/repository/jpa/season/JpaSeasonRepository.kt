@@ -12,22 +12,39 @@ open class JpaSeasonRepository(
   private val seasonMapper: SeasonMapper
 ) : SeasonRepository {
 
-  override fun getLastSeasonLoaded(): Season? =
-    seasonDatasource.findAll().maxByOrNull { it.year }?.let { seasonMapper.toDomain(it) }
+  override fun getLastSeasonLoaded(): Season? {
+    val seasonWithRaces = seasonDatasource.findLastSeasonWithRaces() ?: return null
+
+    return fetchRaceResults(seasonWithRaces)
+  }
 
   override fun getLastYearLoaded(): SeasonYear? =
-    seasonDatasource.findAll().maxByOrNull { it.year }?.let { SeasonYear(it.year) }
+    seasonDatasource.findLastSeasonWithRaces()?.let { SeasonYear(it.year) }
 
   override fun getSeasonIdBy(year: SeasonYear): SeasonId? =
-    seasonDatasource.findByYear(year.value)?.let { SeasonId(it.id) }
+    seasonDatasource.findByYearWithRaces(year.value)?.let { SeasonId(it.id) }
 
-  override fun findBy(year: SeasonYear): Season? =
-    seasonDatasource.findByYear(year.value)?.let { seasonMapper.toDomain(it) }
+  override fun findBy(year: SeasonYear): Season? {
+    val seasonWithRaces = seasonDatasource.findByYearWithRaces(year.value) ?: return null
+
+    return fetchRaceResults(seasonWithRaces)
+  }
 
   override fun findAllSeasonsYears(): List<SeasonYear> = seasonDatasource.findAll().map { SeasonYear(it.year) }
 
+  private fun fetchRaceResults(seasonWithRaces: SeasonEntity): Season {
+    val racesWithResults = seasonDatasource.findRaceResultsBySeasonId(seasonWithRaces.id)
+
+    val raceMap = racesWithResults.associateBy { it.id }
+
+    val updatedRaces = seasonWithRaces.races.map { raceMap[it.id] ?: it }
+    val fullSeason = seasonWithRaces.copy(races = updatedRaces)
+
+    return seasonMapper.toDomain(fullSeason)
+  }
+
   @Transactional
   override fun save(season: Season) {
-    seasonDatasource.save(seasonMapper.toEntity(season))
+    seasonDatasource.saveAndFlush(seasonMapper.toEntity(season))
   }
 }
