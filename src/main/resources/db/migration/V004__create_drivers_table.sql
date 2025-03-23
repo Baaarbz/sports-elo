@@ -10,6 +10,10 @@ CREATE TABLE drivers
     info_url                VARCHAR(255)             NOT NULL,
     current_elo             INT                      NOT NULL,
     current_elo_occurred_on DATE                     NOT NULL,
+    highest_elo             INT                      NOT NULL,
+    highest_elo_occurred_on DATE                     NOT NULL,
+    lowest_elo              INT                      NOT NULL,
+    lowest_elo_occurred_on DATE                     NOT NULL,
     updated_at              TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
 CREATE INDEX idx_driver_given_name ON drivers (given_name);

@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository
 interface JpaDriverDatasource : JpaRepository<DriverEntity, String> {
   @Query(
     """
-    SELECT d, MIN(deh.elo) as lowest_elo, MAX(deh.elo) as highest_elo
+    SELECT d
     FROM DriverEntity d
     LEFT JOIN FETCH d.eloHistory AS deh
     """,
@@ -62,6 +62,10 @@ data class DriverEntity(
   @Column(name = "info_url") val infoUrl: String,
   @Column(name = "current_elo") val currentElo: Int,
   @Column(name = "current_elo_occurred_on") val currentEloOccurredOn: LocalDate,
+  @Column(name = "highest_elo") val highestElo: Int,
+  @Column(name = "highest_elo_occurred_on") val highestEloOccurredOn: LocalDate,
+  @Column(name = "lowest_elo") val lowestElo: Int,
+  @Column(name = "lowest_elo_occurred_on") val lowestEloOccurredOn: LocalDate,
   @OneToMany(mappedBy = "driver", cascade = [CascadeType.ALL], orphanRemoval = true)
   val eloHistory: List<DriverEloHistoryEntity>,
 )

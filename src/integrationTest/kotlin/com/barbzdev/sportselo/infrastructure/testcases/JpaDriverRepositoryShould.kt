@@ -5,6 +5,7 @@ import com.barbzdev.sportselo.core.domain.util.Page
 import com.barbzdev.sportselo.core.domain.util.PageSize
 import com.barbzdev.sportselo.core.domain.util.SortBy
 import com.barbzdev.sportselo.core.domain.util.SortOrder
+import com.barbzdev.sportselo.core.domain.valueobject.SportsmanId
 import com.barbzdev.sportselo.formulaone.domain.Driver
 import com.barbzdev.sportselo.formulaone.factory.DriverFactory.aDriver
 import com.barbzdev.sportselo.formulaone.factory.DriverFactory.hamilton
@@ -13,6 +14,7 @@ import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverRepository
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.mapper.DriverMapper
 import com.barbzdev.sportselo.infrastructure.IntegrationTestConfiguration
+import jakarta.transaction.Transactional
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -46,7 +48,7 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
   }
 
   @Test
-  fun `get all drivers`() {
+  fun `get all drivers paginated`() {
     val driverInDatabase = givenADriverInDatabase()
 
     val drivers = repository.findAll(Page(0), PageSize(1), SortBy("id"), SortOrder("asc"))
@@ -76,9 +78,9 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
 
   private fun givenADriverInDatabase(driver: Driver) = repository.save(driver)
 
-  private fun verifyDriverWasSaved(expectedDriverEntitySaved: Driver) {
-    val actualSavedDrivers = datasource.findAll()
-    val expectedDriver = driverMapper.toEntity(expectedDriverEntitySaved)
+  private fun verifyDriverWasSaved(expectedDriverSaved: Driver) {
+    val actualSavedDrivers = datasource.findByIdJoinDriverEloHistory(expectedDriverSaved.id().value)
+    val expectedDriver = driverMapper.toEntity(expectedDriverSaved)
     assertThat(actualSavedDrivers).contains(expectedDriver)
   }
 }

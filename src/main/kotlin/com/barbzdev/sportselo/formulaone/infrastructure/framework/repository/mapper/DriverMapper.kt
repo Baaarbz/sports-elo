@@ -11,6 +11,9 @@ import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa
 class DriverMapper : EntityMapper<Driver, DriverEntity> {
 
   override fun toEntity(domain: Driver): DriverEntity {
+    val highestElo = domain.highestElo()
+    val lowestElo = domain.lowestElo()
+
     val driverEntity =
       DriverEntity(
         id = domain.id().value,
@@ -23,6 +26,10 @@ class DriverMapper : EntityMapper<Driver, DriverEntity> {
         infoUrl = domain.infoUrl().value,
         currentElo = domain.currentElo().value,
         currentEloOccurredOn = domain.currentElo().occurredOn.toLocalDate(),
+        highestElo = highestElo.value,
+        highestEloOccurredOn = highestElo.occurredOn.toLocalDate(),
+        lowestElo = lowestElo.value,
+        lowestEloOccurredOn = lowestElo.occurredOn.toLocalDate(),
         eloHistory = emptyList())
 
     val eloHistoryEntities =

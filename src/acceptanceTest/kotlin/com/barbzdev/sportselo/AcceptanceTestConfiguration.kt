@@ -1,6 +1,5 @@
 package com.barbzdev.sportselo
 
-import com.barbzdev.sportselo.core.infrastructure.framework.SpringApplication
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
 import org.flywaydb.core.Flyway
@@ -11,7 +10,7 @@ import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock
 import org.springframework.test.context.ActiveProfiles
 
-@SpringBootTest(classes = [SpringApplication::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = [SportsEloApplication::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("acceptance-test")
 @AutoConfigureWireMock(port = 0)
 class AcceptanceTestConfiguration {
