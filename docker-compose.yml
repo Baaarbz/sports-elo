@@ -4,7 +4,7 @@ services:
   postgres:
     image: "postgres:latest"
     environment:
-      - "POSTGRES_DB=f1_elo"
+      - "POSTGRES_DB=sports_elo"
       - "POSTGRES_PASSWORD=local"
       - "POSTGRES_USER=local"
     ports:

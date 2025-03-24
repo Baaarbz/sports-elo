@@ -2,5 +2,6 @@
 extend-ignore-identifiers-re = [
     "ALO",
     "erformance",
-    "iRating"
+    "iRating",
+    "Serie"
 ]

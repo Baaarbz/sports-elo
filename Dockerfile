@@ -3,12 +3,12 @@ FROM docker.io/openjdk:25-jdk
 LABEL org.opencontainers.image.authors="github.com/baaarbz","linkedin.com/in/eduardobarbosatarrio/"
 
 USER root
-RUN adduser f1elo
-USER f1elo
+RUN adduser sportselo
+USER sportselo
 
 WORKDIR /app
 
-COPY build/libs/f1-elo-1.0.0.jar app.jar
+COPY build/libs/sports-elo-1.0.0.jar app.jar
 
 EXPOSE 8000
 

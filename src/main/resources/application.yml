@@ -3,9 +3,9 @@ server:
 
 spring:
   application:
-    name: F1 ELO System
+    name: Sports ELO System
   datasource:
-    url: jdbc:postgresql://localhost:5432/f1_elo
+    url: jdbc:postgresql://localhost:5432/sports_elo
     username: local
     password: local
     driver-class-name: org.postgresql.Driver
