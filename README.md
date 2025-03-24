@@ -186,7 +186,7 @@ further tuned to match observed iRacing behavior more closely.
 - ⬜ Basketball (NBA)
 - ⬜ UFC
 - ⬜ Boxing
-  ...
+  ... more to come
 
 ### Nice to have
 - ✅ Mechanism to reset and reprocess all the data, been able to reprocess only one rating system. Added in
