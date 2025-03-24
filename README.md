@@ -1,4 +1,4 @@
-# F1 Elo
+# Sports Elo
 
 [![CD/CI](https://github.com/Baaarbz/f1-elo/actions/workflows/main.yml/badge.svg)](https://github.com/Baaarbz/f1-elo/actions/workflows/main.yml)
 
@@ -10,16 +10,23 @@
 
 **A multi-sport ELO rating system to identify the greatest athletes across different sports.**
 <!-- TOC -->
-
-* [F1 Elo](#f1-elo)
-    * [About the project](#about-the-project)
-    * [Assumptions](#assumptions)
-    * [Ways of calculating the rating](#ways-of-calculating-the-rating)
-    * [Milestones](#milestones)
-        * [Nice to have](#nice-to-have)
-    * [License Summary](#license-summary)
-    * [References](#references)
-
+* [Sports Elo](#sports-elo)
+  * [About the project](#about-the-project)
+    * [Formula 1 - Corner cases](#formula-1---corner-cases)
+  * [Rating Calculation Methods](#rating-calculation-methods)
+    * [Individual 1v1 Sports (Tennis, Boxing, etc.)](#individual-1v1-sports-tennis-boxing-etc)
+    * [Team Sports (Football, Basketball, etc.)](#team-sports-football-basketball-etc)
+    * [Motorsports (Formula 1, MotoGP, etc.)](#motorsports-formula-1-motogp-etc)
+      * [Calculate Expected Finish Probability](#calculate-expected-finish-probability)
+      * [Determine the Scaling Factor ($K$-Factor)](#determine-the-scaling-factor-k-factor)
+      * [Calculate Actual vs. Expected Performance](#calculate-actual-vs-expected-performance)
+      * [Calculate iRating Change](#calculate-irating-change)
+      * [Update iRating](#update-irating)
+      * [Example Calculation](#example-calculation)
+  * [Roadmap](#roadmap)
+    * [Nice to have](#nice-to-have)
+  * [License Summary](#license-summary)
+  * [References](#references)
 <!-- TOC -->
 
 ## About the project
