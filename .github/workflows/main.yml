@@ -112,7 +112,7 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: baaarbz/f1-elo:latest
+          tags: baaarbz/sports-elo:latest
 
   deploy:
     if: ${{ github.ref == 'refs/heads/main' }}
