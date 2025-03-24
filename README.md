@@ -114,7 +114,9 @@ System based in iRating that accounts for position finishing and field strength.
 
 _Driver Expected Performance_ against the $SoF$ can be modeled with a probability using the logistic formula:
 
-$$E=\cfrac{1}{1 + 10^\cfrac{SoF - R_{before}}{400}}\\$$
+$$
+E=\cfrac{1}{1 + 10^\cfrac{SoF - R_{before}}{400}}\\
+$$
 
 $E$ represents driver expected performance or "win" probability against the field based on his elo relative to the
 $SoF$.
@@ -175,16 +177,16 @@ This approximation captures the essence of elo adjustments in iRacing. The param
 further tuned to match observed iRacing behavior more closely.
 
 ## Roadmap
-✅ Formula 1
-⬜ MotoGP
-⬜ Football Leagues: Starting with major European leagues:
-      ⬜ La Liga
-      ⬜ Premiere League
-      ⬜ Serie A
-⬜ Basketball (NBA)
-⬜ UFC
-⬜ Boxing
-...
+- ✅ Formula 1
+- ⬜ MotoGP
+- ⬜ Football Leagues: Starting with major European leagues:
+  - ⬜ La Liga
+  - ⬜ Premiere League
+  - ⬜ Serie A
+- ⬜ Basketball (NBA)
+- ⬜ UFC
+- ⬜ Boxing
+  ...
 
 ### Nice to have
 - ✅ Mechanism to reset and reprocess all the data, been able to reprocess only one rating system. Added in
