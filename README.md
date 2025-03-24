@@ -20,8 +20,8 @@
       * [Calculate Expected Finish Probability](#calculate-expected-finish-probability)
       * [Determine the Scaling Factor ($K$-Factor)](#determine-the-scaling-factor-k-factor)
       * [Calculate Actual vs. Expected Performance](#calculate-actual-vs-expected-performance)
-      * [Calculate iRating Change](#calculate-irating-change)
-      * [Update iRating](#update-irating)
+      * [Calculate Elo Change](#calculate-elo-change)
+      * [Update Elo](#update-elo)
       * [Example Calculation](#example-calculation)
   * [Roadmap](#roadmap)
     * [Nice to have](#nice-to-have)
@@ -54,6 +54,7 @@ The system employs different calculation methods based on the type of competitio
 ### Individual 1v1 Sports (Tennis, Boxing, etc.)
 
 Standard ELO rating system for direct competition:
+
 $$
 R'=R+K(S-E)\\
 $$
@@ -78,7 +79,7 @@ $$
 
 Team average ELO is calculated, then applied to update individual player ratings based on match results
 
-$$
+$$ 
 R'=R+K(S-E)\\
 $$
 $$
@@ -112,40 +113,46 @@ System based in iRating that accounts for position finishing and field strength.
 #### Calculate Expected Finish Probability
 
 _Driver Expected Performance_ against the $SoF$ can be modeled with a probability using the logistic formula:
+
 $$E=\cfrac{1}{1 + 10^\cfrac{SoF - R_{before}}{400}}\\$$
-$E$ represents driver expected performance or "win" probability against the field based on his iRating relative to the
+
+$E$ represents driver expected performance or "win" probability against the field based on his elo relative to the
 $SoF$.
 
 #### Determine the Scaling Factor ($K$-Factor)
 
-This factor influences how much driver's iRating can change in a single race. For motorsports, a typical $K$-factor
-might be
-set between 30 and 100, depending on field size and competition level.
-Let’s define a scalable $K$-factor based on the field size:
+This factor influences how much driver's elo can change in a single race. For motorsports, a typical $K$-factor
+might be set between 30 and 100, depending on field size and competition level. Let’s define a scalable $K$-factor based on the field size:
+
 $$ K=30+\cfrac{70}{N} $$
 
 #### Calculate Actual vs. Expected Performance
 
 Define an Actual Performance Score ($S$) based on your position:
+
 $$ S=1−\cfrac{Position−1}{N−1} $$
+
 This way, the winner gets $S=1$, and the last-place finisher gets $S=0$, with values in between for other positions.
 
-#### Calculate iRating Change
+#### Calculate Elo Change
 
-Finally, use the Elo-based adjustment for the iRating change:
+Finally, use the Elo-based adjustment for the elo change:
+
 $$ΔR=K*(S−E)$$
+
 This $ΔR$ is your iRating gain (positive) or loss (negative).
 
-#### Update iRating
+#### Update Elo
 
-New iRating:
+New elo:
+
 $$R_{after}=R_{before}+ΔR$$
 
 #### Example Calculation
 
 Let’s say:
 
-1. Driver initial iRating $R_{before}$ is 1500.
+1. Driver initial Elo $R_{before}$ is 1500.
    The race $SoF$ is 1600.
    Driver finish in 5th place out of 20 drivers.
 
@@ -158,13 +165,13 @@ Let’s say:
 4. Actual Performance Score ($S$):
    $$S=1−\cfrac{5−1}{20−1}=1−\cfrac{4}{19}≈0.79$$
 
-5. Calculate iRating Change:
+5. Calculate Elo Change:
    $$ΔR=33.5×(0.79−0.36)=33.5×0.43≈14.4$$
 
-6. Updated iRating:
+6. Updated Elo:
    $$R_{after}=1500+14.4=1514.4$$
 
-This approximation captures the essence of iRating adjustments in iRacing. The parameters (such as $K$-factor) can be
+This approximation captures the essence of elo adjustments in iRacing. The parameters (such as $K$-factor) can be
 further tuned to match observed iRacing behavior more closely.
 
 ## Roadmap
