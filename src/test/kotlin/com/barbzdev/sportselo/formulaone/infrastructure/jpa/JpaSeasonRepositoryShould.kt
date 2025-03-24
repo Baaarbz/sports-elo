@@ -24,25 +24,20 @@ class JpaSeasonRepositoryShould {
   @Test
   fun `return the last season loaded`() {
     val expectedSeason = create(2004, "https://www.url.com/season/2004")
-    val seasonsInDatasource =
-      mutableListOf(
-        create(2000, "https://www.url.com/season/2000"),
-        create(2001, "https://www.url.com/season/2001"),
-        create(2002, "https://www.url.com/season/2002"),
-        create(2003, "https://www.url.com/season/2003"),
-        expectedSeason)
-    seasonsInDatasource.shuffle()
-    every { seasonDatasource.findAll() } returns seasonsInDatasource.map { seasonMapper.toEntity(it) }
+    val expectedSeasonAsEntity = seasonMapper.toEntity(expectedSeason)
+    every { seasonDatasource.findLastSeasonWithRaces() } returns expectedSeasonAsEntity
+    every { seasonDatasource.findRaceResultsBySeasonId(any()) } returns expectedSeasonAsEntity.races
 
     val response = jpaSeasonRepository.getLastSeasonLoaded()
 
     assertThat(response).isEqualTo(expectedSeason)
-    verify { seasonDatasource.findAll() }
+    verify { seasonDatasource.findLastSeasonWithRaces() }
+    verify { seasonDatasource.findRaceResultsBySeasonId(expectedSeason.id().value) }
   }
 
   @Test
   fun `return null if there are no seasons loaded`() {
-    every { seasonDatasource.findAll() } returns emptyList()
+    every { seasonDatasource.findLastSeasonWithRaces() } returns null
 
     val response = jpaSeasonRepository.getLastSeasonLoaded()
 
@@ -52,25 +47,18 @@ class JpaSeasonRepositoryShould {
   @Test
   fun `return the last year loaded`() {
     val expectedSeason = create(2004, "https://www.url.com/season/2004")
-    val seasonsInDatasource =
-      mutableListOf(
-        create(2000, "https://www.url.com/season/2000"),
-        create(2001, "https://www.url.com/season/2001"),
-        create(2002, "https://www.url.com/season/2002"),
-        create(2003, "https://www.url.com/season/2003"),
-        expectedSeason)
-    seasonsInDatasource.shuffle()
-    every { seasonDatasource.findAll() } returns seasonsInDatasource.map { seasonMapper.toEntity(it) }
+    val expectedSeasonAsEntity = seasonMapper.toEntity(expectedSeason)
+    every { seasonDatasource.findLastSeasonWithRaces() } returns expectedSeasonAsEntity
 
     val response = jpaSeasonRepository.getLastYearLoaded()
 
     assertThat(response).isEqualTo(SeasonYear(2004))
-    verify { seasonDatasource.findAll() }
+    verify { seasonDatasource.findLastSeasonWithRaces() }
   }
 
   @Test
   fun `return null if there are no seasons year loaded`() {
-    every { seasonDatasource.findAll() } returns emptyList()
+    every { seasonDatasource.findLastSeasonWithRaces() } returns null
 
     val response = jpaSeasonRepository.getLastYearLoaded()
 
