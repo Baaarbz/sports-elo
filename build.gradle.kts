@@ -50,9 +50,7 @@ dependencies {
   implementation("org.springdoc:springdoc-openapi-starter-common:2.6.0")
 
   // Testing
-  testImplementation("org.springframework.boot:spring-boot-starter-test") {
-    exclude(module = "mockito-core")
-  }
+  testImplementation("org.springframework.boot:spring-boot-starter-test") { exclude(module = "mockito-core") }
   testImplementation("org.springframework.boot:spring-boot-testcontainers")
   testImplementation("org.springframework.cloud:spring-cloud-contract-wiremock:4.2.0")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
@@ -78,7 +76,9 @@ dependencies {
 }
 
 addTestSet("integrationTest")
+
 addTestSet("acceptanceTest")
+
 addTestSet("architectureTest")
 
 kotlin {
@@ -135,12 +135,8 @@ private fun Project.addTestSet(name: String) {
 
   with(configurations) {
     // TODO("not working properly need to fix)
-    named("${name}Implementation") {
-      extendsFrom(configurations["testImplementation"])
-    }
-    named("${name}RuntimeOnly") {
-      extendsFrom(configurations["testRuntimeOnly"])
-    }
+    named("${name}Implementation") { extendsFrom(configurations["testImplementation"]) }
+    named("${name}RuntimeOnly") { extendsFrom(configurations["testRuntimeOnly"]) }
   }
 
   plugins.withType<JavaTestFixturesPlugin> {
@@ -161,13 +157,14 @@ private fun Project.addTestSet(name: String) {
     }
   }
 
-  val testTask = tasks.register<Test>(name) {
-    group = LifecycleBasePlugin.VERIFICATION_GROUP
-    description = "Runs the ${name.removeSuffix("Test")} tests."
+  val testTask =
+    tasks.register<Test>(name) {
+      group = LifecycleBasePlugin.VERIFICATION_GROUP
+      description = "Runs the ${name.removeSuffix("Test")} tests."
 
-    testClassesDirs = sourceSets[name].output.classesDirs
-    classpath = sourceSets[name].runtimeClasspath
-  }
+      testClassesDirs = sourceSets[name].output.classesDirs
+      classpath = sourceSets[name].runtimeClasspath
+    }
 
   tasks.register<JacocoReport>("jacoco${name.replaceFirstChar { it.titlecase(Locale.ROOT) }}Report") {
     dependsOn(testTask)
