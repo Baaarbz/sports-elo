@@ -8,7 +8,7 @@ USER sportselo
 
 WORKDIR /app
 
-COPY build/libs/sports-elo-1.0.0.jar app.jar
+COPY build/libs/sports-elo-3.0.2.jar app.jar
 
 EXPOSE 8000
 
