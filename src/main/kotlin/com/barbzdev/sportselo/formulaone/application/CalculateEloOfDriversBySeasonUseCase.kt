@@ -35,7 +35,8 @@ class CalculateEloOfDriversBySeasonUseCase(
       val rivalsElo = race.results().filter { it.driver != driverToUpdate }.map { it.driver.currentElo() }
 
       val eloDelta = eloCalculator.calculate(driverToUpdate.currentElo(), rivalsElo, result.position)
-      updatedDrivers.add(driverToUpdate.updateElo(eloDelta, race.occurredOn().date.value))
+      val updatedElo = driverToUpdate.currentElo().value + eloDelta
+      updatedDrivers.add(driverToUpdate.updateElo(updatedElo, race.occurredOn().date.value))
     }
 
     driverRepository.saveAll(updatedDrivers)

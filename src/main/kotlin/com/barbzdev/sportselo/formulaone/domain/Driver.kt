@@ -40,7 +40,11 @@ private constructor(
   fun infoUrl() = infoUrl
 
   override fun updateElo(value: Int, occurredOn: String): Driver {
-    val newElo = Elo.create(value, occurredOn)
+    var adjustedValue = value
+    if (adjustedValue < 0) {
+      adjustedValue = 0
+    }
+    val newElo = Elo.create(adjustedValue, occurredOn)
     return Driver(
       id = id,
       fullName = fullName,
