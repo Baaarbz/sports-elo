@@ -26,7 +26,7 @@ class OpenAPIConfig {
 
     val contact = Contact()
     contact.name = "Barbz"
-    contact.url = "https://www.barbzdev.com"
+    contact.url = "https://barbzdev.com"
 
     val mitLicense: License =
       License().name("MIT License with Commons Clause").url("https://github.com/Baaarbz/sports-elo/blob/main/LICENSE")
