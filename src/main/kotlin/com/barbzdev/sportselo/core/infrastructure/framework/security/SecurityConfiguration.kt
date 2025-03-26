@@ -31,7 +31,7 @@ class SecurityConfiguration(
       .csrf { it.disable() }
       .authorizeHttpRequests {
         it
-          .requestMatchers(HttpMethod.GET, "/api/v1/drivers/**")
+          .requestMatchers(HttpMethod.GET, "/api/v1/formula-one/drivers/**")
           .permitAll()
           .requestMatchers(
             "/swagger-ui.html",

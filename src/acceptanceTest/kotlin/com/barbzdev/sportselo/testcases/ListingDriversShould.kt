@@ -28,7 +28,7 @@ abstract class ListingDriversShould : AcceptanceTestConfiguration() {
       .port(port.toInt())
       .contentType(ContentType.JSON)
       .`when`()
-      .get("/api/v1/drivers")
+      .get("/api/v1/formula-one/drivers")
       .then()
       .assertThat()
       .statusCode(HttpStatus.OK.value())

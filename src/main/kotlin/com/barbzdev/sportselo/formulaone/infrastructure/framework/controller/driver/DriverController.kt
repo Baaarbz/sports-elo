@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("api/v1/drivers")
+@RequestMapping("api/v1/formula-one/drivers")
 class DriverController(
   private val listingDriversUseCase: ListingDriversUseCase,
   private val getDriverByIdUseCase: GetDriverByIdUseCase

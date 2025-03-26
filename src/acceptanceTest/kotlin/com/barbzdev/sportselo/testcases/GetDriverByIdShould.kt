@@ -28,7 +28,7 @@ abstract class GetDriverByIdShould : AcceptanceTestConfiguration() {
       .port(port.toInt())
       .contentType(ContentType.JSON)
       .`when`()
-      .get("/api/v1/drivers/hamilton")
+      .get("/api/v1/formula-one/drivers/hamilton")
       .then()
       .assertThat()
       .statusCode(HttpStatus.OK.value())
