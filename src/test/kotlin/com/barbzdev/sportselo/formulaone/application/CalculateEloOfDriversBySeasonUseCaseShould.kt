@@ -27,6 +27,7 @@ class CalculateEloOfDriversBySeasonUseCaseShould {
   fun `calculate elo of drivers when season is found`() {
     val aSeason = aSeason()
     every { seasonRepository.findBy(any()) } returns aSeason
+    every { driverRepository.findBy(any()) } returns null
     every { eloCalculator.calculate(any<Elo>(), any<List<Elo>>(), any()) } returns 10
 
     val response = useCase(CalculateEloOfDriversBySeasonRequest(aSeason.year().value))
@@ -34,6 +35,7 @@ class CalculateEloOfDriversBySeasonUseCaseShould {
     assertThat(response).isInstanceOf(CalculateEloOfDriversBySeasonResponse.Success::class)
     verify {
       seasonRepository.findBy(aSeason.year())
+      driverRepository.findBy(any())
       eloCalculator.calculate(any<Elo>(), any<List<Elo>>(), any())
       driverRepository.save(any())
     }
