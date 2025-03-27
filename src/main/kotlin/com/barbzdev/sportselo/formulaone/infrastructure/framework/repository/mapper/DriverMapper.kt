@@ -7,6 +7,7 @@ import com.barbzdev.sportselo.formulaone.domain.Driver
 import com.barbzdev.sportselo.formulaone.domain.valueobject.driver.Nationality
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.DriverEloHistoryEntity
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.DriverEntity
+import java.util.UUID
 
 class DriverMapper : EntityMapper<Driver, DriverEntity> {
 
@@ -34,7 +35,11 @@ class DriverMapper : EntityMapper<Driver, DriverEntity> {
 
     val eloHistoryEntities =
       domain.eloRecord().map {
-        DriverEloHistoryEntity(driver = driverEntity, elo = it.value, occurredOn = it.occurredOn.toLocalDate())
+        DriverEloHistoryEntity(
+          id = UUID.randomUUID().toString(),
+          driver = driverEntity,
+          elo = it.value,
+          occurredOn = it.occurredOn.toLocalDate())
       }
 
     return driverEntity.copy(eloHistory = eloHistoryEntities)

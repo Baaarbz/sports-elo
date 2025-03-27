@@ -5,12 +5,10 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.Id
-import jakarta.persistence.IdClass
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
-import java.io.Serializable
 import java.time.LocalDate
 import java.util.Optional
 import org.springframework.data.domain.Page
@@ -81,17 +79,14 @@ data class DriverEntity(
 }
 
 @Entity
-@IdClass(DriverEloHistoryId::class)
 @Table(name = "drivers_elo_history")
 data class DriverEloHistoryEntity(
-  @Id @ManyToOne @JoinColumn(name = "driver_id") val driver: DriverEntity,
-  @Id val elo: Int,
-  @Id @Column(name = "occurred_on") val occurredOn: LocalDate,
+  @Id @Column(name = "id") val id: String,
+  @ManyToOne @JoinColumn(name = "driver_id") val driver: DriverEntity,
+  val elo: Int,
+  @Column(name = "occurred_on") val occurredOn: LocalDate,
 ) {
   override fun toString(): String {
     return "DriverEloHistoryEntity(driver.id=${driver.id}, elo=$elo, occurredOn=$occurredOn)"
   }
 }
-
-data class DriverEloHistoryId(val driver: String = "", val elo: Int = 0, val occurredOn: LocalDate = LocalDate.now()) :
-  Serializable
