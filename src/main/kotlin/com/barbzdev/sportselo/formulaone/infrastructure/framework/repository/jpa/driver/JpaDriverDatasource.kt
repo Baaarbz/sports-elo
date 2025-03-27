@@ -41,7 +41,7 @@ interface JpaDriverDatasource : JpaRepository<DriverEntity, String> {
 
   @Query(
     """
-    SELECT d as highest_elo
+    SELECT d
     FROM DriverEntity d
     LEFT JOIN FETCH d.eloHistory AS deh
     where d.id = :id

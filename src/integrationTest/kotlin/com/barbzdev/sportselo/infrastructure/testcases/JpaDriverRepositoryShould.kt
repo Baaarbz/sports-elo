@@ -7,6 +7,7 @@ import com.barbzdev.sportselo.core.domain.util.SortBy
 import com.barbzdev.sportselo.core.domain.util.SortOrder
 import com.barbzdev.sportselo.formulaone.domain.Driver
 import com.barbzdev.sportselo.formulaone.factory.DriverFactory.aDriver
+import com.barbzdev.sportselo.formulaone.factory.DriverFactory.drivers
 import com.barbzdev.sportselo.formulaone.factory.DriverFactory.hamilton
 import com.barbzdev.sportselo.formulaone.factory.DriverFactory.verstappen
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.JpaDriverDatasource
@@ -59,6 +60,18 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
   }
 
   @Test
+  fun `get all drivers paginated and ordered by highestElo`() {
+    givenMultipleDriversInDatabase()
+    var driverWithHighestElo = Driver.createRookie("highest", "driver", "highest", null, null, "2000-01-01", "Spanish", "https://barbzdev.com", "2000-01-01")
+    driverWithHighestElo = driverWithHighestElo.updateElo(99999, "2000-01-01")
+    givenADriverInDatabase(driverWithHighestElo)
+
+    val drivers = repository.findAll(Page(0), PageSize(1), SortBy("highestElo"), SortOrder("desc"))
+
+    assertThat(drivers.elements[0].id()).isEqualTo(driverWithHighestElo.id())
+  }
+
+  @Test
   fun `find all drivers`() {
     givenADriverInDatabase(hamilton)
     givenADriverInDatabase(verstappen)
@@ -69,6 +82,8 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
   }
 
   private fun givenADriverInDatabase(): Driver = aDriver().also { repository.save(it) }
+
+  private fun givenMultipleDriversInDatabase(): List<Driver> = drivers.also { repository.saveAll(it) }
 
   private fun givenADriverInDatabase(driver: Driver) = repository.save(driver)
 

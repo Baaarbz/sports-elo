@@ -19,7 +19,7 @@ object DriverFactory {
 
   private val SIMPLE_ELO_RECORD = listOf(Elo(2000, OccurredOn("1900-01-01")))
 
-  private val drivers =
+  val drivers =
     listOf(
       create(
         id = "raikkonen",
