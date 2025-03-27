@@ -35,7 +35,7 @@ class CalculateEloOfDriversBySeasonUseCaseShould {
     verify {
       seasonRepository.findBy(aSeason.year())
       eloCalculator.calculate(any<Elo>(), any<List<Elo>>(), any())
-      driverRepository.saveAll(any())
+      driverRepository.save(any())
     }
   }
 }

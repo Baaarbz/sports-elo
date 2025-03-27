@@ -2,7 +2,6 @@ package com.barbzdev.sportselo.formulaone.application
 
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
 import com.barbzdev.sportselo.core.domain.service.EloCalculator
-import com.barbzdev.sportselo.formulaone.domain.Driver
 import com.barbzdev.sportselo.formulaone.domain.Race
 import com.barbzdev.sportselo.formulaone.domain.Season
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
@@ -29,17 +28,15 @@ class CalculateEloOfDriversBySeasonUseCase(
   private fun Season.getRacesOrderedByRound() = this.races().sortedBy { it.round().value }
 
   private fun calculateEloOfDrivers(race: Race) {
-    val updatedDrivers = mutableListOf<Driver>()
     for (result in race.results()) {
       val driverToUpdate = result.driver
       val rivalsElo = race.results().filter { it.driver != driverToUpdate }.map { it.driver.currentElo() }
 
       val eloDelta = eloCalculator.calculate(driverToUpdate.currentElo(), rivalsElo, result.position)
       val updatedElo = driverToUpdate.currentElo().value + eloDelta
-      updatedDrivers.add(driverToUpdate.updateElo(updatedElo, race.occurredOn().date.value))
+      val updatedDriver = driverToUpdate.updateElo(updatedElo, race.occurredOn().date.value)
+      driverRepository.save(updatedDriver)
     }
-
-    driverRepository.saveAll(updatedDrivers)
   }
 }
 
