@@ -15,7 +15,10 @@ data class PageSize(val value: Int)
 data class SortBy(val value: String) {
   init {
     when (value) {
-      "currentElo", "highestElo", "lowestElo", "id" -> {}
+      "currentElo",
+      "highestElo",
+      "lowestElo",
+      "id" -> {}
       else -> throw IllegalArgumentException("Invalid sortBy value for find all drivers query")
     }
   }

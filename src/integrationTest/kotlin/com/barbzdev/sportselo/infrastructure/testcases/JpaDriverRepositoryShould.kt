@@ -62,7 +62,9 @@ abstract class JpaDriverRepositoryShould : IntegrationTestConfiguration() {
   @Test
   fun `get all drivers paginated and ordered by highestElo`() {
     givenMultipleDriversInDatabase()
-    var driverWithHighestElo = Driver.createRookie("highest", "driver", "highest", null, null, "2000-01-01", "Spanish", "https://barbzdev.com", "2000-01-01")
+    var driverWithHighestElo =
+      Driver.createRookie(
+        "highest", "driver", "highest", null, null, "2000-01-01", "Spanish", "https://barbzdev.com", "2000-01-01")
     driverWithHighestElo = driverWithHighestElo.updateElo(99999, "2000-01-01")
     givenADriverInDatabase(driverWithHighestElo)
 
