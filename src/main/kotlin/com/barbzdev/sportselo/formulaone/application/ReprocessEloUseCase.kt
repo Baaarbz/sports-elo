@@ -2,7 +2,6 @@ package com.barbzdev.sportselo.formulaone.application
 
 import com.barbzdev.sportselo.core.domain.exception.EloReprocessingFailedException
 import com.barbzdev.sportselo.core.domain.observability.UseCaseInstrumentation
-import com.barbzdev.sportselo.formulaone.domain.Driver
 import com.barbzdev.sportselo.formulaone.domain.repository.DriverRepository
 import com.barbzdev.sportselo.formulaone.domain.repository.SeasonRepository
 import com.barbzdev.sportselo.formulaone.domain.valueobject.season.SeasonYear
