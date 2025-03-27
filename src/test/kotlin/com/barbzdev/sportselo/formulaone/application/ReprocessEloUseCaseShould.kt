@@ -35,7 +35,7 @@ class ReprocessEloUseCaseShould {
     every { seasonRepository.findAllSeasonsYears() } returns seasons
     every { calculateEloOfDriversBySeasonUseCase(any()) } returns CalculateEloOfDriversBySeasonResponse.Success
     every { driverRepository.findAll() } returns listOf(hamilton, verstappen)
-    every { driverRepository.save(any()) } just runs
+    every { driverRepository.saveAll(any()) } just runs
 
     val response = useCase()
 
@@ -57,7 +57,7 @@ class ReprocessEloUseCaseShould {
     every { seasonRepository.findAllSeasonsYears() } returns seasons
     every { calculateEloOfDriversBySeasonUseCase(any()) } returns CalculateEloOfDriversBySeasonResponse.SeasonNotFound
     every { driverRepository.findAll() } returns listOf(hamilton, verstappen)
-    every { driverRepository.save(any()) } just runs
+    every { driverRepository.saveAll(any()) } just runs
 
     assertThrows<EloReprocessingFailedException> { useCase() }
     verify {

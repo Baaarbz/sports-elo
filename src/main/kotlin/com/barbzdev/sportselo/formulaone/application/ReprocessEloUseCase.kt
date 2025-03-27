@@ -23,8 +23,7 @@ class ReprocessEloUseCase(
   }
 
   private fun resetEloOfAllDrivers() {
-    val driversWithResetElo = mutableListOf<Driver>()
-    driverRepository.findAll().forEach { driversWithResetElo.add(it.resetElo()) }
+    driverRepository.findAll().map { it.resetElo() }.also { driverRepository.saveAll(it) }
   }
 
   private fun getAllExistingSeasonsYears() = seasonRepository.findAllSeasonsYears().sortedBy { it.value }
