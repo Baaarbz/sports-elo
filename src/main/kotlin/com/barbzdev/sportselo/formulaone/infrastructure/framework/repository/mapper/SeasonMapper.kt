@@ -9,6 +9,7 @@ import com.barbzdev.sportselo.formulaone.domain.Season
 import com.barbzdev.sportselo.formulaone.domain.valueobject.race.RaceResult
 import com.barbzdev.sportselo.formulaone.domain.valueobject.race.RaceResultStatus
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.driver.DriverEntity
+import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.CircuitEntity
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.ConstructorEntity
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.RaceEntity
 import com.barbzdev.sportselo.formulaone.infrastructure.framework.repository.jpa.season.RaceResultEntity
@@ -23,6 +24,7 @@ class SeasonMapper(
   override fun toEntity(domain: Season): SeasonEntity {
     val driverCache = mutableMapOf<String, DriverEntity>()
     val constructorCache = mutableMapOf<String, ConstructorEntity>()
+    val circuitCache = mutableMapOf<String, CircuitEntity>()
 
     val seasonEntity =
       SeasonEntity(
@@ -31,12 +33,16 @@ class SeasonMapper(
     val racesEntityMap = mutableMapOf<String, RaceEntity>()
     val racesEntity =
       domain.races().map { race ->
+        val circuitEntity =
+          circuitCache.getOrPut(race.circuit().id().value) {
+            circuitMapper.toEntity(race.circuit())
+          }
         val raceEntity =
           RaceEntity(
             id = race.id().value,
             season = seasonEntity,
             round = race.round().value,
-            circuit = circuitMapper.toEntity(race.circuit()),
+            circuit = circuitEntity,
             infoUrl = race.infoUrl().value,
             occurredOn = race.occurredOn().date.toLocalDate(),
             name = race.name().value,
