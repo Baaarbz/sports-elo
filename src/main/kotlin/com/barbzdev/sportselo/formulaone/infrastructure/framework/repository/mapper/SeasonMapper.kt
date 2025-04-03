@@ -33,10 +33,7 @@ class SeasonMapper(
     val racesEntityMap = mutableMapOf<String, RaceEntity>()
     val racesEntity =
       domain.races().map { race ->
-        val circuitEntity =
-          circuitCache.getOrPut(race.circuit().id().value) {
-            circuitMapper.toEntity(race.circuit())
-          }
+        val circuitEntity = circuitCache.getOrPut(race.circuit().id().value) { circuitMapper.toEntity(race.circuit()) }
         val raceEntity =
           RaceEntity(
             id = race.id().value,
