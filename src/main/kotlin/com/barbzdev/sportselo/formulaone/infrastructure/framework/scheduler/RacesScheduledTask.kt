@@ -11,7 +11,7 @@ class RacesScheduledTask(
   @Value("\${cron.job.enabled}") private val isCronJobEnabled: Boolean
 ) {
 
-  @Scheduled(cron = "0 0 */1 * * ?")
+  @Scheduled(cron = "0 0 0 1 1 ?")
   fun gatherRacesResultBySeasonScheduledTask() {
     if (isCronJobEnabled) {
       replicateSeasonByYearUseCase.invoke()
