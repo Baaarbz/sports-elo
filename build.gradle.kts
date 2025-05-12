@@ -71,7 +71,7 @@ dependencies {
 
   testImplementation("io.rest-assured:rest-assured:5.5.1")
 
-  testImplementation("com.tngtech.archunit:archunit-junit5:1.4.0")
+  testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 
   testFixturesImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
 }
