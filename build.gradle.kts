@@ -73,7 +73,7 @@ dependencies {
 
   testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 
-  testFixturesImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
+  testFixturesImplementation("org.mockito.kotlin:mockito-kotlin:6.0.0")
 }
 
 addTestSet("integrationTest")
