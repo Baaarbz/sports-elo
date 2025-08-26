@@ -46,7 +46,7 @@ dependencies {
   runtimeOnly("org.postgresql:postgresql")
 
   // OpenAPI
-  val springDocVersion = "2.8.9"
+  val springDocVersion = "2.8.11"
   implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion")
   implementation("org.springdoc:springdoc-openapi-starter-common:$springDocVersion")
 
