@@ -69,7 +69,7 @@ dependencies {
 
   testImplementation("org.awaitility:awaitility:4.3.0")
 
-  testImplementation("io.rest-assured:rest-assured:5.5.6")
+  testImplementation("io.rest-assured:rest-assured:6.0.0")
 
   testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 
